@@ -1,5 +1,3 @@
 # kleines_mypage
 
-test
-
-test
+deploy
