@@ -44,7 +44,7 @@ if (isset($_POST['login'])) {
             // start session
             ob_start();
             session_start();
-            $_SESSION['email'] = $user->email;
+            $_SESSION['mypage_email'] = $user->email;
             // create log
             error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
             header("Location: /member/mypage/");
