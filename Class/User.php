@@ -34,6 +34,6 @@ class User
 
     public function get_name()
     {
-        echo $this->name;
+        echo $this->grade . $this->part . ' ' . $this->name;
     }
 }
