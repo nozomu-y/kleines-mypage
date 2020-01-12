@@ -47,7 +47,7 @@ if (isset($_POST['login'])) {
             $_SESSION['email'] = $user->email;
             // create log
             error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-            header("Location: /home/chorkleines/www/member/mypage/");
+            header("Location: /member/mypage/");
             exit();
         } else {
             // authentication failure
