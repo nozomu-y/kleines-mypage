@@ -1,3 +1,31 @@
+<?php
+ob_start();
+session_start();
+if (isset($_SESSION['email'])) {
+    header('Location: /home/chorkleines/www/member/mypage/');
+    exit();
+}
+setcookie(session_name(), '', time() - 1, '/');
+session_destroy();
+
+if (isset($_POST['wrong-email'])) {
+    $email_invalid = 'is-invalid';
+    $email_message = "メールアドレスが登録されていません";
+} else if (isset($_POST['wrong-password'])) {
+    $password_invalid = 'is-invalid';
+    $login_failure = $_POST['wrong-password'];
+    $password_message = "パスワードが間違っています。";
+    $failure_message = "ログインに" . $login_failure . "回失敗しています。10回失敗するとアカウントがロックされます。";
+} else if (isset($_POST['login-failure'])) {
+    $email_invalid = 'is-invalid';
+    $password_invalid = 'is-invalid';
+    $failure_message = "ログインに10回連続で失敗しています。パスワードをリセットしてください。";
+}
+
+require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -34,12 +62,21 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Kleines Mypage</h1>
                                     </div>
-                                    <form class="user" method="POST">
+                                    <form class="user" method="POST" action="./Core/auth.php">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="email" name="email" required autocomplete="email" autofocus placeholder="メールアドレス">
+                                            <input type="email" class="form-control form-control-user <?php echo $email_invalid ?>" id="email" name="email" required autocomplete="email" autofocus placeholder="メールアドレス">
+                                            <span class="invalid-feedback" role="alert">
+                                                <?php echo $email_message; ?>
+                                            </span>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="password" placeholder="パスワード" name="password" required autocomplete="current-password">
+                                            <input type="password" class="form-control form-control-user <?php echo $password_invalid ?>" id="password" placeholder="パスワード" name="password" required autocomplete="current-password">
+                                            <span class="invalid-feedback" role="alert">
+                                                <?php echo $password_message; ?>
+                                            </span>
+                                            <span class="invalid-feedback" role="alert">
+                                                <?php echo $failure_message; ?>
+                                            </span>
                                         </div>
                                         <!-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -47,7 +84,7 @@
                                                 <label class="custom-control-label" for="remember">{{ __('Remember Me') }}</label>
                                             </div>
                                         </div> -->
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="login">
                                             ログイン
                                         </button>
                                     </form>
