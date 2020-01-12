@@ -2,7 +2,7 @@
 ob_start();
 session_start();
 if (isset($_SESSION['email'])) {
-    header('Location: /home/chorkleines/www/member/mypage/');
+    header('Location: /member/mypage/');
     exit();
 }
 setcookie(session_name(), '', time() - 1, '/');
