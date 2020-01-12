@@ -31,4 +31,9 @@ class User
         $this->admin = $user['admin'];
         $this->name = $user['last_name'] . $user['first_name'];
     }
+
+    public function get_name()
+    {
+        echo $this->name;
+    }
 }

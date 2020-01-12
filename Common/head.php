@@ -1,3 +1,24 @@
+<?php
+ob_start();
+session_start();
+if (!isset($_SESSION['mypage_email'])) {
+    header('Location: /member/mypage/login.php');
+    exit();
+}
+
+require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
+$email = $_SESSION['mypage_email'];
+$query = "SELECT * FROM members WHERE email='$email'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('クエリーが失敗しました。' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$user = new User($result->fetch_assoc());
+$result->close();
+?>
+
 <!doctype html>
 <html lang="ja">
 
@@ -98,7 +119,7 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">NAME HERE</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php $user->get_name(); ?></span>
                                 <i class="fas fa-user fa-fw"></i>
                             </a>
                             <!-- Dropdown - User Information -->
