@@ -116,11 +116,12 @@
                                     Activity Log
                                 </a> -->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a class="dropdown-item" href="/member/mypage/logout.php" data-toggle="modal" data-target="#logoutModal" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     ログアウト
                                 </a>
-                                <form action="logout.php" method="POST" style="display: none;" id="logout-form">
+                                <form action="/member/mypage/logout.php" method="POST" style="display: none;" id="logout-form">
+                                    <input type='hidden' name='logout'>
                                 </form>
                             </div>
                         </li>
