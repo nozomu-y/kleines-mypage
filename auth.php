@@ -1,4 +1,10 @@
 <?php
+ob_start();
+session_start();
+if (isset($_SESSION['mypage_email'])) {
+    header('Location: /member/mypage/');
+    exit();
+}
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 require_once('/home/chorkleines/www/member/mypage/Core/post_redirect.php');
 
@@ -19,18 +25,24 @@ if (isset($_POST['login'])) {
         // there is no such account with the corresponding email
         // create log
         error_log("[" . date('Y/m/d H:i:s') . "] " . "A non-existing email was entered. (email : " . $email . ", IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-        echo post_redirect('/member/mypage/login.php', 'wrong-email', '');
+        $_SESSION['mypage_auth_error'] = "wrong-email";
+        header("Location: /member/mypage/login.php");
+        exit();
     } else if ($row_cnt >= 2) {
         // if there is more than 2 accounts with the corresponding email
         // this code is not neccesary, just in case
         error_log("[" . date('Y/m/d H:i:s') . "] " . "The following email is registered to several accounts. (email : " . $email . ", IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-        echo post_redirect('/member/mypage/login.php', 'wrong-email', '');
+        $_SESSION['mypage_auth_error'] = "wrong-email";
+        header("Location: /member/mypage/login.php");
+        exit();
     }
     $user = new User($result->fetch_assoc());
     $result->close();
     if ($user->login_failure >= 10) {
         // failed the authentication for more than 10 times
-        echo post_redirect('/member/mypage/login.php', 'login-failure', '');
+        $_SESSION['mypage_auth_error'] = "login-failure";
+        header("Location: /member/mypage/login.php");
+        exit();
     } else {
         if (password_verify($password, $user->password)) {
             $query = "UPDATE members SET login_failure = 0 WHERE email='$user->email'";
@@ -61,7 +73,9 @@ if (isset($_POST['login'])) {
             $mysqli->close();
             // create log
             error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " failed login authentication. " . "(IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-            echo post_redirect('/member/mypage/login.php', 'wrong-password', $user->login_failure + 1);
+            $_SESSION['mypage_auth_error'] = "wrong-password_" . $user->login_failure + 1;
+            header("Location: /member/mypage/login.php");
+            exit();
         }
     }
 }
