@@ -5,22 +5,24 @@ if (isset($_SESSION['mypage_email'])) {
     header('Location: /member/mypage/');
     exit();
 }
+if (isset($_SESSION['mypage_auth_error'])) {
+    if ($_SESSION['mypage_auth_error'] == "wrong-email") {
+        $email_invalid = 'is-invalid';
+        $email_message = "メールアドレスが登録されていません";
+    } else if (strpos($_SESSION['mypage_auth_error'], "wrong-password")) {
+        $login_failure = explode("_", $_SESSION['mypage_auth_error']);
+        $password_invalid = 'is-invalid';
+        $password_message = "パスワードが間違っています。";
+        $failure_message = "ログインに" . $login_failure . "回失敗しています。10回失敗するとアカウントがロックされます。";
+    } else if ($_SESSION['mypage_auth_error'] == "login-failure") {
+        $email_invalid = 'is-invalid';
+        $password_invalid = 'is-invalid';
+        $failure_message = "ログインに10回連続で失敗しています。パスワードをリセットしてください。";
+    }
+}
+$_SESSION = array();
 setcookie(session_name(), '', time() - 1, '/');
 session_destroy();
-
-if (isset($_POST['wrong-email'])) {
-    $email_invalid = 'is-invalid';
-    $email_message = "メールアドレスが登録されていません";
-} else if (isset($_POST['wrong-password'])) {
-    $password_invalid = 'is-invalid';
-    $login_failure = $_POST['wrong-password'];
-    $password_message = "パスワードが間違っています。";
-    $failure_message = "ログインに" . $login_failure . "回失敗しています。10回失敗するとアカウントがロックされます。";
-} else if (isset($_POST['login-failure'])) {
-    $email_invalid = 'is-invalid';
-    $password_invalid = 'is-invalid';
-    $failure_message = "ログインに10回連続で失敗しています。パスワードをリセットしてください。";
-}
 
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
