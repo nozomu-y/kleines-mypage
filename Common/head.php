@@ -40,7 +40,7 @@ $result->close();
     <div id="wrapper">
         <!-- sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/') }}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-music"></i>
                 </div>
@@ -70,6 +70,60 @@ $result->close();
                     <i class="fas fa-wallet fa-fw"></i>
                     <span>個別会計</span>
                 </a>
+            </li>
+            <?php
+            /* 1 : access to all
+             * 2 : access to account edit
+             * 3 : acccess to kaikei
+             * 4 : access to practice plan
+             * 5 : access to gasshuku shuukinn
+             * 
+            */
+            if ($user->admin != NULL) {
+                echo '<hr class="sidebar-divider">';
+                echo '<div class="sidebar-heading">管理コンソール</div>';
+                if ($user->admin == 1 || $user->admin == 2 || $user->adnin == 3) {
+                    echo '<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-users-cog fa-fw"></i></i><span>アカウント管理</span></a></li>';
+                } else {
+                    echo '<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-users fa-fw"></i></i><span>アカウント一覧</span></a></li>';
+                }
+                if ($user->admin == 1 || $user->admin == 3) {
+                    echo '<li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccounting" aria-expanded="true" aria-controls="collapseAccounting">
+                    <i class="fas fa-fw fa-coins"></i>
+                    <span>会計システム</span>
+                    </a>';
+                    echo '<div id="collapseAccounting" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="#">集金記録</a>
+                    <a class="collapse-item" href="#">個別会計</a>
+                    </div>
+                    </div>
+                    </li>';
+                }
+                if ($user->admin == 1 || $user->admin == 5) {
+                    echo '<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
+                }
+            }
+
+            ?>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Pages</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="register.html">Register</a>
+                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="404.html">404 Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                    </div>
+                </div>
             </li>
             <hr class="sidebar-divider d-none d-md-block">
             <div class="text-center d-none d-md-inline">
