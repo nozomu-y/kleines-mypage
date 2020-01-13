@@ -38,7 +38,7 @@ if (isset($_POST['login'])) {
     }
     $user = new User($result->fetch_assoc());
     $result->close();
-    if ($user->login_failure >= 10) {
+    if ($user->login_failure >= 9) {
         // failed the authentication for more than 10 times
         $_SESSION['mypage_auth_error'] = "login-failure";
         header("Location: /member/mypage/login.php");
