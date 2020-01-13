@@ -28,7 +28,7 @@ class User
         $this->token = $user['token'];
         $this->validation_time = $user['validation_time'];
         $this->login_failure = $user['login_failure'];
-        $this->admin = $user['admin'];
+        $this->admin = (int) $user['admin'];
         $this->name = $user['last_name'] . $user['first_name'];
     }
 
