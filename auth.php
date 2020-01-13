@@ -73,7 +73,7 @@ if (isset($_POST['login'])) {
             $mysqli->close();
             // create log
             error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " failed login authentication. " . "(IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-            $_SESSION['mypage_auth_error'] = "wrong-password_" . $user->login_failure + 1;
+            $_SESSION['mypage_auth_error'] = "wrong-password_" . strval($user->login_failure + 1);
             header("Location: /member/mypage/login.php");
             exit();
         }
