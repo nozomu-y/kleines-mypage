@@ -10,7 +10,7 @@ if (isset($_SESSION['mypage_auth_error'])) {
         $email_invalid = 'is-invalid';
         $email_message = "メールアドレスが登録されていません";
     } else if (strpos($_SESSION['mypage_auth_error'], "wrong-password")) {
-        $login_failure = explode("_", $_SESSION['mypage_auth_error']);
+        $login_failure = explode("_", $_SESSION['mypage_auth_error'])[1];
         $password_invalid = 'is-invalid';
         $password_message = "パスワードが間違っています。";
         $failure_message = "ログインに" . $login_failure . "回失敗しています。10回失敗するとアカウントがロックされます。";
