@@ -21,6 +21,13 @@ $result->close();
 if ($PAGE_NAME != "") {
     $PAGE_NAME = " - " . $PAGE_NAME;
 }
+
+// include の呼び出し元
+$backtrace = debug_backtrace()[0]['file'];
+$backtrace = explode('mypage', $backtrace);
+if ($backtrace == '/index.php') {
+    $home = 'active';
+}
 ?>
 
 <!doctype html>
@@ -54,7 +61,7 @@ if ($PAGE_NAME != "") {
             </a>
             <hr class="sidebar-divider my-0">
             <!-- nav item -->
-            <li class="nav-item active">
+            <li class="nav-item <?php echo $home; ?>">
                 <a class="nav-link" href="/member/mypage/">
                     <i class="fas fa-home fa-fw"></i>
                     <span>Home</span>
@@ -180,5 +187,3 @@ if ($PAGE_NAME != "") {
                         </li>
                     </ul>
                 </nav>
-                <?php
-                echo debug_backtrace()[0]['file'];
