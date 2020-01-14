@@ -24,7 +24,7 @@ if ($PAGE_NAME != "") {
 
 // include の呼び出し元
 $backtrace = debug_backtrace()[0]['file'];
-$backtrace = explode('mypage', $backtrace);
+$backtrace = explode('mypage', $backtrace)[1];
 if ($backtrace == '/index.php') {
     $home = 'active';
 }
