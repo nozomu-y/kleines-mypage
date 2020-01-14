@@ -140,7 +140,7 @@ $result->close();
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav">
-                        <li class="nav-item dropdown no-arrow d-sm-none">
+                        <li class="nav-item dropdown no-arrow d-md-none">
                             <span class="text-primary">Kleines Mypage</span>
                         </li>
                     </ul>
