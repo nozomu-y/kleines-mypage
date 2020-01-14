@@ -32,14 +32,14 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             <table id="accountList" class="table table-bordered table-responsive">
                 <thead>
                     <tr>
-                        <th>学年</th>
-                        <th>パート</th>
-                        <th>氏名</th>
-                        <th>滞納額</th>
-                        <th>メールアドレス</th>
-                        <th>パスワード</th>
-                        <th>管理者権限</th>
-                        <th>削除</th>
+                        <th class="text-nowrap">学年</th>
+                        <th class="text-nowrap">パート</th>
+                        <th class="text-nowrap">氏名</th>
+                        <th class="text-nowrap">滞納額</th>
+                        <th class="text-nowrap">メールアドレス</th>
+                        <th class="text-nowrap">パスワード</th>
+                        <th class="text-nowrap">管理者権限</th>
+                        <th class="text-nowrap">削除</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,14 +54,14 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     while ($row = $result->fetch_assoc()) {
                         $account = new User($row);
                         echo '<tr>';
-                        echo '<td>' . $account->grade . '</td>';
-                        echo '<td>' . $account->part . '</td>';
-                        echo '<td><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                        echo '<td></td>';
-                        echo '<td>' . $account->email . '</td>';
-                        echo '<td>**********</td>';
-                        echo '<td>' . $account->admin . '</td>';
-                        echo '<td></td>';
+                        echo '<td class="text-nowrap">' . $account->grade . '</td>';
+                        echo '<td class="text-nowrap">' . $account->part . '</td>';
+                        echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
+                        echo '<td class="text-nowrap"></td>';
+                        echo '<td class="text-nowrap">' . $account->email . '</td>';
+                        echo '<td class="text-nowrap">**********</td>';
+                        echo '<td class="text-nowrap">' . $account->admin . '</td>';
+                        echo '<td class="text-nowrap"></td>';
                         echo '</tr>';
                     }
                     ?>
