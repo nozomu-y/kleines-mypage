@@ -29,7 +29,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <h1 class="h3 text-gray-800 mb-4">アカウント管理</h1>
     <div class="row">
         <div class="col-sm-12">
-            <table id="accountList" class="table table-bordered">
+            <table id="accountList" class="table table-bordered display">
                 <thead>
                     <tr>
                         <th class="text-nowrap">学年</th>
