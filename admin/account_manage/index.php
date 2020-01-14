@@ -54,27 +54,17 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     while ($row = $result->fetch_assoc()) {
                         $account = new User($row);
                         echo '<tr>';
-                        echo '<th>' . $account->grade . '</th>';
-                        echo '<th>' . $account->part . '</th>';
-                        echo '<th>' . $account->name . '</th>';
-                        echo '<th></th>';
-                        echo '<th>' . $account->name . '</th>';
-                        echo '<th>' . $account->name . '</th>';
-                        echo '<th>' . $account->name . '</th>';
-                        echo '<th>' . $account->name . '</th>';
+                        echo '<td>' . $account->grade . '</td>';
+                        echo '<td>' . $account->part . '</td>';
+                        echo '<td>' . $account->name . '</td>';
+                        echo '<td></td>';
+                        echo '<td>' . $account->name . '</td>';
+                        echo '<td>' . $account->name . '</td>';
+                        echo '<td>' . $account->name . '</td>';
+                        echo '<td>' . $account->name . '</td>';
                         echo '</tr>';
                     }
                     ?>
-                    <tr>
-                        <th>学年</th>
-                        <th>パート</th>
-                        <th>氏名</th>
-                        <th>滞納額</th>
-                        <th>メールアドレス</th>
-                        <th>パスワード</th>
-                        <th>管理者権限</th>
-                        <th>削除</th>
-                    </tr>
                 </tbody>
             </table>
         </div>
