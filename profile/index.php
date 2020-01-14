@@ -22,7 +22,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <div class="container">
-    <h2>プロフィール</h2>
+    <h2 class="h3 text-gray-600">プロフィール</h2>
     <?php echo $user->get_name(); ?>
 </div>
 
