@@ -33,6 +33,7 @@ $result->close();
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,500&display=swap&subset=japanese" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css">
+    <link rel="stylesheet" href="/member/mypage/Resources/css/style.css">
     <!-- JS -->
     <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js">
 </head>
