@@ -58,17 +58,17 @@ class Fee
         $this->status = $fee['status'];
 
         // require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-        // $query = "SELECT * FROM fee_list WHERE id = $this->id";
-        // $result = $mysqli->query($query);
-        // if (!$result) {
-        //     print('Query Failed : ' . $mysqli->error);
-        //     $mysqli->close();
-        //     exit();
-        // }
-        // $row = $result->fetch_assoc();
-        // $this->name = $row['name'];
-        // $this->deadline = $row['deadline'];
-        // $this->deadline = date('Y/m/d', strtotime($this->deadline));
-        // $this->admin = $row['admin'];
+        $query = "SELECT * FROM fee_list WHERE id = $this->id";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $row = $result->fetch_assoc();
+        $this->name = $row['name'];
+        $this->deadline = $row['deadline'];
+        $this->deadline = date('Y/m/d', strtotime($this->deadline));
+        $this->admin = $row['admin'];
     }
 }
