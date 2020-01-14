@@ -84,7 +84,9 @@ $script .= '$(document).ready(function() {
     $("#accountList").DataTable({
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Japanese.json"
-        }
+        },
+        order: [], // 初期表示時には並び替えをしない
+        scrollX: true,
     }); 
 });';
 $script .= '</script>';
