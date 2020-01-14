@@ -44,7 +44,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT * FROM members";
+                    $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
                     $result = $mysqli->query($query);
                     if (!$result) {
                         print('Query Failed : ' . $mysqli->error);
