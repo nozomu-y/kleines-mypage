@@ -57,16 +57,16 @@ class Fee
         $this->paid_cash = $user['paid_cash'];
         $this->status = $user['status'];
         require_once('/home/chorkleines/www/member/mypage/Core/config.php');
-        $mysqli = new mysqli($host, $username, $password, $dbname);
-        if ($mysqli->connect_error) {
-            error_log($mysqli->connect_error);
+        $mysqli_fee = new mysqli($host, $username, $password, $dbname);
+        if ($mysqli_fee->connect_error) {
+            error_log($mysqli_fee->connect_error);
             exit;
         }
         $query = "SELECT * FROM fee_list WHERE id = $this->id";
-        $result = $mysqli->query($query);
+        $result = $mysqli_fee->query($query);
         if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
+            print('Query Failed : ' . $mysqli_fee->error);
+            $mysqli_fee->close();
             exit();
         }
         $row = $result->fetch_assoc();
