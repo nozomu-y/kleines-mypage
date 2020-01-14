@@ -37,3 +37,38 @@ class User
         echo $this->grade . $this->part . ' ' . $this->name;
     }
 }
+
+class Fee
+{
+    public $id;
+    public $datetime;
+    public $price;
+    public $paid_cash;
+    public $status;
+    public $name;
+    public $deadline;
+    public $admin;
+
+    public function __construct($user)
+    {
+        $this->id = $user['id'];
+        $this->datetime = $user['datetime'];
+        $this->price = $user['price'];
+        $this->paid_cash = $user['paid_cash'];
+        $this->status = $user['status'];
+
+        require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
+        $query = "SELECT * FROM fee_list WHERE id = $this->id";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $row = $result->fetch_assoc();
+        $this->name = $row['name'];
+        $this->deadline = $row['deadline'];
+        $this->deadline = date('Y/m/d', strtotime($this->deadline));
+        $this->admin = $row['admin'];
+    }
+}
