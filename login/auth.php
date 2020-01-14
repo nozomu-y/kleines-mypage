@@ -26,14 +26,14 @@ if (isset($_POST['login'])) {
         // create log
         error_log("[" . date('Y/m/d H:i:s') . "] " . "A non-existing email was entered. (email : " . $email . ", IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
         $_SESSION['mypage_auth_error'] = "wrong-email";
-        header("Location: /member/mypage/login.php");
+        header("Location: /member/mypage/login/");
         exit();
     } else if ($row_cnt >= 2) {
         // if there is more than 2 accounts with the corresponding email
         // this code is not neccesary, just in case
         error_log("[" . date('Y/m/d H:i:s') . "] " . "The following email is registered to several accounts. (email : " . $email . ", IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
         $_SESSION['mypage_auth_error'] = "wrong-email";
-        header("Location: /member/mypage/login.php");
+        header("Location: /member/mypage/login/");
         exit();
     }
     $user = new User($result->fetch_assoc());
@@ -41,7 +41,7 @@ if (isset($_POST['login'])) {
     if ($user->login_failure >= 9) {
         // failed the authentication for more than 10 times
         $_SESSION['mypage_auth_error'] = "login-failure";
-        header("Location: /member/mypage/login.php");
+        header("Location: /member/mypage/login/");
         exit();
     } else {
         if (password_verify($password, $user->password)) {
@@ -74,7 +74,7 @@ if (isset($_POST['login'])) {
             // create log
             error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " failed login authentication. " . "(IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
             $_SESSION['mypage_auth_error'] = "wrong-password_" . strval($user->login_failure + 1);
-            header("Location: /member/mypage/login.php");
+            header("Location: /member/mypage/login/");
             exit();
         }
     }
