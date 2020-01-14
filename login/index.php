@@ -93,10 +93,10 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="./email_validation.php">新規登録はこちら</a>
+                                        <a class="small" href="/member/mypage/signup/">新規登録はこちら</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="./password_reset.php">パスワードを忘れた方はこちら</a>
+                                        <a class="small" href="/member/mypage/forgot_password/">パスワードを忘れた方はこちら</a>
                                     </div>
                                 </div>
                             </div>
