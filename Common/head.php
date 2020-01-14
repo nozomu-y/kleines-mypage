@@ -45,6 +45,7 @@ if ($backtrace == '/index.php') {
     <!-- CSS -->
     <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css">
     <link rel="stylesheet" href="/member/mypage/Resources/css/style.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <!-- JS -->
     <!-- <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js"> -->
 </head>
