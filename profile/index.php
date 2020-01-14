@@ -21,7 +21,7 @@ $PAGE_NAME = "プロフィール";
 include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
-<div class="container">
+<div class="container-fluid">
     <h1 class="h3 text-gray-800">プロフィール</h1>
     <?php echo $user->get_name(); ?>
 </div>
