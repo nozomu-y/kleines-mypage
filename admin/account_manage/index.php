@@ -80,12 +80,14 @@ $script = '<script>';
 //         fixedHeader: true
 //     });
 // } );';
-$script .= 'jQuery(function($){ 
-    $.extend( $.fn.dataTable.defaults, { 
-        language: {
-            url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
-        } 
-    }); 
+$script .= '
+    $(document).ready(function() {
+        $(\'#example\').dataTable( {
+            "language": {
+                "url": "dataTables.german.lang"
+            }
+        } );
+    } );
 
     $("#accountList").DataTable({
         // responsive: true,
