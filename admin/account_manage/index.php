@@ -56,7 +56,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         echo '<tr>';
                         echo '<td>' . $account->grade . '</td>';
                         echo '<td>' . $account->part . '</td>';
-                        echo '<td>' . $account->name . '</td>';
+                        echo '<td><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
                         echo '<td></td>';
                         echo '<td>' . $account->email . '</td>';
                         echo '<td>**********</td>';
@@ -77,9 +77,7 @@ $script = '<script>';
 $script .= '$(document).ready( function () {
     $(\'#accountList\').DataTable({
         responsive: true,
-        fixedHeader: true,
-        scrollY: 200,
-        scroller: true
+        fixedHeader: true
     });
 } );';
 $script .= '</script>';
