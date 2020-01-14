@@ -90,7 +90,7 @@ $script .= '$(document).ready(function() {
         // fixedHeader: true
          dom:"<\'row\'<\'col-sm-6\'l><\'col-sm-6 right\'f>>" +
             "<\'row\'<\'col-sm-12\'tr>>" +
-            "<\'row\'<\'col-sm-12\'p>>"
+            "<\'row\'<\'col-sm-12 text-center\'p>>"
     }); 
 });';
 $script .= '</script>';
