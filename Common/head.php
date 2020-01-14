@@ -17,6 +17,10 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 $result->close();
+
+if ($PAGE_NAME != "") {
+    $PAGE_NAME = " - " . $PAGE_NAME;
+}
 ?>
 
 <!doctype html>
