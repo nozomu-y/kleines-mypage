@@ -74,13 +74,26 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 
 <?php
 $script = '<script>';
-$script .= '$(document).ready( function () {
-    $(\'#accountList\').DataTable({
+// $script .= '$(document).ready( function () {
+//     $(\'#accountList\').DataTable({
+//         // responsive: true,
+//         fixedHeader: true
+//     });
+// } );';
+$script .= 'jQuery(function($){ 
+    $.extend( $.fn.dataTable.defaults, { 
+        language: {
+            url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
+        } 
+    }); 
+
+    $("#accountList").DataTable({
         // responsive: true,
         fixedHeader: true
-    });
-} );';
+    }); 
+});';
 $script .= '</script>';
+
 
 ?>
 
