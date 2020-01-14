@@ -181,4 +181,4 @@ if ($PAGE_NAME != "") {
                     </ul>
                 </nav>
                 <?php
-                var_dump(debug_backtrace());
+                echo debug_backtrace()[0]['file'];
