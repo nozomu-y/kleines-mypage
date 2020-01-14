@@ -22,7 +22,7 @@
 <!-- Custom scripts for all pages-->
 <script src="/member/mypage/Resources/js/sb-admin-2.min.js"></script>
 <script src="/member/mypage/Resources/js/Chart.min.js"></script>
-<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/fh-3.1.6/r-2.2.3/datatables.min.js"></script>
 <?php
 echo $script;
 ?>
