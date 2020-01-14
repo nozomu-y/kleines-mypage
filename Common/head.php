@@ -46,7 +46,7 @@ if ($backtrace == '/index.php') {
     <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css">
     <link rel="stylesheet" href="/member/mypage/Resources/css/style.css">
     <!-- JS -->
-    <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js">
+    <!-- <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js"> -->
 </head>
 
 <body id="page-top" class="sidebar-toggled">
