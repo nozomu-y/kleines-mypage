@@ -23,6 +23,7 @@ class User
         $this->password = $user['password'];
         $this->last_name = $user['last_name'];
         $this->first_name = $user['first_name'];
+        $this->kana = $user['kana'];
         $this->grade = $user['grade'];
         $this->part = $user['part'];
         $this->token = $user['token'];
