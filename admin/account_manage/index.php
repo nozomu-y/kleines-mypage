@@ -75,7 +75,9 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 <?php
 $script = '<script>';
 $script .= '$(document).ready( function () {
-    $(\'#accountList\').DataTable();
+    $(\'#accountList\').DataTable({
+        responsive: true
+    });
 } );';
 $script .= '</script>';
 
