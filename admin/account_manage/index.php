@@ -76,7 +76,12 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 $script = '<script>';
 $script .= '$(document).ready( function () {
     $(\'#accountList\').DataTable({
-        responsive: true
+        responsive: true,
+        fixedHeader: true,
+        ajax: \'/api/data\',
+        scrollY: 200,
+        deferRender: true,
+        scroller: true
     });
 } );';
 $script .= '</script>';
