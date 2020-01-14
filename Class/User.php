@@ -49,13 +49,13 @@ class Fee
     public $deadline;
     public $admin;
 
-    public function __construct($user)
+    public function __construct($fee)
     {
-        $this->id = $user['id'];
-        $this->datetime = $user['datetime'];
-        $this->price = $user['price'];
-        $this->paid_cash = $user['paid_cash'];
-        $this->status = $user['status'];
+        $this->id = $fee['id'];
+        $this->datetime = $fee['datetime'];
+        $this->price = $fee['price'];
+        $this->paid_cash = $fee['paid_cash'];
+        $this->status = $fee['status'];
 
         // require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
         // $query = "SELECT * FROM fee_list WHERE id = $this->id";
