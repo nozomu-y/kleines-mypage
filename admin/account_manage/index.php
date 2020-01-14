@@ -87,6 +87,7 @@ $script .= '$(document).ready(function() {
         },
         order: [], // 初期表示時には並び替えをしない
         scrollX: true,
+        fixedHeader: true
     }); 
 });';
 $script .= '</script>';
