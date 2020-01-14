@@ -80,13 +80,11 @@ $script = '<script>';
 //         fixedHeader: true
 //     });
 // } );';
-$script .= '
-    $(document).ready(function() {
-        $(\'#example\').dataTable( {
-            "language": {
-                "url": "dataTables.german.lang"
-            }
-        } );
+$script .= '$(document).ready(function() {
+    $(\'#example\').dataTable( {
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Japanese.json"
+        }
     } );
 
     $("#accountList").DataTable({
