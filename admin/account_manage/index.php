@@ -58,10 +58,10 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         echo '<td>' . $account->part . '</td>';
                         echo '<td>' . $account->name . '</td>';
                         echo '<td></td>';
-                        echo '<td>' . $account->name . '</td>';
-                        echo '<td>' . $account->name . '</td>';
-                        echo '<td>' . $account->name . '</td>';
-                        echo '<td>' . $account->name . '</td>';
+                        echo '<td>' . $account->email . '</td>';
+                        echo '<td>**********</td>';
+                        echo '<td>' . $account->admin . '</td>';
+                        echo '<td></td>';
                         echo '</tr>';
                     }
                     ?>
