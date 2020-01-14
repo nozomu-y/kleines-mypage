@@ -180,3 +180,5 @@ if ($PAGE_NAME != "") {
                         </li>
                     </ul>
                 </nav>
+                <?php
+                var_dump(debug_backtrace());
