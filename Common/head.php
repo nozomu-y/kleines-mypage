@@ -51,7 +51,7 @@ $result->close();
             <hr class="sidebar-divider my-0">
             <!-- nav item -->
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/member/mypage/">
                     <i class="fas fa-home fa-fw"></i>
                     <span>Home</span>
                 </a>
