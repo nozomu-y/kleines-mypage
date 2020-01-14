@@ -88,6 +88,9 @@ $script .= '$(document).ready(function() {
         order: [], // 初期表示時には並び替えをしない
         scrollX: true,
         // fixedHeader: true
+         dom:"<\'row\'<\'col-sm-6\'l><\'col-sm-6 right\'f>>" +
+            "<\'row\'<\'col-sm-12\'tr>>" +
+            "<\'row\'<\'col-sm-12\'p>>"
     }); 
 });';
 $script .= '</script>';
