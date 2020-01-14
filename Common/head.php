@@ -7,6 +7,7 @@ if (!isset($_SESSION['mypage_email'])) {
 }
 
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
+require_once('/home/chorkleines/www/member/mypage/Core/User.php');
 $email = $_SESSION['mypage_email'];
 $query = "SELECT * FROM members WHERE email='$email'";
 $result = $mysqli->query($query);
