@@ -1,6 +1,6 @@
 <?php
-require('/home/chorkleines/www/member/mypage/Core/config.php');
-require('/home/chorkleines/www/member/mypage/Class/User.php');
+require_once('/home/chorkleines/www/member/mypage/Core/config.php');
+require_once('/home/chorkleines/www/member/mypage/Class/User.php');
 
 $mysqli = new mysqli($host, $username, $password, $dbname);
 if ($mysqli->connect_error) {
