@@ -46,7 +46,7 @@ if ($PAGE_NAME != "") {
     <div id="wrapper">
         <!-- sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/member/mypage/">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-music"></i>
                 </div>
