@@ -96,7 +96,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </tbody>
             </table>
             <span class="dropdown">
-                <a class="btn btn-primary dropdown-toggle mb-2" href="" id="dropdownMenu-admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="btn btn-primary dropdown-toggle mb-4" href="" id="dropdownMenu-admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     管理者権限を付与
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu-admin">
@@ -107,7 +107,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <button class="dropdown-item" type="submit" name="admin-give-5">合宿会計システム</button>
                 </div>
             </span>
-            <button type="submit" class="btn btn-secondary mb-2" name="admin-take">管理者権限を剥奪</button>
+            <button type="submit" class="btn btn-secondary mb-4" name="admin-take">管理者権限を剥奪</button>
         </div>
     </div>
 </div>
