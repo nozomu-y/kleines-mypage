@@ -63,7 +63,7 @@ class User
     public function get_admin()
     {
         if ($this->admin == 1) {
-            return "全アクセス";
+            return "マスター権限";
         } else if ($this->admin == 2) {
             return "アカウント管理";
         } else if ($this->admin == 3) {
