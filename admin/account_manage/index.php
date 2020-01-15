@@ -56,7 +56,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         $account = new User($row);
                         echo '<tr>';
                         echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                        echo '<td class="text-nowrap">' . $account->part . '</td>';
+                        echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                         echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
                         echo '<td class="text-nowrap"></td>';
                         echo '<td class="text-nowrap">' . $account->email . '</td>';
