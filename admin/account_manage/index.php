@@ -122,9 +122,10 @@ $script .= '$(document).ready(function() {
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
         columnDefs: [
-            { "orderable": false, "targets": 5 },
-            { "orderable": false, "targets": 7 },
-            { "orderable": true, "orderDataType": "part", "targets":1 }
+            { "orderable": false, "targets": 0 },
+            { "orderable": false, "targets": 6 },
+            { "orderable": false, "targets": 8 },
+            { "orderable": true, "orderDataType": "part", "targets": 2 }
         ],
         deferRender : false,
         autowidth: false,
