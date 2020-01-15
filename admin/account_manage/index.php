@@ -67,7 +67,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                         echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
                         if ($user->admin == 1) {
-                            $query = "SELECT * FROM fee_record_$id_u WHERE datetime IS NULL";
+                            $query = "SELECT * FROM fee_record_$account->id WHERE datetime IS NULL";
                             $result_2 = $mysqli->query($query);
                             if (!$result_2) {
                                 print('Query Failed : ' . $mysqli->error);
@@ -76,7 +76,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             }
                             $delinquent = 0;
                             while ($row_2 = $result_2->fetch_assoc()) {
-                                $fee = new Fee($row);
+                                $fee = new Fee($row_2);
                                 $delinquent += $fee->delinquent;
                             }
                             echo '<td class="text-nowrap">' . $delinquent . '</td>';
