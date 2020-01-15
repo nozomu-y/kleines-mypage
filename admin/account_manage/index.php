@@ -70,7 +70,26 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             </table>
         </div>
     </div>
-
+    <script>
+        // $.fn.dataTable.ext.order["part"] = function(settings, col) {
+        //     return this.api().column(col, {
+        //         order: "index"
+        //     }).nodes().map(function(td, i) {
+        //         if (!$(td).html()) return 0;
+        //         if ($(td).html() == "Soprano") {
+        //             return "b";
+        //         } else if ($(td).html() == "Alto") {
+        //             return "c";
+        //         } else if ($(td).html() == "Tenor") {
+        //             return "d";
+        //         } else if ($(td).html() == "Bass") {
+        //             return "e";
+        //         } else {
+        //             return "a";
+        //         }
+        //     });
+        // }
+    </script>
 </div>
 
 <?php
@@ -84,8 +103,10 @@ $script .= '$(document).ready(function() {
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
         columnDefs: [
             { "orderable": false, "targets": 5 },
-            { "orderable": false, "targets": 7 }
+            { "orderable": false, "targets": 7 },
+            { "orderable": true, "orderDataType": "part", "targets":1 }
         ],
+        deferRender : false,
         autowidth: false,
         scrollX: true,
         // fixedHeader: true
@@ -94,6 +115,24 @@ $script .= '$(document).ready(function() {
             "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
     }); 
 });';
+$script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
+            return this.api().column(col, {
+                order: "index"
+            }).nodes().map(function(td, i) {
+                if (!$(td).html()) return 0;
+                if ($(td).html() == "Soprano") {
+                    return "b";
+                } else if ($(td).html() == "Alto") {
+                    return "c";
+                } else if ($(td).html() == "Tenor") {
+                    return "d";
+                } else if ($(td).html() == "Bass") {
+                    return "e";
+                } else {
+                    return "a";
+                }
+            });
+        }';
 $script .= '</script>';
 
 
