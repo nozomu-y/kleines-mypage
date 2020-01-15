@@ -35,7 +35,20 @@ class User
 
     public function get_name()
     {
-        echo $this->grade . $this->part . ' ' . $this->name;
+        return $this->grade . $this->part . ' ' . $this->name;
+    }
+
+    public function get_part()
+    {
+        if ($this->part == 'S') {
+            return 'Soprano';
+        } else if ($this->part == 'A') {
+            return 'Alto';
+        } else if ($this->part == 'T') {
+            return 'Tenor';
+        } else if ($this->part == 'B') {
+            return 'Bass';
+        }
     }
 }
 
