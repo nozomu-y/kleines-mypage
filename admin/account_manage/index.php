@@ -77,7 +77,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             $delinquent = 0;
                             while ($row_2 = $result_2->fetch_assoc()) {
                                 $fee = new Fee($row_2);
-                                $delinquent += $fee->delinquent;
+                                $delinquent += $fee->price;
                             }
                             echo '<td class="text-nowrap">' . $delinquent . '</td>';
                         }
