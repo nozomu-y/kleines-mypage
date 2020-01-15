@@ -28,7 +28,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">アカウント管理</h1>
     <div class="row">
-        <div class=" col-9 col-sm-12">
+        <div class=" col-xl-9 col-sm-12">
             <form action="/member/mypage/admin/account_manage/change_admin.php" method="POST" id="form">
                 <table id="accountList" class="table table-bordered table-striped mb-4" style="width: 100%;">
                     <thead>
@@ -109,6 +109,12 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </span>
                 <button type="submit" class="btn btn-secondary mb-4" name="admin-take">管理者権限を剥奪</button>
             </form>
+        </div>
+        <div class="col-xl-3 col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">管理者一覧</div>
+                <div class="card-body"></div>
+            </div>
         </div>
     </div>
 </div>
