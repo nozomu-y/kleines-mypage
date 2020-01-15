@@ -116,6 +116,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 <div class="card-header">管理者一覧</div>
                 <div class="card-body"></div>
             </div>
+            <div class="card shadow mb-4">
+                <div class="card-header">ログ</div>
+                <div class="card-body">
+                </div>
+            </div>
         </div>
     </div>
 </div>
