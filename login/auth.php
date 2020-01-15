@@ -6,7 +6,7 @@ if (isset($_SESSION['mypage_email'])) {
     exit();
 }
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-require_once('/home/chorkleines/www/member/mypage/Core/post_redirect.php');
+// require_once('/home/chorkleines/www/member/mypage/Core/post_redirect.php');
 
 if (isset($_POST['login'])) {
     $email = $mysqli->real_escape_string($_POST['email']);
