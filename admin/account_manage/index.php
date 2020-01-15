@@ -108,7 +108,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </div>
                 </span>
                 <button type="submit" class="btn btn-secondary mb-4" name="admin-take">管理者権限を剥奪</button>
-                <a class="btn btn-primary mb-2" href="/member/admin/account_manage/add_user.php" role="button">アカウントの追加</a>
+                <a class="btn btn-primary mb-4" href="/member/admin/account_manage/add_user.php" role="button">アカウントの追加</a>
             </form>
         </div>
         <div class="col-xl-3 col-sm-12">
