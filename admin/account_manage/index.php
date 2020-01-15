@@ -51,6 +51,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         $mysqli->close();
                         exit();
                     }
+                    $row_cnt = $result->num_rows;
                     while ($row = $result->fetch_assoc()) {
                         $account = new User($row);
                         echo '<tr>';
@@ -74,12 +75,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 
 <?php
 $script = '<script>';
-// $script .= '$(document).ready( function () {
-//     $(\'#accountList\').DataTable({
-//         // responsive: true,
-//         fixedHeader: true
-//     });
-// } );';
 $script .= '$(document).ready(function() {
     $("#accountList").DataTable({
         "language": {
