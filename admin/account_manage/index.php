@@ -17,7 +17,7 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if ($user->admin != 1 && $user->admin != 2 && $user->adnin != 3) {
+if (!($user->admin == 1 || $user->admin == 2)) {
     header('Location: /member/mypage/');
     exit();
 }
@@ -35,10 +35,18 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <th class="text-nowrap">学年</th>
                         <th class="text-nowrap">パート</th>
                         <th class="text-nowrap">氏名</th>
-                        <th class="text-nowrap">滞納額</th>
+                        <?php
+                        if ($user->admin == 1) {
+                            echo '<th class="text-nowrap">滞納額</th>';
+                        }
+                        ?>
                         <th class="text-nowrap">メールアドレス</th>
                         <th class="text-nowrap">パスワード</th>
-                        <th class="text-nowrap">管理者権限</th>
+                        <?php
+                        if ($user->admin == 1) {
+                            echo '<th class="text-nowrap">管理者権限</th>';
+                        }
+                        ?>
                         <th class="text-nowrap">削除</th>
                     </tr>
                 </thead>
@@ -58,11 +66,27 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         echo '<td class="text-nowrap">' . $account->grade . '</td>';
                         echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                         echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                        echo '<td class="text-nowrap"></td>';
+                        if ($user->admin == 1) {
+                            $query = "SELECT * FROM fee_record_$id_u WHERE datetime IS NULL";
+                            $result_2 = $mysqli->query($query);
+                            if (!$result_2) {
+                                print('Query Failed : ' . $mysqli->error);
+                                $mysqli->close();
+                                exit();
+                            }
+                            $delinquent = 0;
+                            while ($row_2 = $result_2->fetch_assoc()) {
+                                $fee = new Fee($row);
+                                $delinquent += $fee->delinquent;
+                            }
+                            echo '<td class="text-nowrap">' . $delinquent . '</td>';
+                        }
                         echo '<td class="text-nowrap">' . $account->email . '</td>';
                         echo '<td class="text-nowrap">' . $account->get_password() . '</td>';
-                        echo '<td class="text-nowrap">' . $account->get_admin() . '</td>';
-                        echo '<td class="text-nowrap"></td>';
+                        if ($user->admin == 1) {
+                            echo '<td class="text-nowrap">' . $account->get_admin() . '</td>';
+                        }
+                        echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/account_manage/delete_user.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのアカウントを削除しますか？\nこれを実行すると会計記録も消えます！\');">削除</button></td>';
                         echo '</tr>';
                     }
                     ?>
