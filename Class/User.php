@@ -59,6 +59,21 @@ class User
             return '';
         }
     }
+
+    public function get_admin()
+    {
+        if ($this->admin == 1) {
+            return "全アクセス";
+        } else if ($this->admin == 2) {
+            return "アカウント管理";
+        } else if ($this->admin == 3) {
+            return "会計システム";
+        } else if ($this->admin == 5) {
+            return "合宿会計システム";
+        } else {
+            return '';
+        }
+    }
 }
 
 class Fee
