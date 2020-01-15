@@ -50,6 +50,15 @@ class User
             return 'Bass';
         }
     }
+
+    public function get_password()
+    {
+        if ($this->password != '') {
+            return '**********';
+        } else {
+            return '';
+        }
+    }
 }
 
 class Fee
