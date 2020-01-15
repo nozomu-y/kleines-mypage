@@ -41,21 +41,21 @@ if (isset($_POST['delete'])) {
     }
     $id = sprintf('%05d', $id);
     $id = strval($id);
-    $query = "DROP TABLE individual_accounting_$id_u";
+    $query = "DROP TABLE individual_accounting_$id";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
         $mysqli->close();
         exit();
     }
-    $query = "DROP TABLE fee_record_$id_u";
+    $query = "DROP TABLE fee_record_$id";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
         $mysqli->close();
         exit();
     }
-    $query = "DROP TABLE bulletin_board_$id_u";
+    $query = "DROP TABLE bulletin_board_$id";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
