@@ -81,7 +81,7 @@ $script .= '$(document).ready(function() {
             "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Japanese.json"
         },
         order: [], // 初期表示時には並び替えをしない
-        lengthMenu: [ 25, 50, 100, -1 ],
+        lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
         columnDefs: [
             { "orderable": false, "targets": 5 },
             { "orderable": false, "targets": 7 }
