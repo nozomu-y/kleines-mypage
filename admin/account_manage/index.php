@@ -29,9 +29,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <h1 class="h3 text-gray-800 mb-4">アカウント管理</h1>
     <div class="row">
         <div class="col-sm-12">
-            <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
+            <form action="/member/mypage/admin/account_manage/change_admin.php" method="POST" id="form"></form>
+            <table id="accountList" class="table table-bordered table-striped mb-4" style="width: 100%;">
                 <thead>
                     <tr>
+                        <th class="text-nowrap"></th>
                         <th class="text-nowrap">学年</th>
                         <th class="text-nowrap">パート</th>
                         <th class="text-nowrap">氏名</th>
@@ -63,6 +65,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     while ($row = $result->fetch_assoc()) {
                         $account = new User($row);
                         echo '<tr>';
+                        echo '<td><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="check[]" value="' . $account->id . '"></div></td>';
                         echo '<td class="text-nowrap">' . $account->grade . '</td>';
                         echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                         echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
@@ -92,28 +95,21 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     ?>
                 </tbody>
             </table>
+            <span class="dropdown">
+                <a class="btn btn-primary dropdown-toggle mb-2" href="" id="dropdownMenu-admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    管理者権限を付与
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu-admin">
+                    <button class="dropdown-item" type="submit" name="admin-give-1">全アクセス</button>
+                    <button class="dropdown-item" type="submit" name="admin-give-2">アカウント管理</button>
+                    <button class="dropdown-item" type="submit" name="admin-give-3">会計システム</button>
+                    <button class="dropdown-item" type="submit" name="admin-give-4">練習計画管理</button>
+                    <button class="dropdown-item" type="submit" name="admin-give-5">合宿会計システム</button>
+                </div>
+            </span>
+            <button type="submit" class="btn btn-secondary mb-2" name="admin-take">管理者権限を剥奪</button>
         </div>
     </div>
-    <script>
-        // $.fn.dataTable.ext.order["part"] = function(settings, col) {
-        //     return this.api().column(col, {
-        //         order: "index"
-        //     }).nodes().map(function(td, i) {
-        //         if (!$(td).html()) return 0;
-        //         if ($(td).html() == "Soprano") {
-        //             return "b";
-        //         } else if ($(td).html() == "Alto") {
-        //             return "c";
-        //         } else if ($(td).html() == "Tenor") {
-        //             return "d";
-        //         } else if ($(td).html() == "Bass") {
-        //             return "e";
-        //         } else {
-        //             return "a";
-        //         }
-        //     });
-        // }
-    </script>
 </div>
 
 <?php
