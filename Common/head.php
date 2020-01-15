@@ -27,6 +27,8 @@ $backtrace = debug_backtrace()[0]['file'];
 $backtrace = explode('mypage', $backtrace)[1];
 if ($backtrace == '/index.php') {
     $home = 'active';
+} else if ($backtrace == '/admin/account_manage/index.php') {
+    $account_manage = 'active';
 }
 ?>
 
@@ -100,7 +102,7 @@ if ($backtrace == '/index.php') {
                 echo '<hr class="sidebar-divider">';
                 echo '<div class="sidebar-heading">管理コンソール</div>';
                 if ($user->admin == 1 || $user->admin == 2 || $user->adnin == 3) {
-                    echo '<li class="nav-item"><a class="nav-link" href="/member/mypage/admin/account_manage/"><i class="fas fa-users-cog fa-fw"></i></i><span>アカウント管理</span></a></li>';
+                    echo '<li class="nav-item ' . $account_manage . '"><a class="nav-link" href="/member/mypage/admin/account_manage/"><i class="fas fa-users-cog fa-fw"></i></i><span>アカウント管理</span></a></li>';
                 } else {
                     echo '<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-users fa-fw"></i></i><span>アカウント一覧</span></a></li>';
                 }
