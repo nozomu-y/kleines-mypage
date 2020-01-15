@@ -61,7 +61,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         echo '<td class="text-nowrap"></td>';
                         echo '<td class="text-nowrap">' . $account->email . '</td>';
                         echo '<td class="text-nowrap">' . $account->get_password() . '</td>';
-                        echo '<td class="text-nowrap">' . $account->admin . '</td>';
+                        echo '<td class="text-nowrap">' . $account->get_admin() . '</td>';
                         echo '<td class="text-nowrap"></td>';
                         echo '</tr>';
                     }
