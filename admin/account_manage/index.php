@@ -28,7 +28,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">アカウント管理</h1>
     <div class="row">
-        <div class="col-sm-12">
+        <div class=" col-9 col-sm-12">
             <form action="/member/mypage/admin/account_manage/change_admin.php" method="POST" id="form">
                 <table id="accountList" class="table table-bordered table-striped mb-4" style="width: 100%;">
                     <thead>
@@ -100,10 +100,10 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         管理者権限を付与
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu-admin">
-                        <button class="dropdown-item" type="submit" name="admin-give-1">全アクセス</button>
+                        <button class="dropdown-item" type="submit" name="admin-give-1">マスター権限</button>
                         <button class="dropdown-item" type="submit" name="admin-give-2">アカウント管理</button>
                         <button class="dropdown-item" type="submit" name="admin-give-3">会計システム</button>
-                        <button class="dropdown-item" type="submit" name="admin-give-4">練習計画管理</button>
+                        <!-- <button class="dropdown-item" type="submit" name="admin-give-4">練習計画管理</button> -->
                         <button class="dropdown-item" type="submit" name="admin-give-5">合宿会計システム</button>
                     </div>
                 </span>
