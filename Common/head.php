@@ -100,7 +100,7 @@ if ($backtrace == '/index.php') {
             </li>
             <li class="nav-item <?php echo $accounting_individual; ?>">
                 <a class="nav-link" href="/member/mypage/accounting/individual/">
-                    <i class="fas fa-wallet fa-fw"></i>
+                    <i class="fas fa-piggy-bank fa-fw"></i>
                     <span>個別会計</span>
                 </a>
             </li>
