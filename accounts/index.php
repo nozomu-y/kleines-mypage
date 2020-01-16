@@ -250,7 +250,7 @@ $script .= 'var myPieChart = new Chart(ctx, {
                 display: false
             },
             scales: {
-                yAxes: [{
+                xAxes: [{
                     ticks: {
                         beginAtZero: true,
                     }
