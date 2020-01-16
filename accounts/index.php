@@ -252,14 +252,22 @@ $script .= 'var myPieChart = new Chart(ctx, {
         type: \'doughnut\',
         data: {
             labels: [';
+$count = 0;
 foreach ($grade_list as $key => $value) {
-    $script .= '"' . $key . '", ';
+    if ($count != 0) {
+        $script .= ', ';
+    }
+    $script .= '"' . $key . '"';
 }
 $script .= '],
             datasets: [{
                 data: [';
+$count = 0;
 foreach ($grade_list as $key => $value) {
-    $script .= '"' . $value . '", ';
+    if ($count != 0) {
+        $script .= ', ';
+    }
+    $script .= '"' . $value . '"';
 }
 $script .= '],
                 // backgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
