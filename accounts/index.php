@@ -224,6 +224,12 @@ $script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-ser
                             legend: {
                                 display: false
                             },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        min: 0
+                                    }
+                                }]
                         }
                     });';
 $script .= '</script>';
