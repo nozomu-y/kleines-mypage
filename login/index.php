@@ -67,7 +67,7 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                     </div>
                                     <form class="user" method="POST" action="./auth.php">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user <?php echo $email_invalid ?>" id="email" name="email" required autocomplete="email" autofocus placeholder="メールアドレス">
+                                            <input type="email" class="form-control form-control-user <?php echo $email_invalid ?>" id="email" name="email" required autocomplete="email" placeholder="メールアドレス">
                                             <span class="invalid-feedback" role="alert">
                                                 <?php echo $email_message; ?>
                                             </span>
