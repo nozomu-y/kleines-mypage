@@ -76,7 +76,7 @@ if ($backtrace == '/index.php') {
                     <span>Home</span>
                 </a>
             </li>
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider my-0">
             <li class="nav-item <?php echo $accounts; ?>">
                 <a class="nav-link" href="/member/mypage/accounts/">
                     <i class="fas fa-users fa-fw"></i>
