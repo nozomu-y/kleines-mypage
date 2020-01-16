@@ -31,6 +31,8 @@ if ($backtrace == '/index.php') {
     $account_manage = 'active';
 } else if ($backtrace == '/accounts/index.php') {
     $accounts = 'active';
+} else if ($backtrace == '/accounting/collection/') {
+    $accounting_collection = 'active';
 }
 ?>
 
@@ -89,7 +91,7 @@ if ($backtrace == '/index.php') {
                 会計システム
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link <?php echo $accounting_collection; ?>" href="/member/mypage/accounting/collection/">
                     <i class="fas fa-yen-sign fa-fw"></i>
                     <span>集金記録</span>
                 </a>
