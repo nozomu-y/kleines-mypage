@@ -120,8 +120,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         </div>
                     </span>
                     <button type="submit" class="btn btn-secondary mb-4" name="admin-take">管理者権限を剥奪</button>
-                    ';
-                echo '</form>';
+                    </form>';
             }
             ?>
             <a class="btn btn-primary mb-4" href="/member/mypage/admin/account_manage/add_user/" role="button">アカウントの追加</a>
