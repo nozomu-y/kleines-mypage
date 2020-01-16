@@ -21,45 +21,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <div class="container-fluid">
-    <!-- <h1 class="h3 text-gray-800 mb-4">アカウント一覧</h1> -->
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card shadow mb-4">
-                <div class="card-header">パート比率</div>
-                <div class="card-body">
-                    <div class="chart-pie pt-4">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <canvas id="partChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card shadow mb-4">
-                <div class="card-header">学年比率</div>
-                <div class="card-body">
-                    <div class="chart-pie pt-4">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <canvas id="gradeChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1 class="h3 text-gray-800 mb-4">集金記録</h1>
     <div class="row">
         <div class="col-sm-12">
             <div class="mb-4">
@@ -121,24 +83,6 @@ $script .= '$(document).ready(function() {
             "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
     }); 
 });';
-// $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
-//             return this.api().column(col, {
-//                 order: "index"
-//             }).nodes().map(function(td, i) {
-//                 if (!$(td).html()) return 0;
-//                 if ($(td).html() == "Soprano") {
-//                     return "b";
-//                 } else if ($(td).html() == "Alto") {
-//                     return "c";
-//                 } else if ($(td).html() == "Tenor") {
-//                     return "d";
-//                 } else if ($(td).html() == "Bass") {
-//                     return "e";
-//                 } else {
-//                     return "a";
-//                 }
-//             });
-//         }';
 $script .= '</script>';
 
 
