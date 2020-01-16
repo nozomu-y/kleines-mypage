@@ -62,40 +62,37 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <!-- <div class="card shadow mb-4">
-                <div class="card-header">アカウント一覧</div>
-                <div class="card-body"> -->
-            <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th class="text-nowrap">学年</th>
-                        <th class="text-nowrap">パート</th>
-                        <th class="text-nowrap">氏名</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
-                    $result = $mysqli->query($query);
-                    if (!$result) {
-                        print('Query Failed : ' . $mysqli->error);
-                        $mysqli->close();
-                        exit();
-                    }
-                    $row_cnt = $result->num_rows;
-                    while ($row = $result->fetch_assoc()) {
-                        $account = new User($row);
-                        echo '<tr>';
-                        echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                        echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                        echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                        echo '</tr>';
-                    }
-                    ?>
-                </tbody>
-            </table>
-            <!-- </div>
-            </div> -->
+            <div class="mb-4">
+                <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="text-nowrap">学年</th>
+                            <th class="text-nowrap">パート</th>
+                            <th class="text-nowrap">氏名</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
+                        $result = $mysqli->query($query);
+                        if (!$result) {
+                            print('Query Failed : ' . $mysqli->error);
+                            $mysqli->close();
+                            exit();
+                        }
+                        $row_cnt = $result->num_rows;
+                        while ($row = $result->fetch_assoc()) {
+                            $account = new User($row);
+                            echo '<tr>';
+                            echo '<td class="text-nowrap">' . $account->grade . '</td>';
+                            echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
+                            echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
+                            echo '</tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-xl-3 col-sm-12">
         </div>
