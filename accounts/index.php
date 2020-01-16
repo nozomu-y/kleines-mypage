@@ -246,10 +246,10 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 $script .= '<script>';
-$script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-serif\';Chart.defaults.global.defaultFontColor = \'#858796\';';
+$script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", "sans-serif";Chart.defaults.global.defaultFontColor = "#858796";';
 $script .= 'var ctx = document.getElementById("gradeChart");';
 $script .= 'var myPieChart = new Chart(ctx, {
-        type: \'horizontalBar\',
+        type: "horizontalBar",
         data: {
             labels: [';
 $count = 0;
@@ -296,14 +296,23 @@ $script .= '],
         options: {
             maintainAspectRatio: false,
             tooltips: {
+                titleMarginBottom: 10,
+                titleFontColor: "#6e707e",
+                titleFontSize: 14,
                 backgroundColor: "rgb(255,255,255)",
                 bodyFontColor: "#858796",
-                borderColor: \'#dddfeb\',
+                borderColor: "#dddfeb",
                 borderWidth: 1,
                 xPadding: 15,
                 yPadding: 15,
                 displayColors: false,
                 caretPadding: 10,
+                callbacks: {
+                    label: function (tooltipItem, data){
+                        return data.datasets[0].data[tooltipItem.index]
+                        + "人";
+                    }
+                }
             },
             legend: {
                 display: false
