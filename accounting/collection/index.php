@@ -75,7 +75,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM fee_record$user->id ORDER BY id ASC";
+                        $query = "SELECT * FROM fee_record_$user->id ORDER BY id ASC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);
