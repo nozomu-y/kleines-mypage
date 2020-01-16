@@ -33,7 +33,7 @@ if ($backtrace == '/index.php') {
     $accounts = 'active';
 } else if ($backtrace == '/accounting/collection/index.php') {
     $accounting_collection = 'active';
-} else if ($backtrace == '/member/mypage/accounting/individual/index.php') {
+} else if ($backtrace == '/accounting/individual/index.php') {
     $accounting_individual = 'active';
 }
 ?>
