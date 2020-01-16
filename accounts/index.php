@@ -76,15 +76,15 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <span class="mr-2">
                             <i class="fas fa-circle text-warning"></i> Soprano <?php echo $sop_num; ?>人
                         </span>
-                        <br>
+                        <!-- <br> -->
                         <span class="mr-2">
                             <i class="fas fa-circle text-danger"></i> Alto <?php echo $alt_num; ?>人
                         </span>
-                        <br>
+                        <!-- <br> -->
                         <span class="mr-2">
                             <i class="fas fa-circle text-info"></i> Tenor <?php echo $ten_num; ?>人
                         </span>
-                        <br>
+                        <!-- <br> -->
                         <span class="mr-2">
                             <i class="fas fa-circle text-success"></i> Bass <?php echo $bas_num; ?>人
                         </span>
