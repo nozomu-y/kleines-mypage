@@ -81,19 +81,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                             echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
                             if ($user->admin == 1) {
-                                $query = "SELECT * FROM fee_record_$account->id WHERE datetime IS NULL";
-                                $result_2 = $mysqli->query($query);
-                                if (!$result_2) {
-                                    print('Query Failed : ' . $mysqli->error);
-                                    $mysqli->close();
-                                    exit();
-                                }
-                                $delinquent = 0;
-                                while ($row_2 = $result_2->fetch_assoc()) {
-                                    $fee = new Fee($row_2);
-                                    $delinquent += $fee->price;
-                                }
-                                echo '<td class="text-nowrap text-right">￥' . number_format($delinquent) . '</td>';
+                                echo '<td class="text-nowrap text-right">' . $account->get_delinquent() . '</td>';
                             }
                             echo '<td class="text-nowrap">' . $account->email . '</td>';
                             echo '<td class="text-nowrap">' . $account->get_password() . '</td>';
