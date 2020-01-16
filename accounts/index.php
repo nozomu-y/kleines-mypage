@@ -19,7 +19,7 @@ $user = new User($result->fetch_assoc());
 
 include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
-
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.1/css/buttons.dataTables.min.css">
 <div class="container-fluid">
     <!-- <h1 class="h3 text-gray-800 mb-4">アカウント一覧</h1> -->
     <div class="row">
@@ -100,9 +100,10 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 </div>
 
 <?php
-$script .= '<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.9/xlsx.core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/js/tableexport.min.js"></script>';
+$script .= '<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.flash.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.print.min.js"></script>';
 $script .= '<script>';
 $script .= '$(document).ready(function() {
     $("#accountList").DataTable({
