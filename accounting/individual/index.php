@@ -55,7 +55,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <tfoot>
                         <tr>
                             <th colspan="2" style="text-align:right">総計</th>
-                            <th class="text-right"><?php $user->get_individual_accounting_total() ?></th>
+                            <th class="text-right"><?php echo $user->get_individual_accounting_total(); ?></th>
                         </tr>
                     </tfoot>
                 </table>
