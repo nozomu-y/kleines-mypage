@@ -95,19 +95,25 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         ?>
                     </tbody>
                 </table>
-                <span class="dropdown">
-                    <a class="btn btn-primary dropdown-toggle mb-4" href="" id="dropdownMenu-admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        管理者権限を付与
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu-admin">
-                        <button class="dropdown-item" type="submit" name="admin-give-1">マスター権限</button>
-                        <button class="dropdown-item" type="submit" name="admin-give-2">アカウント管理</button>
-                        <button class="dropdown-item" type="submit" name="admin-give-3">会計システム</button>
-                        <!-- <button class="dropdown-item" type="submit" name="admin-give-4">練習計画管理</button> -->
-                        <button class="dropdown-item" type="submit" name="admin-give-5">合宿会計システム</button>
-                    </div>
-                </span>
-                <button type="submit" class="btn btn-secondary mb-4" name="admin-take">管理者権限を剥奪</button>
+                <?php
+                if ($user->admin == 1) {
+                    echo '
+                    <span class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle mb-4" href="" id="dropdownMenu-admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            管理者権限を付与
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu-admin">
+                            <button class="dropdown-item" type="submit" name="admin-give-1">マスター権限</button>
+                            <button class="dropdown-item" type="submit" name="admin-give-2">アカウント管理</button>
+                            <button class="dropdown-item" type="submit" name="admin-give-3">会計システム</button>
+                            <!-- <button class="dropdown-item" type="submit" name="admin-give-4">練習計画管理</button> -->
+                            <button class="dropdown-item" type="submit" name="admin-give-5">合宿会計システム</button>
+                        </div>
+                    </span>
+                    <button type="submit" class="btn btn-secondary mb-4" name="admin-take">管理者権限を剥奪</button>
+                    ';
+                }
+                ?>
                 <a class="btn btn-primary mb-4" href="/member/mypage/admin/account_manage/add_user/" role="button">アカウントの追加</a>
             </form>
         </div>
