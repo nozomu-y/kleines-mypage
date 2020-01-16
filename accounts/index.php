@@ -100,7 +100,10 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 </div>
 
 <?php
-$script = '<script>';
+$script .= '<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.9/xlsx.core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.9/js/tableexport.min.js"></script>';
+$script .= '<script>';
 $script .= '$(document).ready(function() {
     $("#accountList").DataTable({
         "language": {
@@ -113,7 +116,7 @@ $script .= '$(document).ready(function() {
         autowidth: false,
         scrollX: true,
         // fixedHeader: true
-         dom:"Bfrtip",
+        dom: "Bfrtip",
         buttons: [
             "csv", "excel", "pdf", "print"
         ]
