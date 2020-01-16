@@ -63,24 +63,30 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <div class="row">
         <div class="col-sm-12">
             <div class="mb-4">
-                <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
+                <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th class="text-nowrap">学年</th>
-                            <th class="text-nowrap">パート</th>
-                            <th class="text-nowrap">氏名</th>
+                            <th class="text-nowrap">集金名</th>
+                            <th class="text-nowrap">金額</th>
+                            <th class="text-nowrap">期限</th>
+                            <th class="text-nowrap">提出状況</th>
+                            <th class="text-nowrap">提出日時</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
+                        $query = "SELECT * FROM fee_list ORDER BY id ASC";
                         $result = $mysqli->query($query);
                         if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
+                            print('クエリーが失敗しました。' . $mysqli->error);
                             $mysqli->close();
                             exit();
                         }
-                        $row_cnt = $result->num_rows;
+                        while ($row = $result->fetch_assoc()) {
+                            $fee = new Fee($row);
+                        }
+
+
                         while ($row = $result->fetch_assoc()) {
                             $account = new User($row);
                             echo '<tr>';
@@ -102,13 +108,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 <?php
 $script = '<script>';
 $script .= '$(document).ready(function() {
-    $("#accountList").DataTable({
+    $("#accountingList").DataTable({
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Japanese.json"
         },
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
-        columnDefs: [{ "orderable": true, "orderDataType": "part", "targets": 0 }],
+        // columnDefs: [{ "orderable": true, "orderDataType": "part", "targets": 0 }],
         deferRender : false,
         autowidth: false,
         scrollX: true,
@@ -118,212 +124,27 @@ $script .= '$(document).ready(function() {
             "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
     }); 
 });';
-$script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
-            return this.api().column(col, {
-                order: "index"
-            }).nodes().map(function(td, i) {
-                if (!$(td).html()) return 0;
-                if ($(td).html() == "Soprano") {
-                    return "b";
-                } else if ($(td).html() == "Alto") {
-                    return "c";
-                } else if ($(td).html() == "Tenor") {
-                    return "d";
-                } else if ($(td).html() == "Bass") {
-                    return "e";
-                } else {
-                    return "a";
-                }
-            });
-        }';
+// $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
+//             return this.api().column(col, {
+//                 order: "index"
+//             }).nodes().map(function(td, i) {
+//                 if (!$(td).html()) return 0;
+//                 if ($(td).html() == "Soprano") {
+//                     return "b";
+//                 } else if ($(td).html() == "Alto") {
+//                     return "c";
+//                 } else if ($(td).html() == "Tenor") {
+//                     return "d";
+//                 } else if ($(td).html() == "Bass") {
+//                     return "e";
+//                 } else {
+//                     return "a";
+//                 }
+//             });
+//         }';
 $script .= '</script>';
 
 
-$query = "SELECT * FROM members WHERE part='S'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$sop_num = $result->num_rows;
-$query = "SELECT * FROM members WHERE part='A'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$alt_num = $result->num_rows;
-$query = "SELECT * FROM members WHERE part='T'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$ten_num = $result->num_rows;
-$query = "SELECT * FROM members WHERE part='B'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$bas_num = $result->num_rows;
-
-$script .= '<script>';
-$script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", "sans-serif";Chart.defaults.global.defaultFontColor = "#858796";';
-$script .= 'var ctx = document.getElementById("partChart");';
-$script .= 'var myPieChart = new Chart(ctx, {
-        type: "horizontalBar",
-        data: {
-            labels: ["Soprano", "Alto", "Tenor", "Bass"],
-            datasets: [{
-                data: [' . $sop_num . ', ' . $alt_num . ', ' . $ten_num . ', ' . $bas_num . '],
-                backgroundColor: ["#f6c23e", "#e74a3b", "#36b9cc", "#1cc88a"],
-                hoverBackgroundColor: ["#f6c23e", "#e74a3b", "#36b9cc", "#1cc88a"],
-                hoverBorderColor: "rgba(234, 236, 244, 1)",
-            }],
-        },
-        options: {
-            maintainAspectRatio: false,
-            tooltips: {
-                titleMarginBottom: 10,
-                titleFontColor: "#6e707e",
-                titleFontSize: 14,
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                borderColor: "#dddfeb",
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                caretPadding: 10,
-                callbacks: {
-                    label: function (tooltipItem, data){
-                        return data.datasets[0].data[tooltipItem.index]
-                        + "人";
-                    }
-                }
-            },
-            legend: {
-                display: false
-            },
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                    }
-                }]
-            }
-        },
-    });';
-$script .= '</script>';
-
-$query = "SELECT grade FROM members GROUP BY grade";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('クエリーが失敗しました。' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$grade_list = [];
-while ($row = $result->fetch_assoc()) {
-    foreach ($row as $grade) {
-        $query = "SELECT * FROM members WHERE grade=$grade";
-        $result_1 = $mysqli->query($query);
-        if (!$result_1) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        // $grade_list = array_merge($grade_list, array($grade => $result_1->num_rows));
-        $grade_list[$grade] = $result_1->num_rows;
-    }
-}
-$script .= '<script>';
-$script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", "sans-serif";Chart.defaults.global.defaultFontColor = "#858796";';
-$script .= 'var ctx = document.getElementById("gradeChart");';
-$script .= 'var myPieChart = new Chart(ctx, {
-        type: "horizontalBar",
-        data: {
-            labels: [';
-$count = 0;
-foreach ($grade_list as $key => $value) {
-    if ($count != 0) {
-        $script .= ', ';
-    }
-    $script .= '"' . $key . '"';
-    $count++;
-}
-$script .= '],
-            datasets: [{
-                data: [';
-$count = 0;
-foreach ($grade_list as $key => $value) {
-    if ($count != 0) {
-        $script .= ', ';
-    }
-    $script .= '"' . $value . '"';
-    $count++;
-}
-$script .= '],backgroundColor: [';
-$count = 0;
-foreach ($grade_list as $key => $value) {
-    if ($count != 0) {
-        $script .= ', ';
-    }
-    $script .= '"#4e73df"';
-    $count++;
-}
-$script .= '],hoverBackgroundColor: [';
-$count = 0;
-foreach ($grade_list as $key => $value) {
-    if ($count != 0) {
-        $script .= ', ';
-    }
-    $script .= '"#4e73df"';
-    $count++;
-}
-$script .= '],
-                hoverBorderColor: "rgba(234, 236, 244, 1)",
-            }],
-        },
-        options: {
-            maintainAspectRatio: false,
-            tooltips: {
-                titleMarginBottom: 10,
-                titleFontColor: "#6e707e",
-                titleFontSize: 14,
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                borderColor: "#dddfeb",
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                caretPadding: 10,
-                callbacks: {
-                    label: function (tooltipItem, data){
-                        return data.datasets[0].data[tooltipItem.index]
-                        + "人";
-                    }
-                }
-            },
-            legend: {
-                display: false
-            },
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                    }
-                }]
-            }
-        },
-    });';
-$script .= '</script>';
 
 ?>
 
