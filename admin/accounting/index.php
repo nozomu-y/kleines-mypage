@@ -51,12 +51,14 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         $row_cnt = $result->num_rows;
                         while ($row = $result->fetch_assoc()) {
                             $fee_list = new Fee_List($row);
-                            echo '<tr>';
-                            echo '<td class="text-nowrap">' . $fee_list->name . '</td>';
-                            echo '<td class="text-nowrap">' . $fee_list->get_deadline() . '</td>';
-                            echo '<td class="text-nowrap">' . $fee_list->get_price() . '</td>';
-                            echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="btn btn-danger btn-sm" value="' . $fee_list->id . '" Onclick="return confirm(\'' . $fee_list->name . 'を削除しますか？\');">削除</button></td>';
-                            echo '</tr>';
+                            if ($fee_list->admin == 3) {
+                                echo '<tr>';
+                                echo '<td class="text-nowrap">' . $fee_list->name . '</td>';
+                                echo '<td class="text-nowrap">' . $fee_list->get_deadline() . '</td>';
+                                echo '<td class="text-nowrap">' . $fee_list->get_price() . '</td>';
+                                echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="btn btn-danger btn-sm" value="' . $fee_list->id . '" Onclick="return confirm(\'' . $fee_list->name . 'を削除しますか？\');">削除</button></td>';
+                                echo '</tr>';
+                            }
                         }
                         ?>
                     </tbody>
