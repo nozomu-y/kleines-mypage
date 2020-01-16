@@ -73,20 +73,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <canvas id="partChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
                     </div>
                     <div class="mt-4 text-center small">
+                        <span class="mr-2"><i class="fas fa-circle text-warning"></i> Soprano</span>
+                        <span class="mr-2"><i class="fas fa-circle text-danger"></i> Alto</span>
+                        <span class="mr-2"><i class="fas fa-circle text-info"></i> Tenor</span>
                         <span class="mr-2">
-                            <i class="fas fa-circle text-warning"></i> Soprano <?php echo $sop_num; ?>人
-                        </span>
-                        <!-- <br> -->
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-danger"></i> Alto <?php echo $alt_num; ?>人
-                        </span>
-                        <!-- <br> -->
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-info"></i> Tenor <?php echo $ten_num; ?>人
-                        </span>
-                        <!-- <br> -->
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> Bass <?php echo $bas_num; ?>人
+                            <i class="fas fa-circle text-success"></i> Bass
                         </span>
                     </div>
                 </div>
