@@ -226,13 +226,13 @@ $script .= 'var myPieChart = new Chart(ctx, {
         data: {
             labels: [';
 foreach ($grade_list as $key => $value) {
-    $script .= '"' . $key . "', ";
+    $script .= '"' . $key . '", ';
 }
 $script .= '],
             datasets: [{
                 data: [';
 foreach ($grade_list as $key => $value) {
-    $script .= '"' . $value . "', ";
+    $script .= '"' . $value . '", ';
 }
 $script .= '],
                 // backgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
