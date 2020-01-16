@@ -50,11 +50,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             $fee = new Fee($row);
                             echo '<tr>';
                             echo '<td class="text-nowrap">' . $fee->name . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->get_price() . '</td>';
+                            echo '<td class="text-nowrap text-right">' . $fee->get_price() . '</td>';
                             echo '<td class="text-nowrap">' . $fee->get_deadline() . '</td>';
                             echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->get_paid_cash() . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->get_paid_individual() . '</td>';
+                            echo '<td class="text-nowrap text-right">' . $fee->get_paid_cash() . '</td>';
+                            echo '<td class="text-nowrap text-right">' . $fee->get_paid_individual() . '</td>';
                             echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
                             echo '</tr>';
                         }
