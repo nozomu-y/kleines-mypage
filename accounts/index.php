@@ -24,47 +24,74 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <!-- <h1 class="h3 text-gray-800 mb-4">アカウント一覧</h1> -->
     <div class="row">
         <div class="col-sm-4">
+            <?php
+            $query = "SELECT * FROM members WHERE part='S'";
+            $result = $mysqli->query($query);
+            if (!$result) {
+                print('Query Failed : ' . $mysqli->error);
+                $mysqli->close();
+                exit();
+            }
+            $sop_num = $result->num_rows;
+            $query = "SELECT * FROM members WHERE part='A'";
+            $result = $mysqli->query($query);
+            if (!$result) {
+                print('Query Failed : ' . $mysqli->error);
+                $mysqli->close();
+                exit();
+            }
+            $alt_num = $result->num_rows;
+            $query = "SELECT * FROM members WHERE part='T'";
+            $result = $mysqli->query($query);
+            if (!$result) {
+                print('Query Failed : ' . $mysqli->error);
+                $mysqli->close();
+                exit();
+            }
+            $ten_num = $result->num_rows;
+            $query = "SELECT * FROM members WHERE part='B'";
+            $result = $mysqli->query($query);
+            if (!$result) {
+                print('Query Failed : ' . $mysqli->error);
+                $mysqli->close();
+                exit();
+            }
+            $bas_num = $result->num_rows;
+            ?>
             <div class="card shadow mb-4">
                 <div class="card-header">パート比率</div>
                 <div class="card-body">
-                    <canvas id="partChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
+                    <div class="chart-pie pt-4">
+                        <div class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand">
+                                <div class=""></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink">
+                                <div class=""></div>
+                            </div>
+                        </div>
+                        <canvas id="partChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-warning"></i> Soprano <?php echo $sop_num; ?>人
+                        </span>
+                        <br>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-danger"></i> Alto <?php echo $alt_num; ?>人
+                        </span>
+                        <br>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-info"></i> Tenor <?php echo $ten_num; ?>人
+                        </span>
+                        <br>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Bass <?php echo $bas_num; ?>人
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-        <?php
-        $query = "SELECT * FROM members WHERE part='S'";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        $sop_num = $result->num_rows;
-        $query = "SELECT * FROM members WHERE part='A'";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        $alt_num = $result->num_rows;
-        $query = "SELECT * FROM members WHERE part='T'";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        $ten_num = $result->num_rows;
-        $query = "SELECT * FROM members WHERE part='B'";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        $bas_num = $result->num_rows;
-        ?>
         <div class="col-sm-12">
             <div class="card shadow mb-4">
                 <div class="card-header">アカウント一覧</div>
