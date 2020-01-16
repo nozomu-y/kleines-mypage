@@ -107,8 +107,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             </table>
             <?php
             if ($user->admin == 1) {
-                echo '
-                    <span class="dropdown">
+                echo '<span class="dropdown">
                         <a class="btn btn-primary dropdown-toggle mb-4" href="" id="dropdownMenu-admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             管理者権限を付与
                         </a>
@@ -122,10 +121,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </span>
                     <button type="submit" class="btn btn-secondary mb-4" name="admin-take">管理者権限を剥奪</button>
                     ';
-            }
-            ?>
-            <?php
-            if ($user->admin == 1) {
                 echo '</form>';
             }
             ?>
@@ -161,8 +156,7 @@ if ($user->admin == 1) {
             { "orderable": false, "targets": 8 },
             { "orderable": true, "orderDataType": "part", "targets": 2 }';
 } else {
-    $script .= '
-            { "orderable": false, "targets": 4 },
+    $script .= '{ "orderable": false, "targets": 4 },
             { "orderable": false, "targets": 6 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';
 }
