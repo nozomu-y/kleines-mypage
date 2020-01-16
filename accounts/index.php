@@ -344,6 +344,13 @@ $script .= '],
             legend: {
                 display: false
             },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    }
+                }]
+            }
         },
     });';
 $script .= '</script>';
