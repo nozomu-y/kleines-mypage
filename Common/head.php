@@ -120,8 +120,8 @@ if ($backtrace == '/index.php') {
                     echo '<li class="nav-item ' . $account_manage . '"><a class="nav-link" href="/member/mypage/admin/account_manage/"><i class="fas fa-users-cog fa-fw"></i></i><span>アカウント管理</span></a></li>';
                 }
                 if ($user->admin == 1 || $user->admin == 3) {
-                    echo '<li class="nav-item">
-                    <a class="nav-link collapsed ' . $admin_accounting . '" href="#" data-toggle="collapse" data-target="#collapseAccounting" aria-expanded="true" aria-controls="collapseAccounting">
+                    echo '<li class="nav-item ' . $admin_accounting . '">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccounting" aria-expanded="true" aria-controls="collapseAccounting">
                     <i class="fas fa-fw fa-coins"></i>
                     <span>会計システム</span>
                     </a>';
