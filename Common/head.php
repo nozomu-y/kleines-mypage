@@ -35,6 +35,8 @@ if ($backtrace == '/index.php') {
     $accounting_collection = 'active';
 } else if ($backtrace == '/accounting/individual/index.php') {
     $accounting_individual = 'active';
+} else if ($backtrace == '/admin/accounting/index.php') {
+    $admin_accounting = 'active';
 }
 ?>
 
@@ -119,13 +121,13 @@ if ($backtrace == '/index.php') {
                 }
                 if ($user->admin == 1 || $user->admin == 3) {
                     echo '<li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccounting" aria-expanded="true" aria-controls="collapseAccounting">
+                    <a class="nav-link collapsed ' . $admin_accounting . '" href="#" data-toggle="collapse" data-target="#collapseAccounting" aria-expanded="true" aria-controls="collapseAccounting">
                     <i class="fas fa-fw fa-coins"></i>
                     <span>会計システム</span>
                     </a>';
                     echo '<div id="collapseAccounting" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">集金記録</a>
+                    <a class="collapse-item" href="/member/mypage/admin/accounting/">集金記録</a>
                     <a class="collapse-item" href="#">個別会計</a>
                     </div>
                     </div>
