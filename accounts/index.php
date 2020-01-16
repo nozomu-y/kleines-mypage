@@ -100,11 +100,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 </div>
 
 <?php
-$script .= '<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.flash.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.html5.min.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.4.1/js/buttons.print.min.js"></script>';
-$script .= '<script>';
+$script = '<script>';
 $script .= '$(document).ready(function() {
     $("#accountList").DataTable({
         "language": {
@@ -117,10 +113,9 @@ $script .= '$(document).ready(function() {
         autowidth: false,
         scrollX: true,
         // fixedHeader: true
-        dom: "Bfrtip",
-        buttons: [
-            "csv", "excel", "pdf", "print"
-        ]
+        dom:"<\'row\'<\'col-sm-6\'l><\'col-sm-6 right\'f>>" +
+            "<\'row\'<\'col-sm-12 mb-2\'tr>>" +
+            "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
     }); 
 });';
 $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
