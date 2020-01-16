@@ -29,7 +29,7 @@ if ($backtrace == '/index.php') {
     $home = 'active';
 } else if ($backtrace == '/admin/account_manage/index.php') {
     $account_manage = 'active';
-} else if ($backtrace == '/admin/accounts/index.php') {
+} else if ($backtrace == '/accounts/index.php') {
     $accounts = 'active';
 }
 ?>
