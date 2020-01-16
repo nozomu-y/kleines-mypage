@@ -144,12 +144,20 @@ class Fee
 
     public function get_paid_cash()
     {
-        return "￥" . $this->paid_cash;
+        if ($this->datetime == NULL) {
+            return '';
+        } else {
+            return "￥" . $this->paid_cash;
+        }
     }
 
     public function get_paid_individual()
     {
-        return "￥" . $this->paid_individual;
+        if ($this->datetime == NULL) {
+            return '';
+        } else {
+            return "￥" . $this->paid_individual;
+        }
     }
 }
 
