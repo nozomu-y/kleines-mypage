@@ -49,9 +49,10 @@ if ($backtrace == '/index.php') {
     <link rel="stylesheet" href="/member/mypage/Resources/css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/r-2.2.3/datatables.min.css" />
 
-
-
     <!-- JS -->
+    <script>
+        history.replaceState('', '', 'aiueo');
+    </script>
     <!-- <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js"> -->
 </head>
 
