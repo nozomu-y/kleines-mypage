@@ -15,6 +15,8 @@ class User
     public $login_failure;
     public $admin;
     public $name;
+    public $delinquent;
+    public $individual_accounting_total;
 
     public function __construct($user)
     {
@@ -31,6 +33,36 @@ class User
         $this->login_failure = $user['login_failure'];
         $this->admin = (int) $user['admin'];
         $this->name = $user['last_name'] . $user['first_name'];
+
+        require('/home/chorkleines/www/member/mypage/Core/config.php');
+
+        $mysqli = new mysqli($host, $username, $password, $dbname);
+        if ($mysqli->connect_error) {
+            error_log($mysqli->connect_error);
+            exit;
+        }
+        $query = "SELECT * FROM fee_record_$account->id WHERE datetime IS NULL";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $this->delinquent = 0;
+        while ($row = $result->fetch_assoc()) {
+            $this->delinquent += $row['price'];
+        }
+        $query = "SELECT * FROM individual_accounting_$account->id";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $this->individual_accounting_total = 0;
+        while ($row = $result->fetch_assoc()) {
+            $this->individual_accounting_total += $row['price'];
+        }
     }
 
     public function get_name()
@@ -73,6 +105,15 @@ class User
         } else {
             return '';
         }
+    }
+
+    public function get_delinquent()
+    {
+        return '￥' . number_format($this->delinquent);
+    }
+    public function get_individual_accounting_total()
+    {
+        return '￥' . number_format($this->individual_accounting_total);
     }
 }
 
