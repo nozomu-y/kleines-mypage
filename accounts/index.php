@@ -176,16 +176,16 @@ if (!$result) {
 $bas_num = $result->num_rows;
 
 $script .= '<script>';
-$script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-serif\';Chart.defaults.global.defaultFontColor = \'#858796\';';
+$script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", "sans-serif";Chart.defaults.global.defaultFontColor = "#858796";';
 $script .= 'var ctx = document.getElementById("partChart");';
 $script .= 'var myPieChart = new Chart(ctx, {
-        type: \'horizontalBar\',
+        type: "horizontalBar",
         data: {
             labels: ["Soprano", "Alto", "Tenor", "Bass"],
             datasets: [{
                 data: [' . $sop_num . ', ' . $alt_num . ', ' . $ten_num . ', ' . $bas_num . '],
-                backgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
-                hoverBackgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
+                backgroundColor: ["#f6c23e", "#e74a3b", "#36b9cc", "#1cc88a"],
+                hoverBackgroundColor: ["#f6c23e", "#e74a3b", "#36b9cc", "#1cc88a"],
                 hoverBorderColor: "rgba(234, 236, 244, 1)",
             }],
         },
@@ -194,12 +194,20 @@ $script .= 'var myPieChart = new Chart(ctx, {
             tooltips: {
                 backgroundColor: "rgb(255,255,255)",
                 bodyFontColor: "#858796",
-                borderColor: \'#dddfeb\',
+                borderColor: "#dddfeb",
                 borderWidth: 1,
                 xPadding: 15,
                 yPadding: 15,
                 displayColors: false,
                 caretPadding: 10,
+                callbacks: {
+                    label: function (tooltipItem, data){
+                        return data.labels[tooltipItem.index]
+                        + ": "
+                        + data.datasets[0].data[tooltipItem.index]
+                        + "人";
+                    }
+                }
             },
             legend: {
                 display: false
