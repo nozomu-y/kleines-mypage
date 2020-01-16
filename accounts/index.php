@@ -205,8 +205,8 @@ $script .= 'var myPieChart = new Chart(ctx, {
                 caretPadding: 10,
                 callbacks: {
                     label: function (tooltipItem, data){
-                        // return data.labels[tooltipItem.index]
-                        // + ": "
+                        return data.labels[tooltipItem.index]
+                        + ": "
                         + data.datasets[0].data[tooltipItem.index]
                         + "人";
                     }
