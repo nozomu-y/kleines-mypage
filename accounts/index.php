@@ -258,6 +258,7 @@ foreach ($grade_list as $key => $value) {
         $script .= ', ';
     }
     $script .= '"' . $key . '"';
+    $count++;
 }
 $script .= '],
             datasets: [{
@@ -268,6 +269,7 @@ foreach ($grade_list as $key => $value) {
         $script .= ', ';
     }
     $script .= '"' . $value . '"';
+    $count++;
 }
 $script .= '],
                 // backgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
