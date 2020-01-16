@@ -95,7 +95,7 @@ class Fee
         $this->paid_cash = $fee['paid_cash'];
         $this->status = $fee['status'];
 
-        // require('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
+        require('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
         $query = "SELECT * FROM fee_list WHERE id = $this->id";
         $result = $mysqli->query($query);
