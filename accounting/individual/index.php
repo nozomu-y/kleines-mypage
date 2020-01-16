@@ -74,9 +74,33 @@ $script .= '$(document).ready(function() {
         autowidth: false,
         scrollX: true,
         // fixedHeader: true
-         dom:"<\'row\'<\'col-sm-6\'l><\'col-sm-6 right\'f>>" +
+        dom:"<\'row\'<\'col-sm-6\'l><\'col-sm-6 right\'f>>" +
             "<\'row\'<\'col-sm-12 mb-2\'tr>>" +
-            "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
+            "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>",
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === "string" ?
+                    i.replace(/[\￥,]/g, \'\')*1 :
+                    typeof i === "number" ?
+                        i : 0;
+            };
+ 
+            // Total over all pages
+            total = api
+                .column( 3 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+            // Update footer
+            $( api.column( 3 ).footer() ).html(
+                "￥"+total
+            );
+        }
     }); 
 });';
 $script .= '</script>';
