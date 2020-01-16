@@ -134,4 +134,35 @@ class Fee
     {
         return date('Y/m/d H:i:s', strtotime($this->datetime));
     }
+
+    public function get_price()
+    {
+        return "￥" . $this->price;
+    }
+}
+
+class Individual_Accounting
+{
+    public $id;
+    public $date;
+    public $name;
+    public $price;
+
+    public function __construct($individual_accounting)
+    {
+        $this->id = $individual_accounting['id'];
+        $this->date = $individual_accounting['date'];
+        $this->name = $individual_accounting['name'];
+        $this->price = $individual_accounting['price'];
+    }
+
+    public function get_price()
+    {
+        return "￥" . $this->price;
+    }
+
+    public function get_date()
+    {
+        return date('Y/m/d', strtotime($this->date));
+    }
 }
