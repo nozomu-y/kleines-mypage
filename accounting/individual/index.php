@@ -55,7 +55,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <tfoot>
                         <tr>
                             <th colspan="2" style="text-align:right">総計</th>
-                            <th></th>
+                            <th class="text-right"></th>
                         </tr>
                     </tfoot>
                 </table>
