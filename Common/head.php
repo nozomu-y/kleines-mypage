@@ -33,6 +33,8 @@ if ($backtrace == '/index.php') {
     $accounts = 'active';
 } else if ($backtrace == '/accounting/collection/index.php') {
     $accounting_collection = 'active';
+} else if ($backtrace == '/member/mypage/accounting/individual/index.php') {
+    $accounting_individual = 'active';
 }
 ?>
 
@@ -96,8 +98,8 @@ if ($backtrace == '/index.php') {
                     <span>集金記録</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+            <li class="nav-item <?php echo $accounting_individual; ?>">
+                <a class="nav-link" href="/member/mypage/accounting/individual/">
                     <i class="fas fa-wallet fa-fw"></i>
                     <span>個別会計</span>
                 </a>

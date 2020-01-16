@@ -21,23 +21,21 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <div class="container-fluid">
-    <h1 class="h3 text-gray-800 mb-4">集金記録</h1>
+    <h1 class="h3 text-gray-800 mb-4">個別会計</h1>
     <div class="row">
         <div class="col-sm-12">
             <div class="mb-4">
                 <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th class="text-nowrap">集金名</th>
+                            <th class="text-nowrap">日付</th>
+                            <th class="text-nowrap">項目</th>
                             <th class="text-nowrap">金額</th>
-                            <th class="text-nowrap">期限</th>
-                            <th class="text-nowrap">提出状況</th>
-                            <th class="text-nowrap">提出日時</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM fee_record_$user->id ORDER BY `deadline` DESC";
+                        $query = "SELECT * FROM individual_accounting_$user->id ORDER BY `date` DESC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);
@@ -45,13 +43,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             exit();
                         }
                         while ($row = $result->fetch_assoc()) {
-                            $fee = new Fee($row);
+                            $individual_accounting = new Individual_Accounting($row);
                             echo '<tr>';
-                            echo '<td class="text-nowrap">' . $fee->name . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->get_price() . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->get_deadline() . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
+                            echo '<td class="text-nowrap">' . $individual_accounting->get_date() . '</td>';
+                            echo '<td class="text-nowrap">' . $individual_accounting->name . '</td>';
+                            echo '<td class="text-nowrap">' . $individual_accounting->get_price() . '</td>';
                             echo '</tr>';
                         }
                         ?>
@@ -73,7 +69,7 @@ $script .= '$(document).ready(function() {
         },
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 10, 20, -1 ],[10, 20, "全件"]],
-        columnDefs: [{"orderable": false, "targets": 0}],
+        columnDefs: [{"orderable": false, "targets": 1}],
         deferRender : false,
         autowidth: false,
         scrollX: true,
