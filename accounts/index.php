@@ -116,7 +116,8 @@ $script .= '$(document).ready(function() {
         // dom:"<\'row\'<\'col-sm-6\'l><\'col-sm-6 right\'f>>" +
         //     "<\'row\'<\'col-sm-12 mb-2\'tr>>" +
         //     "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
-         buttons: [ "excel", "pdf", "copy" ]
+         buttons: [ "excel", "pdf", "copy" ],
+         dom: "Blfrtip"
     });
 });';
 $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
