@@ -41,7 +41,7 @@ class User
             error_log($mysqli->connect_error);
             exit;
         }
-        $query = "SELECT * FROM fee_record_$account->id WHERE datetime IS NULL";
+        $query = "SELECT * FROM fee_record_$this->id WHERE datetime IS NULL";
         $result = $mysqli->query($query);
         if (!$result) {
             print('Query Failed : ' . $mysqli->error);
@@ -52,7 +52,7 @@ class User
         while ($row = $result->fetch_assoc()) {
             $this->delinquent += $row['price'];
         }
-        $query = "SELECT * FROM individual_accounting_$account->id";
+        $query = "SELECT * FROM individual_accounting_$this->id";
         $result = $mysqli->query($query);
         if (!$result) {
             print('Query Failed : ' . $mysqli->error);
