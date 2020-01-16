@@ -45,7 +45,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             <textarea class="form-control" rows="10" placeholder="Last-name,First-name,kana,Grade,email,Part" name="csv"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary" name="submit">アカウントを追加</button>
-                        <a class="btn btn-secondary" href="./" role="button">キャンセル</a>
+                        <a class="btn btn-secondary" href="/member/mypage/admin/account_manage/" role="button">キャンセル</a>
                     </form>
                 </div>
             </div>
