@@ -119,7 +119,7 @@ $script .= '$(document).ready(function() {
         buttons: [ "excel", "pdf" ]
     }); 
     table.buttons().container()
-        .appendTo( "#example_wrapper .col-md-6:eq(0)" );
+        .appendTo( "#accountList .col-md-6:eq(0)" );
 });';
 $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
             return this.api().column(col, {

@@ -54,7 +54,8 @@ if ($backtrace == '/index.php') {
     <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css">
     <link rel="stylesheet" href="/member/mypage/Resources/css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/r-2.2.3/datatables.min.css" />
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.bootstrap4.min.css" />
     <!-- JS -->
     <script>
         history.replaceState('', '', '');
