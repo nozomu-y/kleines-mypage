@@ -202,7 +202,7 @@ $script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-ser
                 data: {
                     labels: ["Soprano", "Alto", "Tenor", "Bass"],
                     datasets: [{
-                        data: [\' . $sop_num . \', \' . $alt_num . \', \' . $ten_num . \', \' . $bas_num . \'],
+                        data: [' . $sop_num . ', ' . $alt_num . ', ' . $ten_num . ', ' . $bas_num . '],
                             backgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
                                 hoverBackgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
                                     hoverBorderColor: "rgba(234, 236, 244, 1)",
