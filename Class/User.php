@@ -82,6 +82,7 @@ class Fee
     public $datetime;
     public $price;
     public $paid_cash;
+    public $paid_individual;
     public $status;
     public $name;
     public $deadline;
@@ -91,8 +92,9 @@ class Fee
     {
         $this->id = $fee['id'];
         $this->datetime = $fee['datetime'];
-        $this->price = $fee['price'];
-        $this->paid_cash = $fee['paid_cash'];
+        $this->price = (int) $fee['price'];
+        $this->paid_cash = (int) $fee['paid_cash'];
+        $this->paid_individual = $this->price - $this->paid_cash;
         $this->status = $fee['status'];
 
         require('/home/chorkleines/www/member/mypage/Core/config.php');
@@ -138,6 +140,16 @@ class Fee
     public function get_price()
     {
         return "￥" . $this->price;
+    }
+
+    public function get_paid_cash()
+    {
+        return "￥" . $this->paid_cash;
+    }
+
+    public function get_paid_individual()
+    {
+        return "￥" . $this->paid_individual;
     }
 }
 
