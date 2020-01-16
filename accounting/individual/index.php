@@ -59,7 +59,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="2" style="text-align:right">Total:</th>
+                            <th colspan="2" style="text-align:right">総計</th>
                             <th></th>
                         </tr>
                     </tfoot>
