@@ -192,6 +192,9 @@ $script .= 'var myPieChart = new Chart(ctx, {
         options: {
             maintainAspectRatio: false,
             tooltips: {
+                titleMarginBottom: 10,
+                titleFontColor: "#6e707e",
+                titleFontSize: 14,
                 backgroundColor: "rgb(255,255,255)",
                 bodyFontColor: "#858796",
                 borderColor: "#dddfeb",
@@ -202,15 +205,15 @@ $script .= 'var myPieChart = new Chart(ctx, {
                 caretPadding: 10,
                 callbacks: {
                     label: function (tooltipItem, data){
-                        return data.labels[tooltipItem.index]
-                        + ": "
+                        // return data.labels[tooltipItem.index]
+                        // + ": "
                         + data.datasets[0].data[tooltipItem.index]
                         + "人";
                     }
                 }
             },
             legend: {
-                display: true
+                display: false
             },
             scales: {
                 xAxes: [{
