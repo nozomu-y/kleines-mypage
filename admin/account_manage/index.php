@@ -156,8 +156,8 @@ if ($user->admin == 1) {
             { "orderable": true, "orderDataType": "part", "targets": 2 }';
 } else {
     $script .= '{ "orderable": false, "targets": 4 },
-            { "orderable": false, "targets": 6 },
-            //{ "orderable": true, "orderDataType": "part", "targets": 1 }';
+            { "orderable": false, "targets": 5 },
+            { "orderable": true, "orderDataType": "part", "targets": 1 }';
 }
 
 $script .= '],
