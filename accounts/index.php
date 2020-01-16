@@ -224,7 +224,6 @@ $script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-ser
                             legend: {
                                 display: false
                             },
-                            cutoutPercentage: 80,
                         }
                     });';
 $script .= '</script>';
