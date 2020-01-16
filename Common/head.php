@@ -29,6 +29,8 @@ if ($backtrace == '/index.php') {
     $home = 'active';
 } else if ($backtrace == '/admin/account_manage/index.php') {
     $account_manage = 'active';
+} else if ($backtrace == '/admin/accounts/index.php') {
+    $accounts = 'active';
 }
 ?>
 
@@ -75,7 +77,7 @@ if ($backtrace == '/index.php') {
                 </a>
             </li>
             <hr class="sidebar-divider">
-            <li class="nav-item">
+            <li class="nav-item <?php echo $account_manage; ?>">
                 <a class="nav-link" href="/member/mypage/accounts/">
                     <i class="fas fa-users fa-fw"></i>
                     <span>アカウント一覧</span>
