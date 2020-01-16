@@ -164,7 +164,7 @@ if (!$result) {
 }
 $bas_num = $result->num_rows;
 
-$script = '<script>';
+$script .= '<script>';
 $script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-serif\';Chart.defaults.global.defaultFontColor = \'#858796\';';
 $script .= 'var ctx = document.getElementById("partChart");';
 $script .= 'var myPieChart = new Chart(ctx, {
@@ -218,7 +218,7 @@ while ($row = $result->fetch_assoc()) {
         $grade_list = array_merge($grade_list, array($grade => $result_1->num_rows));
     }
 }
-$script = '<script>';
+$script .= '<script>';
 $script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-serif\';Chart.defaults.global.defaultFontColor = \'#858796\';';
 $script .= 'var ctx = document.getElementById("gradeChart");';
 $script .= 'var myPieChart = new Chart(ctx, {
