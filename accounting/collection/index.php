@@ -89,7 +89,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             echo '<td class="text-nowrap">' . $fee->price . '</td>';
                             echo '<td class="text-nowrap">' . $fee->get_deadline() . '</td>';
                             echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->datetime . '</td>';
+                            echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
                             echo '</tr>';
                         }
                         ?>

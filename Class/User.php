@@ -129,4 +129,9 @@ class Fee
             return "既納";
         }
     }
+
+    public function get_submission_time()
+    {
+        return date('Y/m/d H:i:s', strtotime($this->deadline));
+    }
 }
