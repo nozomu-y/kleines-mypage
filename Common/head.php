@@ -75,6 +75,13 @@ if ($backtrace == '/index.php') {
                 </a>
             </li>
             <hr class="sidebar-divider">
+            <li class="nav-item">
+                <a class="nav-link" href="/member/mypage/accounts/">
+                    <i class="fas fa-users fa-fw"></i>
+                    <span>アカウント一覧</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
             <!-- nav-item -->
             <div class="sidebar-heading">
                 会計システム
@@ -104,8 +111,6 @@ if ($backtrace == '/index.php') {
                 echo '<div class="sidebar-heading">管理コンソール</div>';
                 if ($user->admin == 1 || $user->admin == 2) {
                     echo '<li class="nav-item ' . $account_manage . '"><a class="nav-link" href="/member/mypage/admin/account_manage/"><i class="fas fa-users-cog fa-fw"></i></i><span>アカウント管理</span></a></li>';
-                } else {
-                    echo '<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-users fa-fw"></i></i><span>アカウント一覧</span></a></li>';
                 }
                 if ($user->admin == 1 || $user->admin == 3) {
                     echo '<li class="nav-item">
