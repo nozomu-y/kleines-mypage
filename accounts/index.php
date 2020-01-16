@@ -272,9 +272,17 @@ foreach ($grade_list as $key => $value) {
     $script .= '"' . $value . '"';
     $count++;
 }
+$script .= '],backgroundColor: [';
+$count = 0;
+foreach ($grade_list as $key => $value) {
+    if ($count != 0) {
+        $script .= ', ';
+    }
+    $script .= '"#4e73df"';
+    $count++;
+}
 $script .= '],
-                // backgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
-                // hoverBackgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
+                //hoverBackgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
                 hoverBorderColor: "rgba(234, 236, 244, 1)",
             }],
         },
