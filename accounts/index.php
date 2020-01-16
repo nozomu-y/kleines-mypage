@@ -19,7 +19,7 @@ $user = new User($result->fetch_assoc());
 
 include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.1/css/buttons.dataTables.min.css">
+
 <div class="container-fluid">
     <!-- <h1 class="h3 text-gray-800 mb-4">アカウント一覧</h1> -->
     <div class="row">
