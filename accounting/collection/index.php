@@ -37,7 +37,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM fee_record_$user->id ORDER BY `deadline` DESC";
+                        $query = "SELECT * FROM fee_record_$user->id ORDER BY id DESC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);
