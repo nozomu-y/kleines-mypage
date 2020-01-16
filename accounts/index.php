@@ -24,40 +24,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <!-- <h1 class="h3 text-gray-800 mb-4">アカウント一覧</h1> -->
     <div class="row">
         <div class="col-sm-4">
-            <?php
-            $query = "SELECT * FROM members WHERE part='S'";
-            $result = $mysqli->query($query);
-            if (!$result) {
-                print('Query Failed : ' . $mysqli->error);
-                $mysqli->close();
-                exit();
-            }
-            $sop_num = $result->num_rows;
-            $query = "SELECT * FROM members WHERE part='A'";
-            $result = $mysqli->query($query);
-            if (!$result) {
-                print('Query Failed : ' . $mysqli->error);
-                $mysqli->close();
-                exit();
-            }
-            $alt_num = $result->num_rows;
-            $query = "SELECT * FROM members WHERE part='T'";
-            $result = $mysqli->query($query);
-            if (!$result) {
-                print('Query Failed : ' . $mysqli->error);
-                $mysqli->close();
-                exit();
-            }
-            $ten_num = $result->num_rows;
-            $query = "SELECT * FROM members WHERE part='B'";
-            $result = $mysqli->query($query);
-            if (!$result) {
-                print('Query Failed : ' . $mysqli->error);
-                $mysqli->close();
-                exit();
-            }
-            $bas_num = $result->num_rows;
-            ?>
             <div class="card shadow mb-4">
                 <div class="card-header">パート比率</div>
                 <div class="card-body">
@@ -82,6 +48,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </div>
                 </div>
             </div>
+            <canvas id="gradeChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
         </div>
         <div class="col-sm-12">
             <div class="card shadow mb-4">
@@ -162,6 +129,41 @@ $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
             });
         }';
 $script .= '</script>';
+
+
+$query = "SELECT * FROM members WHERE part='S'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$sop_num = $result->num_rows;
+$query = "SELECT * FROM members WHERE part='A'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$alt_num = $result->num_rows;
+$query = "SELECT * FROM members WHERE part='T'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$ten_num = $result->num_rows;
+$query = "SELECT * FROM members WHERE part='B'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$bas_num = $result->num_rows;
+
 $script = '<script>';
 $script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-serif\';Chart.defaults.global.defaultFontColor = \'#858796\';';
 $script .= 'var ctx = document.getElementById("partChart");';
@@ -195,8 +197,68 @@ $script .= 'var myPieChart = new Chart(ctx, {
         },
     });';
 $script .= '</script>';
-?>
-<?php
+
+$query = "SELECT grade FROM members GROUP BY grade";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('クエリーが失敗しました。' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$grade_list = [];
+while ($row = $result->fetch_assoc()) {
+    foreach ($row as $grade) {
+        $query = "SELECT * FROM members WHERE grade=$grade";
+        $result_1 = $mysqli->query($query);
+        if (!$result_1) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $grade_list = array_merge($grade_list, array($grade => $result_1->num_rows));
+    }
+}
+$script = '<script>';
+$script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-serif\';Chart.defaults.global.defaultFontColor = \'#858796\';';
+$script .= 'var ctx = document.getElementById("gradeChart");';
+$script .= 'var myPieChart = new Chart(ctx, {
+        type: \'doughnut\',
+        data: {
+            labels: [';
+foreach ($grade_list as $key => $value) {
+    $script .= '"' . $key . "', ";
+}
+$script .= '],
+            datasets: [{
+                data: [';
+foreach ($grade_list as $key => $value) {
+    $script .= '"' . $value . "', ";
+}
+$script .= '],
+                // backgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
+                // hoverBackgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: \'#dddfeb\',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+            },
+            legend: {
+                display: false
+            },
+            cutoutPercentage: 80,
+        },
+    });';
+$script .= '</script>';
 
 ?>
 
