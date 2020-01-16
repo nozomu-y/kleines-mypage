@@ -38,14 +38,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         </div>
                         <canvas id="partChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
                     </div>
-                    <div class="mt-4 text-center small">
-                        <span class="mr-2"><i class="fas fa-circle text-warning"></i> Soprano</span>
-                        <span class="mr-2"><i class="fas fa-circle text-danger"></i> Alto</span>
-                        <span class="mr-2"><i class="fas fa-circle text-info"></i> Tenor</span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> Bass
-                        </span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -64,14 +56,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         </div>
                         <canvas id="gradeChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
                     </div>
-                    <!-- <div class="mt-4 text-center small">
-                        <span class="mr-2"><i class="fas fa-circle text-warning"></i> Soprano</span>
-                        <span class="mr-2"><i class="fas fa-circle text-danger"></i> Alto</span>
-                        <span class="mr-2"><i class="fas fa-circle text-info"></i> Tenor</span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> Bass
-                        </span>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -194,35 +178,6 @@ $bas_num = $result->num_rows;
 $script .= '<script>';
 $script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-serif\';Chart.defaults.global.defaultFontColor = \'#858796\';';
 $script .= 'var ctx = document.getElementById("partChart");';
-// $script .= 'var myPieChart = new Chart(ctx, {
-//         type: \'doughnut\',
-//         data: {
-//             labels: ["Soprano", "Alto", "Tenor", "Bass"],
-//             datasets: [{
-//                 data: [' . $sop_num . ', ' . $alt_num . ', ' . $ten_num . ', ' . $bas_num . '],
-//                 backgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
-//                 hoverBackgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
-//                 hoverBorderColor: "rgba(234, 236, 244, 1)",
-//             }],
-//         },
-//         options: {
-//             maintainAspectRatio: false,
-//             tooltips: {
-//                 backgroundColor: "rgb(255,255,255)",
-//                 bodyFontColor: "#858796",
-//                 borderColor: \'#dddfeb\',
-//                 borderWidth: 1,
-//                 xPadding: 15,
-//                 yPadding: 15,
-//                 displayColors: false,
-//                 caretPadding: 10,
-//             },
-//             legend: {
-//                 display: false
-//             },
-//             cutoutPercentage: 80,
-//         },
-//     });';
 $script .= 'var myPieChart = new Chart(ctx, {
         type: \'horizontalBar\',
         data: {
