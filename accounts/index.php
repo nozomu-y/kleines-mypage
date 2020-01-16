@@ -232,7 +232,6 @@ $script .= 'var myPieChart = new Chart(ctx, {
                 backgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
                 hoverBackgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
                 hoverBorderColor: "rgba(234, 236, 244, 1)",
-                minBarLength: 0
             }],
         },
         options: {
@@ -250,6 +249,13 @@ $script .= 'var myPieChart = new Chart(ctx, {
             legend: {
                 display: false
             },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    }
+                }]
+            }
         },
     });';
 $script .= '</script>';
