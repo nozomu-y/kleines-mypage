@@ -194,7 +194,7 @@ $script .= 'var myPieChart = new Chart(ctx, {
             cutoutPercentage: 80,
         },
     });';
-
+$script .= '</script>';
 ?>
 <?php
 
