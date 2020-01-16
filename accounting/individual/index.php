@@ -51,11 +51,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             echo '</tr>';
                         }
                         ?>
-                        <tr role="row" class="odd">
-                            <td class="text-nowrap">2019/06/08</td>
-                            <td class="text-nowrap">団費集金（1～6月分）</td>
-                            <td class="text-nowrap">￥10600</td>
-                        </tr>
                     </tbody>
                     <tfoot>
                         <tr>
