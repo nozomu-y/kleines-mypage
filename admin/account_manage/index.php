@@ -93,7 +93,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                     $fee = new Fee($row_2);
                                     $delinquent += $fee->price;
                                 }
-                                echo '<td class="text-nowrap">' . $delinquent . '</td>';
+                                echo '<td class="text-nowrap text-right">￥' . number_format($delinquent) . '</td>';
                             }
                             echo '<td class="text-nowrap">' . $account->email . '</td>';
                             echo '<td class="text-nowrap">' . $account->get_password() . '</td>';
