@@ -115,7 +115,7 @@ $script .= '$(document).ready(function() {
         // fixedHeader: true
         dom:"<\'row\'<\'col-sm-6\'l><\'col-sm-6 right\'f>>" +
             "<\'row\'<\'col-sm-12 mb-2\'tr>>" +
-            "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'pB>>"
+            "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>> B"
         buttons: [ "excel", "pdf", "copy" ],
         // dom: "Blfrtip"
     });
