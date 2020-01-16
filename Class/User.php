@@ -96,7 +96,6 @@ class Fee
         $this->status = $fee['status'];
 
         require('/home/chorkleines/www/member/mypage/Core/config.php');
-        // require_once('/home/chorkleines/www/member/mypage/Class/User.php');
 
         $mysqli = new mysqli($host, $username, $password, $dbname);
         if ($mysqli->connect_error) {
@@ -114,12 +113,20 @@ class Fee
         $row = $result->fetch_assoc();
         $this->name = $row['name'];
         $this->deadline = $row['deadline'];
-        $this->deadline = date('Y/m/d', strtotime($this->deadline));
         $this->admin = $row['admin'];
     }
 
     public function get_deadline()
     {
         return date('Y/m/d', strtotime($this->deadline));
+    }
+
+    public function get_status()
+    {
+        if ($this->datetime == NULL) {
+            return "未納";
+        } else {
+            return "既納";
+        }
     }
 }

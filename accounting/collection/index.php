@@ -75,24 +75,21 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM fee_list ORDER BY id ASC";
+                        $query = "SELECT * FROM fee_record$user->id ORDER BY id ASC";
                         $result = $mysqli->query($query);
                         if (!$result) {
-                            print('クエリーが失敗しました。' . $mysqli->error);
+                            print('Query Failed : ' . $mysqli->error);
                             $mysqli->close();
                             exit();
                         }
                         while ($row = $result->fetch_assoc()) {
                             $fee = new Fee($row);
-                        }
-
-
-                        while ($row = $result->fetch_assoc()) {
-                            $account = new User($row);
                             echo '<tr>';
-                            echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                            echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                            echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
+                            echo '<td class="text-nowrap">' . $fee->name . '</td>';
+                            echo '<td class="text-nowrap">' . $fee->price . '</td>';
+                            echo '<td class="text-nowrap">' . $fee->get_deadline() . '</td>';
+                            echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
+                            echo '<td class="text-nowrap">' . $fee->datetime . '</td>';
                             echo '</tr>';
                         }
                         ?>
