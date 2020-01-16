@@ -250,7 +250,7 @@ $script .= '<script>';
 $script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-serif\';Chart.defaults.global.defaultFontColor = \'#858796\';';
 $script .= 'var ctx = document.getElementById("gradeChart");';
 $script .= 'var myPieChart = new Chart(ctx, {
-        type: \'doughnut\',
+        type: \'horizontalBar\',
         data: {
             labels: [';
 $count = 0;
