@@ -90,8 +90,8 @@ if ($backtrace == '/index.php') {
             <div class="sidebar-heading">
                 会計システム
             </div>
-            <li class="nav-item">
-                <a class="nav-link <?php echo $accounting_collection; ?>" href="/member/mypage/accounting/collection/">
+            <li class="nav-item <?php echo $accounting_collection; ?>">
+                <a class="nav-link" href="/member/mypage/accounting/collection/">
                     <i class="fas fa-yen-sign fa-fw"></i>
                     <span>集金記録</span>
                 </a>
