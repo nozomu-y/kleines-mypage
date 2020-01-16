@@ -52,6 +52,12 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         }
                         ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="2" style="text-align:right">Total:</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
