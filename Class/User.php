@@ -227,3 +227,31 @@ class Individual_Accounting
         return date('Y/m/d', strtotime($this->date));
     }
 }
+
+class Fee_List
+{
+    public $id;
+    public $name;
+    public $deadline;
+    public $price;
+    public $admin;
+
+    public function __construct($fee)
+    {
+        $this->id = $fee['id'];
+        $this->name = $fee['name'];
+        $this->deadline = $fee['deadline'];
+        $this->price = $fee['price'];
+        $this->admin = (int) $fee['admin'];
+    }
+
+    public function get_price()
+    {
+        return "￥" . number_format($this->price);
+    }
+
+    public function get_deadline()
+    {
+        return date('Y/m/d', strtotime($this->deadline));
+    }
+}
