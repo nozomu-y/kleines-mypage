@@ -32,6 +32,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             <th class="text-nowrap">金額</th>
                             <th class="text-nowrap">期限</th>
                             <th class="text-nowrap">提出状況</th>
+                            <th class="text-nowrap">現金支払い</th>
+                            <th class="text-nowrap">個別会計支払い</th>
                             <th class="text-nowrap">提出日時</th>
                         </tr>
                     </thead>
@@ -51,6 +53,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             echo '<td class="text-nowrap">' . $fee->get_price() . '</td>';
                             echo '<td class="text-nowrap">' . $fee->get_deadline() . '</td>';
                             echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
+                            echo '<td class="text-nowrap">' . $fee->get_paid_cash() . '</td>';
+                            echo '<td class="text-nowrap">' . $fee->get_paid_individual() . '</td>';
                             echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
                             echo '</tr>';
                         }
