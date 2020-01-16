@@ -242,7 +242,8 @@ while ($row = $result->fetch_assoc()) {
             $mysqli->close();
             exit();
         }
-        $grade_list = array_merge($grade_list, array($grade => $result_1->num_rows));
+        // $grade_list = array_merge($grade_list, array($grade => $result_1->num_rows));
+        $grade_list[$grade] = $result_1->num_rows;
     }
 }
 $script .= '<script>';
