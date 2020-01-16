@@ -47,7 +47,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             echo '<tr>';
                             echo '<td class="text-nowrap">' . $individual_accounting->get_date() . '</td>';
                             echo '<td class="text-nowrap">' . $individual_accounting->name . '</td>';
-                            echo '<td class="text-nowrap">' . $individual_accounting->get_price() . '</td>';
+                            echo '<td class="text-nowrap text-right">' . $individual_accounting->get_price() . '</td>';
                             echo '</tr>';
                         }
                         ?>
