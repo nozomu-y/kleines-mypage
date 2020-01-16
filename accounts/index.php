@@ -21,39 +21,82 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <div class="container-fluid">
-    <h1 class="h3 text-gray-800 mb-4">アカウント一覧</h1>
+    <!-- <h1 class="h3 text-gray-800 mb-4">アカウント一覧</h1> -->
     <div class="row">
-        <div class=" col-xl-9 col-sm-12">
-            <div class="mb-4">
-                <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th class="text-nowrap">学年</th>
-                            <th class="text-nowrap">パート</th>
-                            <th class="text-nowrap">氏名</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
-                        $result = $mysqli->query($query);
-                        if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
-                            $mysqli->close();
-                            exit();
-                        }
-                        $row_cnt = $result->num_rows;
-                        while ($row = $result->fetch_assoc()) {
-                            $account = new User($row);
-                            echo '<tr>';
-                            echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                            echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                            echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                            echo '</tr>';
-                        }
-                        ?>
-                    </tbody>
-                </table>
+        <div class="col-sm-4">
+            <div class="card-header">パート比率</div>
+            <div class="card-body">
+                <canvas id="partChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
+            </div>
+        </div>
+        <?php
+        $query = "SELECT * FROM members WHERE part='S'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $sop_num = $result->num_rows;
+        $query = "SELECT * FROM members WHERE part='A'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $alt_num = $result->num_rows;
+        $query = "SELECT * FROM members WHERE part='T'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $ten_num = $result->num_rows;
+        $query = "SELECT * FROM members WHERE part='B'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $bas_num = $result->num_rows;
+        ?>
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">アカウント一覧</div>
+                <div class="card-body">
+                    <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th class="text-nowrap">学年</th>
+                                <th class="text-nowrap">パート</th>
+                                <th class="text-nowrap">氏名</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
+                            $result = $mysqli->query($query);
+                            if (!$result) {
+                                print('Query Failed : ' . $mysqli->error);
+                                $mysqli->close();
+                                exit();
+                            }
+                            $row_cnt = $result->num_rows;
+                            while ($row = $result->fetch_assoc()) {
+                                $account = new User($row);
+                                echo '<tr>';
+                                echo '<td class="text-nowrap">' . $account->grade . '</td>';
+                                echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
+                                echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
+                                echo '</tr>';
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="col-xl-3 col-sm-12">
@@ -99,7 +142,39 @@ $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
             });
         }';
 $script .= '</script>';
-
+$script = '<script>';
+$script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", \'sans-serif\';Chart.defaults.global.defaultFontColor = \'#858796\';';
+$script .= 'var ctx = document.getElementById("partChart");';
+$script .= 'var myPieChart = new Chart(ctx, {
+        type: \'doughnut\',
+        data: {
+            labels: ["Soprano", "Alto", "Tenor", "Bass"],
+            datasets: [{
+                data: [' . $sop_num . ', ' . $alt_num . ', ' . $ten_num . ', ' . $bas_num . '],
+                backgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
+                hoverBackgroundColor: [\'#f6c23e\', \'#e74a3b\', \'#36b9cc\', \'#1cc88a\'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: \'#dddfeb\',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+            },
+            legend: {
+                display: false
+            },
+            cutoutPercentage: 80,
+        },
+    });';
+$script .= '</script>';
 
 ?>
 
