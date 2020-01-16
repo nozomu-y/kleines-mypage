@@ -31,7 +31,7 @@ if ($backtrace == '/index.php') {
     $account_manage = 'active';
 } else if ($backtrace == '/accounts/index.php') {
     $accounts = 'active';
-} else if ($backtrace == '/accounting/collection/') {
+} else if ($backtrace == '/accounting/collection/index.php') {
     $accounting_collection = 'active';
 }
 ?>
