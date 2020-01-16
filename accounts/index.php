@@ -199,7 +199,7 @@ $script .= 'var myPieChart = new Chart(ctx, {
                 xPadding: 15,
                 yPadding: 15,
                 displayColors: false,
-                // caretPadding: 10,
+                caretPadding: 10,
                 callbacks: {
                     label: function (tooltipItem, data){
                         return data.labels[tooltipItem.index]
@@ -210,7 +210,7 @@ $script .= 'var myPieChart = new Chart(ctx, {
                 }
             },
             legend: {
-                display: false
+                display: true
             },
             scales: {
                 xAxes: [{
