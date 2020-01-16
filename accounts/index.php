@@ -48,8 +48,35 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </div>
                 </div>
             </div>
-            <canvas id="gradeChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
         </div>
+        <div class="col-sm-4">
+            <div class="card shadow mb-4">
+                <div class="card-header">学年比率</div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4">
+                        <div class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand">
+                                <div class=""></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink">
+                                <div class=""></div>
+                            </div>
+                        </div>
+                        <canvas id="gradeChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
+                    </div>
+                    <!-- <div class="mt-4 text-center small">
+                        <span class="mr-2"><i class="fas fa-circle text-warning"></i> Soprano</span>
+                        <span class="mr-2"><i class="fas fa-circle text-danger"></i> Alto</span>
+                        <span class="mr-2"><i class="fas fa-circle text-info"></i> Tenor</span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Bass
+                        </span>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-12">
             <div class="card shadow mb-4">
                 <div class="card-header">アカウント一覧</div>
