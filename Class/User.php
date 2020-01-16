@@ -139,7 +139,7 @@ class Fee
 
     public function get_price()
     {
-        return "￥" . $this->price;
+        return "￥" . number_format($this->price);
     }
 
     public function get_paid_cash()
@@ -147,7 +147,7 @@ class Fee
         if ($this->datetime == NULL) {
             return '';
         } else {
-            return "￥" . $this->paid_cash;
+            return "￥" . number_format($this->paid_cash);
         }
     }
 
@@ -156,7 +156,7 @@ class Fee
         if ($this->datetime == NULL) {
             return '';
         } else {
-            return "￥" . $this->paid_individual;
+            return "￥" . number_format($this->paid_individual);
         }
     }
 }
@@ -178,7 +178,7 @@ class Individual_Accounting
 
     public function get_price()
     {
-        return "￥" . $this->price;
+        return "￥" . number_format($this->price);
     }
 
     public function get_date()
