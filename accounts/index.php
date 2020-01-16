@@ -24,9 +24,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <!-- <h1 class="h3 text-gray-800 mb-4">アカウント一覧</h1> -->
     <div class="row">
         <div class="col-sm-4">
-            <div class="card-header">パート比率</div>
-            <div class="card-body">
-                <canvas id="partChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
+            <div class="card shadow mb-4">
+                <div class="card-header">パート比率</div>
+                <div class="card-body">
+                    <canvas id="partChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
+                </div>
             </div>
         </div>
         <?php
