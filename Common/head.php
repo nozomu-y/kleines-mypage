@@ -51,7 +51,7 @@ if ($backtrace == '/index.php') {
 
     <!-- JS -->
     <script>
-        history.replaceState('', '', 'aiueo');
+        history.replaceState('', '', '');
     </script>
     <!-- <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js"> -->
 </head>
