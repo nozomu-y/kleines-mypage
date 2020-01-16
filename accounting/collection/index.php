@@ -110,8 +110,8 @@ $script .= '$(document).ready(function() {
             "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Japanese.json"
         },
         order: [], // 初期表示時には並び替えをしない
-        lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
-        // columnDefs: [{ "orderable": true, "orderDataType": "part", "targets": 0 }],
+        lengthMenu: [[ 5, 10, 20, -1 ],[5, 10, 20, "全件"]],
+        columnDefs: [{"orderable": false, "targets": 0}],
         deferRender : false,
         autowidth: false,
         scrollX: true,
