@@ -83,21 +83,21 @@ $script .= '$(document).ready(function() {
             // Remove the formatting to get integer data for summation
             var intVal = function ( i ) {
                 return typeof i === "string" ?
-                    i.replace(/[\￥,]/g, \'\')*1 :
+                    i.replace(/[\￥,]/g, "")*1 :
                     typeof i === "number" ?
                         i : 0;
             };
  
             // Total over all pages
             total = api
-                .column( 3 )
+                .column( 2 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
  
             // Update footer
-            $( api.column( 3 ).footer() ).html(
+            $( api.column( 2 ).footer() ).html(
                 "￥"+total
             );
         }
