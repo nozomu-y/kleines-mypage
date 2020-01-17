@@ -95,7 +95,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 }
                                 echo '<tr>';
                                 echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                                echo '<td class="text-nowrap">' . $account->part . '</td>';
+                                echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                                 echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
                                 echo '<td class="text-nowrap"><input type="button" id="paid_' . $id_u . '" name="paid" class="btn btn-primary btn-sm" value="既納" Onclick="getPaid(\'' . $account->id . '\',\'' . $account->get_name() . '\',\'' . $account->get_individual_accounting_total() . '\',\'' . $fee->price . '\');" ' . $disabled_paid . '> <input type="button" id="unpaid_' . $account->id . '" name="unpaid" class="btn btn-primary btn-sm" value="未納" Onclick="getUnpaid(\'' . $account->id . '\',\'' . $account->get_name() . '\');" ' . $disabled_unpaid . '></td>';
                                 echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
