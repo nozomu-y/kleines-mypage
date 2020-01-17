@@ -49,7 +49,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <h1 class="h3 text-gray-800 mb-4">集金記録</h1>
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
-            <!-- <h2 class="h5 text-gray-800 mb-4"><? echo $fee_list->name; ?></h2> -->
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/">集金記録一覧</a></li>
