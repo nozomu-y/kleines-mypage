@@ -38,6 +38,11 @@ if (!$result) {
 }
 $fee_list = new Fee_List($result->fetch_assoc());
 
+if ($fee_list->admin != 3) {
+    header('Location: /member/mypage/admin/accounting/');
+    exit();
+}
+
 include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 <div class="container-fluid">
@@ -49,15 +54,19 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th class="text-nowrap">集金名</th>
-                            <th class="text-nowrap">期限</th>
+                            <th class="text-nowrap">学年</th>
+                            <th class="text-nowrap">パート</th>
+                            <th class="text-nowrap">氏名</th>
+                            <th class="text-nowrap">変更</th>
+                            <th class="text-nowrap">提出状況</th>
+                            <th class="text-nowrap">提出日時</th>
                             <th class="text-nowrap">金額</th>
-                            <th class="text-nowrap">削除</th>
+                            <th class="text-nowrap">編集</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM fee_list ORDER BY deadline DESC";
+                        $query = "SELECT * FROM members ORDER BY CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, grade ASC, kana ASC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);
@@ -66,13 +75,33 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         }
                         $row_cnt = $result->num_rows;
                         while ($row = $result->fetch_assoc()) {
-                            $fee_list = new Fee_List($row);
-                            if ($fee_list->admin == 3) {
+                            $account = new User($row);
+                            $query = "SELECT * FROM fee_record_$id_u WHERE id = $fee_list->id";
+                            $result_1 = $mysqli->query($query);
+                            if (!$result_1) {
+                                print('Query Failed : ' . $mysqli->error);
+                                $mysqli->close();
+                                exit();
+                            }
+                            if ($result_1->num_rows != 0) {
+                                // if the list exists
+                                $fee = new Fee($result_1->fetch_assoc());
+                                if ($fee->paid()) {
+                                    $disabled_paid = "disabled";
+                                    $disabled_unpaid = "";
+                                } else {
+                                    $disabled_paid = "";
+                                    $disabled_unpaid = "disabled";
+                                }
                                 echo '<tr>';
-                                echo '<td class="text-nowrap"><a href="./detail.php?' . $fee_list->id . '" class="text-info">' . $fee_list->name . '</a></td>';
-                                echo '<td class="text-nowrap">' . $fee_list->get_deadline() . '</td>';
-                                echo '<td class="text-nowrap text-right">' . $fee_list->get_price() . '</td>';
-                                echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="btn btn-danger btn-sm" value="' . $fee_list->id . '" Onclick="return confirm(\'' . $fee_list->name . 'を削除しますか？\');">削除</button></td>';
+                                echo '<td class="text-nowrap">' . $account->grade . '</td>';
+                                echo '<td class="text-nowrap">' . $account->part . '</td>';
+                                echo '<td class="text-nowrap">' . $account->name . '</td>';
+                                echo '<td class="text-nowrap"><input type="button" id="paid_' . $id_u . '" name="paid" class="btn btn-primary btn-sm" value="既納" Onclick="getPaid(\'' . $account->id . '\',\'' . $account->get_name() . '\',\'' . $account->get_individual_accounting_total() . '\',\'' . $fee->price . '\');" ' . $disabled_paid . '> <input type="button" id="unpaid_' . $account->id . '" name="unpaid" class="btn btn-primary btn-sm" value="未納" Onclick="getUnpaid(\'' . $account->id . '\',\'' . $account->get_name() . '\');" ' . $disabled_unpaid . '></td>';
+                                echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
+                                echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
+                                echo '<td class="text-nowrap text-right">' . $fee->get_price() . '</td>';
+                                echo '<td class="text-nowrap"><a href="./edit_price.php?id=' . $account->id . '&fee_id=' . $fee_list->id . '">編集</a></td>';
                                 echo '</tr>';
                             }
                         }
