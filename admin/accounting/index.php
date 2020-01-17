@@ -64,26 +64,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </tbody>
                 </table>
             </div>
-            <!-- <div class="list-group mb-4">
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-0">団費集金(10~12月分)</h6>
-                        <small>2020/01/01</small>
-                    </div>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-0">団費集金(10~12月分)</h6>
-                        <small>2020/01/01</small>
-                    </div>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-0">団費集金(10~12月分)</h6>
-                        <small>2020/01/01</small>
-                    </div>
-                </a>
-            </div> -->
         </div>
         <div class="col-xl-3 col-sm-12">
         </div>

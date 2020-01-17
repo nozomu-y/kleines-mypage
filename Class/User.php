@@ -235,6 +235,8 @@ class Fee_List
     public $deadline;
     public $price;
     public $admin;
+    public $paid_cnt;
+    public $unpaid_cnt;
 
     public function __construct($fee)
     {
@@ -243,6 +245,44 @@ class Fee_List
         $this->deadline = $fee['deadline'];
         $this->price = $fee['price'];
         $this->admin = (int) $fee['admin'];
+
+        require('/home/chorkleines/www/member/mypage/Core/config.php');
+
+        $mysqli = new mysqli($host, $username, $password, $dbname);
+        if ($mysqli->connect_error) {
+            error_log($mysqli->connect_error);
+            exit;
+        }
+
+        $query = "SELECT * FROM members ORDER BY id";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $this->paid_cnt = 0;
+        $this->unpaid_cnt = 0;
+        while ($row = $result->fetch_assoc()) {
+            $id = $row['id'];
+            $query = "SELECT * FROM fee_record_$id WHERE id = $this->id";
+            $result = $mysqli->query($query);
+            if (!$result) {
+                print('Query Failed : ' . $mysqli->error);
+                $mysqli->close();
+                exit();
+            }
+            $row_cnt = $result->num_rows;
+            if ($row_cnt != 0) {
+                while ($row = $result->fetch_assoc()) {
+                    if ($row['datetime'] == NULL) {
+                        $this->unpaid_cnt += 1;
+                    } else {
+                        $this->paid_cnt += 1;
+                    }
+                }
+            }
+        }
     }
 
     public function get_price()
@@ -253,5 +293,14 @@ class Fee_List
     public function get_deadline()
     {
         return date('Y/m/d', strtotime($this->deadline));
+    }
+
+    public function get_paid_ratio()
+    {
+        if ($this->paid_cnt + $this->unpaid_cnt == 0) {
+            return '0.00 %';
+        } else {
+            return strval(round($this->paid_cnt / ($this->paid_cnt + $this->unpaid_cnt), 3) * 100) . ' %';
+        }
     }
 }
