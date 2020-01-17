@@ -35,7 +35,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <tr>
                             <th class="text-nowrap">集金名</th>
                             <th class="text-nowrap">期限</th>
-                            <th class="text-nowrap">金額</th>
+                            <th class="text-nowrap text-right">金額</th>
                             <th class="text-nowrap">削除</th>
                         </tr>
                     </thead>
@@ -55,7 +55,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 echo '<tr>';
                                 echo '<td class="text-nowrap"><a href="./detail.php?fee_id=' . $fee_list->id . '" class="text-info">' . $fee_list->name . '</a></td>';
                                 echo '<td class="text-nowrap">' . $fee_list->get_deadline() . '</td>';
-                                echo '<td class="text-nowrap">' . $fee_list->get_price() . '</td>';
+                                echo '<td class="text-nowrap text-right">' . $fee_list->get_price() . '</td>';
                                 echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="btn btn-danger btn-sm" value="' . $fee_list->id . '" Onclick="return confirm(\'' . $fee_list->name . 'を削除しますか？\');">削除</button></td>';
                                 echo '</tr>';
                             }
@@ -63,6 +63,26 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         ?>
                     </tbody>
                 </table>
+            </div>
+            <div class="list-group mb-4">
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h4>団費集金(10~12月分)</h4>
+                        <small>2020/01/01</small>
+                    </div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h4>団費集金(10~12月分)</h4>
+                        <small>2020/01/01</small>
+                    </div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h4>団費集金(10~12月分)</h4>
+                        <small>2020/01/01</small>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-xl-3 col-sm-12">
