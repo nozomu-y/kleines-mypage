@@ -76,7 +76,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         $row_cnt = $result->num_rows;
                         while ($row = $result->fetch_assoc()) {
                             $account = new User($row);
-                            $query = "SELECT * FROM fee_record_$id_u WHERE id = $fee_list->id";
+                            $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
                             $result_1 = $mysqli->query($query);
                             if (!$result_1) {
                                 print('Query Failed : ' . $mysqli->error);
