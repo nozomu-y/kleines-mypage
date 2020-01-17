@@ -108,7 +108,7 @@ $script .= '$(document).ready(function() {
         },
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
-        columnDefs: [{ "orderable": true, "orderDataType": "part", "targets": 0 }],
+        columnDefs: [{ "orderable": true, "orderDataType": "part", "targets": 1 }],
         deferRender : false,
         autowidth: false,
         scrollX: true,
