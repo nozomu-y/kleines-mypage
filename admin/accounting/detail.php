@@ -96,7 +96,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 echo '<tr>';
                                 echo '<td class="text-nowrap">' . $account->grade . '</td>';
                                 echo '<td class="text-nowrap">' . $account->part . '</td>';
-                                echo '<td class="text-nowrap">' . $account->name . '</td>';
+                                echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
                                 echo '<td class="text-nowrap"><input type="button" id="paid_' . $id_u . '" name="paid" class="btn btn-primary btn-sm" value="既納" Onclick="getPaid(\'' . $account->id . '\',\'' . $account->get_name() . '\',\'' . $account->get_individual_accounting_total() . '\',\'' . $fee->price . '\');" ' . $disabled_paid . '> <input type="button" id="unpaid_' . $account->id . '" name="unpaid" class="btn btn-primary btn-sm" value="未納" Onclick="getUnpaid(\'' . $account->id . '\',\'' . $account->get_name() . '\');" ' . $disabled_unpaid . '></td>';
                                 echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
                                 echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
@@ -124,8 +124,9 @@ $script .= '$(document).ready(function() {
         },
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
-        columnDefs: [{ "orderable": false, "targets": 0 },
-            { "orderable": false, "targets": 3 }],
+        columnDefs: [{ "orderable": false, "targets": 3 },
+            { "orderable": false, "targets": 7 },
+            { "orderable": true, "orderDataType": "part", "targets": 1 }],
         deferRender : false,
         autowidth: false,
         scrollX: true,
@@ -135,6 +136,24 @@ $script .= '$(document).ready(function() {
             "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
     }); 
 });';
+$script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
+            return this.api().column(col, {
+                order: "index"
+            }).nodes().map(function(td, i) {
+                if (!$(td).html()) return 0;
+                if ($(td).html() == "Soprano") {
+                    return "b";
+                } else if ($(td).html() == "Alto") {
+                    return "c";
+                } else if ($(td).html() == "Tenor") {
+                    return "d";
+                } else if ($(td).html() == "Bass") {
+                    return "e";
+                } else {
+                    return "a";
+                }
+            });
+        }';
 $script .= '</script>';
 
 
