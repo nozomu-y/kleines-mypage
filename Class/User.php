@@ -166,16 +166,29 @@ class Fee
 
     public function get_status()
     {
-        if ($this->datetime == NULL) {
+        if ($this->datetime == NULL || strtotime($this->datetime) == 0) {
             return "未納";
         } else {
             return "既納";
         }
     }
 
+    public function paid()
+    {
+        if ($this->datetime == NULL || strtotime($this->datetime) == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public function get_submission_time()
     {
-        return date('Y/m/d H:i:s', strtotime($this->datetime));
+        if ($this->datetime == NULL || strtotime($this->datetime) == 0) {
+            return '';
+        } else {
+            return date('Y/m/d H:i:s', strtotime($this->datetime));
+        }
     }
 
     public function get_price()
