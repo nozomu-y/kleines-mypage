@@ -52,7 +52,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             <!-- <h2 class="h5 text-gray-800 mb-4"><? echo $fee_list->name; ?></h2> -->
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">集金記録一覧</a></li>
+                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/">集金記録一覧</a></li>
                     <li class="breadcrumb-item active" aria-current="page"><? echo $fee_list->name; ?></li>
                 </ol>
             </nav>
