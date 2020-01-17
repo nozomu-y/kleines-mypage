@@ -40,9 +40,6 @@ $fee_list = new Fee_List($result->fetch_assoc());
 
 include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
-<script>
-    history.replaceState('', '', '/member/mypage/admin/accounting/');
-</script>
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">集金記録</h1>
     <div class="row">
