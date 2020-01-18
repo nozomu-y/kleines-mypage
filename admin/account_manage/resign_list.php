@@ -73,7 +73,12 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 if ($account->status != 2) {
                                     continue;
                                 }
-                                echo '<tr>';
+                                if ($account->delinquent != 0) {
+                                    $table_danger = 'class="table-danger"';
+                                } else {
+                                    $table_danger = '';
+                                }
+                                echo '<tr ' . $table_danger . '>';
                                 echo '<td class="text-nowrap">' . $account->grade . '</td>';
                                 echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                                 echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
