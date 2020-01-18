@@ -108,6 +108,20 @@ class User
             return '';
         }
     }
+    public function get_admin_en()
+    {
+        if ($this->admin == 1) {
+            return "master";
+        } else if ($this->admin == 2) {
+            return "account managemant";
+        } else if ($this->admin == 3) {
+            return "accounting";
+        } else if ($this->admin == 5) {
+            return "camp accounting";
+        } else {
+            return '';
+        }
+    }
 
     public function get_status()
     {
