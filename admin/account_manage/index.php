@@ -172,7 +172,8 @@ if ($user->admin == 1) {
     $script .= '{ "orderable": false, "targets": 0 },
             { "orderable": false, "targets": 6 },
             { "orderable": false, "targets": 9 },
-            { "orderable": true, "orderDataType": "part", "targets": 2 }';
+            { "orderable": true, "orderDataType": "part", "targets": 2 },
+            { type: "currency", targets: 4 }';
 } else if ($user->admin == 2) {
     $script .= '{ "orderable": false, "targets": 4 },
             { "orderable": false, "targets": 6 },
@@ -180,7 +181,8 @@ if ($user->admin == 1) {
 } else {
     $script .= '{ "orderable": false, "targets": 5 },
             { "orderable": false, "targets": 7 },
-            { "orderable": true, "orderDataType": "part", "targets": 1 }';
+            { "orderable": true, "orderDataType": "part", "targets": 1 },
+            { type: "currency", targets: 3 }';
 }
 
 $script .= '],
