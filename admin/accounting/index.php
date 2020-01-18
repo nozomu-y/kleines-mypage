@@ -66,6 +66,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             </div>
         </div>
         <div class="col-xl-3 col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">ログ</div>
+                <div class="card-body">
+                    <p>このページで行われる操作は全てログとして残ります。</p>
+                    <a href="./accounting_log.php">ログを閲覧</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
