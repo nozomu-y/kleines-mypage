@@ -90,8 +90,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 <button type="submit" name="present" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを在団にしますか？\');">在団</button>
                                 <button type="submit" name="absent" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを休団にしますか？\');">休団</button>
                             </td>';
+                            if ($account->admin != NULL) {
+                                $resign_warning = "\nこのユーザーは管理者権限（" . $account->get_admin() . "）を持っています。このアカウントを退団にすると権限も削除されます。";
+                            }
                             if ($user->admin == 1) {
-                                echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/account_manage/delete_user.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのアカウントを削除しますか？\nこのアカウントに関連する会計データが全て削除されます。\');">削除</button></td>';
+                                echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/account_manage/delete_user.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのアカウントを削除しますか？\nこのアカウントに関連する会計データが全て削除されます。' . $resign_warning . '\');">削除</button></td>';
                             }
                             echo '</tr>';
                         }
