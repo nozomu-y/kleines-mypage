@@ -63,7 +63,7 @@ if (isset($_POST['delete'])) {
         exit();
     }
     // make log file
-    error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "のアカウントを削除しました。\n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
+    error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " deleted the account of " . $account->name . ". \n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
     header('Location: /member/mypage/admin/account_manage/');
     exit();
 }
