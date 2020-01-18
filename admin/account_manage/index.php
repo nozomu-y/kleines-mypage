@@ -102,12 +102,12 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                         break;
                                 }
                                 if ($account->admin != NULL) {
-                                    $resign_warning = "\nこのユーザーは管理者権限（" . $account->get_admin() . "）を持っています。このアカウントを退団にすると権限も削除されます。";
+                                    $resign_warning = "このユーザーは管理者権限（" . $account->get_admin() . "）を持っています。このアカウントを退団にすると権限も削除されます。";
                                 }
                                 echo '<td class="text-nowrap">
                                 <button type="submit" name="present" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを在団にしますか？\');" ' . $disabled_present . '>在団</button>
                                 <button type="submit" name="absent" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを休団にしますか？\');" ' . $disabled_absent . '>休団</button>
-                                <button type="submit" name="resign" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを退団にしますか？' . $resign_warning . '\');">退団</button>
+                                <button type="submit" name="resign" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを退団にしますか？\n' . $resign_warning . '\');">退団</button>
                                 </td>';
                                 echo '</tr>';
                             }
