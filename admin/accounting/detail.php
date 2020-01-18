@@ -62,7 +62,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     window.alert("現金で" + String(paid_cash) + "円徴収してください。\n残りの" + String(price - paid_cash) + "円は個別会計から差し引きます。");
                     var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
                     if (result) {
-                        var form = document.createElement('form_paid');
+                        var form = document.createElement('form');
                         form.method = 'POST';
                         form.action = './change_status_paid.php';
 
@@ -105,7 +105,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             window.alert("個別会計の残高がありません。\n現金で" + price + "円徴収してください。");
             var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
             if (result) {
-                var form = document.createElement('form_paid');
+                var form = document.createElement('form');
                 form.method = 'POST';
                 form.action = './change_status_paid.php';
 
@@ -144,7 +144,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     function getUnpaid(id, name) {
         var result = window.confirm(name + "さんの提出状況を未納に変更しますか？");
         if (result) {
-            var form = document.createElement('form_unpaid');
+            var form = document.createElement('form');
             form.method = 'POST';
             form.action = './change_status_unpaid.php';
 
