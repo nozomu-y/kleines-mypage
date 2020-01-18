@@ -77,9 +77,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 }
                                 echo '<td class="text-nowrap">' . $account->email . '</td>';
                                 echo '<td class="text-nowrap">' . $account->get_password() . '</td>';
-                                if ($user->admin == 1) {
-                                    echo '<td class="text-nowrap">' . $account->get_admin() . '</td>';
-                                }
                                 echo '<td class="text-nowrap">
                                 <button type="submit" name="present" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを在団にしますか？\');">在団</button>
                                 <button type="submit" name="absent" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを休団にしますか？\');>休団</button>
