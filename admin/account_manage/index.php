@@ -90,10 +90,27 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 echo '<td class="text-nowrap">' . $account->get_admin() . '</td>';
                             }
                             echo '<td class="text-nowrap">' . $account->get_status() . '</td>';
+                            switch ($account->status) {
+                                case 0:
+                                    $disabled_present = "disabled";
+                                    $disabled_absent = "";
+                                    $disabled_resign = "";
+                                    break;
+                                case 1:
+                                    $disabled_present = "";
+                                    $disabled_absent = "disabled";
+                                    $disabled_resign = "";
+                                    break;
+                                case 2:
+                                    $disabled_present = "";
+                                    $disabled_absent = "";
+                                    $disabled_resign = "disabled";
+                                    break;
+                            }
                             echo '<td class="text-nowrap">
-                                <button type="submit" name="present" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを在団にしますか？\');">在団</button>
-                                <button type="submit" name="absent" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを休団にしますか？\');">休団</button>
-                                <button type="submit" name="resign" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを退団にしますか？\');">退団</button>
+                                <button type="submit" name="present" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを在団にしますか？\');" ' . $disabled_present . '>在団</button>
+                                <button type="submit" name="absent" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを休団にしますか？\');" ' . $disabled_absent . '>休団</button>
+                                <button type="submit" name="resign" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを退団にしますか？\');" ' . $disabled_resign . '>退団</button>
                             </td>';
                             // echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/account_manage/delete_user.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのアカウントを削除しますか？\nこれを実行すると会計記録も消えます！\');">削除</button></td>';
                             echo '</tr>';
