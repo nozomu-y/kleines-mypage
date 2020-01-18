@@ -297,7 +297,7 @@ class Fee_List
         $query = "SELECT * FROM members ORDER BY id";
         $result = $mysqli->query($query);
         if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
+            print('Query Failed1 : ' . $mysqli->error);
             $mysqli->close();
             exit();
         }
@@ -308,7 +308,7 @@ class Fee_List
             $query = "SELECT * FROM fee_record_$id WHERE id = $this->id";
             $result = $mysqli->query($query);
             if (!$result) {
-                print('Query Failed : ' . $mysqli->error);
+                print('Query Failed2 : ' . $mysqli->error);
                 $mysqli->close();
                 exit();
             }
