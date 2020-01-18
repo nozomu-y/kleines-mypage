@@ -127,11 +127,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             <button class="dropdown-item" type="submit" name="admin-give-5">合宿会計システム</button>
                         </div>
                     </span>
-                    <button type="submit" class="btn btn-secondary mb-4" name="admin-take">管理者権限を剥奪</button>
-                    </form>';
+                    <button type="submit" class="btn btn-secondary mb-4" name="admin-take">管理者権限を剥奪</button>';
                 }
                 ?>
-                <a class="btn btn-primary mb-4" href="/member/mypage/admin/account_manage/add_user/" role="button">アカウントの追加</a>
+            </form>
+            <a class="btn btn-primary mb-4" href="/member/mypage/admin/account_manage/add_user/" role="button">アカウントの追加</a>
         </div>
         <div class="col-xl-3 col-sm-12">
             <div class="card shadow mb-4">
@@ -141,6 +141,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             <div class="card shadow mb-4">
                 <div class="card-header">ログ</div>
                 <div class="card-body">
+                    <p>このページで行われる操作は全てログとして残ります。</p>
+                    <a href="./account_log.php">ログを閲覧</a>
                 </div>
             </div>
         </div>
