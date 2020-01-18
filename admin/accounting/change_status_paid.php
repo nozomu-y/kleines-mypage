@@ -38,6 +38,7 @@ print($query);
 // print($result->fetch_assoc()['id']);
 while ($row = $result->fetch_assoc()) {
     echo $row['id'];
+    echo $row['admin'];
 }
 $fee_list = new Fee_List($result->fetch_assoc());
 if ($fee_list->admin != 3) {
