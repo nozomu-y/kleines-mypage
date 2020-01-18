@@ -5,8 +5,7 @@ if (!isset($_SESSION['mypage_email'])) {
     header('Location: /member/mypage/login/');
     exit();
 }
-echo 'a';
-print('b');
+print('a');
 
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 $email = $_SESSION['mypage_email'];
@@ -17,7 +16,10 @@ if (!$result) {
     $mysqli->close();
     exit();
 }
+print('b');
+
 $user = new User($result->fetch_assoc());
+print('c');
 
 if (!($user->admin == 1 || $user->admin == 3)) {
     header('Location: /member/mypage/');
@@ -36,11 +38,14 @@ if (!$result) {
     $mysqli->close();
     exit();
 }
+print('d');
+
 $fee_list = new Fee_List($result->fetch_assoc());
 if ($fee_list->admin != 3) {
     header('Location: /member/mypage/admin/accounting/');
     exit();
 }
+print('e');
 
 $user_id = $_POST['user_id'];
 $price = $_POST['price'];
@@ -53,7 +58,10 @@ if (!$result) {
     $mysqli->close();
     exit();
 }
+print('f');
+
 $account = new User($result->fetch_assoc());
+print('g');
 
 // amount of money paid from individual accounting
 $paid_individual = '-' . strval(intval($price) - intval($paid_cash));
