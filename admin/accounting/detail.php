@@ -64,7 +64,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     if (result) {
                         var form = document.createElement('form');
                         form.method = 'POST';
-                        form.action = './change_status_paid.php';
+                        form.action = '/member/mypage/admin/accounting/change_status_paid.php';
 
                         var form_fee_id = document.createElement('input');
                         form_fee_id.type = 'hidden';
@@ -107,7 +107,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             if (result) {
                 var form = document.createElement('form');
                 form.method = 'POST';
-                form.action = './change_status_paid.php';
+                form.action = '/member/mypage/admin/accounting/change_status_paid.php';
 
                 var form_fee_id = document.createElement('input');
                 form_fee_id.type = 'hidden';
@@ -146,7 +146,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
         if (result) {
             var form = document.createElement('form');
             form.method = 'POST';
-            form.action = './change_status_unpaid.php';
+            form.action = '/member/mypage/admin/accounting/change_status_unpaid.php';
 
             var form_fee_id = document.createElement('input');
             form_fee_id.type = 'hidden';
