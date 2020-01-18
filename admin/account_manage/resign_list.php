@@ -36,7 +36,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </ol>
             </nav>
             <div class="mb-4">
-                <form action="POST" id="form">
+                <form method="POST" id="form">
                     <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
                         <thead>
                             <tr>
