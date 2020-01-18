@@ -51,6 +51,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 <th class="text-nowrap">メールアドレス</th>
                                 <th class="text-nowrap">パスワード</th>
                                 <th class="text-nowrap">編集</th>
+                                <?php
+                                if ($user->admin == 1) {
+                                    echo '<th class="text-nowrap">削除<th>';
+                                }
+                                ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -80,8 +85,10 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 echo '<td class="text-nowrap">
                                 <button type="submit" name="present" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを在団にしますか？\');">在団</button>
                                 <button type="submit" name="absent" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを休団にしますか？\');>休団</button>
-                                <button type="submit" name="delete" formaction="/member/mypage/admin/account_manage/delete_user.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのアカウントを削除しますか？\nこのアカウントに関連する会計データが全て削除されます。\');" >削除</button>
                             </td>';
+                                if ($user->admin == 1) {
+                                    echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/account_manage/delete_user.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのアカウントを削除しますか？\nこのアカウントに関連する会計データが全て削除されます。\');" >削除</button></td>';
+                                }
                                 echo '</tr>';
                             }
                             ?>
@@ -109,6 +116,7 @@ $script .= '$(document).ready(function() {
 if ($user->admin == 1 || $user->admin == 3) {
     $script .= '{ "orderable": false, "targets": 5 },
             { "orderable": false, "targets": 6 },
+            { "orderable": false, "targets": 7 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';
 } else {
     $script .= '{ "orderable": false, "targets": 4 },
