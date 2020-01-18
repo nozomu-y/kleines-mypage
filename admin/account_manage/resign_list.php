@@ -122,11 +122,13 @@ if ($user->admin == 1) {
     $script .= '{ "orderable": false, "targets": 5 },
             { "orderable": false, "targets": 6 },
             { "orderable": false, "targets": 7 },
-            { "orderable": true, "orderDataType": "part", "targets": 1 }';
+            { "orderable": true, "orderDataType": "part", "targets": 1 },
+            { type: "currency", targets: 3 }';
 } else if ($user->admin == 3) {
     $script .= '{ "orderable": false, "targets": 5 },
             { "orderable": false, "targets": 6 },
-            { "orderable": true, "orderDataType": "part", "targets": 1 }';
+            { "orderable": true, "orderDataType": "part", "targets": 1 },
+            { type: "currency", targets: 3 }';
 } else {
     $script .= '{ "orderable": false, "targets": 4 },
             { "orderable": false, "targets": 5 },
