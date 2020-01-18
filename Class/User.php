@@ -113,11 +113,11 @@ class User
         if ($this->admin == 1) {
             return "master";
         } else if ($this->admin == 2) {
-            return "account managemant";
+            return "account management";
         } else if ($this->admin == 3) {
-            return "accounting";
+            return "accounting management";
         } else if ($this->admin == 5) {
-            return "camp accounting";
+            return "camp accounting management";
         } else {
             return '';
         }

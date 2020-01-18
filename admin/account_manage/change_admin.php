@@ -41,7 +41,7 @@ if (isset($_POST['admin-give-1'])) {
             exit();
         }
         // make log file
-        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "に管理者権限（全アクセス）を与えました。\n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
+        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " gave the administrator right (master) to " . $account->name . ". \n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
     }
     header('Location: /member/mypage/admin/account_manage/');
     exit();
@@ -63,7 +63,7 @@ if (isset($_POST['admin-give-1'])) {
             $mysqli->close();
             exit();
         }
-        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "に管理者権限（アカウント管理）を与えました。\n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
+        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " gave the administrator right (account management) to " . $account->name . ". \n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
     }
     header('Location: /member/mypage/admin/account_manage/');
     exit();
@@ -85,7 +85,7 @@ if (isset($_POST['admin-give-1'])) {
             $mysqli->close();
             exit();
         }
-        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "に管理者権限（会計システム）を与えました。\n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
+        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " gave the administrator right (accounting management) to " . $account->name . ". \n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
     }
     header('Location: /member/mypage/admin/account_manage/');
     exit();
@@ -107,7 +107,7 @@ if (isset($_POST['admin-give-1'])) {
             $mysqli->close();
             exit();
         }
-        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "に管理者権限（練習計画管理）を与えました。\n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
+        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " gave the administrator right (practice schedule management) to " . $account->name . ". \n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
     }
     header('Location: /member/mypage/admin/account_manage/');
     exit();
@@ -129,7 +129,7 @@ if (isset($_POST['admin-give-1'])) {
             $mysqli->close();
             exit();
         }
-        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "に管理者権限（合宿会計システム）を与えました。\n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
+        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " gave the administrator right (camp accounting management) to " . $account->name . ". \n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
     }
     header('Location: /member/mypage/admin/account_manage/');
     exit();
@@ -152,7 +152,7 @@ if (isset($_POST['admin-give-1'])) {
             exit();
         }
         /** ログファイル作成の処理 **/
-        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の管理者権限を剥奪しました。\n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
+        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " deprived " . $account->name . " of the administrator right (" . $account->get_admin_en() . "). \n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
     }
     header('Location: /member/mypage/admin/account_manage/');
     exit();
