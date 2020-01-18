@@ -99,6 +99,64 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     </div>
 </div>
 
+<?php
+$script = '<script>';
+$script .= '$(document).ready(function() {
+    $("#accountList").DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Japanese.json"
+        },
+        order: [], // 初期表示時には並び替えをしない
+        lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
+        columnDefs: [';
+if ($user->admin == 1) {
+    $script .= '{ "orderable": false, "targets": 0 },
+            { "orderable": false, "targets": 6 },
+            { "orderable": false, "targets": 9 },
+            { "orderable": true, "orderDataType": "part", "targets": 2 }';
+} else if ($user->admin == 2) {
+    $script .= '{ "orderable": false, "targets": 4 },
+            { "orderable": false, "targets": 6 },
+            { "orderable": true, "orderDataType": "part", "targets": 1 }';
+} else {
+    $script .= '{ "orderable": false, "targets": 5 },
+            { "orderable": false, "targets": 7 },
+            { "orderable": true, "orderDataType": "part", "targets": 1 }';
+}
+
+$script .= '],
+        deferRender : false,
+        autowidth: false,
+        scrollX: true,
+        // fixedHeader: true
+         dom:"<\'row\'<\'col-sm-6\'l><\'col-sm-6 right\'f>>" +
+            "<\'row\'<\'col-sm-12 mb-2\'tr>>" +
+            "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
+    }); 
+});';
+$script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
+            return this.api().column(col, {
+                order: "index"
+            }).nodes().map(function(td, i) {
+                if (!$(td).html()) return 0;
+                if ($(td).html() == "Soprano") {
+                    return "b";
+                } else if ($(td).html() == "Alto") {
+                    return "c";
+                } else if ($(td).html() == "Tenor") {
+                    return "d";
+                } else if ($(td).html() == "Bass") {
+                    return "e";
+                } else {
+                    return "a";
+                }
+            });
+        }';
+$script .= '</script>';
+
+
+?>
+
 
 <?php
 include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
