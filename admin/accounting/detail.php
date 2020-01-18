@@ -45,6 +45,128 @@ if ($fee_list->admin != 3) {
 
 include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
+
+<script>
+    function getPaid(id, name, i_a_price, price) {
+        if (i_a_price > 0) {
+            // 個別会計を使える場合（値が正）
+            var paid_cash = window.prompt(name + "さんの集金処理を行います。\n現金で受け取る金額を指定してください。\n個別会計残高：" + i_a_price + "\n集金額：" + price);
+            if ((paid_cash != "") && (paid_cash != null) && !isNaN(paid_cash)) {
+                if (Number(paid_cash) < 0) {
+                    window.alert("非負整数を入力して下さい。");
+                } else if (Number(paid_cash) > Number(price)) {
+                    window.alert("入力された金額が集金額よりも多いです。");
+                } else if (Number(price) - Number(paid_cash) > Number(i_a_price)) {
+                    window.alert("個別会計の残高が足りません。");
+                } else if (Number(price) - Number(paid_cash) <= Number(i_a_price)) {
+                    window.alert("現金で" + String(paid_cash) + "円徴収してください。\n残りの" + String(price - paid_cash) + "円は個別会計から差し引きます。");
+                    var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
+                    if (result) {
+                        var form = document.createElement('form_paid');
+                        form.method = 'POST';
+                        form.action = './change_status_paid.php';
+
+                        var form_fee_id = document.createElement('input');
+                        form_fee_id.type = 'hidden';
+                        form_fee_id.name = 'fee_id';
+                        form_fee_id.value = <?php echo $fee_list->id; ?>;
+                        form.appendChild(form_fee_id);
+
+                        var form_price = document.createElement('input');
+                        form_price.type = 'hidden';
+                        form_price.name = 'price';
+                        form_price.value = price;
+                        form.appendChild(form_price);
+
+                        var form_user_id = document.createElement('input');
+                        form_user_id.type = 'hidden';
+                        form_user_id.name = 'user_id';
+                        form_user_id.value = id;
+                        form.appendChild(form_user_id);
+
+                        var form_paid_cash = document.createElement('input');
+                        form_paid_cash.type = 'hidden';
+                        form_paid_cash.name = 'paid_cash';
+                        form_paid_cash.value = String(paid_cash);
+                        form.appendChild(form_paid_cash);
+
+                        document.body.appendChild(form);
+
+                        form.submit();
+                    }
+                }
+            } else if ((paid_cash != "") && isNaN(paid_cash)) {
+                window.alert("値は数字で入力してください。");
+            } else if (paid_cash == "") {
+                window.alert("値を入力してください。");
+            }
+        } else {
+            // 個別会計を使えない場合（値が負）
+            window.alert("個別会計の残高がありません。\n現金で" + price + "円徴収してください。");
+            var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
+            if (result) {
+                var form = document.createElement('form_paid');
+                form.method = 'POST';
+                form.action = './change_status_paid.php';
+
+                var form_fee_id = document.createElement('input');
+                form_fee_id.type = 'hidden';
+                form_fee_id.name = 'fee_id';
+                form_fee_id.value = <?php echo $fee_list->id; ?>;
+                form.appendChild(form_fee_id);
+
+                var form_price = document.createElement('input');
+                form_price.type = 'hidden';
+                form_price.name = 'price';
+                form_price.value = price;
+                form.appendChild(form_price);
+
+                var form_user_id = document.createElement('input');
+                form_user_id.type = 'hidden';
+                form_user_id.name = 'user_id';
+                form_user_id.value = id;
+                form.appendChild(form_user_id);
+
+                var form_paid_cash = document.createElement('input');
+                form_paid_cash.type = 'hidden';
+                form_paid_cash.name = 'paid_cash';
+                form_paid_cash.value = String(price);
+                form.appendChild(form_paid_cash);
+
+                document.body.appendChild(form);
+
+                form.submit();
+            }
+        }
+    }
+</script>
+<script>
+    function getUnpaid(id, name) {
+        var result = window.confirm(name + "さんの提出状況を未納に変更しますか？");
+        if (result) {
+            var form = document.createElement('form_unpaid');
+            form.method = 'POST';
+            form.action = './change_status_unpaid.php';
+
+            var form_fee_id = document.createElement('input');
+            form_fee_id.type = 'hidden';
+            form_fee_id.name = 'fee_id';
+            form_fee_id.value = <?php echo $fee_list->id; ?>;
+            form.appendChild(form_fee_id);
+
+            var form_user_id = document.createElement('input');
+            form_user_id.type = 'hidden';
+            form_user_id.name = 'user_id';
+            form_user_id.value = id;
+            form.appendChild(form_user_id);
+
+            document.body.appendChild(form);
+
+            form.submit();
+        }
+    }
+</script>
+
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">集金記録</h1>
     <div class="row">
