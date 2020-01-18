@@ -34,7 +34,7 @@ if (!$result) {
     $mysqli->close();
     exit();
 }
-print($result->fetch_assoc()['id']);
+print($fee_id);
 $fee_list = new Fee_List($result->fetch_assoc());
 if ($fee_list->admin != 3) {
     header('Location: /member/mypage/admin/accounting/');
