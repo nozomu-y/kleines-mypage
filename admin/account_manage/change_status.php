@@ -74,7 +74,7 @@ if (isset($_POST['present'])) {
         exit();
     }
     $account = new User($result->fetch_assoc());
-    $query = "UPDATE members SET status = 0 WHERE id = $id";
+    $query = "UPDATE members SET status = 2 WHERE id = $id";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
