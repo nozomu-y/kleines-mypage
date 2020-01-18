@@ -34,7 +34,9 @@ if (!$result) {
     $mysqli->close();
     exit();
 }
-print($query);
+
+// something's wrong here
+// print($query);
 // print($result->fetch_assoc()['id']);
 while ($row = $result->fetch_assoc()) {
     echo $row['id'];
