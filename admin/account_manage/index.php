@@ -58,7 +58,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 echo '<th class="text-nowrap">管理者権限</th>';
                             }
                             ?>
-                            <th class="text-nowrap">削除</th>
+                            <th class="text-nowrap">ステータス</th>
+                            <th class="text-nowrap">編集</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,7 +89,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             if ($user->admin == 1) {
                                 echo '<td class="text-nowrap">' . $account->get_admin() . '</td>';
                             }
-                            echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/account_manage/delete_user.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのアカウントを削除しますか？\nこれを実行すると会計記録も消えます！\');">削除</button></td>';
+                            echo '<td class="text-nowrap">' . $account->get_status() . '</td>';
+                            echo '<td class="text-nowrap">
+                                <button type="submit" name="present" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを在団にしますか？\');">在団</button>
+                                <button type="submit" name="absent" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを休団にしますか？\');">休団</button>
+                                <button type="submit" name="resign" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを退団にしますか？\');">退団</button>
+                            </td>';
+                            // echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/account_manage/delete_user.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのアカウントを削除しますか？\nこれを実行すると会計記録も消えます！\');">削除</button></td>';
                             echo '</tr>';
                         }
                         ?>
