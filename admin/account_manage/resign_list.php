@@ -106,18 +106,13 @@ $script .= '$(document).ready(function() {
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
         columnDefs: [';
-if ($user->admin == 1) {
-    $script .= '{ "orderable": false, "targets": 0 },
-            { "orderable": false, "targets": 6 },
-            { "orderable": false, "targets": 9 },
-            { "orderable": true, "orderDataType": "part", "targets": 2 }';
-} else if ($user->admin == 2) {
-    $script .= '{ "orderable": false, "targets": 4 },
+if ($user->admin == 1 || $user->admin == 3) {
+    $script .= '{ "orderable": false, "targets": 5 },
             { "orderable": false, "targets": 6 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';
 } else {
-    $script .= '{ "orderable": false, "targets": 5 },
-            { "orderable": false, "targets": 7 },
+    $script .= '{ "orderable": false, "targets": 4 },
+            { "orderable": false, "targets": 5 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';
 }
 
