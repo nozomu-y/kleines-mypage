@@ -23,8 +23,7 @@ if (!($user->admin == 1 || $user->admin == 3)) {
 }
 
 if (!isset($_POST['fee_id'])) {
-    // header('Location: /member/mypage/admin/accounting/');
-    echo 'failure';
+    header('Location: /member/mypage/admin/accounting/');
     exit();
 }
 
@@ -35,9 +34,10 @@ if (!$result) {
     $mysqli->close();
     exit();
 }
-$fee_list = new Fee_List($fee_id);
+$fee_list = new Fee_List($result->fetch_assoc());
 if ($fee_list->admin != 3) {
     header('Location: /member/mypage/admin/accounting/');
+
     exit();
 }
 
