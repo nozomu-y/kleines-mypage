@@ -69,7 +69,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         var form_fee_id = document.createElement('input');
                         form_fee_id.type = 'hidden';
                         form_fee_id.name = 'fee_id';
-                        form_fee_id.value = <?php echo $fee_list->id; ?>;
+                        form_fee_id.value = '<?php echo $fee_list->id; ?>';
                         form.appendChild(form_fee_id);
 
                         var form_price = document.createElement('input');
@@ -112,7 +112,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 var form_fee_id = document.createElement('input');
                 form_fee_id.type = 'hidden';
                 form_fee_id.name = 'fee_id';
-                form_fee_id.value = <?php echo $fee_list->id; ?>;
+                form_fee_id.value = '<?php echo $fee_list->id; ?>';
                 form.appendChild(form_fee_id);
 
                 var form_price = document.createElement('input');
@@ -151,7 +151,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             var form_fee_id = document.createElement('input');
             form_fee_id.type = 'hidden';
             form_fee_id.name = 'fee_id';
-            form_fee_id.value = <?php echo $fee_list->id; ?>;
+            form_fee_id.value = '<?php echo $fee_list->id; ?>';
             form.appendChild(form_fee_id);
 
             var form_user_id = document.createElement('input');
