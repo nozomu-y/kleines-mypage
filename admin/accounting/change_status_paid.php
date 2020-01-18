@@ -11,7 +11,7 @@ $email = $_SESSION['mypage_email'];
 $query = "SELECT * FROM members WHERE email='$email'";
 $result = $mysqli->query($query);
 if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
+    print('Query Failed1 : ' . $mysqli->error);
     $mysqli->close();
     exit();
 }
@@ -30,7 +30,7 @@ if (!isset($_POST['fee_id'])) {
 $fee_id = $_POST['fee_id'];
 $query = "SELECT * FROM fee_list WHERE id='$fee_id'";
 if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
+    print('Query Failed2 : ' . $mysqli->error);
     $mysqli->close();
     exit();
 }
@@ -48,7 +48,7 @@ $paid_cash = $_POST['paid_cash'];
 $query = "SELECT * FROM members WHERE id='$user_id'";
 $result = $mysqli->query($query);
 if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
+    print('Query Failed3 : ' . $mysqli->error);
     $mysqli->close();
     exit();
 }
@@ -59,7 +59,7 @@ $paid_individual = '-' . strval(intval($price) - intval($paid_cash));
 $query = "UPDATE fee_record_$account->id SET datetime = now(), paid_cash = $paid_cash WHERE id = $fee_id";
 $result = $mysqli->query($query);
 if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
+    print('Query Failed4 : ' . $mysqli->error);
     $mysqli->close();
     exit();
 }
@@ -69,7 +69,7 @@ if (intval($price) - intval($paid_cash) > 0) {
     $query = "SELECT id FROM individual_accounting_$account->id ORDER BY id ASC";
     $result = $mysqli->query($query);
     if (!$result) {
-        print('Query Failed : ' . $mysqli->error);
+        print('Query Failed5 : ' . $mysqli->error);
         $mysqli->close();
         exit();
     }
@@ -80,7 +80,7 @@ if (intval($price) - intval($paid_cash) > 0) {
     $query = "INSERT INTO individual_accounting_$account->id (id, date, name, price) VALUES ('$list_id', now(), '$fee_list->name', $paid_individual)";
     $result = $mysqli->query($query);
     if (!$result) {
-        print('Query Failed : ' . $mysqli->error);
+        print('Query Failed6 : ' . $mysqli->error);
         $mysqli->close();
         exit();
     }
