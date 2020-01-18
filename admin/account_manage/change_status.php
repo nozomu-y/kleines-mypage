@@ -81,6 +81,13 @@ if (isset($_POST['present'])) {
         $mysqli->close();
         exit();
     }
+    $query = "UPDATE members SET admin = NULL WHERE id = $id";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
     // make log file
     error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " changed the status of " . $account->name . " to resign. \n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
     header('Location: /member/mypage/admin/account_manage/');
