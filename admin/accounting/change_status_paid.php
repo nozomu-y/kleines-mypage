@@ -23,7 +23,8 @@ if (!($user->admin == 1 || $user->admin == 3)) {
 }
 
 if (!isset($_POST['fee_id'])) {
-    header('Location: /member/mypage/admin/accounting/');
+    // header('Location: /member/mypage/admin/accounting/');
+    echo 'failure';
     exit();
 }
 
