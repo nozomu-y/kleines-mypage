@@ -14,6 +14,7 @@ class User
     public $validation_time;
     public $login_failure;
     public $admin;
+    public $status;
     public $name;
     public $delinquent;
     public $individual_accounting_total;
@@ -32,6 +33,7 @@ class User
         $this->validation_time = $user['validation_time'];
         $this->login_failure = $user['login_failure'];
         $this->admin = (int) $user['admin'];
+        $this->status = (int) $user['status'];
         $this->name = $user['last_name'] . $user['first_name'];
 
         require('/home/chorkleines/www/member/mypage/Core/config.php');
@@ -104,6 +106,17 @@ class User
             return "合宿会計システム";
         } else {
             return '';
+        }
+    }
+
+    public function get_status()
+    {
+        if ($this->status == 0) {
+            return "在団";
+        } else if ($this->status == 1) {
+            return "休団";
+        } else {
+            return "退団";
         }
     }
 
