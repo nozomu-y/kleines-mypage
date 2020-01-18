@@ -31,7 +31,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/">アカウント管理</a></li>
+                    <li class="breadcrumb-item"><a href="/member/mypage/admin/account_manage/">アカウント管理</a></li>
                     <li class="breadcrumb-item active" aria-current="page">ログ</li>
                 </ol>
             </nav>
