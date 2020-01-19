@@ -29,6 +29,7 @@ if (!isset($_POST['fee_id'])) {
 
 $fee_id = $_POST['fee_id'];
 $query = "SELECT * FROM fee_list WHERE id='$fee_id'";
+$result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
     $mysqli->close();
