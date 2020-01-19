@@ -127,3 +127,9 @@ if (intval($price) - intval($paid_cash) == 0) {
 } else {
     error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の「" . $fee_list->name . "」の提出状況を既納に変更し、現金で￥" . $paid_cash . "受け取り、個別会計から￥" . $paid_individual . "差し引きました。\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
 }
+
+$_SESSION['mypage_account_name'] = $account->name;
+$_SESSION['mypage_fee_status'] = "既納";
+
+header('Location: /member/mypage/admin/accounting/detail.php?fee_id=' . $fee_list->id);
+exit();
