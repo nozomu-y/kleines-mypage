@@ -146,14 +146,15 @@ $script .= '$(document).ready(function() {
             "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Japanese.json"
         },
         order: [], // 初期表示時には並び替えをしない
-        lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
+        lengthChange: false,
+        displayLength: -1,
         columnDefs: [{ "orderable": false, "targets": 0 },
             { "orderable": true, "orderDataType": "part", "targets": 2 }],
         deferRender : false,
         autowidth: false,
         scrollX: true,
         // fixedHeader: true
-         dom:"<\'row\'<\'col-sm-6\'l><\'col-sm-6 right\'f>>" +
+         dom:"<\'row\'<\'col-sm-6\'><\'col-sm-6 right\'f>>" +
             "<\'row\'<\'col-sm-12 mb-2\'tr>>" +
             "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
     }); 
