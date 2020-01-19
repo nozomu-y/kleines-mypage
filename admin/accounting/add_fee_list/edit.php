@@ -22,6 +22,25 @@ if (!($user->admin == 1 || $user->admin == 3)) {
     exit();
 }
 
+if (!isset($_GET['fee_id'])) {
+    header('Location: /member/mypage/admin/accounting/');
+    exit();
+}
+
+$fee_id = $_GET['fee_id'];
+$query = "SELECT * FROM fee_list WHERE id='$fee_id'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$fee_list = new Fee_List($result->fetch_assoc());
+if ($fee_list->admin != 3) {
+    header('Location: /member/mypage/admin/accounting/');
+    exit();
+}
+
 include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
@@ -40,12 +59,12 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 <form method="post" action="./edit_fee_list.php" class="mb-4">
                     <div class="form-group">
                         <label for="fee-list">集金リスト名</label>
-                        <input type="text" class="form-control" name="name" id="fee-list" aria-describedby="nameHelp" required>
+                        <input type="text" class="form-control" name="name" id="fee-list" aria-describedby="nameHelp" value="<?php echo $fee_list->name; ?>" required>
                         <small id="nameHelp" class="form-text text-muted">「団費」「演奏会費」のように入力してください。</small>
                     </div>
                     <div class="form-group">
                         <label for="deadline">期限</label>
-                        <input type="date" name="deadline" class="form-control" id="deadline" required>
+                        <input type="date" name="deadline" class="form-control" id="deadline" value="<?php echo $fee_list->deadline; ?>" required>
                     </div>
                     <input type="hidden" name="fee_id" value="<?php echo $fee_list->id; ?>">
                     <button type="submit" class="btn btn-primary" name="submit">リストを更新</button>
