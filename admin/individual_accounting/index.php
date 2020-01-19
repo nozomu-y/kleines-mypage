@@ -66,41 +66,10 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                     continue;
                                 }
                                 echo '<tr>';
-                                if ($user->admin == 1) {
-                                    echo '<td><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="check[]" value="' . $account->id . '"></div></td>';
-                                }
                                 echo '<td class="text-nowrap">' . $account->grade . '</td>';
                                 echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                                echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                                if ($user->admin == 1 || $user->admin == 3) {
-                                    echo '<td class="text-nowrap text-right">' . $account->get_delinquent() . '</td>';
-                                }
-                                echo '<td class="text-nowrap">' . $account->email . '</td>';
-                                echo '<td class="text-nowrap">' . $account->get_password() . '</td>';
-                                if ($user->admin == 1) {
-                                    echo '<td class="text-nowrap">' . $account->get_admin() . '</td>';
-                                }
-                                echo '<td class="text-nowrap">' . $account->get_status() . '</td>';
-                                switch ($account->status) {
-                                    case 0:
-                                        $disabled_present = "disabled";
-                                        $disabled_absent = "";
-                                        $disabled_resign = "";
-                                        break;
-                                    case 1:
-                                        $disabled_present = "";
-                                        $disabled_absent = "disabled";
-                                        $disabled_resign = "";
-                                        break;
-                                }
-                                if ($account->admin != NULL) {
-                                    $resign_warning = "このユーザーは管理者権限（" . $account->get_admin() . "）を持っています。このアカウントを退団にすると権限も削除されます。";
-                                }
-                                echo '<td class="text-nowrap">
-                                <button type="submit" name="present" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを在団にしますか？\');" ' . $disabled_present . '>在団</button>
-                                <button type="submit" name="absent" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを休団にしますか？\');" ' . $disabled_absent . '>休団</button>
-                                <button type="submit" name="resign" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを退団にしますか？\n' . $resign_warning . '\');">退団</button>
-                                </td>';
+                                echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span><a href="detail.php' . $account->id . '" class="text-secondary"><u>' . $account->name . '</u></a></td>';
+                                echo '<td class="text-nowrap">' . $account->get_individual_accounting_total() . '</td>';
                                 echo '</tr>';
                             }
                             ?>
@@ -129,21 +98,10 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
         </div>
         <div class="col-xl-3 col-sm-12">
             <div class="card shadow mb-4">
-                <div class="card-header">管理者一覧</div>
-                <div class="card-body">管理者権限のあるユーザーのステータス変更</div>
-            </div>
-            <div class="card shadow mb-4">
-                <div class="card-header">ステータス</div>
-                <div class="card-body">
-                    <p>全てのアカウントは在団・休団・退団の3つのステータスで管理されます。<br>このページには在団・休団のみが表示されます。</p>
-                    <a href="./resign_list.php">退団者リスト</a>
-                </div>
-            </div>
-            <div class="card shadow mb-4">
                 <div class="card-header">ログ</div>
                 <div class="card-body">
                     <p>このページで行われる操作は全てログとして残ります。</p>
-                    <a href="./account_log.php">ログを閲覧</a>
+                    <a href="/member/mypage/admin/accounting/accounting_log.php">ログを閲覧</a>
                 </div>
             </div>
         </div>
@@ -159,25 +117,8 @@ $script .= '$(document).ready(function() {
         },
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
-        columnDefs: [';
-if ($user->admin == 1) {
-    $script .= '{ "orderable": false, "targets": 0 },
-            { "orderable": false, "targets": 6 },
-            { "orderable": false, "targets": 9 },
-            { "orderable": true, "orderDataType": "part", "targets": 2 },
-            { type: "currency", targets: 4 }';
-} else if ($user->admin == 2) {
-    $script .= '{ "orderable": false, "targets": 4 },
-            { "orderable": false, "targets": 6 },
-            { "orderable": true, "orderDataType": "part", "targets": 1 }';
-} else {
-    $script .= '{ "orderable": false, "targets": 5 },
-            { "orderable": false, "targets": 7 },
-            { "orderable": true, "orderDataType": "part", "targets": 1 },
-            { type: "currency", targets: 3 }';
-}
-
-$script .= '],
+        columnDefs: [{ "orderable": true, "orderDataType": "part", "targets": 1 },
+            { type: "currency", targets: 3 }],
         deferRender : false,
         autowidth: false,
         scrollX: true,
