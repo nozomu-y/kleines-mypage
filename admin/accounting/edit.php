@@ -68,24 +68,35 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </ol>
             </nav>
             <div class="mb-4">
-                <form method="post" action="./edit_price.php" class="mb-4">
-                    <div class="form-group">
-                        <label for="fee-list">集金リスト名</label>
-                        <input type="text" class="form-control" name="name" id="fee-list" aria-describedby="nameHelp" value="<?php echo $fee->name; ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="deadline">期限</label>
-                        <input type="date" name="deadline" class="form-control" id="deadline" value="<?php echo date('Y-m-d', strtotime($fee->deadline)); ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="price">金額</label>
-                        <input type="number" name="price" class="form-control" id="price" value="<?php echo $fee->price; ?>" required>
-                    </div>
-                    <input type="hidden" name="fee_id" value="<?php echo $fee->id; ?>">
-                    <input type="hidden" name="account_id" value="<?php echo $account->id; ?>">
-                    <button type="submit" class="btn btn-primary" name="submit">金額を変更</button>
-                    <a class="btn btn-secondary" href="/member/mypage/admin/accounting/detail.php?fee_id=<?php echo $fee->id ?>" role="button">キャンセル</a>
-                </form>
+                <?php
+                if ($fee->datetime == NULL) {
+                ?>
+                    <form method="post" action="./edit_price.php" class="mb-4">
+                        <div class="form-group">
+                            <label for="fee-list">集金リスト名</label>
+                            <input type="text" class="form-control" name="name" id="fee-list" aria-describedby="nameHelp" value="<?php echo $fee->name; ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="deadline">期限</label>
+                            <input type="date" name="deadline" class="form-control" id="deadline" value="<?php echo date('Y-m-d', strtotime($fee->deadline)); ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">金額</label>
+                            <input type="number" name="price" class="form-control" id="price" value="<?php echo $fee->price; ?>" required>
+                        </div>
+                        <input type="hidden" name="fee_id" value="<?php echo $fee->id; ?>">
+                        <input type="hidden" name="account_id" value="<?php echo $account->id; ?>">
+                        <button type="submit" class="btn btn-primary" name="submit">金額を変更</button>
+                        <a class="btn btn-secondary" href="/member/mypage/admin/accounting/detail.php?fee_id=<?php echo $fee->id ?>" role="button">キャンセル</a>
+                    </form>
+                <?php
+                } else {
+                ?>
+                    <div class="alert alert-info shadow p-3 mb-4" role="alert">既に集金が完了しています。</div>
+                    <a class="btn btn-secondary" href="/member/mypage/admin/accounting/detail.php?fee_id=<?php echo $fee->id; ?>" role="button">キャンセル</a>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </div>
