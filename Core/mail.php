@@ -1,5 +1,5 @@
 <?php
-require '/home/chorkleines/www/member/download/18/mypage/googleapi/vendor/autoload.php';
+require '/home/chorkleines/www/member/mypage/googleapi/vendor/autoload.php';
 
 function getClient()
 {
@@ -7,12 +7,12 @@ function getClient()
     $client->setApplicationName('Gmail API PHP Quickstart');
     $client->setScopes(Google_Service_Gmail::GMAIL_READONLY);
     $client->setScopes('https://www.googleapis.com/auth/gmail.send');
-    $client->setAuthConfig('/home/chorkleines/www/member/download/18/mypage/googleapi/credentials.json');
+    $client->setAuthConfig('/home/chorkleines/www/member/mypage/googleapi/credentials.json');
     $client->setApprovalPrompt('auto');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
 
-    $tokenPath = '/home/chorkleines/www/member/download/18/mypage/googleapi/token.json';
+    $tokenPath = '/home/chorkleines/www/member/mypage/googleapi/token.json';
     if (file_exists($tokenPath)) {
         $accessToken = json_decode(file_get_contents($tokenPath), true);
         $client->setAccessToken($accessToken);
