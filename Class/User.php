@@ -306,7 +306,6 @@ class Fee_List
         while ($row = $result->fetch_assoc()) {
             $id = $row['id'];
             $query = "SELECT * FROM fee_record_$id WHERE id = $this->id";
-            print($query);
             $result = $mysqli->query($query);
             if (!$result) {
                 print('Query Failed : ' . $mysqli->error);
