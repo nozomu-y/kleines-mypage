@@ -21,6 +21,9 @@ if (isset($_SESSION['mypage_auth_error'])) {
         $failure_message = "ログインに10回連続で失敗しています。パスワードをリセットしてください。";
     }
 }
+if (isset($_SESSION['mypage_password_success'])) {
+    $mypage_password_success = true;
+}
 $_SESSION = array();
 setcookie(session_name(), '', time() - 1, '/');
 session_destroy();
@@ -99,6 +102,14 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                         <a class="small" href="/member/mypage/forgot_password/">パスワードを忘れた方はこちら</a>
                                     </div>
                                 </div>
+                                <?php
+                                if ($mypage_auth_success) {
+                                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                                    echo 'パスワードの設定が完了しました。';
+                                    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                                    echo '</div>';
+                                }
+                                ?>
                             </div>
                             <div class="col-lg-3"></div>
                         </div>
