@@ -26,6 +26,12 @@ if (!$result) {
     $mysqli->close();
     exit();
 }
+$row_cnt = $result->num_rows;
+if ($row_cnt == 0) {
+    $_SESSION['mypage_token_expired'];
+    header('Location: /member/mypage/signup/');
+    exit();
+}
 $account = new User($result->fetch_assoc());
 
 $validation_time = strtotime($account->validation_time);
