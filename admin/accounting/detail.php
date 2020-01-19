@@ -200,6 +200,13 @@ if ($user->admin == 1 || $user->admin == 3) {
                 echo '</div>';
                 unset($_SESSION['mypage_update_fee']);
             }
+            if (isset($_SESSION['mypage_update_subject'])) {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '集金対象者を更新しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_update_subject']);
+            }
             ?>
             <div class="mb-4">
                 <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">
