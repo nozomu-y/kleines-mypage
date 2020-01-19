@@ -29,6 +29,7 @@ if (!isset($_POST['fee_id'])) {
 
 $fee_id = $_POST['fee_id'];
 $query = "SELECT * FROM fee_list WHERE id=$fee_id";
+$result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
     $mysqli->close();
@@ -36,12 +37,11 @@ if (!$result) {
 }
 
 // something's wrong here
-// print($query);
-// print($result->fetch_assoc()['id']);
 while ($row = $result->fetch_assoc()) {
     echo $row['id'];
     echo $row['admin'];
 }
+//
 $fee_list = new Fee_List($result->fetch_assoc());
 if ($fee_list->admin != 3) {
     header('Location: /member/mypage/admin/accounting/');
