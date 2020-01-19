@@ -53,5 +53,5 @@ if (!$result) {
 
 // make log file
 error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が新規集金リスト「" . $name . "」を追加しました。（期限：" . $deadline . "、金額：" . $price . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
-header('Location: subject.php?id=' . $fee_id);
+header('Location: subject.php?fee_id=' . $fee_id);
 exit();
