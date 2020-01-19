@@ -266,7 +266,11 @@ if ($user->admin == 1 || $user->admin == 3) {
                                     $disabled_paid = "";
                                     $disabled_unpaid = "disabled";
                                 }
-                                echo '<tr>';
+                                if ($account->status != 2) {
+                                    echo '<tr>';
+                                } else {
+                                    echo '<tr class="table-danger">';
+                                }
                                 echo '<td class="text-nowrap">' . $account->grade . '</td>';
                                 echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                                 echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
