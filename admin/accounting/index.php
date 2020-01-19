@@ -75,6 +75,12 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <a href="./accounting_log.php">ログを閲覧</a>
                 </div>
             </div>
+            <div class="card shadow mb-4">
+                <div class="card-header">todo</div>
+                <div class="card-body">
+                    <p>fee listを削除した場合，既に処理した会計はどうするのか</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
