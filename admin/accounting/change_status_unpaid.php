@@ -82,7 +82,7 @@ if (!$result) {
 /** ログファイル作成の処理 **/
 error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の「" . $fee_list->name . "」の提出状況を未納に変更しました。\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
 
-$_SESSION['mypage_account_name'] = $account->name;
+$_SESSION['mypage_account_name'] = $account->get_name();
 $_SESSION['mypage_fee_status'] = "未納";
 
 header('Location: /member/mypage/admin/accounting/detail.php?fee_id=' . $fee_list->id);
