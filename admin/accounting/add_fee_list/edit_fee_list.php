@@ -40,6 +40,8 @@ if (!$result) {
     exit();
 }
 
+$_SESSION['mypage_update_fee'] = '';
+
 // make log file
 error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が新規集金リスト「" . $name . "」を編集しました。（期限：" . $deadline . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
 header('Location: detail.php?fee_id=' . $fee_id);
