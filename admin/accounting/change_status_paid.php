@@ -88,17 +88,17 @@ if (intval($price) - intval($paid_cash) > 0) {
 }
 
 
-/* GoogleApi を用いてメールを送信する */
+/* use google api to send an email */
 require_once('/home/chorkleines/www/member/mypage/googleapi/mail.php');
 $msg = new Google_Service_Gmail_Message();
 $data = "";
-$data .= "To: " . $account->email . "\n"; //送信先
-$data .= "Cc: \n"; //CC
+$data .= "To: " . $account->email . "\n";
+$data .= "Cc: \n";
 $from = "コール・クライネス会計";
 $data .= "From: " . mb_encode_mimeheader($from, 'utf-8') . " <kleines.webmaster@gmail.com>\n";
 $subject = $fee_list->name . '完了のお知らせ';
 $data .= "Subject: " . mb_encode_mimeheader($subject, 'utf-8') . "\n";
-$data .= "\n"; //改行２回でヘッダー部分を区別
+$data .= "\n";
 $body = "コール・クライネス会計です。\n" . $fee_list->name . "（￥" . $price . "）の集金が完了致しました。\n";
 if (intval($price) - intval($paid_cash) == 0) {
     $body .= "現金で￥" . $paid_cash . "を徴収しました。\n";
@@ -109,19 +109,19 @@ $body .= "お支払いただきありがとうございます。\n";
 $body .= "\n支払った覚えのない方は会計またはWeb管までご連絡ください。";
 $body .= "\n\nマイページへのアクセスは https://www.chorkleines.com/member/mypage/ から。";
 $data .= $body;
-$data = base64_encode($data); //base64エンコードする
-$data = strtr($data, '+/', '-_'); //サニタイジング
-$data = rtrim($data, '='); //最後の'='を除去
-$msg->setRaw($data); //データをセット
-//オブジェクト生成
+$data = base64_encode($data);
+$data = strtr($data, '+/', '-_');
+$data = rtrim($data, '=');
+$msg->setRaw($data);
+// make object
 $service = new Google_Service_Gmail($client);
-//メッセージ作成
+// make message
 $message = $msg;
-//メッセージ送信
+//send message
 $message = $service->users_messages->send("me", $message);
-// 値を正にする
+// get absolute number
 $paid_individual *= -1;
-/** ログファイル作成の処理 **/
+// make log file
 if (intval($price) - intval($paid_cash) == 0) {
     error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の「" . $fee_list->name . "」の提出状況を既納に変更し、現金で￥" . $paid_cash . "受け取りました。\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
 } else {
