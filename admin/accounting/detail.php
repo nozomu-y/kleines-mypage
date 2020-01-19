@@ -193,6 +193,13 @@ if ($user->admin == 1 || $user->admin == 3) {
                 unset($_SESSION['mypage_fee_status']);
                 unset($_SESSION['mypage_account_name']);
             }
+            if (isset($_SESSION['mypage_update_fee'])) {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>の集金状況を<strong>' . $_SESSION['mypage_fee_status'] . '</strong>に変更しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_update_fee']);
+            }
             ?>
             <div class="mb-4">
                 <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">
