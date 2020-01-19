@@ -28,7 +28,7 @@ if (!$result) {
 }
 $row_cnt = $result->num_rows;
 if ($row_cnt == 0) {
-    $_SESSION['mypage_token_expired'];
+    $_SESSION['mypage_token_expired'] = "";
     header('Location: /member/mypage/signup/');
     exit();
 }
@@ -37,7 +37,7 @@ $account = new User($result->fetch_assoc());
 $validation_time = strtotime($account->validation_time);
 $time_now = strtotime(date("Y-m-d H:i:s"));
 if ($time_now - $validation_time > 86400) {
-    $_SESSION['mypage_token_expired'];
+    $_SESSION['mypage_token_expired'] = "";
     header('Location: /member/mypage/signup/');
     exit();
 }
