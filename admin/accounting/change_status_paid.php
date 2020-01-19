@@ -92,14 +92,14 @@ if (intval($price) - intval($paid_cash) > 0) {
 require_once('/home/chorkleines/www/member/mypage/googleapi/mail.php');
 $msg = new Google_Service_Gmail_Message();
 $data = "";
-$data .= "To: " . $email_u . "\n"; //送信先
+$data .= "To: " . $account->email . "\n"; //送信先
 $data .= "Cc: \n"; //CC
 $from = "コール・クライネス会計";
 $data .= "From: " . mb_encode_mimeheader($from, 'utf-8') . " <kleines.webmaster@gmail.com>\n";
-$subject = $name . '完了のお知らせ';
+$subject = $fee_list->name . '完了のお知らせ';
 $data .= "Subject: " . mb_encode_mimeheader($subject, 'utf-8') . "\n";
 $data .= "\n"; //改行２回でヘッダー部分を区別
-$body = "コール・クライネス会計です。\n" . $name . "（￥" . $price . "）の集金が完了致しました。\n";
+$body = "コール・クライネス会計です。\n" . $fee_list->name . "（￥" . $price . "）の集金が完了致しました。\n";
 if (intval($price) - intval($paid_cash) == 0) {
     $body .= "現金で￥" . $paid_cash . "を徴収しました。\n";
 } else {
@@ -122,4 +122,8 @@ $message = $service->users_messages->send("me", $message);
 // 値を正にする
 $paid_individual *= -1;
 /** ログファイル作成の処理 **/
-error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の「" . $fee_list->name . "」の提出状況を既納に変更し、現金で￥" . $paid_cash . "受け取り、個別会計から￥" . $paid_individual . "差し引きました。\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
+if (intval($price) - intval($paid_cash) == 0) {
+    error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の「" . $fee_list->name . "」の提出状況を既納に変更し、現金で￥" . $paid_cash . "受け取りました。\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
+} else {
+    error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の「" . $fee_list->name . "」の提出状況を既納に変更し、現金で￥" . $paid_cash . "受け取り、個別会計から￥" . $paid_individual . "差し引きました。\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
+}
