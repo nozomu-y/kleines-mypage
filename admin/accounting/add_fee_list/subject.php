@@ -108,7 +108,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                     $hidden = '';
                                 }
 
-                                if (!($user->status == 2 && $row_cnt == 0)) {
+                                if (!($account->status == 2 && $row_cnt == 0)) {
                                     echo '<tr>';
                                     echo '<td><div class="form-check form-check-inline"><input type="hidden" name="check_' . $account->id . '" value="0"><input ' . $hidden . ' class="form-check-input" ' . $check . ' type="checkbox" name="check_' . $account->id . '" value="1"></div></td>';
                                     echo '<td class="text-nowrap">' . $account->grade . '</td>';
