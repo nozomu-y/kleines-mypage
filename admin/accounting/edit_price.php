@@ -62,7 +62,8 @@ if (!$result) {
     exit();
 }
 
-$_SESSION['mypage_update_price'] = '';
+$_SESSION['mypage_update_price'] = $price;
+$_SESSION['mypage_account_name'] = $account->name;
 
 // make log file
 error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の集金リスト「" . $fee->name . "」の金額を変更しました。（金額：" . $price . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
