@@ -96,10 +96,7 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="/member/mypage/signup/">新規登録はこちら</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="/member/mypage/forgot_password/">パスワードを忘れた方はこちら</a>
+                                        <a class="small" href="/member/mypage/signup/">パスワードの発行</a>
                                     </div>
                                 </div>
                                 <?php
