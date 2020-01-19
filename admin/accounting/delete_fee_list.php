@@ -1,44 +1,64 @@
 <?php
+ob_start();
+session_start();
+if (!isset($_SESSION['mypage_email'])) {
+    header('Location: /member/mypage/login/');
+    exit();
+}
+
+require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
+$email = $_SESSION['mypage_email'];
+$query = "SELECT * FROM members WHERE email='$email'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$user = new User($result->fetch_assoc());
+
+if (!($user->admin == 1 || $user->admin == 3)) {
+    header('Location: /member/mypage/');
+    exit();
+}
+
 if (isset($_POST['delete'])) {
-    $check = $_POST['check'];
-    foreach ($check as $value) {
-        require_once('../../dbconnect.php');
-        $query = "SELECT * FROM fee_list WHERE id = $value";
-        $result = $mysqli->query($query);
-        while ($row = $result->fetch_assoc()) {
-            $fee_name_tmp = $row['name'];
-        }
-        if (!$result) {
-            print('クエリーが失敗しました。' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        require_once('../../dbconnect.php');
-        $query = "DELETE FROM fee_list WHERE id = $value";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('クエリーが失敗しました。' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        require_once('../../dbconnect.php');
-        $query = "SELECT * FROM members ORDER BY id";
+    $fee_id = $_POST['delete'];
+    $query = "SELECT * FROM fee_list WHERE id = $fee_id";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $fee_list = new Fee_List($result->fetch_assoc());
+    $query = "DELETE FROM fee_list WHERE id = $fee_id";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $query = "SELECT * FROM members ORDER BY id";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    while ($row = $result->fetch_assoc()) {
+        $account = new User($row);
+        $query = "DELETE FROM fee_record_$account->id WHERE id = $fee_id";
         $result_1 = $mysqli->query($query);
-        while ($row_1 = $result_1->fetch_assoc()) {
-            $id_u = $row_1['id'];
-            require_once('../../dbconnect.php');
-            $query = "DELETE FROM fee_record_$id_u WHERE id = $value";
-            $result_2 = $mysqli->query($query);
-            if (!$result_2) {
-                print('クエリーが失敗しました。' . $mysqli->error);
-                $mysqli->close();
-                exit();
-            }
+        if (!$result_1) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
         }
     }
-    /** ログファイル作成の処理 **/
-    date_default_timezone_set('Asia/Tokyo');
-    error_log("[" . date('Y/m/d H:i:s') . "] " . $last_name . $first_name . "が集金リスト「" . $fee_name_tmp . "」を削除しました。\n", 3, "../core/fee.log");
-    header('Location: index.php');
+
+    // make log file
+    error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が集金リスト「" . $fee_list->name . "」を削除しました。\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
+    header('Location: /member/mypage/admin/accounting/');
     exit();
 }
