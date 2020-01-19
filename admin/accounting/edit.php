@@ -64,7 +64,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/">集金リスト一覧</a></li>
                     <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/detail.php?fee_id=<?php echo $fee->id ?>"><?php echo $fee->name ?></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">金額の変更</li>
+                    <li class="breadcrumb-item active" aria-current="page">金額の変更（<?php echo $account->get_name() ?>）</li>
                 </ol>
             </nav>
             <div class="mb-4">
