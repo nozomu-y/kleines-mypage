@@ -17,7 +17,7 @@ if (isset($_POST['signup'])) {
         exit();
     }
     $account = new User($row = $result->fetch_assoc());
-    $row_cnt = $result->num_rows();
+    $row_cnt = $result->num_rows;
     if ($row_cnt == 0) {
         $_SESSION['mypage_auth_error'] = "wrong-email";
         header('Location: /member/mypage/signup/');
