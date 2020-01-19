@@ -66,7 +66,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </table>
                 </div>
             </form>
-            <a class="btn btn-primary mb-4" href="/member/mypage/admin/accounting/add_fee_list/" role="button">集金リストの追加</a>
+            <?php
+            if ($user->admin == 1 || $user->admin == 3) {
+            ?>
+                <a class="btn btn-primary mb-4" href="/member/mypage/admin/accounting/add_fee_list/" role="button">集金リストの追加</a>
+            <?php
+            }
+            ?>
         </div>
         <div class="col-xl-3 col-sm-12">
             <?php
