@@ -61,7 +61,7 @@ foreach ($_POST as $key => $value) {
     }
 }
 
-$_SESSION['mypage_update_fee'] = '';
+$_SESSION['mypage_update_subject'] = '';
 
 header('Location: /member/mypage/admin/accounting/detail.php?fee_id=' . $fee_id);
 exit();
