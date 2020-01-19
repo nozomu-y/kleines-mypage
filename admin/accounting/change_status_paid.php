@@ -36,12 +36,6 @@ if (!$result) {
     exit();
 }
 
-// something's wrong here
-while ($row = $result->fetch_assoc()) {
-    echo $row['id'];
-    echo $row['admin'];
-}
-//
 $fee_list = new Fee_List($result->fetch_assoc());
 if ($fee_list->admin != 3) {
     header('Location: /member/mypage/admin/accounting/');
