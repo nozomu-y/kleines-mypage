@@ -278,7 +278,7 @@ if ($user->admin == 1 || $user->admin == 3) {
                                 echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
                                 echo '<td class="text-nowrap text-right">' . $fee->get_price() . '</td>';
                                 if ($user->admin == 1 || $user->admin == 3) {
-                                    echo '<td class="text-nowrap"><a href="./edit_price.php?id=' . $account->id . '&fee_id=' . $fee_list->id . '" class="text-secondary"><u>編集</u></a></td>';
+                                    echo '<td class="text-nowrap"><a href="./edit.php?id=' . $account->id . '&fee_id=' . $fee_list->id . '" class="text-secondary"><u>編集</u></a></td>';
                                 }
                                 echo '</tr>';
                             }
