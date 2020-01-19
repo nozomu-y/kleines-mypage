@@ -124,7 +124,7 @@ if ($backtrace == '/index.php') {
                     </a>';
                     echo '<div id="collapseAccounting" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/member/mypage/admin/accounting/">集金記録</a>
+                    <a class="collapse-item" href="/member/mypage/admin/accounting/">集金リスト</a>
                     <a class="collapse-item" href="#">個別会計</a>
                     </div>
                     </div>
