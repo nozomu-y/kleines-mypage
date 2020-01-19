@@ -78,21 +78,21 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                     <div class="text-center">
                                         <a class="small" href="/member/mypage/login/">ログインはこちら</a>
                                     </div>
+                                    <?php
+                                    if ($mypage_auth_success) {
+                                        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                                        echo $email . 'にメールを送信しました。<br>24時間以内にリンクをクリックしてパスワードを設定してください。<br>メールが届かない場合は、<a href="mailto:kleines.webmaster@gmail.com" class="alert-link">kleines.webmaster@gmail.com</a>までご連絡ください。';
+                                        echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                                        echo '</div>';
+                                    }
+                                    if ($mypage_token_expired) {
+                                        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                                        echo 'リンクの期限が切れました。再度メール認証を行い、リンクを発行してください。';
+                                        echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                                        echo '</div>';
+                                    }
+                                    ?>
                                 </div>
-                                <?php
-                                if ($mypage_auth_success) {
-                                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                                    echo $email . 'にメールを送信しました。<br>24時間以内にリンクをクリックしてパスワードを設定してください。<br>メールが届かない場合は、<a href="mailto:kleines.webmaster@gmail.com" class="alert-link">kleines.webmaster@gmail.com</a>までご連絡ください。';
-                                    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-                                    echo '</div>';
-                                }
-                                if ($mypage_token_expired) {
-                                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
-                                    echo 'リンクの期限が切れました。再度メール認証を行い、リンクを発行してください。';
-                                    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-                                    echo '</div>';
-                                }
-                                ?>
                             </div>
                             <div class="col-lg-3"></div>
                         </div>
