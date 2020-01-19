@@ -17,7 +17,7 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 3)) {
+if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3)) {
     header('Location: /member/mypage/');
     exit();
 }
@@ -46,68 +46,110 @@ if ($fee_list->admin != 3) {
 include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
-<script>
-    function getPaid(id, name, i_a_price, price) {
-        if (i_a_price > 0) {
-            // 個別会計を使える場合（値が正）
-            var paid_cash = window.prompt(name + "さんの集金処理を行います。\n現金で受け取る金額を指定してください。\n個別会計残高：" + i_a_price + "\n集金額：" + price);
-            if ((paid_cash != "") && (paid_cash != null) && !isNaN(paid_cash)) {
-                if (Number(paid_cash) < 0) {
-                    window.alert("非負整数を入力して下さい。");
-                } else if (Number(paid_cash) > Number(price)) {
-                    window.alert("入力された金額が集金額よりも多いです。");
-                } else if (Number(price) - Number(paid_cash) > Number(i_a_price)) {
-                    window.alert("個別会計の残高が足りません。");
-                } else if (Number(price) - Number(paid_cash) <= Number(i_a_price)) {
-                    window.alert("現金で" + String(paid_cash) + "円徴収してください。\n残りの" + String(price - paid_cash) + "円は個別会計から差し引きます。");
-                    var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
-                    if (result) {
-                        var form = document.createElement('form');
-                        form.method = 'POST';
-                        form.action = '/member/mypage/admin/accounting/change_status_paid.php';
+<?php
+if ($user->admin == 1 || $user->admin == 3) {
+?>
+    <script>
+        function getPaid(id, name, i_a_price, price) {
+            if (i_a_price > 0) {
+                // 個別会計を使える場合（値が正）
+                var paid_cash = window.prompt(name + "さんの集金処理を行います。\n現金で受け取る金額を指定してください。\n個別会計残高：" + i_a_price + "\n集金額：" + price);
+                if ((paid_cash != "") && (paid_cash != null) && !isNaN(paid_cash)) {
+                    if (Number(paid_cash) < 0) {
+                        window.alert("非負整数を入力して下さい。");
+                    } else if (Number(paid_cash) > Number(price)) {
+                        window.alert("入力された金額が集金額よりも多いです。");
+                    } else if (Number(price) - Number(paid_cash) > Number(i_a_price)) {
+                        window.alert("個別会計の残高が足りません。");
+                    } else if (Number(price) - Number(paid_cash) <= Number(i_a_price)) {
+                        window.alert("現金で" + String(paid_cash) + "円徴収してください。\n残りの" + String(price - paid_cash) + "円は個別会計から差し引きます。");
+                        var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
+                        if (result) {
+                            var form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = '/member/mypage/admin/accounting/change_status_paid.php';
 
-                        var form_fee_id = document.createElement('input');
-                        form_fee_id.type = 'hidden';
-                        form_fee_id.name = 'fee_id';
-                        form_fee_id.value = '<?php echo $fee_list->id; ?>';
-                        form.appendChild(form_fee_id);
+                            var form_fee_id = document.createElement('input');
+                            form_fee_id.type = 'hidden';
+                            form_fee_id.name = 'fee_id';
+                            form_fee_id.value = '<?php echo $fee_list->id; ?>';
+                            form.appendChild(form_fee_id);
 
-                        var form_price = document.createElement('input');
-                        form_price.type = 'hidden';
-                        form_price.name = 'price';
-                        form_price.value = price;
-                        form.appendChild(form_price);
+                            var form_price = document.createElement('input');
+                            form_price.type = 'hidden';
+                            form_price.name = 'price';
+                            form_price.value = price;
+                            form.appendChild(form_price);
 
-                        var form_user_id = document.createElement('input');
-                        form_user_id.type = 'hidden';
-                        form_user_id.name = 'user_id';
-                        form_user_id.value = id;
-                        form.appendChild(form_user_id);
+                            var form_user_id = document.createElement('input');
+                            form_user_id.type = 'hidden';
+                            form_user_id.name = 'user_id';
+                            form_user_id.value = id;
+                            form.appendChild(form_user_id);
 
-                        var form_paid_cash = document.createElement('input');
-                        form_paid_cash.type = 'hidden';
-                        form_paid_cash.name = 'paid_cash';
-                        form_paid_cash.value = String(paid_cash);
-                        form.appendChild(form_paid_cash);
+                            var form_paid_cash = document.createElement('input');
+                            form_paid_cash.type = 'hidden';
+                            form_paid_cash.name = 'paid_cash';
+                            form_paid_cash.value = String(paid_cash);
+                            form.appendChild(form_paid_cash);
 
-                        document.body.appendChild(form);
+                            document.body.appendChild(form);
 
-                        form.submit();
+                            form.submit();
+                        }
                     }
+                } else if ((paid_cash != "") && isNaN(paid_cash)) {
+                    window.alert("値は数字で入力してください。");
+                } else if (paid_cash == "") {
+                    window.alert("値を入力してください。");
                 }
-            } else if ((paid_cash != "") && isNaN(paid_cash)) {
-                window.alert("値は数字で入力してください。");
-            } else if (paid_cash == "") {
-                window.alert("値を入力してください。");
+            } else {
+                // 個別会計を使えない場合（値が負）
+                window.alert("個別会計の残高がありません。\n現金で" + price + "円徴収してください。");
+                var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
+                if (result) {
+                    var form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/member/mypage/admin/accounting/change_status_paid.php';
+
+                    var form_fee_id = document.createElement('input');
+                    form_fee_id.type = 'hidden';
+                    form_fee_id.name = 'fee_id';
+                    form_fee_id.value = '<?php echo $fee_list->id; ?>';
+                    form.appendChild(form_fee_id);
+
+                    var form_price = document.createElement('input');
+                    form_price.type = 'hidden';
+                    form_price.name = 'price';
+                    form_price.value = price;
+                    form.appendChild(form_price);
+
+                    var form_user_id = document.createElement('input');
+                    form_user_id.type = 'hidden';
+                    form_user_id.name = 'user_id';
+                    form_user_id.value = id;
+                    form.appendChild(form_user_id);
+
+                    var form_paid_cash = document.createElement('input');
+                    form_paid_cash.type = 'hidden';
+                    form_paid_cash.name = 'paid_cash';
+                    form_paid_cash.value = String(price);
+                    form.appendChild(form_paid_cash);
+
+                    document.body.appendChild(form);
+
+                    form.submit();
+                }
             }
-        } else {
-            // 個別会計を使えない場合（値が負）
-            window.alert("個別会計の残高がありません。\n現金で" + price + "円徴収してください。");
-            var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
+        }
+    </script>
+    <script>
+        function getUnpaid(id, name) {
+            var result = window.confirm(name + "さんの提出状況を未納に変更しますか？");
             if (result) {
                 var form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '/member/mypage/admin/accounting/change_status_paid.php';
+                form.action = '/member/mypage/admin/accounting/change_status_unpaid.php';
 
                 var form_fee_id = document.createElement('input');
                 form_fee_id.type = 'hidden';
@@ -115,57 +157,21 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 form_fee_id.value = '<?php echo $fee_list->id; ?>';
                 form.appendChild(form_fee_id);
 
-                var form_price = document.createElement('input');
-                form_price.type = 'hidden';
-                form_price.name = 'price';
-                form_price.value = price;
-                form.appendChild(form_price);
-
                 var form_user_id = document.createElement('input');
                 form_user_id.type = 'hidden';
                 form_user_id.name = 'user_id';
                 form_user_id.value = id;
                 form.appendChild(form_user_id);
 
-                var form_paid_cash = document.createElement('input');
-                form_paid_cash.type = 'hidden';
-                form_paid_cash.name = 'paid_cash';
-                form_paid_cash.value = String(price);
-                form.appendChild(form_paid_cash);
-
                 document.body.appendChild(form);
 
                 form.submit();
             }
         }
-    }
-</script>
-<script>
-    function getUnpaid(id, name) {
-        var result = window.confirm(name + "さんの提出状況を未納に変更しますか？");
-        if (result) {
-            var form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '/member/mypage/admin/accounting/change_status_unpaid.php';
-
-            var form_fee_id = document.createElement('input');
-            form_fee_id.type = 'hidden';
-            form_fee_id.name = 'fee_id';
-            form_fee_id.value = '<?php echo $fee_list->id; ?>';
-            form.appendChild(form_fee_id);
-
-            var form_user_id = document.createElement('input');
-            form_user_id.type = 'hidden';
-            form_user_id.name = 'user_id';
-            form_user_id.value = id;
-            form.appendChild(form_user_id);
-
-            document.body.appendChild(form);
-
-            form.submit();
-        }
-    }
-</script>
+    </script>
+<?php
+}
+?>
 
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">集金記録</h1>
@@ -195,11 +201,19 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             <th class="text-nowrap">学年</th>
                             <th class="text-nowrap">パート</th>
                             <th class="text-nowrap">氏名</th>
-                            <th class="text-nowrap">変更</th>
+                            <?php
+                            if ($user->admin == 1 || $user->admin == 3) {
+                                echo '<th class="text-nowrap">変更</th>';
+                            }
+                            ?>
                             <th class="text-nowrap">提出状況</th>
                             <th class="text-nowrap">提出日時</th>
                             <th class="text-nowrap">金額</th>
-                            <th class="text-nowrap">編集</th>
+                            <?php
+                            if ($user->admin == 1 || $user->admin == 3) {
+                                echo '<th class="text-nowrap">編集</th>';
+                            }
+                            ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -235,11 +249,15 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 echo '<td class="text-nowrap">' . $account->grade . '</td>';
                                 echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                                 echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                                echo '<td class="text-nowrap"><input type="button" id="paid_' . $id_u . '" name="paid" class="btn btn-secondary btn-sm" value="既納" Onclick="getPaid(\'' . $account->id . '\',\'' . $account->name . '\',\'' . $account->get_individual_accounting_total() . '\',\'' . $fee->price . '\');" ' . $disabled_paid . '> <input type="button" id="unpaid_' . $account->id . '" name="unpaid" class="btn btn-secondary btn-sm" value="未納" Onclick="getUnpaid(\'' . $account->id . '\',\'' . $account->name . '\');" ' . $disabled_unpaid . '></td>';
+                                if ($user->admin == 1 || $user->admin == 3) {
+                                    echo '<td class="text-nowrap"><input type="button" id="paid_' . $id_u . '" name="paid" class="btn btn-secondary btn-sm" value="既納" Onclick="getPaid(\'' . $account->id . '\',\'' . $account->name . '\',\'' . $account->get_individual_accounting_total() . '\',\'' . $fee->price . '\');" ' . $disabled_paid . '> <input type="button" id="unpaid_' . $account->id . '" name="unpaid" class="btn btn-secondary btn-sm" value="未納" Onclick="getUnpaid(\'' . $account->id . '\',\'' . $account->name . '\');" ' . $disabled_unpaid . '></td>';
+                                }
                                 echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
                                 echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
                                 echo '<td class="text-nowrap text-right">' . $fee->get_price() . '</td>';
-                                echo '<td class="text-nowrap"><a href="./edit_price.php?id=' . $account->id . '&fee_id=' . $fee_list->id . '" class="text-secondary"><u>編集</u></a></td>';
+                                if ($user->admin == 1 || $user->admin == 3) {
+                                    echo '<td class="text-nowrap"><a href="./edit_price.php?id=' . $account->id . '&fee_id=' . $fee_list->id . '" class="text-secondary"><u>編集</u></a></td>';
+                                }
                                 echo '</tr>';
                             }
                         }
@@ -250,8 +268,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
         </div>
         <div class="col-xl-3 col-sm-12">
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action"></a>
-                <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+                <a href="#" class="list-group-item list-group-item-action">集金リストの編集</a>
+                <a href="#" class="list-group-item list-group-item-action">集金対象者の選択</a>
                 <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
                 <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
                 <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
@@ -262,7 +280,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 
 <?php
 $script = '<script>';
-$script .= '$(document).ready(function() {
+if ($user->admin == 1 || $user->admin == 3) {
+    $script .= '$(document).ready(function() {
     $("#accountingList").DataTable({
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Japanese.json"
@@ -282,6 +301,27 @@ $script .= '$(document).ready(function() {
             "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
     }); 
 });';
+} else {
+    $script .= '$(document).ready(function() {
+    $("#accountingList").DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Japanese.json"
+        },
+        order: [], // 初期表示時には並び替えをしない
+        lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
+        columnDefs: [{ "orderable": true, "orderDataType": "part", "targets": 1 },
+            { type: "currency", targets: 5 }],
+        deferRender : false,
+        autowidth: false,
+        scrollX: true,
+        // fixedHeader: true
+         dom:"<\'row\'<\'col-sm-6\'l><\'col-sm-6 right\'f>>" +
+            "<\'row\'<\'col-sm-12 mb-2\'tr>>" +
+            "<\'row\'<\'col-sm-6\'i><\'col-sm-6\'p>>"
+    }); 
+});';
+}
+
 $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
             return this.api().column(col, {
                 order: "index"
