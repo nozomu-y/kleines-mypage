@@ -75,7 +75,8 @@ $script .= '$(document).ready(function() {
         },
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 10, 20, -1 ],[10, 20, "全件"]],
-        columnDefs: [{"orderable": false, "targets": 1}],
+        columnDefs: [{"orderable": false, "targets": 1},
+        { type: "currency", targets: 2 }],
         deferRender : false,
         autowidth: false,
         scrollX: true,
