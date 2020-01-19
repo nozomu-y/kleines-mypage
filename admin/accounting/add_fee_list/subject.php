@@ -22,8 +22,8 @@ if (!($user->admin == 1 || $user->admin == 3)) {
     exit();
 }
 
-if (isset($_GET['id'])) {
-    $fee_id = $_GET['id'];
+if (isset($_GET['fee_id'])) {
+    $fee_id = $_GET['fee_id'];
 } else {
     header('Location: /member/mypage/admin/accounting/');
     exit();
