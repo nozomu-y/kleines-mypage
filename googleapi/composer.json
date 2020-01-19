@@ -1,0 +1,6 @@
+{
+    "name": "nozomu/googleapi",
+    "require": {
+        "google/apiclient": "^2.0"
+    }
+}
