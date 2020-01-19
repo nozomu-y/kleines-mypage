@@ -36,7 +36,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             <tr>
                                 <th class="text-nowrap">集金名</th>
                                 <th class="text-nowrap">期限</th>
-                                <th class="text-nowrap text-right">金額</th>
+                                <th class="text-nowrap">金額</th>
                                 <th class="text-nowrap">集金率</th>
                             </tr>
                         </thead>
@@ -57,7 +57,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                     echo '<td class="text-nowrap"><a href="./detail.php?fee_id=' . $fee_list->id . '" class="text-secondary"><u>' . $fee_list->name . '</u></a></td>';
                                     echo '<td class="text-nowrap">' . $fee_list->get_deadline() . '</td>';
                                     echo '<td class="text-nowrap text-right">' . $fee_list->get_price() . '</td>';
-                                    echo '<td class="text-nowrap text-right">' . $fee_list->get_paid_ratio() . '</td>';
+                                    echo '<td class="text-nowrap">' . $fee_list->get_paid_ratio() . '</td>';
                                     echo '</tr>';
                                 }
                             }
