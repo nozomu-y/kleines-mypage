@@ -76,7 +76,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             echo '<tr>
                         <td class="text-nowrap">' . $individual->get_date() . '</td>
                         <td class="text-nowrap">' . $individual->name . '</td>
-                        <td class="text-nowrap">' . $individual->get_price() . '</td>
+                        <td class="text-nowrap text-right">' . $individual->get_price() . '</td>
                         <td class="text-nowrap"><a href="edit.php?id=' . $account->id . '&list_id=' . $individual->id . '" class="text-secondary"><u>編集</u></a></td>
                         <td class="text-nowrap"><button type="submit" name="delete" class="btn btn-danger btn-sm" value="' . $individual->id . '" Onclick="return confirm(\'個別会計「' . $individual->name . '」を削除しますか？\');">削除</button></td>
                         </tr>';
