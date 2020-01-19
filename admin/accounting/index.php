@@ -49,7 +49,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 $mysqli->close();
                                 exit();
                             }
-                            $row_cnt = $result->num_rows;
                             while ($row = $result->fetch_assoc()) {
                                 $fee_list = new Fee_List($row);
                                 if ($fee_list->admin == 3) {
