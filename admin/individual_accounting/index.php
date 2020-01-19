@@ -69,7 +69,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 echo '<td class="text-nowrap">' . $account->grade . '</td>';
                                 echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                                 echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span><a href="detail.php?account_id=' . $account->id . '" class="text-secondary"><u>' . $account->name . '</u></a></td>';
-                                echo '<td class="text-nowrap">' . $account->get_individual_accounting_total() . '</td>';
+                                echo '<td class="text-nowrap text-right">' . $account->get_individual_accounting_total() . '</td>';
                                 echo '</tr>';
                             }
                             ?>
