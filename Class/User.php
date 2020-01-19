@@ -306,16 +306,16 @@ class Fee_List
         while ($row = $result->fetch_assoc()) {
             $id = $row['id'];
             $query = "SELECT * FROM fee_record_$id WHERE id = $this->id";
-            $result = $mysqli->query($query);
-            if (!$result) {
+            $resul_2 = $mysqli->query($query);
+            if (!$result_2) {
                 print('Query Failed : ' . $mysqli->error);
                 $mysqli->close();
                 exit();
             }
-            $row_cnt = $result->num_rows;
+            $row_cnt = $result_2->num_rows;
             if ($row_cnt != 0) {
-                while ($row = $result->fetch_assoc()) {
-                    if ($row['datetime'] == NULL) {
+                while ($row_2 = $result_2->fetch_assoc()) {
+                    if ($row_2['datetime'] == NULL) {
                         $this->unpaid_cnt += 1;
                     } else {
                         $this->paid_cnt += 1;
