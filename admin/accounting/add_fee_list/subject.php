@@ -95,7 +95,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                     $fee = new Fee($result_1->fetch_assoc());
                                     if ($fee->datetime != NULL) {
                                         // if it is already paid
-                                        $check = '';
+                                        $check = 'checked="checked"';
                                         $hidden = 'type="hidden"';
                                     } else {
                                         // if it is not paid yet
@@ -122,6 +122,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         </tbody>
                     </table>
                 </div>
+                <button type="submit" class="btn btn-primary" name="submit">集金対象に追加</button>
+                <a class="btn btn-secondary" href="index.php" role="button">キャンセル</a>
             </form>
         </div>
     </div>
