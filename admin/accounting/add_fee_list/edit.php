@@ -66,6 +66,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <label for="deadline">期限</label>
                         <input type="date" name="deadline" class="form-control" id="deadline" value="<?php echo $fee_list->deadline; ?>" required>
                     </div>
+                    <div class="form-group">
+                        <label for="price">金額</label>
+                        <input type="number" name="price" class="form-control" id="price" value="<?php echo $fee_list->price; ?>" readonly>
+                        <small id="nameHelp" class="form-text text-muted">金額は一括変更できません。</small>
+                    </div>
                     <input type="hidden" name="fee_id" value="<?php echo $fee_list->id; ?>">
                     <button type="submit" class="btn btn-primary" name="submit">リストを更新</button>
                     <a class="btn btn-secondary" href="/member/mypage/admin/accounting/detail.php?fee_id=<?php echo $fee_list->id ?>" role="button">キャンセル</a>
