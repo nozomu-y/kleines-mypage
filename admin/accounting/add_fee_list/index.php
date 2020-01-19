@@ -39,7 +39,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 <form method="post" action="./add.php" class="mb-4">
                     <div class="form-group">
                         <label for="fee-list">集金リスト名</label>
-                        <input type="text" class="form-control" name="name" placeholder="" id="fee-list" aria-describedby="nameHelp" required>
+                        <input type="text" class="form-control" name="name" id="fee-list" aria-describedby="nameHelp" required>
                         <small id="nameHelp" class="form-text text-muted">「団費」「演奏会費」のように入力してください。</small>
                     </div>
                     <div class="form-group">
@@ -48,7 +48,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </div>
                     <div class="form-group">
                         <label for="price">金額</label>
-                        <input type="number" name="price" class="form-control" id="price" placeholder="金額" required>
+                        <input type="number" name="price" class="form-control" id="price" required>
                         <small id="nameHelp" class="form-text text-muted">設定後、個別に金額を変更することも可能です。</small>
                     </div>
                     <button type="submit" class="btn btn-primary" name="submit">リストを追加</button>
