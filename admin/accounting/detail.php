@@ -184,7 +184,6 @@ if ($user->admin == 1 || $user->admin == 3) {
                 </ol>
             </nav>
             <?php
-
             if (isset($_SESSION['mypage_fee_status'])) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
                 echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>の集金状況を<strong>' . $_SESSION['mypage_fee_status'] . '</strong>に変更しました。';

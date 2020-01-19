@@ -29,6 +29,32 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <h1 class="h3 text-gray-800 mb-4">アカウント管理</h1>
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
+            <?php
+            if (isset($_SESSION['mypage_status'])) {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>のステータスを<strong>' . $_SESSION['mypage_status'] . '</strong>に変更しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_status']);
+                unset($_SESSION['mypage_account_name']);
+            }
+            if (isset($_SESSION['mypage_admin'])) {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>に管理者権限（<strong>' . $_SESSION['mypage_admin'] . '</strong>）を与えました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_admin']);
+                unset($_SESSION['mypage_account_name']);
+            }
+            if (isset($_SESSION['mypage_admin_deprive'])) {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>の管理者権限を剥奪しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_admin_deprive']);
+                unset($_SESSION['mypage_account_name']);
+            }
+            ?>
             <form action="/member/mypage/admin/account_manage/change_admin.php" method="POST" id="form">
                 <div class="mb-4">
                     <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
