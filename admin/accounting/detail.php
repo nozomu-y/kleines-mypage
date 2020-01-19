@@ -266,10 +266,10 @@ if ($user->admin == 1 || $user->admin == 3) {
                                     $disabled_paid = "";
                                     $disabled_unpaid = "disabled";
                                 }
-                                if ($account->status != 2) {
-                                    echo '<tr>';
-                                } else {
+                                if ($account->status == 2 && !$fee->paid()) {
                                     echo '<tr class="table-danger">';
+                                } else {
+                                    echo '<tr>';
                                 }
                                 echo '<td class="text-nowrap">' . $account->grade . '</td>';
                                 echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
