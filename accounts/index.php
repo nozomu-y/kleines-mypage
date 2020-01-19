@@ -69,6 +69,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             <th class="text-nowrap">学年</th>
                             <th class="text-nowrap">パート</th>
                             <th class="text-nowrap">氏名</th>
+                            <th class="text-nowrap">ステータス</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,11 +84,14 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         $row_cnt = $result->num_rows;
                         while ($row = $result->fetch_assoc()) {
                             $account = new User($row);
-                            echo '<tr>';
-                            echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                            echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                            echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                            echo '</tr>';
+                            if ($account->status != 2) {
+                                echo '<tr>';
+                                echo '<td class="text-nowrap">' . $account->grade . '</td>';
+                                echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
+                                echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
+                                echo '<td class="text-nowrap">' . $account->get_status() . '</td>';
+                                echo '</tr>';
+                            }
                         }
                         ?>
                     </tbody>
