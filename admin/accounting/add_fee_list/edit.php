@@ -64,7 +64,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </div>
                     <div class="form-group">
                         <label for="deadline">期限</label>
-                        <input type="date" name="deadline" class="form-control" id="deadline" value="<?php echo $fee_list->deadline; ?>" required>
+                        <input type="date" name="deadline" class="form-control" id="deadline" value="<?php echo date('Y-m-d', strtotime($fee_list->deadline)); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="price">金額</label>
