@@ -57,7 +57,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </ol>
             </nav>
             <p>集金対象者を選択し、除外したい人の選択を解除してください。既納の場合は変更できません。</p>
-            <form method="post" action="./change_subject.php" class="mb-4">
+            <form method="post" action="./change_subject.php" id="sampleform" class="mb-4">
                 <input type="button" class="btn btn-primary mb-2" value="全て選択" onclick="allcheck(true);">
                 <input type="button" class="btn btn-primary mb-2" value="選択解除" onclick="allcheck(false);">
                 <div class="mb-4">
