@@ -52,38 +52,40 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </ol>
             </nav>
             <div class="mb-4">
-                <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th class="text-nowrap">日付</th>
-                            <th class="text-nowrap">項目</th>
-                            <th class="text-nowrap">金額</th>
-                            <th class="text-nowrap">編集</th>
-                            <th class="text-nowrap">削除</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $query = "SELECT * FROM individual_accounting_$account->id ORDER BY `date` ASC";
-                        $result = $mysqli->query($query);
-                        if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
-                            $mysqli->close();
-                            exit();
-                        }
-                        while ($row = $result->fetch_assoc()) {
-                            $individual = new Individual_Accounting($row);
-                            echo '<tr>
-                        <td class="text-nowrap">' . $individual->get_date() . '</td>
-                        <td class="text-nowrap">' . $individual->name . '</td>
-                        <td class="text-nowrap text-right">' . $individual->get_price() . '</td>
-                        <td class="text-nowrap"><a href="edit.php?id=' . $account->id . '&list_id=' . $individual->id . '" class="text-secondary"><u>編集</u></a></td>
-                        <td class="text-nowrap"><button type="submit" name="delete" class="btn btn-danger btn-sm" value="' . $individual->id . '" Onclick="return confirm(\'個別会計「' . $individual->name . '」を削除しますか？\');">削除</button></td>
-                        </tr>';
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                <form method="POST">
+                    <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th class="text-nowrap">日付</th>
+                                <th class="text-nowrap">項目</th>
+                                <th class="text-nowrap">金額</th>
+                                <th class="text-nowrap">編集</th>
+                                <th class="text-nowrap">削除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query = "SELECT * FROM individual_accounting_$account->id ORDER BY `date` ASC";
+                            $result = $mysqli->query($query);
+                            if (!$result) {
+                                print('Query Failed : ' . $mysqli->error);
+                                $mysqli->close();
+                                exit();
+                            }
+                            while ($row = $result->fetch_assoc()) {
+                                $individual = new Individual_Accounting($row);
+                                echo '<tr>
+                                <td class="text-nowrap">' . $individual->get_date() . '</td>
+                                <td class="text-nowrap">' . $individual->name . '</td>
+                                <td class="text-nowrap text-right">' . $individual->get_price() . '</td>
+                                <td class="text-nowrap"><a href="edit.php?id=' . $account->id . '&list_id=' . $individual->id . '" class="text-secondary"><u>編集</u></a></td>
+                                <td class="text-nowrap"><button type="submit" name="delete" formaction="delete.php" class="btn btn-danger btn-sm" value="' . $account->id . '_' . $individual->id . '" Onclick="return confirm(\'個別会計「' . $individual->name . '」を削除しますか？\');">削除</button></td>
+                                </tr>';
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
