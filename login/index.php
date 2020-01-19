@@ -100,7 +100,7 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                     </div>
                                 </div>
                                 <?php
-                                if ($mypage_auth_success) {
+                                if ($mypage_password_success) {
                                     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
                                     echo 'パスワードの設定が完了しました。';
                                     echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
