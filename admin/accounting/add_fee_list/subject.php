@@ -95,7 +95,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                     $fee = new Fee($result_1->fetch_assoc());
                                     if ($fee->datetime != NULL) {
                                         // if it is already paid
-                                        $check = 'checked="checked"';
+                                        $check = '';
                                         $hidden = 'type="hidden"';
                                     } else {
                                         // if it is not paid yet
@@ -110,7 +110,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 
                                 if ($user->status != 2) {
                                     echo '<tr>';
-                                    echo '<td><div class="form-check form-check-inline"><input type="hidden" name="check_' . $account->id . '" value="0"><input ' . $hidden . ' class="form-check-input" ' . $check . ' type="checkbox" name="check_' . $account->id . '" value="1"></div></td>';
+                                    echo '<td><div class="form-check form-check-inline"><input type="hidden" name="check1_' . $account->id . '" value="0"><input ' . $hidden . ' class="form-check-input" ' . $check . ' type="checkbox" name="check2_' . $account->id . '" value="1"></div></td>';
                                     echo '<td class="text-nowrap">' . $account->grade . '</td>';
                                     echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                                     echo '<td class="text-nowrap">' . $account->name . '</td>';
