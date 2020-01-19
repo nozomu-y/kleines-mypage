@@ -24,7 +24,7 @@ if (isset($_POST['signup'])) {
         exit();
     }
     $token = md5(uniqid(rand(), true));
-    $validation_url = "https://www.chorkleines.com/member/mypage/auth.php?token=" . $token;
+    $validation_url = "https://www.chorkleines.com/member/mypage/signup/auth.php?token=" . $token;
     $query = "UPDATE members SET token = '$token', validation_time = now() WHERE email = '$email'";
     $result = $mysqli->query($query);
     if (!$result) {
