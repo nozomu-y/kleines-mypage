@@ -5,25 +5,36 @@ if (isset($_SESSION['mypage_email'])) {
     header('Location: /member/mypage/');
     exit();
 }
-if (isset($_SESSION['mypage_auth_error'])) {
-    if ($_SESSION['mypage_auth_error'] == "wrong-email") {
-        $email_invalid = 'is-invalid';
-        $email_message = "このメールアドレスは登録されていません";
-    }
-}
-if (isset($_SESSION['mypage_auth_success'])) {
-    $mypage_auth_success = true;
-    $email = $_SESSION['mypage_auth_success'];
-}
-if (isset($_SESSION['mypage_token_expired'])) {
-    $mypage_token_expired = true;
-}
-$_SESSION = array();
-setcookie(session_name(), '', time() - 1, '/');
-session_destroy();
 
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
+if (!isset($_GET['token'])) {
+    header('Location: /member/mypage/');
+    exit();
+}
+
+if (isset($_SESSION['mypage_password_error'])) {
+    $password_invalid = 'is-invalid';
+    $password_message = "パスワードが一致しません。";
+}
+
+$token = $_GET["token"];
+$query = "SELECT * FROM members WHERE token = '$token'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$account = new User($result->fetch_assoc());
+
+$validation_time = strtotime($account->validation_time);
+$time_now = strtotime(date("Y-m-d H:i:s"));
+if ($time_now - $validation_time > 86400) {
+    $_SESSION['mypage_token_expired'];
+    header('Location: /member/mypage/signup/');
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,18 +71,22 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">メール認証</h1>
-                                        <p>メールで個人認証を行い、パスワードを設定します。</p>
+                                        <h1 class="h4 text-gray-900 mb-4">パスワードの設定</h1>
+                                        <p><?php echo $account->name ?>さん。パスワードを英数字8文字以上で入力してください。</p>
                                     </div>
-                                    <form class="user" method="POST" action="./create_token.php">
+                                    <form class="user" method="POST" action="./check_password.php">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user <?php echo $email_invalid ?>" id="email" name="email" required autocomplete="email" placeholder="メールアドレス">
+                                            <input type="password" class="form-control form-control-user <?php echo $password_invalid ?>" id="password1" name="password1" required pattern="^([a-zA-Z0-9]{8,})$" placeholder="パスワード">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user <?php echo $password_invalid ?>" id="password2" name="password2" required pattern="^([a-zA-Z0-9]{8,})$" placeholder="パスワード（再入力）">
                                             <span class="invalid-feedback" role="alert">
-                                                <?php echo $email_message; ?>
+                                                <?php echo $password_message; ?>
                                             </span>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="signup">
-                                            認証
+                                        <input type="hidden" name="token" value="<?php echo $token; ?>">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="set_password">
+                                            パスワードを設定
                                         </button>
                                     </form>
                                     <hr>
@@ -79,20 +94,6 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                         <a class="small" href="/member/mypage/login/">ログインはこちら</a>
                                     </div>
                                 </div>
-                                <?php
-                                if ($mypage_auth_success) {
-                                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                                    echo $email . 'にメールを送信しました。<br>24時間以内にリンクをクリックしてパスワードを設定してください。<br>メールが届かない場合は、<a href="mailto:kleines.webmaster@gmail.com" class="alert-link">kleines.webmaster@gmail.com</a>までご連絡ください。';
-                                    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-                                    echo '</div>';
-                                }
-                                if ($mypage_token_expired) {
-                                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
-                                    echo 'リンクの期限が切れました。再度メール認証を行い、リンクを発行してください。';
-                                    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-                                    echo '</div>';
-                                }
-                                ?>
                             </div>
                             <div class="col-lg-3"></div>
                         </div>
