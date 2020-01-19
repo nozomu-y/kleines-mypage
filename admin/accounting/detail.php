@@ -266,15 +266,21 @@ if ($user->admin == 1 || $user->admin == 3) {
                 </table>
             </div>
         </div>
-        <div class="col-xl-3 col-sm-12">
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action">集金リストの編集</a>
-                <a href="#" class="list-group-item list-group-item-action">集金対象者の選択</a>
-                <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+        <?php
+        if ($user->admin == 1 || $user->admin == 3) {
+        ?>
+            <div class="col-xl-3 col-sm-12">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">集金リストの編集</a>
+                    <a href="#" class="list-group-item list-group-item-action">集金対象者の選択</a>
+                    <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+                    <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+                </div>
             </div>
-        </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
 
