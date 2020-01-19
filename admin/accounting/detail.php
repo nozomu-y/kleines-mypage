@@ -271,11 +271,9 @@ if ($user->admin == 1 || $user->admin == 3) {
         ?>
             <div class="col-xl-3 col-sm-12">
                 <div class="list-group">
-                    <a href="/member/mypage/admin/accounting/add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
-                    <a href="#" class="list-group-item list-group-item-action">集金対象者の選択</a>
-                    <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+                    <a href="#" class="list-group-item list-group-item-action">集金リストの編集</a>
+                    <a href="/member/mypage/admin/accounting/add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金対象者の選択</a>
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-danger">集金リストの削除</a>
                 </div>
             </div>
         <?php
