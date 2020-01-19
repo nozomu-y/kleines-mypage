@@ -89,7 +89,7 @@ if (intval($price) - intval($paid_cash) > 0) {
 
 
 /* GoogleApi を用いてメールを送信する */
-require_once('/home/chorkleines/www/member/mypage/Core/mail.php');
+require_once('/home/chorkleines/www/member/mypage/googleapi/mail.php');
 $msg = new Google_Service_Gmail_Message();
 $data = "";
 $data .= "To: " . $email_u . "\n"; //送信先
