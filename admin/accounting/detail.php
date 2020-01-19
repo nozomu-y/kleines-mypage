@@ -209,7 +209,7 @@ if ($user->admin == 1 || $user->admin == 3) {
             }
             if (isset($_SESSION['mypage_update_price'])) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>の集金額を<strong>￥' . number_format($_SESSION['mypage_account_name']) . '</strong>に変更しました。';
+                echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>の集金額を<strong>￥' . number_format((int) $_SESSION['mypage_account_name']) . '</strong>に変更しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
                 unset($_SESSION['mypage_update_price']);
