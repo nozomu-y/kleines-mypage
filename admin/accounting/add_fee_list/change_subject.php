@@ -1,40 +1,65 @@
 <?php
-if (isset($_POST['submit'])) {
-    foreach ($_POST as $key => $value) {
-        if (strpos($key, 'check') !== false) {
-            $id_u = explode('_', $key)[1];
-            if ($value == 1) {
-                require_once('../../dbconnect.php');
-                $query = "SELECT * FROM fee_record_$id_u WHERE id = $fee_id";
+ob_start();
+session_start();
+if (!isset($_SESSION['mypage_email'])) {
+    header('Location: /member/mypage/login/');
+    exit();
+}
+
+require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
+$email = $_SESSION['mypage_email'];
+$query = "SELECT * FROM members WHERE email='$email'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$user = new User($result->fetch_assoc());
+
+if (!($user->admin == 1 || $user->admin == 3)) {
+    header('Location: /member/mypage/');
+    exit();
+}
+
+if (!isset($_POST['submit'])) {
+    header('Location: /member/mypage/admin/accounting/');
+    exit();
+}
+
+$fee_id = $_POST['fee_id'];
+foreach ($_POST as $key => $value) {
+    if (strpos($key, 'check') !== false) {
+        $account_id = explode('_', $key)[1];
+        if ($value == 1) {
+            $query = "SELECT * FROM fee_record_$account_id WHERE id = $fee_id";
+            $result = $mysqli->query($query);
+            if (!$result) {
+                print('Query Failed : ' . $mysqli->error);
+                $mysqli->close();
+                exit();
+            }
+            $row_cnt = $result->num_rows;
+            if ($row_cnt == 0) {
+                $query = "INSERT INTO fee_record_$account_id (id, price) VALUES ('$fee_id', '$price')";
                 $result = $mysqli->query($query);
-                $row_cnt = $result->num_rows;
                 if (!$result) {
-                    print('クエリーが失敗しました1。' . $mysqli->error);
-                    $mysqli->close();
-                    exit();
-                }
-                if ($row_cnt == 0) {
-                    require_once('../../dbconnect.php');
-                    $query = "INSERT INTO fee_record_$id_u (id, price) VALUES ('$fee_id', '$price')";
-                    $result = $mysqli->query($query);
-                    if (!$result) {
-                        print('クエリーが失敗しました2。' . $mysqli->error);
-                        $mysqli->close();
-                        exit();
-                    }
-                }
-            } else if ($value == 0) {
-                require_once('../../dbconnect.php');
-                $query = "DELETE FROM fee_record_$id_u WHERE id = $fee_id";
-                $result = $mysqli->query($query);
-                if (!$result) {
-                    print('クエリーが失敗しました3。' . $mysqli->error);
+                    print('Query Failed : ' . $mysqli->error);
                     $mysqli->close();
                     exit();
                 }
             }
+        } else if ($value == 0) {
+            $query = "DELETE FROM fee_record_$account_id WHERE id = $fee_id";
+            $result = $mysqli->query($query);
+            if (!$result) {
+                print('Query Failed : ' . $mysqli->error);
+                $mysqli->close();
+                exit();
+            }
         }
     }
 }
-header('Location: /member/mypage/admin/');
+
+header('Location: /member/mypage/admin/accounting/detail.php?fee_id=' . $fee_id);
 exit();
