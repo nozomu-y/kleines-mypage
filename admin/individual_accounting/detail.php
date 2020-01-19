@@ -101,6 +101,7 @@ $script .= '$(document).ready(function() {
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
         columnDefs: [{ "orderable": false, "targets": 3 },
             { "orderable": false, "targets": 4 },
+            { "orderable": false, "targets": 1 },
             { type: "currency", targets: 2 }],
         deferRender : false,
         autowidth: false,
