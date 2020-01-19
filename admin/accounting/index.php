@@ -26,7 +26,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <div class="container-fluid">
-    <h1 class="h3 text-gray-800 mb-4">集金記録</h1>
+    <h1 class="h3 text-gray-800 mb-4">集金リスト</h1>
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
             <form method="post">
@@ -34,7 +34,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th class="text-nowrap">集金名</th>
+                                <th class="text-nowrap">集金リスト</th>
                                 <th class="text-nowrap">期限</th>
                                 <th class="text-nowrap">金額</th>
                                 <th class="text-nowrap">集金率</th>
