@@ -29,41 +29,43 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <h1 class="h3 text-gray-800 mb-4">集金記録</h1>
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
-            <div class="mb-4">
-                <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th class="text-nowrap">集金名</th>
-                            <th class="text-nowrap">期限</th>
-                            <th class="text-nowrap text-right">金額</th>
-                            <th class="text-nowrap">削除</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $query = "SELECT * FROM fee_list ORDER BY deadline DESC";
-                        $result = $mysqli->query($query);
-                        if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
-                            $mysqli->close();
-                            exit();
-                        }
-                        $row_cnt = $result->num_rows;
-                        while ($row = $result->fetch_assoc()) {
-                            $fee_list = new Fee_List($row);
-                            if ($fee_list->admin == 3) {
-                                echo '<tr>';
-                                echo '<td class="text-nowrap"><a href="./detail.php?fee_id=' . $fee_list->id . '" class="text-secondary"><u>' . $fee_list->name . '</u></a></td>';
-                                echo '<td class="text-nowrap">' . $fee_list->get_deadline() . '</td>';
-                                echo '<td class="text-nowrap text-right">' . $fee_list->get_price() . '</td>';
-                                echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="btn btn-danger btn-sm" value="' . $fee_list->id . '" Onclick="return confirm(\'' . $fee_list->name . 'を削除しますか？\');">削除</button></td>';
-                                echo '</tr>';
+            <form method="post">
+                <div class="mb-4">
+                    <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th class="text-nowrap">集金名</th>
+                                <th class="text-nowrap">期限</th>
+                                <th class="text-nowrap text-right">金額</th>
+                                <th class="text-nowrap">削除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query = "SELECT * FROM fee_list ORDER BY deadline DESC";
+                            $result = $mysqli->query($query);
+                            if (!$result) {
+                                print('Query Failed : ' . $mysqli->error);
+                                $mysqli->close();
+                                exit();
                             }
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+                            $row_cnt = $result->num_rows;
+                            while ($row = $result->fetch_assoc()) {
+                                $fee_list = new Fee_List($row);
+                                if ($fee_list->admin == 3) {
+                                    echo '<tr>';
+                                    echo '<td class="text-nowrap"><a href="./detail.php?fee_id=' . $fee_list->id . '" class="text-secondary"><u>' . $fee_list->name . '</u></a></td>';
+                                    echo '<td class="text-nowrap">' . $fee_list->get_deadline() . '</td>';
+                                    echo '<td class="text-nowrap text-right">' . $fee_list->get_price() . '</td>';
+                                    echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="btn btn-danger btn-sm" value="' . $fee_list->id . '" Onclick="return confirm(\'' . $fee_list->name . 'を削除しますか？\');">削除</button></td>';
+                                    echo '</tr>';
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
         </div>
         <div class="col-xl-3 col-sm-12">
             <div class="card shadow mb-4">
