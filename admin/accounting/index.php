@@ -17,7 +17,7 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 3)) {
+if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3)) {
     header('Location: /member/mypage/');
     exit();
 }
@@ -37,7 +37,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 <th class="text-nowrap">集金名</th>
                                 <th class="text-nowrap">期限</th>
                                 <th class="text-nowrap text-right">金額</th>
-                                <th class="text-nowrap">削除</th>
+                                <th class="text-nowrap">集金率</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +57,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                     echo '<td class="text-nowrap"><a href="./detail.php?fee_id=' . $fee_list->id . '" class="text-secondary"><u>' . $fee_list->name . '</u></a></td>';
                                     echo '<td class="text-nowrap">' . $fee_list->get_deadline() . '</td>';
                                     echo '<td class="text-nowrap text-right">' . $fee_list->get_price() . '</td>';
-                                    echo '<td class="text-nowrap"><button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="btn btn-danger btn-sm" value="' . $fee_list->id . '" Onclick="return confirm(\'' . $fee_list->name . 'を削除しますか？\');">削除</button></td>';
+                                    echo '<td class="text-nowrap text-right">' . $fee_list->get_paid_ratio() . '</td>';
                                     echo '</tr>';
                                 }
                             }
@@ -66,6 +66,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </table>
                 </div>
             </form>
+            <a class="btn btn-primary mb-4" href="/member/mypage/admin/accounting/add_fee_list/" role="button">集金リストの追加</a>
         </div>
         <div class="col-xl-3 col-sm-12">
             <div class="card shadow mb-4">
@@ -95,7 +96,6 @@ $script .= '$(document).ready(function() {
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
         columnDefs: [{ "orderable": false, "targets": 0 },
-            { "orderable": false, "targets": 3 },
             { type: "currency", targets: 2 }],
         deferRender : false,
         autowidth: false,
