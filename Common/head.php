@@ -130,6 +130,9 @@ if ($backtrace == '/index.php') {
                     </div>
                     </li>';
                 }
+                if ($user->admin == 2) {
+                    echo '<li class="nav-item ' . $admin_accounting . '"><a class="nav-link" href="/member/mypage/admin/accounting/"><i class="fas fa-coins fa-fw"></i></i><span>会計システム</span></a></li>';
+                }
                 if ($user->admin == 1 || $user->admin == 5) {
                     echo '<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
                 }
