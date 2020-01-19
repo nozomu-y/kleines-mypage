@@ -69,13 +69,19 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             <a class="btn btn-primary mb-4" href="/member/mypage/admin/accounting/add_fee_list/" role="button">集金リストの追加</a>
         </div>
         <div class="col-xl-3 col-sm-12">
-            <div class="card shadow mb-4">
-                <div class="card-header">ログ</div>
-                <div class="card-body">
-                    <p>このページで行われる操作は全てログとして残ります。</p>
-                    <a href="./accounting_log.php">ログを閲覧</a>
+            <?php
+            if ($user->admin == 1 || $user->admin == 3) {
+            ?>
+                <div class="card shadow mb-4">
+                    <div class="card-header">ログ</div>
+                    <div class="card-body">
+                        <p>このページで行われる操作は全てログとして残ります。</p>
+                        <a href="./accounting_log.php">ログを閲覧</a>
+                    </div>
                 </div>
-            </div>
+            <?php
+            }
+            ?>
             <div class="card shadow mb-4">
                 <div class="card-header">todo</div>
                 <div class="card-body">
