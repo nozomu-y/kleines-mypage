@@ -1,6 +1,5 @@
 <?php
 require '/home/chorkleines/www/member/mypage/googleapi/vendor/autoload.php';
-date_default_timezone_set('Asia/Tokyo');
 function getClient()
 {
     $client = new Google_Client();
