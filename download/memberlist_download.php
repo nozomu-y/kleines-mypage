@@ -35,7 +35,6 @@ $sheet->setCellValue('C1', "姓");
 $sheet->setCellValue('D1', "名");
 $sheet->setCellValue('E1', "フリガナ");
 $ROW = 2;
-require_once('../dbconnect.php');
 $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC WHERE status != 2";
 $result = $mysqli->query($query);
 while ($row = $result->fetch_assoc()) {
