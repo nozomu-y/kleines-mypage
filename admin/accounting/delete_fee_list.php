@@ -29,7 +29,6 @@ if (!isset($_POST['delete'])) {
 
 $fee_id = $_POST['delete'];
 $query = "SELECT * FROM fee_list WHERE id = $fee_id";
-echo ($query);
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -44,7 +43,6 @@ if ($fee_list->admin != 3) {
 }
 
 $query = "SELECT * FROM members ORDER BY id";
-echo ($query);
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
