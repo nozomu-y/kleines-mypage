@@ -61,7 +61,7 @@ if (!$result) {
 }
 $fee = new Fee($result->fetch_assoc());
 if ($fee->paid_individual != 0) {
-    $query = "DELETE FROM individual_accounting_$account->id WHERE name = $fee_list->name";
+    $query = "DELETE FROM individual_accounting_$account->id WHERE fee_id = $fee_list->id";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
