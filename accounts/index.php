@@ -228,7 +228,7 @@ $script .= 'var myPieChart = new Chart(ctx, {
     });';
 $script .= '</script>';
 
-$query = "SELECT grade FROM members GROUP BY grade WHERE status != 2";
+$query = "SELECT grade FROM members WHERE status != 2 GROUP BY grade";
 $result = $mysqli->query($query);
 if (!$result) {
     print('クエリーが失敗しました。' . $mysqli->error);
@@ -238,7 +238,7 @@ if (!$result) {
 $grade_list = [];
 while ($row = $result->fetch_assoc()) {
     foreach ($row as $grade) {
-        $query = "SELECT * FROM members WHERE grade=$grade";
+        $query = "SELECT * FROM members WHERE grade=$grade WHERE status != 2";
         $result_1 = $mysqli->query($query);
         if (!$result_1) {
             print('Query Failed : ' . $mysqli->error);
