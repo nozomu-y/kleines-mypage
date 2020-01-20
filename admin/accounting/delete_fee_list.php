@@ -29,6 +29,7 @@ if (!isset($_POST['delete'])) {
 
 $fee_id = $_POST['delete'];
 $query = "SELECT * FROM fee_list WHERE id = $fee_id";
+echo ($query);
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -42,14 +43,8 @@ if ($fee_list->admin != 3) {
     exit();
 }
 
-$query = "DELETE FROM fee_list WHERE id = $fee_id";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
 $query = "SELECT * FROM members ORDER BY id";
+echo ($query);
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -59,6 +54,7 @@ if (!$result) {
 while ($row = $result->fetch_assoc()) {
     $account = new User($row);
     $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_id";
+    echo ($query);
     $result_1 = $mysqli->query($query);
     if (!$result_1) {
         print('Query Failed : ' . $mysqli->error);
@@ -70,6 +66,7 @@ while ($row = $result->fetch_assoc()) {
         $fee = new Fee($result_1->fetch_assoc());
         if ($fee->paid_individual != 0) {
             $query = "DELETE FROM individual_accounting_$account->id WHERE name = $fee_list->name";
+            echo ($query);
             $result_1 = $mysqli->query($query);
             if (!$result_1) {
                 print('Query Failed : ' . $mysqli->error);
@@ -78,6 +75,7 @@ while ($row = $result->fetch_assoc()) {
             }
         }
         $query = "DELETE FROM fee_record_$account->id WHERE id = $fee_id";
+        echo ($query);
         $result_1 = $mysqli->query($query);
         if (!$result_1) {
             print('Query Failed : ' . $mysqli->error);
@@ -85,6 +83,14 @@ while ($row = $result->fetch_assoc()) {
             exit();
         }
     }
+}
+
+$query = "DELETE FROM fee_list WHERE id = $fee_id";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
 }
 
 // make log file
