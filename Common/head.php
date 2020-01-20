@@ -27,15 +27,17 @@ $backtrace = debug_backtrace()[0]['file'];
 $backtrace = explode('mypage', $backtrace)[1];
 if ($backtrace == '/index.php') {
     $home = 'active';
-} else if ($backtrace == '/admin/account_manage/index.php') {
+} else if (strpos($backtrace, '/admin/account_manage/') !== false) {
     $account_manage = 'active';
-} else if ($backtrace == '/accounts/index.php') {
+} else if (strpos($backtrace, 'accounts/') !== false) {
     $accounts = 'active';
-} else if ($backtrace == '/accounting/collection/index.php') {
+} else if (strpos($backtrace, '/accounting/collection/') !== false) {
     $accounting_collection = 'active';
-} else if ($backtrace == '/accounting/individual/index.php') {
+} else if (strpos($backtrace, '/accounting/individual/') !== false) {
     $accounting_individual = 'active';
-} else if ($backtrace == '/admin/accounting/index.php') {
+} else if (strpos($backtrace, '/admin/accounting/') !== false) {
+    $admin_accounting = 'active';
+} else if (strpos($backtrace, '/admin/individual_accounting/') !== false) {
     $admin_accounting = 'active';
 }
 ?>
