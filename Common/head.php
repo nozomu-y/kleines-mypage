@@ -60,6 +60,18 @@ if ($backtrace == '/index.php') {
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-flash-1.6.1/b-html5-1.6.1/datatables.min.css" />
     <!-- JS -->
     <!-- <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js"> -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133192700-4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-133192700-4');
+    </script>
 </head>
 
 <body id="page-top" class="sidebar-toggled">
