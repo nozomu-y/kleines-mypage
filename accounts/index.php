@@ -228,7 +228,7 @@ $script .= 'var myPieChart = new Chart(ctx, {
     });';
 $script .= '</script>';
 
-$query = "SELECT grade FROM members GROUP BY grade";
+$query = "SELECT grade FROM members GROUP BY grade WHERE status != 2";
 $result = $mysqli->query($query);
 if (!$result) {
     print('クエリーが失敗しました。' . $mysqli->error);
