@@ -28,6 +28,15 @@ if (!isset($_POST['submit'])) {
 }
 
 $fee_id = $_POST['fee_id'];
+$query = "SELECT * FROM fee_list WHERE id = $fee_id";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$fee_list = new Fee_List($result->fetch_assoc());
+
 foreach ($_POST as $key => $value) {
     if (strpos($key, 'check') !== false) {
         $account_id = explode('_', $key)[1];
@@ -41,7 +50,7 @@ foreach ($_POST as $key => $value) {
             }
             $row_cnt = $result->num_rows;
             if ($row_cnt == 0) {
-                $query = "INSERT INTO fee_record_$account_id (id, price) VALUES ('$fee_id', '$price')";
+                $query = "INSERT INTO fee_record_$account_id (id, price) VALUES ('$fee_id', '$fee_list->id')";
                 $result = $mysqli->query($query);
                 if (!$result) {
                     print('Query Failed : ' . $mysqli->error);
