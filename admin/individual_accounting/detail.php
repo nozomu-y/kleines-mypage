@@ -54,21 +54,21 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             <?php
             if (isset($_SESSION['mypage_individual'])) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                echo '<strong>' . $_SESSION['mypage_individual'] . '</strong>を編集しました。';
+                echo '個別会計「<strong>' . $_SESSION['mypage_individual'] . '</strong>」を編集しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
                 unset($_SESSION['mypage_individual']);
             }
             if (isset($_SESSION['mypage_individual_delete'])) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                echo '<strong>' . $_SESSION['mypage_individual_delete'] . '</strong>を削除しました。';
+                echo '個別会計「<strong>' . $_SESSION['mypage_individual_delete'] . '</strong>」を削除しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
                 unset($_SESSION['mypage_individual_delete']);
             }
             if (isset($_SESSION['mypage_individual_add'])) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                echo '<strong>' . $_SESSION['mypage_individual_add'] . '</strong>を追加しました。';
+                echo '個別会計「<strong>' . $_SESSION['mypage_individual_add'] . '</strong>」を追加しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
                 unset($_SESSION['mypage_individual_add']);
