@@ -41,7 +41,7 @@ $account = new User($result->fetch_assoc());
 if (isset($_GET['list_id'])) {
     $list_id = $_GET['list_id'];
 } else {
-    header('Location: /member/mypage/admin/accounting/');
+    header('Location: /member/mypage/admin/individual_accounting/');
     exit();
 }
 
@@ -82,7 +82,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <input type="number" name="price" class="form-control input-sm" placeholder="金額" value="<?php echo $individual->price; ?>" required>
                     </div>
                     <button type="submit" class="btn btn-primary" name="submit">変更する</button>
-                    <a class="btn btn-secondary" href="./detail.php?id=<?php echo $account->id; ?>" role="button">キャンセル</a>
+                    <a class="btn btn-secondary" href="./detail.php?account_id=<?php echo $account->id; ?>" role="button">キャンセル</a>
                 </form>
             </div>
         </div>
