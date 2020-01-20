@@ -83,7 +83,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 <div class="card-header">ログ</div>
                 <div class="card-body">
                     <p>このページで行われる操作は全てログとして残ります。</p>
-                    <a href="/member/mypage/admin/accounting/accounting_log.php">ログを閲覧</a>
+                    <a href="/member/mypage/admin/accounting/individual_accounting_log.php">ログを閲覧</a>
                 </div>
             </div>
         </div>
