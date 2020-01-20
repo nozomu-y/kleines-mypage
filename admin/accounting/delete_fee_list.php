@@ -62,7 +62,7 @@ while ($row = $result->fetch_assoc()) {
     if ($row_cnt != 0) {
         $fee = new Fee($result_1->fetch_assoc());
         if ($fee->paid_individual != 0) {
-            $query = "DELETE FROM individual_accounting_$account->id WHERE fee_id = $fee_list->id";
+            $query = "UPDATE individual_accounting_$account->id SET fee_id = null WHERE fee_id = $fee_list->id";
             echo ($query);
             $result_1 = $mysqli->query($query);
             if (!$result_1) {
