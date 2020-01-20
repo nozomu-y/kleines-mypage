@@ -59,7 +59,7 @@ while ($row = $result->fetch_assoc()) {
         $mysqli->close();
         exit();
     }
-    $row_cnt = $result->num_rows;
+    $row_cnt = $result_1->num_rows;
     if ($row_cnt != 0) {
         $fee = new Fee($result_1->fetch_assoc());
         if ($fee->paid_individual != 0) {
