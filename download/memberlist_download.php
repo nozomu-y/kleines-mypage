@@ -44,7 +44,7 @@ if (!$result) {
     exit();
 }
 while ($row = $result->fetch_assoc()) {
-    $account = new User($rrow);
+    $account = new User($row);
     $sheet->setCellValue('A' . $ROW, $account->grade);
     $sheet->setCellValue('B' . $ROW, $account->get_part());
     $sheet->setCellValue('C' . $ROW, $account->last_name);
