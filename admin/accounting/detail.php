@@ -445,7 +445,7 @@ while ($row = $result->fetch_assoc()) {
 if ($paid_cnt + $unpaid_cnt == 0) {
     $sop_ratio = 0;
 } else {
-    $sop_ratio = round($this->paid_cnt / ($this->paid_cnt + $this->unpaid_cnt), 3) * 100;
+    $sop_ratio = round($paid_cnt / ($paid_cnt + $unpaid_cnt), 3) * 100;
 }
 
 // alt
@@ -481,7 +481,7 @@ while ($row = $result->fetch_assoc()) {
 if ($paid_cnt + $unpaid_cnt == 0) {
     $alt_ratio = 0;
 } else {
-    $alt_ratio = round($this->paid_cnt / ($this->paid_cnt + $this->unpaid_cnt), 3) * 100;
+    $alt_ratio = round($paid_cnt / ($paid_cnt + $unpaid_cnt), 3) * 100;
 }
 
 // ten
@@ -517,7 +517,7 @@ while ($row = $result->fetch_assoc()) {
 if ($paid_cnt + $unpaid_cnt == 0) {
     $ten_ratio = 0;
 } else {
-    $ten_ratio = round($this->paid_cnt / ($this->paid_cnt + $this->unpaid_cnt), 3) * 100;
+    $ten_ratio = round($paid_cnt / ($paid_cnt + $unpaid_cnt), 3) * 100;
 }
 
 // bas
@@ -553,7 +553,7 @@ while ($row = $result->fetch_assoc()) {
 if ($paid_cnt + $unpaid_cnt == 0) {
     $bas_ratio = 0;
 } else {
-    $bas_ratio = round($this->paid_cnt / ($this->paid_cnt + $this->unpaid_cnt), 3) * 100;
+    $bas_ratio = round($paid_cnt / ($paid_cnt + $unpaid_cnt), 3) * 100;
 }
 
 $script .= '<script>';
