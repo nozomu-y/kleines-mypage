@@ -109,8 +109,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         </tbody>
                     </table>
                 </form>
-                <a class="btn btn-primary" href="add.php?account_id=<?php echo $id_u; ?>" role="button">項目の追加</a>
             </div>
+            <a class="btn btn-primary" href="add.php?account_id=<?php echo $id_u; ?>" role="button">項目の追加</a>
         </div>
     </div>
 </div>
