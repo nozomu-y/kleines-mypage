@@ -1,3 +1,5 @@
 .htaccess
 config.php
-*.log
+account_manage.log
+accounting.log
+auth.log
