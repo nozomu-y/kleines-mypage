@@ -65,22 +65,25 @@ while ($row = $result->fetch_assoc()) {
         $mysqli->close();
         exit();
     }
-    $fee = new Fee($result_1->fetch_assoc());
-    if ($fee->paid_individual != 0) {
-        $query = "DELETE FROM individual_accounting_$account->id WHERE name = $fee_list->name";
+    $row_cnt = $result->num_rows;
+    if ($row_cnt != 0) {
+        $fee = new Fee($result_1->fetch_assoc());
+        if ($fee->paid_individual != 0) {
+            $query = "DELETE FROM individual_accounting_$account->id WHERE name = $fee_list->name";
+            $result_1 = $mysqli->query($query);
+            if (!$result_1) {
+                print('Query Failed : ' . $mysqli->error);
+                $mysqli->close();
+                exit();
+            }
+        }
+        $query = "DELETE FROM fee_record_$account->id WHERE id = $fee_id";
         $result_1 = $mysqli->query($query);
         if (!$result_1) {
             print('Query Failed : ' . $mysqli->error);
             $mysqli->close();
             exit();
         }
-    }
-    $query = "DELETE FROM fee_record_$account->id WHERE id = $fee_id";
-    $result_1 = $mysqli->query($query);
-    if (!$result_1) {
-        print('Query Failed : ' . $mysqli->error);
-        $mysqli->close();
-        exit();
     }
 }
 
