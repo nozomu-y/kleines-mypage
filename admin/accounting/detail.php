@@ -587,7 +587,7 @@ $script .= 'var myPieChart = new Chart(ctx, {
                 callbacks: {
                     label: function (tooltipItem, data){
                         return data.datasets[0].data[tooltipItem.index]
-                        + "人";
+                        + " %";
                     }
                 }
             },
