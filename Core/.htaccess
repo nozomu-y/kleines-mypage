@@ -1,3 +1,0 @@
-<Files ~ ".(dwt|php|log)$">
-Deny from all
-</Files>
