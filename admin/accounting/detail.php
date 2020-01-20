@@ -312,7 +312,7 @@ if ($user->admin == 1 || $user->admin == 3) {
             if ($user->admin == 1 || $user->admin == 3) {
             ?>
                 <form method="post">
-                    <div class="list-group mb-4">
+                    <div class="list-group shadow mb-4">
                         <a href="/member/mypage/admin/accounting/add_fee_list/edit.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
                         <a href="/member/mypage/admin/accounting/add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金対象者の選択</a>
                         <button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="list-group-item list-group-item-action list-group-item-danger" value="<?php echo $fee_list->id ?>" Onclick="return confirm('集金リスト「<?php echo $fee_list->name; ?>」を削除しますか？\n削除した場合、関連する全ての集金記録・個別会計が削除されます。');">集金リストの削除</button>
