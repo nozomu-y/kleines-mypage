@@ -79,7 +79,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 <td class="text-nowrap">' . $individual->name . '</td>
                                 <td class="text-nowrap text-right">' . $individual->get_price() . '</td>
                                 <td class="text-nowrap">';
-                                if ($individual->fee_id != NULL) {
+                                if ($individual->fee_id == NULL) {
                                     echo '<a href="edit.php?account_id=' . $account->id . '&list_id=' . $individual->id . '" class="text-secondary"><u>編集</u></a>';
                                 }
                                 echo '</td>
