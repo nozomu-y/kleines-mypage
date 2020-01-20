@@ -53,7 +53,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </ol>
             </nav>
             <div class="mb-4">
-                <form action="edit_individual.php" method="post">
+                <form action="add_individual.php" method="post">
                     <div class="form-group">
                         <label for="date">日付</label>
                         <input type="date" name="date" class="form-control" id="date" value="<?php echo date('Y-m-d'); ?>" required>
