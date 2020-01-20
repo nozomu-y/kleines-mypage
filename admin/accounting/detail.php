@@ -291,10 +291,26 @@ if ($user->admin == 1 || $user->admin == 3) {
                 </table>
             </div>
         </div>
-        <?php
-        if ($user->admin == 1 || $user->admin == 3) {
-        ?>
-            <div class="col-xl-3 col-sm-12">
+        <div class="col-xl-3 col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">提出率</div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4">
+                        <div class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand">
+                                <div class=""></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink">
+                                <div class=""></div>
+                            </div>
+                        </div>
+                        <canvas id="partChart" width="516" height="506" class="chartjs-render-monitor" style="display: block; height: 253px; width: 258px;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <?php
+            if ($user->admin == 1 || $user->admin == 3) {
+            ?>
                 <form method="post">
                     <div class="list-group mb-4">
                         <a href="/member/mypage/admin/accounting/add_fee_list/edit.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
@@ -325,10 +341,10 @@ if ($user->admin == 1 || $user->admin == 3) {
                         </p>
                     </div>
                 </div>
-            </div>
-        <?php
-        }
-        ?>
+            <?php
+            }
+            ?>
+        </div>
     </div>
 </div>
 
@@ -394,6 +410,199 @@ $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
                 }
             });
         }';
+$script .= '</script>';
+
+// sop
+$query = "SELECT * FROM members WHERE part = 'S'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$paid_cnt = 0;
+$unpaid_cnt = 0;
+while ($row = $result->fetch_assoc()) {
+    $account = new User($row);
+    $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
+    $result_2 = $mysqli->query($query);
+    if (!$result_2) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $row_cnt = $result_2->num_rows;
+    if ($row_cnt != 0) {
+        while ($row_2 = $result_2->fetch_assoc()) {
+            if ($row_2['datetime'] == NULL) {
+                $unpaid_cnt += 1;
+            } else {
+                $paid_cnt += 1;
+            }
+        }
+    }
+}
+if ($paid_cnt + $unpaid_cnt == 0) {
+    $sop_ratio = 0;
+} else {
+    $sop_ratio = round($this->paid_cnt / ($this->paid_cnt + $this->unpaid_cnt), 3) * 100;
+}
+
+// alt
+$query = "SELECT * FROM members WHERE part = 'A'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$paid_cnt = 0;
+$unpaid_cnt = 0;
+while ($row = $result->fetch_assoc()) {
+    $account = new User($row);
+    $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
+    $result_2 = $mysqli->query($query);
+    if (!$result_2) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $row_cnt = $result_2->num_rows;
+    if ($row_cnt != 0) {
+        while ($row_2 = $result_2->fetch_assoc()) {
+            if ($row_2['datetime'] == NULL) {
+                $unpaid_cnt += 1;
+            } else {
+                $paid_cnt += 1;
+            }
+        }
+    }
+}
+if ($paid_cnt + $unpaid_cnt == 0) {
+    $alt_ratio = 0;
+} else {
+    $alt_ratio = round($this->paid_cnt / ($this->paid_cnt + $this->unpaid_cnt), 3) * 100;
+}
+
+// ten
+$query = "SELECT * FROM members WHERE part = 'T'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$paid_cnt = 0;
+$unpaid_cnt = 0;
+while ($row = $result->fetch_assoc()) {
+    $account = new User($row);
+    $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
+    $result_2 = $mysqli->query($query);
+    if (!$result_2) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $row_cnt = $result_2->num_rows;
+    if ($row_cnt != 0) {
+        while ($row_2 = $result_2->fetch_assoc()) {
+            if ($row_2['datetime'] == NULL) {
+                $unpaid_cnt += 1;
+            } else {
+                $paid_cnt += 1;
+            }
+        }
+    }
+}
+if ($paid_cnt + $unpaid_cnt == 0) {
+    $ten_ratio = 0;
+} else {
+    $ten_ratio = round($this->paid_cnt / ($this->paid_cnt + $this->unpaid_cnt), 3) * 100;
+}
+
+// bas
+$query = "SELECT * FROM members WHERE part = 'B'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$paid_cnt = 0;
+$unpaid_cnt = 0;
+while ($row = $result->fetch_assoc()) {
+    $account = new User($row);
+    $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
+    $result_2 = $mysqli->query($query);
+    if (!$result_2) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $row_cnt = $result_2->num_rows;
+    if ($row_cnt != 0) {
+        while ($row_2 = $result_2->fetch_assoc()) {
+            if ($row_2['datetime'] == NULL) {
+                $unpaid_cnt += 1;
+            } else {
+                $paid_cnt += 1;
+            }
+        }
+    }
+}
+if ($paid_cnt + $unpaid_cnt == 0) {
+    $bas_ratio = 0;
+} else {
+    $bas_ratio = round($this->paid_cnt / ($this->paid_cnt + $this->unpaid_cnt), 3) * 100;
+}
+
+$script .= '<script>';
+$script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", "sans-serif";Chart.defaults.global.defaultFontColor = "#858796";';
+$script .= 'var ctx = document.getElementById("partChart");';
+$script .= 'var myPieChart = new Chart(ctx, {
+        type: "horizontalBar",
+        data: {
+            labels: ["Soprano", "Alto", "Tenor", "Bass"],
+            datasets: [{
+                data: [' . $sop_ratio . ', ' . $alt_ratio . ', ' . $ten_ratio . ', ' . $bas_ratio . '],
+                backgroundColor: ["#f6c23e", "#e74a3b", "#36b9cc", "#1cc88a"],
+                hoverBackgroundColor: ["#f6c23e", "#e74a3b", "#36b9cc", "#1cc88a"],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                titleMarginBottom: 10,
+                titleFontColor: "#6e707e",
+                titleFontSize: 14,
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: "#dddfeb",
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+                callbacks: {
+                    label: function (tooltipItem, data){
+                        return data.datasets[0].data[tooltipItem.index]
+                        + "人";
+                    }
+                }
+            },
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    }
+                }]
+            }
+        },
+    });';
 $script .= '</script>';
 
 
