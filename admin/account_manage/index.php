@@ -176,6 +176,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 <div class="card-body">
                     <p>このページで行われる操作は全てログとして残ります。</p>
                     <a href="./account_log.php">ログを閲覧</a>
+                    <?php
+                    if ($user->admin == 1) {
+                        echo '<br><a href="./auth_log.php">認証ログを閲覧</a>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>
