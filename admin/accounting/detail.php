@@ -296,13 +296,35 @@ if ($user->admin == 1 || $user->admin == 3) {
         ?>
             <div class="col-xl-3 col-sm-12">
                 <form method="post">
-                    <div class="list-group">
+                    <div class="list-group mb-4">
                         <a href="/member/mypage/admin/accounting/add_fee_list/edit.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
                         <a href="/member/mypage/admin/accounting/add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金対象者の選択</a>
                         <button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="list-group-item list-group-item-action list-group-item-danger" value="<?php echo $fee_list->id ?>" Onclick="return confirm('集金リスト「<?php echo $fee_list->name; ?>」を削除しますか？\n削除した場合、関連する全ての集金記録・個別会計が削除されます。');">集金リストの削除</button>
                         <!-- <a href="#" class="list-group-item list-group-item-action list-group-item-danger disabled">集金リストの削除</a> -->
                     </div>
                 </form>
+                <div class="card shadow mb-4">
+                    <div class="card-header">未納に変更した場合...</div>
+                    <div class="card-body">
+                        <p>
+                            全額現金で支払った場合、そのまま未納に変更されます。
+                            <br>
+                            一部でも個別会計を利用した場合、利用した個別会計もリセットされます。
+                        </p>
+                    </div>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-header">集金リストを削除した場合...</div>
+                    <div class="card-body">
+                        <p>
+                            削除した集金リストの全てのデータが削除されます。（提出状況・提出日時など）
+                            <br>
+                            個別会計を利用している場合、個別会計側のデータはそのまま残ります。（個別会計の額が増えることはありません）
+                            <br>
+                            個別会計のデータもリセットしたい場合、一度未納に変更してから削除してください。
+                        </p>
+                    </div>
+                </div>
             </div>
         <?php
         }
