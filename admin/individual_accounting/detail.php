@@ -81,6 +81,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 <td class="text-nowrap">';
                                 if ($individual->fee_id == NULL) {
                                     echo '<a href="edit.php?account_id=' . $account->id . '&list_id=' . $individual->id . '" class="text-secondary"><u>編集</u></a>';
+                                } else {
+                                    echo '<span class="text-muted">編集</span>';
                                 }
                                 echo '</td>
                                 <td class="text-nowrap"><button type="submit" name="delete" formaction="delete.php" class="btn btn-danger btn-sm" value="' . $account->id . '_' . $individual->id . '" Onclick="return confirm(\'個別会計「' . $individual->name . '」を削除しますか？\');">削除</button></td>
