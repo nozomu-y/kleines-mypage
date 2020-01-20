@@ -9,20 +9,20 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
 if (isset($_POST['signup'])) {
     $email = $mysqli->real_escape_string($_POST['email']);
-    $query = "SELECT * FROM members WHERE email = '$email'";
+    $query = "SELECT * FROM members WHERE email = '$email' AND status != 2";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
         $mysqli->close();
         exit();
     }
-    $account = new User($row = $result->fetch_assoc());
     $row_cnt = $result->num_rows;
     if ($row_cnt == 0) {
         $_SESSION['mypage_auth_error'] = "wrong-email";
         header('Location: /member/mypage/signup/');
         exit();
     }
+    $account = new User($row = $result->fetch_assoc());
     $token = md5(uniqid(rand(), true));
     $validation_url = "https://www.chorkleines.com/member/mypage/signup/auth.php?token=" . $token;
     $query = "UPDATE members SET token = '$token', validation_time = now() WHERE email = '$email'";
