@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
                     name varchar(256),
                     memo varchar(256),
                     price int(10),
-                    fee_id int(3)
+                    fee_id int(3) UNSIGNED ZEROFILL
                   );";
         $result = $mysqli->query($query);
         if (!$result) {
