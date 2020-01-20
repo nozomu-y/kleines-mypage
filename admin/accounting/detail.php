@@ -298,7 +298,10 @@ if ($user->admin == 1 || $user->admin == 3) {
                 <div class="list-group">
                     <a href="/member/mypage/admin/accounting/add_fee_list/edit.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
                     <a href="/member/mypage/admin/accounting/add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金対象者の選択</a>
-                    <!-- <a href="#" class="list-group-item list-group-item-action list-group-item-danger disabled">集金リストの削除</a> -->
+                    <form method="post">
+                        <button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="list-group-item list-group-item-action list-group-item-danger" value="<?php echo $fee_list->id ?>" Onclick="return confirm('集金リスト「<?php echo $fee_list->name; ?>」を削除しますか？\n削除した場合、関連する全ての集金記録・個別会計が削除されます。');">退団</button>
+                        <!-- <a href="#" class="list-group-item list-group-item-action list-group-item-danger disabled">集金リストの削除</a> -->
+                    </form>
                 </div>
             </div>
         <?php
