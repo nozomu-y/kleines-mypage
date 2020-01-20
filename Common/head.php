@@ -113,7 +113,7 @@ if ($backtrace == '/index.php') {
             if ($user->admin != NULL) {
                 echo '<hr class="sidebar-divider">';
                 echo '<div class="sidebar-heading">管理コンソール</div>';
-                if ($user->admin == 1 || $user->admin == 2) {
+                if ($user->admin == 1 || $user->admin == 2 || $user->admin == 3) {
                     echo '<li class="nav-item ' . $account_manage . '"><a class="nav-link" href="/member/mypage/admin/account_manage/"><i class="fas fa-users-cog fa-fw"></i></i><span>アカウント管理</span></a></li>';
                 }
                 if ($user->admin == 1 || $user->admin == 3) {
