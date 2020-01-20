@@ -51,7 +51,7 @@ if (!$result) {
 }
 while ($row = $result->fetch_assoc()) {
     $account = new User($row);
-    $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_id";
+    $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
     echo ($query);
     $result_1 = $mysqli->query($query);
     if (!$result_1) {
