@@ -73,14 +73,19 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             <div class="mb-4">
                 <form action="edit_individual.php" method="post">
                     <div class="form-group">
-                        <input type="date" name="date" class="form-control input-sm" value="<?php echo $individual->date; ?>" required>
+                        <label for="date">日付</label>
+                        <input type="date" name="date" class="form-control" id="date" value="<?php echo $individual->date; ?>" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control input-sm" name="name" placeholder="項目名" value="<?php echo $individual->name; ?>" required>
+                        <label for="name">項目名</label>
+                        <input type="text" class="form-control" name="name" id="name" value="<?php echo $individual->name; ?>" required>
                     </div>
                     <div class="form-group">
-                        <input type="number" name="price" class="form-control input-sm" placeholder="金額" value="<?php echo $individual->price; ?>" required>
+                        <label for="price">金額</label>
+                        <input type="number" name="price" id="price" class="form-control" value="<?php echo $individual->price; ?>" required>
                     </div>
+                    <input type="hidden" name="account_id" value="<?php echo $account->id; ?>">
+                    <input type="hidden" name="list_id" value="<?php echo $individual->id; ?>">
                     <button type="submit" class="btn btn-primary" name="submit">変更する</button>
                     <a class="btn btn-secondary" href="./detail.php?account_id=<?php echo $account->id; ?>" role="button">キャンセル</a>
                 </form>
