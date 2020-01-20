@@ -167,7 +167,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             <div class="card shadow mb-4">
                 <div class="card-header">ステータス</div>
                 <div class="card-body">
-                    <p>全てのアカウントは在団・休団・退団の3つのステータスで管理されます。<br>このページには在団・休団のみが表示されます。</p>
+                    <p>全てのアカウントは在団・休団・退団のいずれかのステータスで管理されます。<br>このページには在団・休団のみが表示されます。</p>
                     <a href="./resign_list.php">退団者リスト</a>
                 </div>
             </div>
