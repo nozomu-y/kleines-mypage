@@ -51,6 +51,15 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <li class="breadcrumb-item active" aria-current="page"><? echo $account->get_name(); ?></li>
                 </ol>
             </nav>
+            <?php
+            if (isset($_SESSION['mypage_individual'])) {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<strong>' . $_SESSION['mypage_individual'] . '</strong>を編集しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_individual']);
+            }
+            ?>
             <div class="mb-4">
                 <form method="POST">
                     <table id="accountingList" class="table table-bordered table-striped" style="width: 100%;">

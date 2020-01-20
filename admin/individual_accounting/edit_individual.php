@@ -70,6 +70,9 @@ if (!$result) {
     $mysqli->close();
     exit();
 }
+
+$_SESSION['mypage_individual'] = $name;
+
 error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の個別会計を編集しました。（項目名：" . $name . "　日付：" . $date . "　金額：" . $price . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/individual_accounting.log");
 header('Location: detail.php?account_id=' . $account->id);
 exit();
