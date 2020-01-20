@@ -32,7 +32,7 @@ if (!$result) {
 
 while ($row = $result->fetch_assoc()) {
     $account = new User($row);
-    $query = "ALTER TABLE fee_record_$account->id DROP fee_id";
+    $query = "ALTER TABLE individual_accounting_$account->id ADD `fee_id` INT(3) NULL DEFAULT NULL AFTER `price`";
     $result_1 = $mysqli->query($query);
     if (!$result_1) {
         print('Query Failed : ' . $mysqli->error);
