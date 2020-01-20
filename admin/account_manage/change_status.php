@@ -78,22 +78,18 @@ if (isset($_POST['present'])) {
         exit();
     }
     $account = new User($result->fetch_assoc());
+    if ($account->admin != NULL) {
+        $_SESSION['mypage_status_failure'] = "";
+        $_SESSION['mypage_account_name'] = $account->get_name();
+        header('Location: /member/mypage/admin/account_manage/');
+        exit();
+    }
     $query = "UPDATE members SET status = 2 WHERE id = $id";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
         $mysqli->close();
         exit();
-    }
-    if ($account->admin != NULL) {
-        $query = "UPDATE members SET admin = NULL WHERE id = $id";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " deprived " . $account->name . " of the administrator right (" . $account->get_admin_en() . "). \n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
     }
     $_SESSION['mypage_account_name'] = $account->get_name();
     $_SESSION['mypage_status'] = "退団";
