@@ -65,6 +65,13 @@ while ($row = $result->fetch_assoc()) {
         $mysqli->close();
         exit();
     }
+    $query = "DELETE FROM individual_accounting_$account->id WHERE name = $fee_list->name";
+    $result_1 = $mysqli->query($query);
+    if (!$result_1) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
 }
 
 // make log file
