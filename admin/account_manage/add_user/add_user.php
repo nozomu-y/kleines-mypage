@@ -70,7 +70,8 @@ if (isset($_POST['submit'])) {
                     datetime datetime,
                     price int(10),
                     paid_cash int(10),
-                    status int(1)
+                    status int(1),
+                    fee_id int(3),
                   );";
         $result = $mysqli->query($query);
         if (!$result) {
