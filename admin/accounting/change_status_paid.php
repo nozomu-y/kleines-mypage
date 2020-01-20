@@ -78,7 +78,7 @@ if (intval($price) - intval($paid_cash) > 0) {
         $list_id = $row['id'];
     }
     $list_id = $list_id + 1;
-    $query = "INSERT INTO individual_accounting_$account->id (id, date, name, price) VALUES ('$list_id', now(), '$fee_list->name', $paid_individual)";
+    $query = "INSERT INTO individual_accounting_$account->id (id, date, name, price, fee_id) VALUES ('$list_id', now(), '$fee_list->name', $paid_individual, '$fee_list->id')";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
