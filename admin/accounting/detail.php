@@ -185,7 +185,7 @@ if ($user->admin == 1 || $user->admin == 3) {
             </nav>
             <?php
             if (isset($_SESSION['mypage_fee_status'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
                 echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>の集金状況を<strong>' . $_SESSION['mypage_fee_status'] . '</strong>に変更しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
@@ -193,21 +193,21 @@ if ($user->admin == 1 || $user->admin == 3) {
                 unset($_SESSION['mypage_account_name']);
             }
             if (isset($_SESSION['mypage_update_fee'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
                 echo '集金リストの情報を更新しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
                 unset($_SESSION['mypage_update_fee']);
             }
             if (isset($_SESSION['mypage_update_subject'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
                 echo '集金対象者を更新しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
                 unset($_SESSION['mypage_update_subject']);
             }
             if (isset($_SESSION['mypage_update_price'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
                 echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>の集金額を<strong>￥' . number_format($_SESSION['mypage_update_price']) . '</strong>に変更しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
