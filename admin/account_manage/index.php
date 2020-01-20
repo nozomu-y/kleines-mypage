@@ -180,6 +180,9 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     if ($user->admin == 1) {
                         echo '<br><a href="./auth_log.php">認証ログを閲覧</a>';
                     }
+                    if ($user->admin == 1) {
+                        echo '<br><a href="./download_log.php">ダウンロードログを閲覧</a>';
+                    }
                     ?>
                 </div>
             </div>
