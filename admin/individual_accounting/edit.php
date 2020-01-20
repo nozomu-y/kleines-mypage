@@ -71,14 +71,24 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </ol>
             </nav>
             <div class="mb-4">
-                <form action="edit_" method="post"></form>
+                <form action="edit_individual.php" method="post">
+                    <div class="form-group">
+                        <input type="date" name="date" class="form-control input-sm" value="<?php echo $individual->date; ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-sm" name="name" placeholder="項目名" value="<?php echo $individual->name; ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="price" class="form-control input-sm" placeholder="金額" value="<?php echo $individual->price; ?>" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="submit">変更する</button>
+                    <a class="btn btn-secondary" href="./detail.php?id=<?php echo $account->id; ?>" role="button">キャンセル</a>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-
-?>
 
 
 
