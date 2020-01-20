@@ -64,3 +64,12 @@ $name = $_POST['name'];
 $price = $_POST['price'];
 
 $query = "UPDATE individual_accounting_$account->id SET name = '$name', date = '$date', price = '$price' WHERE id = '$individual->id'";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の個別会計を編集しました。（項目名：" . $name . "　日付：" . $date . "　金額：" . $price . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/individual_accounting.log");
+header('Location: detail.php?account_id=' . $account->id);
+exit();
