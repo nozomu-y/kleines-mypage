@@ -165,10 +165,6 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
         </div>
         <div class="col-xl-3 col-sm-12">
             <div class="card shadow mb-4">
-                <div class="card-header">管理者一覧</div>
-                <div class="card-body">管理者権限のあるユーザーのステータス変更</div>
-            </div>
-            <div class="card shadow mb-4">
                 <div class="card-header">ステータス</div>
                 <div class="card-body">
                     <p>全てのアカウントは在団・休団・退団の3つのステータスで管理されます。<br>このページには在団・休団のみが表示されます。</p>
