@@ -54,6 +54,14 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 unset($_SESSION['mypage_admin_deprive']);
                 unset($_SESSION['mypage_account_name']);
             }
+            if (isset($_SESSION['mypage_status_failure'])) {
+                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>は管理者権限を持っているため、ステータスを退団に変更できません。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_status_failure']);
+                unset($_SESSION['mypage_account_name']);
+            }
             ?>
             <form action="/member/mypage/admin/account_manage/change_admin.php" method="POST" id="form">
                 <div class="mb-4">
