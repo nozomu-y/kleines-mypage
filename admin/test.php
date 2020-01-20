@@ -41,10 +41,11 @@ while ($row = $result->fetch_assoc()) {
         exit();
     }
     $row_cnt = $result_1->numm_rows;
+    echo $row_cnt . '<br>';
     if ($row_cnt != 0) {
         while ($row_1 = $result_1->fetch_assoc()) {
             $individual_accounting = new Individual_Accounting($row_1);
-            $query = "SELECT * FROM fee_record WHERE name = '$individual_accounting->name'";
+            $query = "SELECT * FROM fee_list WHERE name = '$individual_accounting->name'";
             $result_2 = $mysqli->query($query);
             if (!$result_2) {
                 print('Query Failed : ' . $mysqli->error);
@@ -52,6 +53,7 @@ while ($row = $result->fetch_assoc()) {
                 exit();
             }
             $row_cnt_2 = $result_2->numm_rows;
+            echo $row_cnt_2 . '<br>';
             if ($row_cnt_2 != 0) {
                 $fee_list = new Fee_List($result_2->fetch_assoc());
                 // $query = "UPDATE individual_accounting_$account->id SET fee_id = $fee_list->id WHERE name = '$individual_accounting->name'";
