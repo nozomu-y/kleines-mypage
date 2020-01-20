@@ -66,6 +66,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 echo '</div>';
                 unset($_SESSION['mypage_individual_delete']);
             }
+            if (isset($_SESSION['mypage_individual_add'])) {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<strong>' . $_SESSION['mypage_individual_add'] . '</strong>を追加しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_individual_add']);
+            }
             ?>
             <div class="mb-4">
                 <form method="POST">
