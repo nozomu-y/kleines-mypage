@@ -50,7 +50,7 @@ foreach ($_POST as $key => $value) {
             }
             $row_cnt = $result->num_rows;
             if ($row_cnt == 0) {
-                $query = "INSERT INTO fee_record_$account_id (id, price) VALUES ('$fee_id', '$fee_list->id')";
+                $query = "INSERT INTO fee_record_$account_id (id, price) VALUES ('$fee_id', '$fee_list->price')";
                 $result = $mysqli->query($query);
                 if (!$result) {
                     print('Query Failed : ' . $mysqli->error);
