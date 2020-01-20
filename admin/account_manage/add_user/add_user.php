@@ -56,7 +56,8 @@ if (isset($_POST['submit'])) {
                     date date,
                     name varchar(256),
                     memo varchar(256),
-                    price int(10)
+                    price int(10),
+                    fee_id int(3)
                   );";
         $result = $mysqli->query($query);
         if (!$result) {
@@ -70,8 +71,7 @@ if (isset($_POST['submit'])) {
                     datetime datetime,
                     price int(10),
                     paid_cash int(10),
-                    status int(1),
-                    fee_id int(3),
+                    status int(1)
                   );";
         $result = $mysqli->query($query);
         if (!$result) {
