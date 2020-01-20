@@ -63,6 +63,7 @@ while ($row = $result->fetch_assoc()) {
         $fee = new Fee($result_1->fetch_assoc());
         if ($fee->paid_individual != 0) {
             $query = "DELETE FROM individual_accounting_$account->id WHERE name = $fee_list->name";
+            echo ($query);
             $result_1 = $mysqli->query($query);
             if (!$result_1) {
                 print('Query Failed : ' . $mysqli->error);
@@ -71,6 +72,7 @@ while ($row = $result->fetch_assoc()) {
             }
         }
         $query = "DELETE FROM fee_record_$account->id WHERE id = $fee_id";
+        echo ($query);
         $result_1 = $mysqli->query($query);
         if (!$result_1) {
             print('Query Failed : ' . $mysqli->error);
