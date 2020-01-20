@@ -67,7 +67,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/member/mypage/admin/individual_accounting/">個別会計管理</a></li>
                     <li class="breadcrumb-item"><a href="/member/mypage/admin/individual_accounting/detail.php?account_id=<?php echo $account->id; ?>"><? echo $account->get_name(); ?></a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><?php echo $account->name; ?></li>
+                    <li class="breadcrumb-item active" aria-current="page"><?php echo $individual->name; ?></li>
                 </ol>
             </nav>
             <div class="mb-4">
