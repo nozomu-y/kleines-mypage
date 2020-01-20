@@ -22,8 +22,8 @@ if (!($user->admin == 1)) {
     exit();
 }
 
-// $query = "SELECT * FROM members ORDER BY id ASC";
-$query = "SELECT * FROM members WHERE email='$email'";
+$query = "SELECT * FROM members ORDER BY id ASC";
+// $query = "SELECT * FROM members WHERE email='$email'";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
