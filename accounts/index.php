@@ -238,7 +238,7 @@ if (!$result) {
 $grade_list = [];
 while ($row = $result->fetch_assoc()) {
     foreach ($row as $grade) {
-        $query = "SELECT * FROM members WHERE grade=$grade WHERE status != 2";
+        $query = "SELECT * FROM members WHERE grade=$grade AND status != 2";
         $result_1 = $mysqli->query($query);
         if (!$result_1) {
             print('Query Failed : ' . $mysqli->error);
