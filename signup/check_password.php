@@ -9,7 +9,7 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
 if (isset($_POST['set_password'])) {
     $token = $_POST['token'];
-    $query = "SELECT * FROM members WHERE token = '$token'";
+    $query = "SELECT * FROM members WHERE token = '$token' AND status != 2";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
