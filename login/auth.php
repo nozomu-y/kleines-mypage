@@ -11,7 +11,7 @@ if (isset($_POST['login'])) {
     $email = $mysqli->real_escape_string($_POST['email']);
     $password = $mysqli->real_escape_string($_POST['password']);
     // start query
-    $query = "SELECT * FROM members WHERE email='$email'";
+    $query = "SELECT * FROM members WHERE email='$email' AND status != 2";
     $result = $mysqli->query($query);
     // error check
     if (!$result) {
