@@ -56,7 +56,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                     echo '<td class="text-nowrap"><a href="./detail.php?fee_id=' . $fee_list->id . '" class="text-secondary"><u>' . $fee_list->name . '</u></a></td>';
                                     echo '<td class="text-nowrap">' . $fee_list->get_deadline() . '</td>';
                                     echo '<td class="text-nowrap text-right">' . $fee_list->get_price() . '</td>';
-                                    echo '<td class="text-nowrap">' . $fee_list->get_paid_ratio() . '</td>';
+                                    echo '<td class="text-nowrap text-right">' . $fee_list->get_paid_ratio() . '</td>';
                                     echo '</tr>';
                                 }
                             }
