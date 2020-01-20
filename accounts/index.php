@@ -146,7 +146,7 @@ $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
 $script .= '</script>';
 
 
-$query = "SELECT * FROM members WHERE part='S'";
+$query = "SELECT * FROM members WHERE part='S' AND status != 2";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -154,7 +154,7 @@ if (!$result) {
     exit();
 }
 $sop_num = $result->num_rows;
-$query = "SELECT * FROM members WHERE part='A'";
+$query = "SELECT * FROM members WHERE part='A' AND status != 2";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -162,7 +162,7 @@ if (!$result) {
     exit();
 }
 $alt_num = $result->num_rows;
-$query = "SELECT * FROM members WHERE part='T'";
+$query = "SELECT * FROM members WHERE part='T' AND status != 2";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -170,7 +170,7 @@ if (!$result) {
     exit();
 }
 $ten_num = $result->num_rows;
-$query = "SELECT * FROM members WHERE part='B'";
+$query = "SELECT * FROM members WHERE part='B' AND status != 2";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
