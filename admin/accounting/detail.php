@@ -598,6 +598,8 @@ $script .= 'var myPieChart = new Chart(ctx, {
                 xAxes: [{
                     ticks: {
                         beginAtZero: true,
+                        min: 0,
+                        max: 100
                     }
                 }]
             }
