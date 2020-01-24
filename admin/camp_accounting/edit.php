@@ -17,13 +17,13 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 3)) {
+if (!($user->admin == 1 || $user->admin == 5)) {
     header('Location: /member/mypage/');
     exit();
 }
 
 if (!isset($_GET['fee_id'])) {
-    header('Location: /member/mypage/admin/accounting/');
+    header('Location: /member/mypage/admin/camp_accounting/');
     exit();
 }
 
@@ -47,8 +47,8 @@ if (!$result) {
 }
 $fee = new Fee($result->fetch_assoc());
 
-if ($fee->admin != 3) {
-    header('Location: /member/mypage/admin/accounting/');
+if ($fee->admin != 5) {
+    header('Location: /member/mypage/admin/camp_accounting/');
     exit();
 }
 
@@ -57,13 +57,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <div class="container-fluid">
-    <h1 class="h3 text-gray-800 mb-4">集金リスト</h1>
+    <h1 class="h3 text-gray-800 mb-4">合宿集金リスト</h1>
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/">集金リスト一覧</a></li>
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/detail.php?fee_id=<?php echo $fee->id ?>"><?php echo $fee->name ?></a></li>
+                    <li class="breadcrumb-item"><a href="/member/mypage/admin/camp_accounting/">合宿集金リスト一覧</a></li>
+                    <li class="breadcrumb-item"><a href="/member/mypage/admin/camp_accounting/detail.php?fee_id=<?php echo $fee->id ?>"><?php echo $fee->name ?></a></li>
                     <li class="breadcrumb-item active" aria-current="page">金額の変更（<?php echo $account->get_name() ?>）</li>
                 </ol>
             </nav>
@@ -87,13 +87,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <input type="hidden" name="fee_id" value="<?php echo $fee->id; ?>">
                         <input type="hidden" name="account_id" value="<?php echo $account->id; ?>">
                         <button type="submit" class="btn btn-primary" name="submit">金額を変更</button>
-                        <a class="btn btn-secondary" href="/member/mypage/admin/accounting/detail.php?fee_id=<?php echo $fee->id ?>" role="button">キャンセル</a>
+                        <a class="btn btn-secondary" href="/member/mypage/admin/camp_accounting/detail.php?fee_id=<?php echo $fee->id ?>" role="button">キャンセル</a>
                     </form>
                 <?php
                 } else {
                 ?>
                     <div class="alert alert-info shadow p-3 mb-4" role="alert">既に集金が完了しています。</div>
-                    <a class="btn btn-secondary" href="/member/mypage/admin/accounting/detail.php?fee_id=<?php echo $fee->id; ?>" role="button">キャンセル</a>
+                    <a class="btn btn-secondary" href="/member/mypage/admin/camp_accounting/detail.php?fee_id=<?php echo $fee->id; ?>" role="button">キャンセル</a>
                 <?php
                 }
                 ?>

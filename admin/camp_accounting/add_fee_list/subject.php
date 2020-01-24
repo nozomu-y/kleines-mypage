@@ -17,7 +17,7 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 3)) {
+if (!($user->admin == 1 || $user->admin == 5)) {
     header('Location: /member/mypage/');
     exit();
 }
@@ -25,7 +25,7 @@ if (!($user->admin == 1 || $user->admin == 3)) {
 if (isset($_GET['fee_id'])) {
     $fee_id = $_GET['fee_id'];
 } else {
-    header('Location: /member/mypage/admin/accounting/');
+    header('Location: /member/mypage/admin/camp_accounting/');
     exit();
 }
 
@@ -37,8 +37,8 @@ if (!$result) {
     exit();
 }
 $fee_list = new Fee_List($result->fetch_assoc());
-if ($fee_list->admin != 3) {
-    header('Location: /member/mypage/admin/accounting/');
+if ($fee_list->admin != 5) {
+    header('Location: /member/mypage/admin/camp_accounting/');
     exit();
 }
 
@@ -46,13 +46,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <div class="container-fluid">
-    <h1 class="h3 text-gray-800 mb-4">集金リスト</h1>
+    <h1 class="h3 text-gray-800 mb-4">合宿集金リスト</h1>
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/">集金リスト一覧</a></li>
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/detail.php?fee_id=<?php echo $fee_list->id ?>"><?php echo $fee_list->name ?></a></li>
+                    <li class="breadcrumb-item"><a href="/member/mypage/admin/camp_accounting/">合宿集金リスト一覧</a></li>
+                    <li class="breadcrumb-item"><a href="/member/mypage/admin/camp_accounting/detail.php?fee_id=<?php echo $fee_list->id ?>"><?php echo $fee_list->name ?></a></li>
                     <li class="breadcrumb-item active" aria-current="page">集金対象者の編集</li>
                 </ol>
             </nav>
@@ -124,7 +124,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </div>
                 <input type="hidden" name="fee_id" value="<?php echo $fee_list->id; ?>">
                 <button type="submit" class="btn btn-primary" name="submit">集金対象に追加</button>
-                <a class="btn btn-secondary" href="index.php" role="button">キャンセル</a>
+                <a class="btn btn-secondary" href="/member/mypage/admin/camp_accounting/" role="button">キャンセル</a>
             </form>
         </div>
     </div>

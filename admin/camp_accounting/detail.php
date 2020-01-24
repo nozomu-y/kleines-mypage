@@ -17,7 +17,7 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3)) {
+if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5)) {
     header('Location: /member/mypage/');
     exit();
 }
@@ -25,7 +25,7 @@ if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3)) {
 if (isset($_GET['fee_id'])) {
     $id = $_GET['fee_id'];
 } else {
-    header('Location: /member/mypage/admin/accounting/');
+    header('Location: /member/mypage/admin/camp_accounting/');
     exit();
 }
 
@@ -38,8 +38,8 @@ if (!$result) {
 }
 $fee_list = new Fee_List($result->fetch_assoc());
 
-if ($fee_list->admin != 3) {
-    header('Location: /member/mypage/admin/accounting/');
+if ($fee_list->admin != 5) {
+    header('Location: /member/mypage/admin/camp_accounting/');
     exit();
 }
 
@@ -47,99 +47,37 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <?php
-if ($user->admin == 1 || $user->admin == 3) {
+if ($user->admin == 1 || $user->admin == 5) {
 ?>
     <script>
-        function getPaid(id, name, i_a_price, price) {
-            if (i_a_price > 0) {
-                // 個別会計を使える場合（値が正）
-                var paid_cash = window.prompt(name + "さんの集金処理を行います。\n現金で受け取る金額を指定してください。\n個別会計残高：" + i_a_price + "\n集金額：" + price);
-                if ((paid_cash != "") && (paid_cash != null) && !isNaN(paid_cash)) {
-                    if (Number(paid_cash) < 0) {
-                        window.alert("非負整数を入力して下さい。");
-                    } else if (Number(paid_cash) > Number(price)) {
-                        window.alert("入力された金額が集金額よりも多いです。");
-                    } else if (Number(price) - Number(paid_cash) > Number(i_a_price)) {
-                        window.alert("個別会計の残高が足りません。");
-                    } else if (Number(price) - Number(paid_cash) <= Number(i_a_price)) {
-                        window.alert("現金で" + String(paid_cash) + "円徴収してください。\n残りの" + String(price - paid_cash) + "円は個別会計から差し引きます。");
-                        var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
-                        if (result) {
-                            var form = document.createElement('form');
-                            form.method = 'POST';
-                            form.action = '/member/mypage/admin/accounting/change_status_paid.php';
+        function getPaid(id, name, price) {
+            var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
+            if (result) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/member/mypage/admin/camp_accounting/change_status_paid.php';
 
-                            var form_fee_id = document.createElement('input');
-                            form_fee_id.type = 'hidden';
-                            form_fee_id.name = 'fee_id';
-                            form_fee_id.value = '<?php echo $fee_list->id; ?>';
-                            form.appendChild(form_fee_id);
+                var form_fee_id = document.createElement('input');
+                form_fee_id.type = 'hidden';
+                form_fee_id.name = 'fee_id';
+                form_fee_id.value = '<?php echo $fee_list->id; ?>';
+                form.appendChild(form_fee_id);
 
-                            var form_price = document.createElement('input');
-                            form_price.type = 'hidden';
-                            form_price.name = 'price';
-                            form_price.value = price;
-                            form.appendChild(form_price);
+                var form_price = document.createElement('input');
+                form_price.type = 'hidden';
+                form_price.name = 'price';
+                form_price.value = price;
+                form.appendChild(form_price);
 
-                            var form_user_id = document.createElement('input');
-                            form_user_id.type = 'hidden';
-                            form_user_id.name = 'user_id';
-                            form_user_id.value = id;
-                            form.appendChild(form_user_id);
+                var form_user_id = document.createElement('input');
+                form_user_id.type = 'hidden';
+                form_user_id.name = 'user_id';
+                form_user_id.value = id;
+                form.appendChild(form_user_id);
 
-                            var form_paid_cash = document.createElement('input');
-                            form_paid_cash.type = 'hidden';
-                            form_paid_cash.name = 'paid_cash';
-                            form_paid_cash.value = String(paid_cash);
-                            form.appendChild(form_paid_cash);
+                document.body.appendChild(form);
 
-                            document.body.appendChild(form);
-
-                            form.submit();
-                        }
-                    }
-                } else if ((paid_cash != "") && isNaN(paid_cash)) {
-                    window.alert("値は数字で入力してください。");
-                } else if (paid_cash == "") {
-                    window.alert("値を入力してください。");
-                }
-            } else {
-                // 個別会計を使えない場合（値が負）
-                window.alert("個別会計の残高がありません。\n現金で" + price + "円徴収してください。");
-                var result = window.confirm(name + "さんの提出状況を既納に変更して、集金完了メールを送信します。");
-                if (result) {
-                    var form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '/member/mypage/admin/accounting/change_status_paid.php';
-
-                    var form_fee_id = document.createElement('input');
-                    form_fee_id.type = 'hidden';
-                    form_fee_id.name = 'fee_id';
-                    form_fee_id.value = '<?php echo $fee_list->id; ?>';
-                    form.appendChild(form_fee_id);
-
-                    var form_price = document.createElement('input');
-                    form_price.type = 'hidden';
-                    form_price.name = 'price';
-                    form_price.value = price;
-                    form.appendChild(form_price);
-
-                    var form_user_id = document.createElement('input');
-                    form_user_id.type = 'hidden';
-                    form_user_id.name = 'user_id';
-                    form_user_id.value = id;
-                    form.appendChild(form_user_id);
-
-                    var form_paid_cash = document.createElement('input');
-                    form_paid_cash.type = 'hidden';
-                    form_paid_cash.name = 'paid_cash';
-                    form_paid_cash.value = String(price);
-                    form.appendChild(form_paid_cash);
-
-                    document.body.appendChild(form);
-
-                    form.submit();
-                }
+                form.submit();
             }
         }
     </script>
@@ -149,7 +87,7 @@ if ($user->admin == 1 || $user->admin == 3) {
             if (result) {
                 var form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '/member/mypage/admin/accounting/change_status_unpaid.php';
+                form.action = '/member/mypage/admin/camp_accounting/change_status_unpaid.php';
 
                 var form_fee_id = document.createElement('input');
                 form_fee_id.type = 'hidden';
@@ -179,7 +117,7 @@ if ($user->admin == 1 || $user->admin == 3) {
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/">集金記録一覧</a></li>
+                    <li class="breadcrumb-item"><a href="/member/mypage/admin/camp_accounting/">合宿集金記録一覧</a></li>
                     <li class="breadcrumb-item active" aria-current="page"><? echo $fee_list->name; ?></li>
                 </ol>
             </nav>
@@ -223,7 +161,7 @@ if ($user->admin == 1 || $user->admin == 3) {
                             <th class="text-nowrap">パート</th>
                             <th class="text-nowrap">氏名</th>
                             <?php
-                            if ($user->admin == 1 || $user->admin == 3) {
+                            if ($user->admin == 1 || $user->admin == 5) {
                                 echo '<th class="text-nowrap">変更</th>';
                             }
                             ?>
@@ -231,7 +169,7 @@ if ($user->admin == 1 || $user->admin == 3) {
                             <th class="text-nowrap">提出日時</th>
                             <th class="text-nowrap">金額</th>
                             <?php
-                            if ($user->admin == 1 || $user->admin == 3) {
+                            if ($user->admin == 1 || $user->admin == 5) {
                                 echo '<th class="text-nowrap">編集</th>';
                             }
                             ?>
@@ -274,13 +212,13 @@ if ($user->admin == 1 || $user->admin == 3) {
                                 echo '<td class="text-nowrap">' . $account->grade . '</td>';
                                 echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                                 echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                                if ($user->admin == 1 || $user->admin == 3) {
-                                    echo '<td class="text-nowrap"><input type="button" id="paid_' . $id_u . '" name="paid" class="btn btn-secondary btn-sm" value="既納" Onclick="getPaid(\'' . $account->id . '\',\'' . $account->name . '\',\'' . $account->individual_accounting_total . '\',\'' . $fee->price . '\');" ' . $disabled_paid . '> <input type="button" id="unpaid_' . $account->id . '" name="unpaid" class="btn btn-secondary btn-sm" value="未納" Onclick="getUnpaid(\'' . $account->id . '\',\'' . $account->name . '\');" ' . $disabled_unpaid . '></td>';
+                                if ($user->admin == 1 || $user->admin == 5) {
+                                    echo '<td class="text-nowrap"><input type="button" id="paid_' . $id_u . '" name="paid" class="btn btn-secondary btn-sm" value="既納" Onclick="getPaid(\'' . $account->id . '\',\'' . $account->name . '\',\'' . $fee->price . '\');" ' . $disabled_paid . '> <input type="button" id="unpaid_' . $account->id . '" name="unpaid" class="btn btn-secondary btn-sm" value="未納" Onclick="getUnpaid(\'' . $account->id . '\',\'' . $account->name . '\');" ' . $disabled_unpaid . '></td>';
                                 }
                                 echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
                                 echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
                                 echo '<td class="text-nowrap text-right">' . $fee->get_price() . '</td>';
-                                if ($user->admin == 1 || $user->admin == 3) {
+                                if ($user->admin == 1 || $user->admin == 5) {
                                     echo '<td class="text-nowrap"><a href="./edit.php?id=' . $account->id . '&fee_id=' . $fee_list->id . '" class="text-secondary"><u>編集</u></a></td>';
                                 }
                                 echo '</tr>';
@@ -309,35 +247,20 @@ if ($user->admin == 1 || $user->admin == 3) {
                 </div>
             </div>
             <?php
-            if ($user->admin == 1 || $user->admin == 3) {
+            if ($user->admin == 1 || $user->admin == 5) {
             ?>
                 <form method="post">
                     <div class="list-group shadow mb-4">
-                        <a href="/member/mypage/admin/accounting/add_fee_list/edit.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
-                        <a href="/member/mypage/admin/accounting/add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金対象者の選択</a>
-                        <button type="submit" name="delete" formaction="/member/mypage/admin/accounting/delete_fee_list.php" class="list-group-item list-group-item-action text-danger" value="<?php echo $fee_list->id ?>" Onclick="return confirm('集金リスト「<?php echo $fee_list->name; ?>」を削除しますか？\n削除した場合、関連する全ての集金記録・個別会計が削除されます。');">集金リストの削除</button>
-                        <!-- <a href="#" class="list-group-item list-group-item-action list-group-item-danger disabled">集金リストの削除</a> -->
+                        <a href="/member/mypage/admin/camp_accounting/add_fee_list/edit.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
+                        <a href="/member/mypage/admin/camp_accounting/add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金対象者の選択</a>
+                        <button type="submit" name="delete" formaction="/member/mypage/admin/camp_accounting/delete_fee_list.php" class="list-group-item list-group-item-action text-danger" value="<?php echo $fee_list->id ?>" Onclick="return confirm('集金リスト「<?php echo $fee_list->name; ?>」を削除しますか？\n削除した場合、関連する全ての集金記録・個別会計が削除されます。');">集金リストの削除</button>
                     </div>
                 </form>
-                <div class="card shadow mb-4">
-                    <div class="card-header">未納に変更した場合...</div>
-                    <div class="card-body">
-                        <p>
-                            全額現金で支払った場合、そのまま未納に変更されます。
-                            <br>
-                            一部でも個別会計を利用した場合、利用した個別会計もリセットされます。
-                        </p>
-                    </div>
-                </div>
                 <div class="card shadow mb-4">
                     <div class="card-header">集金リストを削除した場合...</div>
                     <div class="card-body">
                         <p>
                             削除した集金リストの全てのデータが削除されます。（提出状況・提出日時など）
-                            <br>
-                            個別会計を利用している場合、個別会計側のデータはそのまま残ります。（個別会計の額が増えることはありません）
-                            <br>
-                            個別会計のデータもリセットしたい場合、一度未納に変更してから削除してください。
                         </p>
                     </div>
                 </div>
@@ -350,7 +273,7 @@ if ($user->admin == 1 || $user->admin == 3) {
 
 <?php
 $script = '<script>';
-if ($user->admin == 1 || $user->admin == 3) {
+if ($user->admin == 1 || $user->admin == 5) {
     $script .= '$(document).ready(function() {
     $("#accountingList").DataTable({
         "language": {

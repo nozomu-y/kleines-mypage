@@ -17,7 +17,7 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 3)) {
+if (!($user->admin == 1 || $user->admin == 5)) {
     header('Location: /member/mypage/');
     exit();
 }
@@ -26,12 +26,12 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <div class="container-fluid">
-    <h1 class="h3 text-gray-800 mb-4">集金リスト</h1>
+    <h1 class="h3 text-gray-800 mb-4">合宿集金リスト</h1>
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/">集金リスト一覧</a></li>
+                    <li class="breadcrumb-item"><a href="/member/mypage/admin/camp_accounting/">合宿集金リスト一覧</a></li>
                     <li class="breadcrumb-item active" aria-current="page">集金リストの追加</li>
                 </ol>
             </nav>
@@ -40,7 +40,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <div class="form-group">
                         <label for="fee-list">集金リスト名</label>
                         <input type="text" class="form-control" name="name" id="fee-list" aria-describedby="nameHelp" required>
-                        <small id="nameHelp" class="form-text text-muted">「団費」「演奏会費」のように入力してください。</small>
+                        <small id="nameHelp" class="form-text text-muted">「全国大会費」のように入力してください。</small>
                     </div>
                     <div class="form-group">
                         <label for="deadline">期限</label>
@@ -52,7 +52,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <small id="nameHelp" class="form-text text-muted">設定後、個別に金額を変更することも可能です。</small>
                     </div>
                     <button type="submit" class="btn btn-primary" name="submit">リストを追加</button>
-                    <a class="btn btn-secondary" href="/member/mypage/admin/accounting/" role="button">キャンセル</a>
+                    <a class="btn btn-secondary" href="/member/mypage/admin/camp_accounting/" role="button">キャンセル</a>
                 </form>
             </div>
         </div>

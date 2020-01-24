@@ -124,7 +124,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </div>
                 <input type="hidden" name="fee_id" value="<?php echo $fee_list->id; ?>">
                 <button type="submit" class="btn btn-primary" name="submit">集金対象に追加</button>
-                <a class="btn btn-secondary" href="index.php" role="button">キャンセル</a>
+                <a class="btn btn-secondary" href="/member/mypage/admin/accounting/" role="button">キャンセル</a>
             </form>
         </div>
     </div>
