@@ -50,8 +50,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/">合宿集金リスト一覧</a></li>
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/detail.php?fee_id=<?php echo $fee_list->id ?>"><?php echo $fee_list->name ?></a></li>
+                    <li class="breadcrumb-item"><a href="/member/mypage/admin/camp_accounting/">合宿集金リスト一覧</a></li>
+                    <li class="breadcrumb-item"><a href="/member/mypage/admin/camp_accounting/detail.php?fee_id=<?php echo $fee_list->id ?>"><?php echo $fee_list->name ?></a></li>
                     <li class="breadcrumb-item active" aria-current="page">集金リストの編集</li>
                 </ol>
             </nav>
