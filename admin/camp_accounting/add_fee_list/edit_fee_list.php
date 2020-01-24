@@ -17,13 +17,13 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 3)) {
+if (!($user->admin == 1 || $user->admin == 5)) {
     header('Location: /member/mypage/');
     exit();
 }
 
 if (!isset($_POST['submit'])) {
-    header('Location: /member/mypage/admin/accounting/');
+    header('Location: /member/mypage/admin/camp_accounting/');
     exit();
 }
 
@@ -43,6 +43,6 @@ if (!$result) {
 $_SESSION['mypage_update_fee'] = '';
 
 // make log file
-error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が新規集金リスト「" . $name . "」を編集しました。（期限：" . $deadline . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
-header('Location: /member/mypage/admin/accounting/detail.php?fee_id=' . $fee_id);
+error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が新規集金リスト「" . $name . "」を編集しました。（期限：" . $deadline . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/camp_accounting.log");
+header('Location: /member/mypage/admin/camp_accounting/detail.php?fee_id=' . $fee_id);
 exit();

@@ -17,7 +17,7 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 5)) {
+if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5)) {
     header('Location: /member/mypage/');
     exit();
 }
@@ -26,7 +26,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <div class="container-fluid">
-    <h1 class="h3 text-gray-800 mb-4">集金リスト</h1>
+    <h1 class="h3 text-gray-800 mb-4">合宿集金リスト</h1>
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
             <form method="post">
@@ -68,7 +68,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             <?php
             if ($user->admin == 1 || $user->admin == 5) {
             ?>
-                <a class="btn btn-primary mb-4" href="/member/mypage/admin/accounting/add_fee_list/" role="button">集金リストの追加</a>
+                <a class="btn btn-primary mb-4" href="/member/mypage/admin/camp_accounting/add_fee_list/" role="button">集金リストの追加</a>
             <?php
             }
             ?>
@@ -81,7 +81,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <div class="card-header">ログ</div>
                     <div class="card-body">
                         <p>このページで行われる操作は全てログとして残ります。</p>
-                        <a href="./accounting_log.php">ログを閲覧</a>
+                        <a href="./camp_accounting_log.php">ログを閲覧</a>
                     </div>
                 </div>
             <?php

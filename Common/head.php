@@ -149,7 +149,7 @@ if ($backtrace == '/index.php') {
                 if ($user->admin == 2) {
                     echo '<li class="nav-item ' . $admin_accounting . '"><a class="nav-link" href="/member/mypage/admin/accounting/"><i class="fas fa-coins fa-fw"></i></i><span>会計システム</span></a></li>';
                 }
-                if ($user->admin == 1 || $user->admin == 5) {
+                if ($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5) {
                     echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="/member/mypage/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
                 }
             }

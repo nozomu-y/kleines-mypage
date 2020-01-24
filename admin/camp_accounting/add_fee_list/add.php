@@ -17,13 +17,13 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 3)) {
+if (!($user->admin == 1 || $user->admin == 5)) {
     header('Location: /member/mypage/');
     exit();
 }
 
 if (!isset($_POST['submit'])) {
-    header('Location: /member/mypage/admin/accounting/');
+    header('Location: /member/mypage/admin/camp_accounting/');
     exit();
 }
 
@@ -41,7 +41,7 @@ if (!$result) {
 while ($row = $result->fetch_assoc()) {
     $fee_id = $row['id'];
 }
-$fee_admin = 3;
+$fee_admin = 5;
 $fee_id = $fee_id + 1;
 $query = "INSERT INTO fee_list (id, name, deadline, price, admin) VALUES ('$fee_id', '$name', '$deadline', '$price', '$fee_admin')";
 $result = $mysqli->query($query);
@@ -52,6 +52,6 @@ if (!$result) {
 }
 
 // make log file
-error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が新規集金リスト「" . $name . "」を追加しました。（期限：" . $deadline . "、金額：" . $price . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が新規集金リスト「" . $name . "」を追加しました。（期限：" . $deadline . "、金額：" . $price . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/camp_accounting.log");
 header('Location: subject.php?fee_id=' . $fee_id);
 exit();

@@ -17,13 +17,13 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 3)) {
+if (!($user->admin == 1 || $user->admin == 5)) {
     header('Location: /member/mypage/');
     exit();
 }
 
 if (!isset($_POST['submit'])) {
-    header('Location: /member/mypage/admin/accounting/');
+    header('Location: /member/mypage/admin/camp_accounting/');
     exit();
 }
 
@@ -72,5 +72,5 @@ foreach ($_POST as $key => $value) {
 
 $_SESSION['mypage_update_subject'] = '';
 
-header('Location: /member/mypage/admin/accounting/detail.php?fee_id=' . $fee_id);
+header('Location: /member/mypage/admin/camp_accounting/detail.php?fee_id=' . $fee_id);
 exit();
