@@ -39,6 +39,8 @@ if ($backtrace == '/index.php') {
     $admin_accounting = 'active';
 } else if (strpos($backtrace, '/admin/individual_accounting/') !== false) {
     $admin_accounting = 'active';
+} else if (strpos($backtrace, '/admin/camp_accounting/') !== false) {
+    $admin_camp_accounting = 'active';
 }
 ?>
 
@@ -148,7 +150,7 @@ if ($backtrace == '/index.php') {
                     echo '<li class="nav-item ' . $admin_accounting . '"><a class="nav-link" href="/member/mypage/admin/accounting/"><i class="fas fa-coins fa-fw"></i></i><span>会計システム</span></a></li>';
                 }
                 if ($user->admin == 1 || $user->admin == 5) {
-                    echo '<li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
+                    echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="/member/mypage/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
                 }
             }
 
