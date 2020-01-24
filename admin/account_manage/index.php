@@ -17,7 +17,7 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5)) {
+if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3)) {
     header('Location: /member/mypage/');
     exit();
 }
@@ -206,7 +206,7 @@ if ($user->admin == 1) {
             { "orderable": false, "targets": 9 },
             { "orderable": true, "orderDataType": "part", "targets": 2 },
             { type: "currency", targets: 4 }';
-} else if ($user->admin == 2 || $user->admin == 5) {
+} else if ($user->admin == 2) {
     $script .= '{ "orderable": false, "targets": 4 },
             { "orderable": false, "targets": 7 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';

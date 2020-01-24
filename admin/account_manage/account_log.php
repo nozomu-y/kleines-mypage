@@ -17,7 +17,7 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3)) {
+if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5)) {
     header('Location: /member/mypage/');
     exit();
 }
