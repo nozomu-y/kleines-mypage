@@ -79,6 +79,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 <?php
                                 if ($user->admin == 1 || $user->admin == 3) {
                                     echo '<th class="text-nowrap">滞納額</th>';
+                                    echo '<th class="text-nowrap">個別会計総額</th>';
                                 }
                                 ?>
                                 <th class="text-nowrap">メールアドレス</th>
@@ -116,6 +117,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
                                 if ($user->admin == 1 || $user->admin == 3) {
                                     echo '<td class="text-nowrap text-right">' . $account->get_delinquent() . '</td>';
+                                    echo '<td class="text-nowrap text-right">' . $account->get_individual_accounting_total() . '</td>';
                                 }
                                 echo '<td class="text-nowrap">' . $account->email . '</td>';
                                 if ($user->admin == 1) {
@@ -210,17 +212,19 @@ $script .= '$(document).ready(function() {
         columnDefs: [';
 if ($user->admin == 1) {
     $script .= '{ "orderable": false, "targets": 0 },
-            { "orderable": false, "targets": 6 },
-            { "orderable": false, "targets": 9 },
+            { "orderable": false, "targets": 7 },
+            { "orderable": false, "targets": 10 },
             { "orderable": true, "orderDataType": "part", "targets": 2 },
-            { type: "currency", targets: 4 }';
+            { type: "currency", targets: 4 },
+            { type: "currency", targets: 5 }';
 } else if ($user->admin == 2) {
     $script .= '{ "orderable": false, "targets": 5 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';
 } else if ($user->admin == 3) {
-    $script .= '{ "orderable": false, "targets":6 },
+    $script .= '{ "orderable": false, "targets": 7 },
             { "orderable": true, "orderDataType": "part", "targets": 1 },
-            { type: "currency", targets: 3 }';
+            { type: "currency", targets: 3 },
+            { type: "currency", targets: 4 }';
 }
 
 $script .= '],
