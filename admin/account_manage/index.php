@@ -217,9 +217,8 @@ if ($user->admin == 1) {
 } else if ($user->admin == 2) {
     $script .= '{ "orderable": false, "targets": 5 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';
-} else {
-    $script .= '{ "orderable": false, "targets": 5 },
-            { "orderable": false, "targets":8 },
+} else if ($user->admin == 3) {
+    $script .= '{ "orderable": false, "targets":6 },
             { "orderable": true, "orderDataType": "part", "targets": 1 },
             { type: "currency", targets: 3 }';
 }
