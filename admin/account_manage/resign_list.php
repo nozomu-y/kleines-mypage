@@ -46,10 +46,10 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 <?php
                                 if ($user->admin == 1 || $user->admin == 3) {
                                     echo '<th class="text-nowrap">滞納額</th>';
+                                    echo '<th class="text-nowrap">個別会計総額</th>';
                                 }
                                 ?>
                                 <th class="text-nowrap">メールアドレス</th>
-                                <th class="text-nowrap">パスワード</th>
                                 <th class="text-nowrap">編集</th>
                                 <?php
                                 if ($user->admin == 1) {
@@ -84,9 +84,9 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
                                 if ($user->admin == 1 || $user->admin == 3) {
                                     echo '<td class="text-nowrap text-right">' . $account->get_delinquent() . '</td>';
+                                    echo '<td class="text-nowrap text-right">' . $account->get_individual_accounting_total() . '</td>';
                                 }
                                 echo '<td class="text-nowrap">' . $account->email . '</td>';
-                                echo '<td class="text-nowrap">' . $account->get_password() . '</td>';
                                 echo '<td class="text-nowrap">
                                 <button type="submit" name="present" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを在団にしますか？\');">在団</button>
                                 <button type="submit" name="absent" formaction="/member/mypage/admin/account_manage/change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを休団にしますか？\');">休団</button>
@@ -119,19 +119,19 @@ $script .= '$(document).ready(function() {
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
         columnDefs: [';
 if ($user->admin == 1) {
-    $script .= '{ "orderable": false, "targets": 5 },
-            { "orderable": false, "targets": 6 },
+    $script .= '{ "orderable": false, "targets": 6 },
             { "orderable": false, "targets": 7 },
             { "orderable": true, "orderDataType": "part", "targets": 1 },
-            { type: "currency", targets: 3 }';
+            { type: "currency", targets: 3 },
+            { type: "currency", targets: 4 }';
 } else if ($user->admin == 3) {
-    $script .= '{ "orderable": false, "targets": 5 },
-            { "orderable": false, "targets": 6 },
+    $script .= '{ "orderable": false, "targets": 6 },
             { "orderable": true, "orderDataType": "part", "targets": 1 },
-            { type: "currency", targets: 3 }';
+            { type: "currency", targets: 3 },
+            { type: "currency", targets: 4 }';
 } else {
-    $script .= '{ "orderable": false, "targets": 4 },
-            { "orderable": false, "targets": 5 },
+    $script .= '{ "orderable": false, "targets": 3 },
+            { "orderable": false, "targets": 4 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';
 }
 
