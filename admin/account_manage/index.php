@@ -82,8 +82,12 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 }
                                 ?>
                                 <th class="text-nowrap">メールアドレス</th>
-                                <th class="text-nowrap">パスワード</th>
-                                <th class="text-nowrap">管理者権限</th>
+                                <?php
+                                if ($user->admin == 1) {
+                                    echo '<th class="text-nowrap">パスワード</th>';
+                                    echo '<th class="text-nowrap">管理者権限</th>';
+                                }
+                                ?>
                                 <th class="text-nowrap">ステータス</th>
                                 <th class="text-nowrap">編集</th>
                             </tr>
@@ -114,8 +118,10 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                     echo '<td class="text-nowrap text-right">' . $account->get_delinquent() . '</td>';
                                 }
                                 echo '<td class="text-nowrap">' . $account->email . '</td>';
-                                echo '<td class="text-nowrap">' . $account->get_password() . '</td>';
-                                echo '<td class="text-nowrap">' . $account->get_admin() . '</td>';
+                                if ($user->admin == 1) {
+                                    echo '<td class="text-nowrap">' . $account->get_password() . '</td>';
+                                    echo '<td class="text-nowrap">' . $account->get_admin() . '</td>';
+                                }
                                 echo '<td class="text-nowrap">' . $account->get_status() . '</td>';
                                 switch ($account->status) {
                                     case 0:
@@ -209,8 +215,7 @@ if ($user->admin == 1) {
             { "orderable": true, "orderDataType": "part", "targets": 2 },
             { type: "currency", targets: 4 }';
 } else if ($user->admin == 2) {
-    $script .= '{ "orderable": false, "targets": 4 },
-            { "orderable": false, "targets": 7 },
+    $script .= '{ "orderable": false, "targets": 5 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';
 } else {
     $script .= '{ "orderable": false, "targets": 5 },
