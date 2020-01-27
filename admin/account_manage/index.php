@@ -79,7 +79,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 <?php
                                 if ($user->admin == 1 || $user->admin == 3) {
                                     echo '<th class="text-nowrap">滞納額</th>';
-                                    echo '<th class="text-nowrap">個別会計総額</th>';
+                                    echo '<th class="text-nowrap">個別会計</th>';
                                 }
                                 ?>
                                 <th class="text-nowrap">メールアドレス</th>
