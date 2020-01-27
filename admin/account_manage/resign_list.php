@@ -130,8 +130,7 @@ if ($user->admin == 1) {
             { type: "currency", targets: 3 },
             { type: "currency", targets: 4 }';
 } else {
-    $script .= '{ "orderable": false, "targets": 3 },
-            { "orderable": false, "targets": 4 },
+    $script .= '{ "orderable": false, "targets": 4 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';
 }
 
