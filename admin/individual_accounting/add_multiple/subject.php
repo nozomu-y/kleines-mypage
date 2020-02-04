@@ -22,10 +22,10 @@ if (!($user->admin == 1 || $user->admin == 3)) {
     exit();
 }
 
-if (isset($_GET['name'])) {
-    $name = $_GET['name'];
-    $date = $_GET['date'];
-    $price = $_GET['price'];
+if (isset($_POST['name'])) {
+    $name = $_POST['name'];
+    $date = $_POST['date'];
+    $price = $_POST['price'];
 } else {
     header('Location: /member/mypage/admin/individual_accounting/');
     exit();
