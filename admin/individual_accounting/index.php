@@ -30,14 +30,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
             <?php
-            // if (isset($_SESSION['mypage_status'])) {
-            //     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-            //     echo '<strong>' . $_SESSION['mypage_account_name'] . '</strong>のステータスを<strong>' . $_SESSION['mypage_status'] . '</strong>に変更しました。';
-            //     echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-            //     echo '</div>';
-            //     unset($_SESSION['mypage_status']);
-            //     unset($_SESSION['mypage_account_name']);
-            // }
+            if (isset($_SESSION['mypage_individual_add_multiple'])) {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<strong>' . $_SESSION['mypage_individual_add_multiple'] . '</strong>を追加しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_individual_add_multiple']);
+            }
             ?>
             <form action="/member/mypage/admin/account_manage/change_admin.php" method="POST" id="form">
                 <div class="mb-4">
@@ -76,6 +75,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         </tbody>
                     </table>
                 </div>
+                <a class="btn btn-primary mb-4" href="/member/mypage/admin/individual_accounting/add_multiple/" role="button">一括追加</a>
             </form>
         </div>
         <div class="col-xl-3 col-sm-12">
