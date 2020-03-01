@@ -41,6 +41,8 @@ if ($backtrace == '/index.php') {
     $admin_accounting = 'active';
 } else if (strpos($backtrace, '/admin/camp_accounting/') !== false) {
     $admin_camp_accounting = 'active';
+} else if (strpos($backtrace, '/admin/eticket/') !== false) {
+    $admin_eticket = 'active';
 }
 ?>
 
@@ -151,6 +153,9 @@ if ($backtrace == '/index.php') {
                 }
                 if ($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5) {
                     echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="/member/mypage/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
+                }
+                if ($user->admin == 1) {
+                    echo '<li class="nav-item ' . $admin_eticket . '"><a class="nav-link" href="/member/mypage/admin/eticket/"><i class="fas fa-ticket-alt fa-fw"></i></i><span>電子チケット</span></a></li>';
                 }
             }
 
