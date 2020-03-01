@@ -33,29 +33,29 @@ $list_id = substr($data, 0, 5);
 $ticket_id = substr($data, 5, 6);
 $token = substr($data, 11);
 
-$query = "SELECT * FROM ticket_list WHERE list_id = '$list_id'";
-echo $query;
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-while ($row = $result->fetch_assoc()) {
-    $ticket_list = new Ticket_List($row);
-}
+// $query = "SELECT * FROM ticket_list WHERE list_id = '$list_id'";
+// echo $query;
+// $result = $mysqli->query($query);
+// if (!$result) {
+//     print('Query Failed : ' . $mysqli->error);
+//     $mysqli->close();
+//     exit();
+// }
+// while ($row = $result->fetch_assoc()) {
+//     $ticket_list = new Ticket_List($row);
+// }
 
-$query = "SELECT * FROM ticket_'$list_id' WHERE id = $ticket_id";
-echo $query;
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-while ($row = $result->fetch_assoc()) {
-    $ticket = new Ticket($row);
-}
+// $query = "SELECT * FROM ticket_'$list_id' WHERE id = $ticket_id";
+// echo $query;
+// $result = $mysqli->query($query);
+// if (!$result) {
+//     print('Query Failed : ' . $mysqli->error);
+//     $mysqli->close();
+//     exit();
+// }
+// while ($row = $result->fetch_assoc()) {
+//     $ticket = new Ticket($row);
+// }
 
 include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
@@ -65,13 +65,15 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
             <?php
-            if ($token != $ticket->token) {
-                echo "<p>チケットが不正です</p>";
-                exit();
-            }
-            echo $ticket_list->name;
-            echo '<br>';
-            echo $ticket->id;
+            // if ($token != $ticket->token) {
+            //     echo "<p>チケットが不正です</p>";
+            //     exit();
+            // }
+            // echo $ticket_list->name;
+            // echo '<br>';
+            // echo $ticket->id;
+            echo $list_id;
+            echo $ticket_id . $token;
             ?>
         </div>
         <div class="col-xl-3 col-sm-12">
