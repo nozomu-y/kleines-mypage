@@ -68,5 +68,5 @@ if (!$result) {
     exit();
 }
 
-header('Location: /member/mypage/login/admin/eticket/tickets/?list_id=' . $ticket_list->id);
+header('Location: /member/mypage/admin/eticket/tickets/?list_id=' . $ticket_list->id);
 exit();
