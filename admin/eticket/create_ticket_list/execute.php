@@ -76,5 +76,5 @@ if (!$result) {
     exit();
 }
 
-// header('Location: /member/mypage/login/');
-// exit();
+header('Location: /member/mypage/login/');
+exit();
