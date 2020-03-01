@@ -33,7 +33,7 @@ $list_id = substr($data, 0, 5);
 $ticket_id = substr($data, 5, 6);
 $token = substr($data, 11);
 
-$query = "SELECT * FROM ticket_list WHERE list_id = $list_id";
+$query = "SELECT * FROM ticket_list WHERE list_id = '$list_id'";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed1 : ' . $mysqli->error);
