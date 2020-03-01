@@ -36,7 +36,7 @@ $token = substr($data, 11);
 $query = "SELECT * FROM ticket_list WHERE list_id = '$list_id'";
 $result = $mysqli->query($query);
 if (!$result) {
-    print('Query Failed1 : ' . $mysqli->error);
+    print('Query Failed : ' . $mysqli->error);
     $mysqli->close();
     exit();
 }
@@ -47,7 +47,7 @@ while ($row = $result->fetch_assoc()) {
 $query = "SELECT * FROM ticket_$list_id WHERE id = '$ticket_id'";
 $result = $mysqli->query($query);
 if (!$result) {
-    print('Query Failed2 : ' . $mysqli->error);
+    print('Query Failed : ' . $mysqli->error);
     $mysqli->close();
     exit();
 }
