@@ -38,7 +38,7 @@ if (!isset($_GET['ticket_id'])) {
 
 
 
-$query = "SELECT * FROM ticket_$list_id WHERE ticket_id = $ticket_id";
+$query = "SELECT * FROM ticket_$list_id WHERE id = $ticket_id";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
