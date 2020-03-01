@@ -406,6 +406,7 @@ class Ticket
         }
 
         $query = "SELECT * FROM members WHERE id = $issue_member_id";
+        echo $query;
         $result = $mysqli->query($query);
         if (!$result) {
             print('Query Failed : ' . $mysqli->error);
