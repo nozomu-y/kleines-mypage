@@ -59,7 +59,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <tr>
                             <th class="text-nowrap">発券番号</th>
                             <th class="text-nowrap">発券日時</th>
-                            <th class="text-nowrap"></th>
+                            <th class="text-nowrap">発券者</th>
+                            <th class="text-nowrap">QRコード</th>
                         </tr>
                     </thead>
                     <tbody>
