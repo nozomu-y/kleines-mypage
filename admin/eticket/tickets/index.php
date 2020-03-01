@@ -78,14 +78,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             echo '<td class="text-nowrap">' . $ticket->issue_datetime . '</td>';
                             echo '<td class="text-nowrap">' . $ticket->issue_member_id . '</td>';
                             echo '<td class="text-nowrap"><a href="./qrcode.php?list_id=' . $ticket_list->id . '&ticket_id=' . $ticket->id . '">QRコードを保存</a></td>';
-                            echo '<td class="text-nowrap"><a href="./tickets/?list_id=' . $ticket->id . '">一覧</a></td>';
                             echo '</tr>';
                         }
                         ?>
                     </tbody>
                 </table>
             </div>
-            <a class="btn btn-primary mb-4" href="./issue_ticket.php" role="button">チケット発行</a>
+            <a class="btn btn-primary mb-4" href="./issue_ticket.php?list_id=<?php echo $ticket_list->id ?>" role="button">チケット発行</a>
         </div>
         <div class="col-xl-3 col-sm-12">
         </div>
