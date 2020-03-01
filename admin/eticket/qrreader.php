@@ -38,7 +38,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
         </div>
     </div>
 </div>
-<form action="test.php" method="POST" name="QRPost">
+<form action="use_ticket.php" method="POST" name="QRPost">
     <input type="hidden" name="data" value="" />
 </form>
 

@@ -22,12 +22,16 @@ if (!($user->admin == 1)) {
     exit();
 }
 
-if (!isset($_GET['list_id'])) {
-    header('Location: /member/mypage/login/admin/eticket/');
+if (!isset($_POST['data'])) {
+    header('Location: index.php');
     exit();
-} else {
-    $list_id = $_GET['list_id'];
 }
+$data = $_POST['data'];
+$data = explode("redirect.php?list_id=", $data)[1];
+
+$list_id = substr($data, 0, 5);
+$ticket_id = substr($data, 5, 6);
+$token = substr($data, 11);
 
 $query = "SELECT * FROM ticket_list WHERE list_id = $list_id";
 $result = $mysqli->query($query);
@@ -40,8 +44,7 @@ while ($row = $result->fetch_assoc()) {
     $ticket_list = new Ticket_List($row);
 }
 
-$ticket_id = 0;
-$query = "SELECT * FROM ticket_$ticket_list->id ORDER BY id ASC";
+$query = "SELECT * FROM ticket_$list_id WHERE id = $ticket_id";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -51,22 +54,29 @@ if (!$result) {
 while ($row = $result->fetch_assoc()) {
     $ticket = new Ticket($row);
 }
-$ticket_id = $ticket->id + 1;
-if ($ticket_list->start_num > $ticket_id) {
-    $ticket_id = $ticket_list->start_num;
-}
-if ($ticket_id >= $ticket_list->max_num + $ticket_list->start_num) {
-    exit();
-}
 
-$token = md5(uniqid(rand(), true));
-$query = "INSERT INTO ticket_$ticket_list->id (id, issue_datetime, token, issue_member_id) VALUES ('$ticket_id', NOW(), '$token', '$user->id')";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
+include_once('/home/chorkleines/www/member/mypage/Common/head.php');
+?>
 
-header('Location: /member/mypage/admin/eticket/tickets/?list_id=' . $ticket_list->id);
-exit();
+<div class="container-fluid">
+    <h1 class="h3 text-gray-800 mb-4">電子チケット</h1>
+    <div class="row">
+        <div class=" col-xl-9 col-sm-12">
+            <?php
+            if ($token != $ticket->token) {
+                echo "<p>チケットが不正です</p>";
+                exit();
+            }
+            echo $ticket_list->name;
+            echo '<br>';
+            echo $ticket->id;
+            ?>
+        </div>
+        <div class="col-xl-3 col-sm-12">
+        </div>
+    </div>
+</div>
+
+
+<?php
+include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
