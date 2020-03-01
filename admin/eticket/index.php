@@ -29,40 +29,38 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <h1 class="h3 text-gray-800 mb-4">電子チケット</h1>
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
-            <form method="post">
-                <div class="mb-4">
-                    <table id="TicketList" class="table table-bordered table-striped" style="width: 100%;">
-                        <thead>
-                            <tr>
-                                <th class="text-nowrap">チケット</th>
-                                <th class="text-nowrap">発券</th>
-                                <th class="text-nowrap">一覧</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $query = "SELECT * FROM ticket_list ORDER BY date DESC";
-                            $result = $mysqli->query($query);
-                            if (!$result) {
-                                print('Query Failed : ' . $mysqli->error);
-                                $mysqli->close();
-                                exit();
+            <div class="mb-4">
+                <table id="TicketList" class="table table-bordered table-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="text-nowrap">チケット</th>
+                            <th class="text-nowrap">発券</th>
+                            <th class="text-nowrap">一覧</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $query = "SELECT * FROM ticket_list ORDER BY date DESC";
+                        $result = $mysqli->query($query);
+                        if (!$result) {
+                            print('Query Failed : ' . $mysqli->error);
+                            $mysqli->close();
+                            exit();
+                        }
+                        while ($row = $result->fetch_assoc()) {
+                            $ticket_list = new Ticket_List($row);
+                            if ($ticket_list->admin == 3) {
+                                echo '<tr>';
+                                echo '<td class="text-nowrap">' . $ticket_list->name . '</td>';
+                                echo '<td class="text-nowrap"><a href="./issue_ticket.php?ticket_id=' . $ticket_list->id . '">発券</a></td>';
+                                echo '<td class="text-nowrap"><a href="./list.php?ticket_id=' . $ticket_list->id . '">一覧</a></td>';
+                                echo '</tr>';
                             }
-                            while ($row = $result->fetch_assoc()) {
-                                $ticket_list = new Ticket_List($row);
-                                if ($ticket_list->admin == 3) {
-                                    echo '<tr>';
-                                    echo '<td class="text-nowrap">' . $ticket_list->name . '</td>';
-                                    echo '<td class="text-nowrap"><a href="./issue_ticket.php?ticket_id=' . $ticket_list->id . '">発券</a></td>';
-                                    echo '<td class="text-nowrap"><a href="./list.php?ticket_id=' . $ticket_list->id . '">一覧</a></td>';
-                                    echo '</tr>';
-                                }
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </form>
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
             <a class="btn btn-primary mb-4" href="./create_ticket_list/" role="button">チケット作成</a>
         </div>
         <div class="col-xl-3 col-sm-12">
