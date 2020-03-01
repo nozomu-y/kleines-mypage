@@ -155,7 +155,7 @@ if ($backtrace == '/index.php') {
                     echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="/member/mypage/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
                 }
                 if ($user->admin == 1) {
-                    echo '<li class="nav-item ' . $admin_eticket . '"><a class="nav-link" href="/member/mypage/admin/eticket/"><i class="fas fa-ticket-alt fa-fw"></i></i><span>電子チケット</span></a></li>';
+                    echo '<li class="nav-item ' . $admin_eticket . '"><a class="nav-link" href="/member/mypage/admin/eticket/"><i class="fas fa-qrcode fa-fw"></i></i><span>電子チケット</span></a></li>';
                 }
             }
 
