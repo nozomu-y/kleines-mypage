@@ -49,13 +49,11 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         }
                         while ($row = $result->fetch_assoc()) {
                             $ticket_list = new Ticket_List($row);
-                            if ($ticket_list->admin == 3) {
-                                echo '<tr>';
-                                echo '<td class="text-nowrap">' . $ticket_list->name . '</td>';
-                                echo '<td class="text-nowrap"><a href="./issue_ticket.php?ticket_id=' . $ticket_list->id . '">発券</a></td>';
-                                echo '<td class="text-nowrap"><a href="./list.php?ticket_id=' . $ticket_list->id . '">一覧</a></td>';
-                                echo '</tr>';
-                            }
+                            echo '<tr>';
+                            echo '<td class="text-nowrap">' . $ticket_list->name . '</td>';
+                            echo '<td class="text-nowrap"><a href="./issue_ticket.php?ticket_id=' . $ticket_list->id . '">発券</a></td>';
+                            echo '<td class="text-nowrap"><a href="./list.php?ticket_id=' . $ticket_list->id . '">一覧</a></td>';
+                            echo '</tr>';
                         }
                         ?>
                     </tbody>
