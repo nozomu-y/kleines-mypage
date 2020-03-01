@@ -30,7 +30,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
             <!-- カメラ映像 -->
-            <video id="camera" muted autoplay playsinline></video>
+            <video id="camera" class="w-100" muted autoplay playsinline></video>
             <!-- 処理用 -->
             <canvas id="picture" hidden></canvas>
         </div>
