@@ -44,7 +44,7 @@ while ($row = $result->fetch_assoc()) {
     $ticket_list = new Ticket_List($row);
 }
 
-$query = "SELECT * FROM ticket_$list_id WHERE id = '$ticket_id'";
+$query = "SELECT * FROM ticket_'$list_id' WHERE id = '$ticket_id'";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
