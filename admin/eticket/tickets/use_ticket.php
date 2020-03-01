@@ -79,6 +79,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             echo '<br>';
             echo $ticket->id;
             ?>
+            <a class="btn btn-primary mb-4" href="#" role="button">使用済みにする</a>
         </div>
         <div class="col-xl-3 col-sm-12">
         </div>
