@@ -346,3 +346,47 @@ class Fee_List
         }
     }
 }
+
+class Ticket_List
+{
+    public $id;
+    public $name;
+    public $date;
+    public $open_time;
+    public $start_time;
+    public $place;
+    public $ticket_price;
+    public $pre_ticket_price;
+    public $max_num;
+    public $start_num;
+
+    public function __construct($ticket_list)
+    {
+        $this->id = $ticket_list['list_id'];
+        $this->name = $ticket_list['ticket_name'];
+        $this->date = $ticket_list['date'];
+        $this->open_time = $ticket_list['open_time'];
+        $this->start_time = $ticket_list['start_time'];
+        $this->place = $ticket_list['place'];
+        $this->ticket_price = $ticket_list['ticket_price'];
+        $this->pre_ticket_price = $ticket_list['pre_ticket_price'];
+        $this->max_num = $ticket_list['max_num'];
+        $this->start_num = $ticket_list['start_num'];
+
+        // require('/home/chorkleines/www/member/mypage/Core/config.php');
+
+        // $mysqli = new mysqli($host, $username, $password, $dbname);
+        // if ($mysqli->connect_error) {
+        //     error_log($mysqli->connect_error);
+        //     exit;
+        // }
+
+        // $query = "SELECT * FROM members ORDER BY id";
+        // $result = $mysqli->query($query);
+        // if (!$result) {
+        //     print('Query Failed : ' . $mysqli->error);
+        //     $mysqli->close();
+        //     exit();
+        // }
+    }
+}
