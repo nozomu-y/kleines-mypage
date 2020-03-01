@@ -49,7 +49,7 @@ while ($row = $result->fetch_assoc()) {
     $ticket = new Ticket($row);
 }
 
-$data = $list_id . $ticket->id . $ticket->token;
+$data = "https://www.chorkleines.com/member/mypage/admin/eticket/redirect.php?list_id=" . $list_id . $ticket->id . $ticket->token;
 
 require_once('/home/chorkleines/www/member/mypage/admin/eticket/vendor/autoload.php');
 
