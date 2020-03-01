@@ -59,7 +59,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <tr>
                             <th class="text-nowrap">発券番号</th>
                             <th class="text-nowrap">発券日時</th>
-                            <th class="text-nowrap">発券者</th>
+                            <!-- <th class="text-nowrap">発券者</th> -->
                             <th class="text-nowrap">QRコード</th>
                         </tr>
                     </thead>
@@ -77,7 +77,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             echo '<tr>';
                             echo '<td class="text-nowrap">' . $ticket->id . '</td>';
                             echo '<td class="text-nowrap">' . $ticket->issue_datetime . '</td>';
-                            echo '<td class="text-nowrap">' . $ticket->get_issue_member_name() . '</td>';
+                            // echo '<td class="text-nowrap">' . $ticket->get_issue_member_name() . '</td>';
                             echo '<td class="text-nowrap"><a href="./qrcode.php?list_id=' . $ticket_list->id . '&ticket_id=' . $ticket->id . '">QRコードを保存</a></td>';
                             echo '</tr>';
                         }
