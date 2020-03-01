@@ -60,6 +60,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 </table>
             </div>
             <a class="btn btn-primary mb-4" href="./create_ticket_list/" role="button">チケット作成</a>
+            <a class="btn btn-primary mb-4" href="./qrreader.php" role="button">QR読み取り</a>
         </div>
         <div class="col-xl-3 col-sm-12">
         </div>
