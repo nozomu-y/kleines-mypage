@@ -77,7 +77,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             echo '<tr>';
                             echo '<td class="text-nowrap">' . $ticket->id . '</td>';
                             echo '<td class="text-nowrap">' . $ticket->issue_datetime . '</td>';
-                            echo '<td class="text-nowrap">' . $ticket->issue_member_id . '</td>';
+                            echo '<td class="text-nowrap">' . $ticket->get_issue_member_name() . '</td>';
                             echo '<td class="text-nowrap"><a href="./qrcode.php?list_id=' . $ticket_list->id . '&ticket_id=' . $ticket->id . '">QRコードを保存</a></td>';
                             echo '</tr>';
                         }
