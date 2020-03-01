@@ -22,8 +22,6 @@ if (!($user->admin == 1)) {
     exit();
 }
 
-include_once('/home/chorkleines/www/member/mypage/Common/head.php');
-
 if (!isset($_POST['submit'])) {
     header('Location: /member/mypage/admin/eticket/');
     exit();
