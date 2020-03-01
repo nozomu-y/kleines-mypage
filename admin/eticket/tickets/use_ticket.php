@@ -75,11 +75,14 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 echo "<p>チケットが不正です</p>";
                 exit();
             }
-            echo $ticket_list->name;
+            echo '<h3>' . $ticket_list->name . '</h3>';
+            echo 'No. ' . $ticket->id;
             echo '<br>';
-            echo $ticket->id;
+            echo 'Token: ' . $ticket->token;
             ?>
-            <a class="btn btn-primary mb-4" href="#" role="button">使用済みにする</a>
+            <div>
+                <a class="btn btn-primary mb-4" href="#" role="button">使用済みにする</a>
+            </div>
         </div>
         <div class="col-xl-3 col-sm-12">
         </div>
