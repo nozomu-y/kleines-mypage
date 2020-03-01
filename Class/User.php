@@ -372,22 +372,6 @@ class Ticket_List
         $this->pre_ticket_price = $ticket_list['pre_ticket_price'];
         $this->max_num = $ticket_list['max_num'];
         $this->start_num = $ticket_list['start_num'];
-
-        // require('/home/chorkleines/www/member/mypage/Core/config.php');
-
-        // $mysqli = new mysqli($host, $username, $password, $dbname);
-        // if ($mysqli->connect_error) {
-        //     error_log($mysqli->connect_error);
-        //     exit;
-        // }
-
-        // $query = "SELECT * FROM members ORDER BY id";
-        // $result = $mysqli->query($query);
-        // if (!$result) {
-        //     print('Query Failed : ' . $mysqli->error);
-        //     $mysqli->close();
-        //     exit();
-        // }
     }
 }
 
@@ -399,6 +383,7 @@ class Ticket
     public $use_datetime;
     public $issue_member_id;
     public $use_member_id;
+    public $issue_member_name;
 
     public function __construct($ticket_list)
     {
@@ -408,5 +393,28 @@ class Ticket
         $this->use_datetime = $ticket_list['use_datetime'];
         $this->issue_member_id = $ticket_list['issue_member_id'];
         $this->use_member_id = $ticket_list['use_member_id'];
+    }
+
+    public function get_issue_member_name()
+    {
+        require('/home/chorkleines/www/member/mypage/Core/config.php');
+
+        $mysqli = new mysqli($host, $username, $password, $dbname);
+        if ($mysqli->connect_error) {
+            error_log($mysqli->connect_error);
+            exit;
+        }
+
+        $query = "SELECT * FROM members WHERE id = $issue_member_id";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        while ($row = $result->fetch_assoc()) {
+            $account = new User($row);
+        }
+        return $account->get_name();
     }
 }
