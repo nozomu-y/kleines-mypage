@@ -66,8 +66,8 @@ $query = "CREATE TABLE ticket_$list_id (
         issue_datetime datetime,
         token varchar(256),
         use_datetime datetime,
-        issue_member_id int(5),
-        use_member_id int(5)
+        issue_member_id int(5) UNSIGNED ZEROFILL,
+        use_member_id int(5) UNSIGNED ZEROFILL
     );";
 $result = $mysqli->query($query);
 if (!$result) {
