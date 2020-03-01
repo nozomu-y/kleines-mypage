@@ -390,3 +390,23 @@ class Ticket_List
         // }
     }
 }
+
+class Ticket
+{
+    public $id;
+    public $issue_datetime;
+    public $token;
+    public $use_datetime;
+    public $issue_member_id;
+    public $use_member_id;
+
+    public function __construct($ticket_list)
+    {
+        $this->id = $ticket_list['id'];
+        $this->issue_datetime = $ticket_list['issue_datetime'];
+        $this->token = $ticket_list['token'];
+        $this->use_datetime = $ticket_list['use_datetime'];
+        $this->issue_member_id = $ticket_list['issue_member_id'];
+        $this->use_member_id = $ticket_list['use_member_id'];
+    }
+}

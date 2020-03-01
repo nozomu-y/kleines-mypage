@@ -51,8 +51,8 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                             $ticket_list = new Ticket_List($row);
                             echo '<tr>';
                             echo '<td class="text-nowrap">' . $ticket_list->name . '</td>';
-                            echo '<td class="text-nowrap"><a href="./issue_ticket.php?ticket_id=' . $ticket_list->id . '">発券</a></td>';
-                            echo '<td class="text-nowrap"><a href="./list.php?ticket_id=' . $ticket_list->id . '">一覧</a></td>';
+                            echo '<td class="text-nowrap"><a href="./issue_ticket.php?list_id=' . $ticket_list->id . '">発券</a></td>';
+                            echo '<td class="text-nowrap"><a href="./tickets.php?list_id=' . $ticket_list->id . '">一覧</a></td>';
                             echo '</tr>';
                         }
                         ?>
