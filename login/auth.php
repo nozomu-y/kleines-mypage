@@ -60,43 +60,52 @@ if (isset($_POST['login'])) {
                 $expiration_time = 3600 * 24 * 30; // token valid for 30 days
                 // set cookie
                 setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
-                // check device(platform)
-                $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-                if (preg_match('/ipod/i', $user_agent)) {
-                    $device = 'iPod';
-                } elseif (preg_match('/iphone/i', $user_agent)) {
-                    $device = 'iPhone';
-                } elseif (preg_match('/ipad/i', $user_agent)) {
-                    $device = 'iPad';
-                } elseif (preg_match('/android/i', $user_agent)) {
-                    $device = 'Android';
-                } elseif (preg_match('/windows phone/i', $user_agent)) {
-                    $device = 'Windows Phone';
-                } elseif (preg_match('/linux/i', $user_agent)) {
-                    $device = 'Linux';
-                } elseif (preg_match('/macintosh|mac os/i', $user_agent)) {
-                    $device = 'Mac';
-                } elseif (preg_match('/windows/i', $user_agent)) {
-                    $device = 'Windows';
-                } else {
-                    $device = '不明';
-                }
-                // check browser
-                if (strstr($user_agent, 'edge')) {
-                    $browser = 'Edge';
-                } elseif (strstr($user_agent, 'trident') || strstr($user_agent, 'msie')) {
-                    $browser = 'Internet Explorer';
-                } elseif (strstr($user_agent, 'chrome')) {
-                    $browser = 'Google Chrome';
-                } elseif (strstr($user_agent, 'firefox')) {
-                    $browser = 'Firefox';
-                } elseif (strstr($user_agent, 'safari')) {
-                    $browser = 'Safari';
-                } elseif (strstr($user_agent, 'opera')) {
-                    $browser = 'Opera';
-                } else {
-                    $browser = '不明';
-                }
+                // check device(platform) and browser
+                require '/home/chorkleines/www/member/mypage/login/vendor/autoload.php';
+                $b = new Browser($_SERVER['HTTP_USER_AGENT']);
+                // check device
+                $browser = $b->getBrowser();
+                $device = $b->getPlatform();
+
+
+
+
+                // $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+                // if (preg_match('/ipod/i', $user_agent)) {
+                //     $device = 'iPod';
+                // } elseif (preg_match('/iphone/i', $user_agent)) {
+                //     $device = 'iPhone';
+                // } elseif (preg_match('/ipad/i', $user_agent)) {
+                //     $device = 'iPad';
+                // } elseif (preg_match('/android/i', $user_agent)) {
+                //     $device = 'Android';
+                // } elseif (preg_match('/windows phone/i', $user_agent)) {
+                //     $device = 'Windows Phone';
+                // } elseif (preg_match('/linux/i', $user_agent)) {
+                //     $device = 'Linux';
+                // } elseif (preg_match('/macintosh|mac os/i', $user_agent)) {
+                //     $device = 'Mac';
+                // } elseif (preg_match('/windows/i', $user_agent)) {
+                //     $device = 'Windows';
+                // } else {
+                //     $device = '不明';
+                // }
+                // // check browser
+                // if (strstr($user_agent, 'edge')) {
+                //     $browser = 'Edge';
+                // } elseif (strstr($user_agent, 'trident') || strstr($user_agent, 'msie')) {
+                //     $browser = 'Internet Explorer';
+                // } elseif (strstr($user_agent, 'chrome')) {
+                //     $browser = 'Google Chrome';
+                // } elseif (strstr($user_agent, 'firefox')) {
+                //     $browser = 'Firefox';
+                // } elseif (strstr($user_agent, 'safari')) {
+                //     $browser = 'Safari';
+                // } elseif (strstr($user_agent, 'opera')) {
+                //     $browser = 'Opera';
+                // } else {
+                //     $browser = '不明';
+                // }
                 // add to database
                 $query = "INSERT INTO auto_login (id, token, datetime, device, browser) VALUES ('$user->id', '$token', now(), '$device', '$browser')";
                 $result = $mysqli->query($query);
