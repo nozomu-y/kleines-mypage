@@ -1,5 +1,5 @@
 {
     "require": {
-        "cbschuld/browser.php": "^1.9"
+        "donatj/phpuseragentparser": "^0.15.0"
     }
 }
