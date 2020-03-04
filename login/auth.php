@@ -98,7 +98,7 @@ if (isset($_POST['login'])) {
                     $browser = '不明';
                 }
                 // add to database
-                $query = "INSERT INTO auto_login (id, token, datetime, device, browser) VALUES ($user->id, $token, now(), $device, $browser)";
+                $query = "INSERT INTO auto_login (id, token, datetime, device, browser) VALUES ('$user->id', '$token', now(), '$device', '$browser')";
                 $result = $mysqli->query($query);
                 if (!$result) {
                     print("Query Failed : " . $mysqli->error);
