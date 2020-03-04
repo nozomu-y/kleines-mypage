@@ -1,0 +1,5 @@
+{
+    "require": {
+        "cbschuld/browser.php": "^1.9"
+    }
+}
