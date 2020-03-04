@@ -55,7 +55,7 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
         // expiration time
         $expiration_time = 3600 * 24 * 30; // token valid for 30 days
         // update database
-        $query = "UPDATE auto_login SET token = $token, datetime = now() WHERE token = '$token_old'";
+        $query = "UPDATE auto_login SET token = '$token', datetime = now() WHERE token = '$token_old'";
         $result = $mysqli->query($query);
         if (!$result) {
             print("Query Failed : " . $mysqli->error);
