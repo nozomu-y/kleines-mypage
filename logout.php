@@ -7,6 +7,7 @@ if (isset($_POST['logout'])) {
     setcookie(session_name(), '', time() - 1, '/');
     session_destroy();
 
+    require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
     if (!empty($_COOKIE['mypage_auto_login'])) {
         $token = $_COOKIE['mypage_auto_login'];
         // delete token from database
