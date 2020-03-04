@@ -211,10 +211,10 @@ if ($backtrace == '/index.php') {
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     プロフィール
                                 </a> -->
-                                <!-- <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/member/mypage/profile/sessions.php">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    設定
-                                </a> -->
+                                    セッション管理
+                                </a>
                                 <!-- <div class="dropdown-divider"></div> -->
                                 <a class="dropdown-item" href="/member/mypage/logout.php" data-toggle="modal" data-target="#logoutModal" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
