@@ -54,7 +54,7 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
         // reset cookie
         setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
         // update database
-        $query = "UPDATE auto_login SET token = $token, datetime = now() WHERE token = $token_old";
+        $query = "UPDATE auto_login SET token = $token, datetime = now() WHERE token = '$token_old'";
         $result = $mysqli->query($query);
         if (!$result) {
             print("Query Failed : " . $mysqli->error);
