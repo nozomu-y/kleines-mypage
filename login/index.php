@@ -42,6 +42,7 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
         exit();
     }
     $row_cnt = $result->num_rows;
+    echo $row_cnt;
     // if the token exists in database
     if ($row_cnt == 1) {
         while ($row = $result->fetch_assoc()) {
