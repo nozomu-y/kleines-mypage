@@ -37,7 +37,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM auto_login ORDER BY datetime DESC WHERE id = '$user->id'";
+                        $query = "SELECT * FROM auto_login WHERE id = '$user->id' ORDER BY datetime DESC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);
