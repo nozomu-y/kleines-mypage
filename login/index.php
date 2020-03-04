@@ -33,6 +33,7 @@ session_destroy();
 
 if (!empty($_COOKIE['mypage_auto_login'])) {
     $token_old = $_COOKIE['mypage_auto_login'];
+    echo 'old' . $token_old;
     // delete token from database
     $query = "SELECT * FROM auto_login WHERE token = '$token_old'";
     $result = $mysqli->query($query);
@@ -50,10 +51,9 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
         }
         // regenerate token
         $token = sha1(uniqid(rand(), true) . mt_rand(1, 999999999) . '_mypage_auto_login');
+        echo 'new' . $token;
         // expiration time
         $expiration_time = 3600 * 24 * 30; // token valid for 30 days
-        // reset cookie
-        setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
         // update database
         $query = "UPDATE auto_login SET token = $token, datetime = now() WHERE token = '$token_old'";
         $result = $mysqli->query($query);
@@ -62,6 +62,8 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
             $mysqli->close();
             exit();
         }
+        // reset cookie
+        setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
         // login the user
         // get user info
         $query = "SELECT * FROM members WHERE id='$user_id'";
