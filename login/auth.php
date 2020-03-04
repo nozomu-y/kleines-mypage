@@ -53,7 +53,7 @@ if (isset($_POST['login'])) {
                 exit();
             }
             // when "remember me" was selected at /login/index.php
-            if (isset($_GET['remember_me']) && $_GET['remember_me'] == "checked") {
+            if (isset($_POST['remember_me']) && $_POST['remember_me'] == "checked") {
                 // generate token
                 $token = sha1(uniqid(rand(), true) . mt_rand(1, 999999999) . '_mypage_auto_login');
                 // expiration time
