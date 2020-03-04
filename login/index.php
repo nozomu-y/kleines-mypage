@@ -101,7 +101,7 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <!-- CSS -->
     <!-- <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css"> -->
-    <link rel="stylesheet" href="/member/mypage/Resources/css/ck-sb-admin-2.min.css">
+    <link rel="stylesheet" href="/member/mypage/Resources/css/ck-sb-admin-2.css">
     <!-- JS -->
     <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js">
 </head>
