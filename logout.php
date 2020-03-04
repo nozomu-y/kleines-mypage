@@ -11,7 +11,7 @@ if (isset($_POST['logout'])) {
     if (!empty($_COOKIE['mypage_auto_login'])) {
         $token = $_COOKIE['mypage_auto_login'];
         // delete token from database
-        $query = "DELETE FROM auto_login WHERE token = $token";
+        $query = "DELETE FROM auto_login WHERE token = '$token'";
         $result = $mysqli->query($query);
         if (!$result) {
             print("Query Failed : " . $mysqli->error);
