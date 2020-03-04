@@ -46,7 +46,7 @@ if ($user_id == $user->id) {
     }
 }
 
-$_SESSION['mypage_delete_session'] = $login_platform . '(' . $login_browser . ')';
+$_SESSION['mypage_delete_session'] = $login_platform . ' (' . $login_browser . ') ';
 
 header('Location: /member/mypage/profile/sessions.php');
 exit();
