@@ -62,10 +62,10 @@ if (isset($_POST['login'])) {
                 setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
                 // check device(platform) and browser
                 require '/home/chorkleines/www/member/mypage/login/vendor/autoload.php';
-                $b = new Browser($_SERVER['HTTP_USER_AGENT']);
+                $ua_info = parse_user_agent();
                 // check device
-                $browser = $b->getBrowser();
-                $device = $b->getPlatform();
+                $browser = $ua_info['browser'];
+                $device = $ua_info['platform'];
                 // add to database
                 $query = "INSERT INTO auto_login (id, token, datetime, device, browser) VALUES ('$user->id', '$token', now(), '$device', '$browser')";
                 $result = $mysqli->query($query);
