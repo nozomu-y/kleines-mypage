@@ -5,7 +5,7 @@ if (isset($_SESSION['mypage_email'])) {
     header('Location: /member/mypage/');
     exit();
 }
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
+require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php')
 if (isset($_SESSION['mypage_auth_error'])) {
     if ($_SESSION['mypage_auth_error'] == "wrong-email") {
         $email_invalid = 'is-invalid';
@@ -33,7 +33,7 @@ session_destroy();
 if (!empty($_COOKIE['mypage_auto_login'])) {
     $token_old = $_COOKIE['mypage_auto_login'];
     // delete token from database
-    $query = "SELECT * FROM auto_login WHERE token = $token_old";
+    $query = "SELECT * FROM auto_login WHERE token = '$token_old'";
     $result = $mysqli->query($query);
     if (!$result) {
         print("Query Failed : " . $mysqli->error);
