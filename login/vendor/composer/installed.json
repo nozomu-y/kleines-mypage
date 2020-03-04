@@ -1,36 +1,33 @@
 [
     {
-        "name": "cbschuld/browser.php",
-        "version": "1.9.4",
-        "version_normalized": "1.9.4.0",
+        "name": "donatj/phpuseragentparser",
+        "version": "v0.15.0",
+        "version_normalized": "0.15.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/cbschuld/Browser.php.git",
-            "reference": "3d0f74bd975c51fd07b02d68dbfb5b3fc9d93c72"
+            "url": "https://github.com/donatj/PhpUserAgent.git",
+            "reference": "283e5812d3a3f2deb62377c14b0d24191aba1595"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/cbschuld/Browser.php/zipball/3d0f74bd975c51fd07b02d68dbfb5b3fc9d93c72",
-            "reference": "3d0f74bd975c51fd07b02d68dbfb5b3fc9d93c72",
+            "url": "https://api.github.com/repos/donatj/PhpUserAgent/zipball/283e5812d3a3f2deb62377c14b0d24191aba1595",
+            "reference": "283e5812d3a3f2deb62377c14b0d24191aba1595",
             "shasum": ""
         },
         "require": {
-            "php": ">=7.2"
+            "php": ">=5.3.0"
         },
         "require-dev": {
-            "phpunit/phpunit": "^8"
+            "camspiers/json-pretty": "0.1.*",
+            "donatj/drop": "*",
+            "phpunit/phpunit": "~4.8"
         },
-        "time": "2019-07-09T23:55:12+00:00",
+        "time": "2020-01-21T17:51:39+00:00",
         "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.9.x-dev"
-            }
-        },
         "installation-source": "dist",
         "autoload": {
-            "classmap": [
-                "lib/Browser.php"
+            "files": [
+                "src/UserAgentParser.php"
             ]
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -39,17 +36,20 @@
         ],
         "authors": [
             {
-                "name": "Chris Schuld",
-                "email": "chris@chrisschuld.com",
-                "homepage": "http://chrisschuld.com"
+                "name": "Jesse G. Donat",
+                "email": "donatj@gmail.com",
+                "homepage": "http://donatstudios.com",
+                "role": "Developer"
             }
         ],
-        "description": "A PHP Class to detect a user's Browser",
-        "homepage": "https://chrisschuld.com/projects/browser-php-detecting-a-users-browser-from-php/",
+        "description": "Lightning fast, minimalist PHP UserAgent string parser.",
+        "homepage": "http://donatstudios.com/PHP-Parser-HTTP_USER_AGENT",
         "keywords": [
             "browser",
-            "detection",
-            "user agent"
+            "browser detection",
+            "parser",
+            "user agent",
+            "useragent"
         ]
     }
 ]
