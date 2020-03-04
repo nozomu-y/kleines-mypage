@@ -33,7 +33,6 @@ session_destroy();
 
 if (!empty($_COOKIE['mypage_auto_login'])) {
     $token_old = $_COOKIE['mypage_auto_login'];
-    echo 'old' . $token_old;
     // delete token from database
     $query = "SELECT * FROM auto_login WHERE token = '$token_old'";
     $result = $mysqli->query($query);
@@ -43,7 +42,6 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
         exit();
     }
     $row_cnt = $result->num_rows;
-    echo $row_cnt;
     // if the token exists in database
     if ($row_cnt == 1) {
         while ($row = $result->fetch_assoc()) {
@@ -51,7 +49,6 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
         }
         // regenerate token
         $token = sha1(uniqid(rand(), true) . mt_rand(1, 999999999) . '_mypage_auto_login');
-        echo 'new' . $token;
         // expiration time
         $expiration_time = 3600 * 24 * 30; // token valid for 30 days
         // update database
