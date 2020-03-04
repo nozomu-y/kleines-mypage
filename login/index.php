@@ -21,12 +21,66 @@ if (isset($_SESSION['mypage_auth_error'])) {
         $failure_message = "ログインに10回連続で失敗しています。パスワードをリセットしてください。";
     }
 }
+// if password was set properly at /signup/check_password.php
 if (isset($_SESSION['mypage_password_success'])) {
     $mypage_password_success = true;
 }
 $_SESSION = array();
 setcookie(session_name(), '', time() - 1, '/');
 session_destroy();
+
+if (!empty($_COOKIE['mypage_auto_login'])) {
+    $token_old = $_COOKIE['mypage_auto_login'];
+    // delete token from database
+    $query = "SELECT * FROM auto_login WHERE token = $token_old";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print("Query Failed : " . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $row_cnt = $result->num_rows;
+    // if the token exists in database
+    if ($row_cnt == 1) {
+        while ($row = $result->fetch_assoc()) {
+            $user_id = $row['id'];
+        }
+        // regenerate token
+        $token = sha1(uniqid(rand(), true) . mt_rand(1, 999999999) . '_mypage_auto_login');
+        // expiration time
+        $expiration_time = 3600 * 24 * 30; // token valid for 30 days
+        // reset cookie
+        setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
+        // update database
+        $query = "UPDATE auto_login SET token = $token, datetime = now() WHERE token = $token_old";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print("Query Failed : " . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        // login the user
+        // get user info
+        $query = "SELECT * FROM members WHERE id='$user_id'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print("Query Failed : " . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $user = new User($result->fetch_assoc());
+        if ($user->status != 2) { // if the user status is not resigned
+            // start session
+            ob_start();
+            session_start();
+            $_SESSION['mypage_email'] = $user->email;
+            // create log
+            error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in using remember me. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
+            header("Location: /member/mypage/");
+            exit();
+        }
+    }
+}
 
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
@@ -84,12 +138,12 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                                 <?php echo $failure_message; ?>
                                             </span>
                                         </div>
-                                        <!-- <div class="form-group">
+                                        <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                                <label class="custom-control-label" for="remember">{{ __('Remember Me') }}</label>
+                                                <input type="checkbox" class="custom-control-input" name="remember_me" id="remember_me" value="checked">
+                                                <label class="custom-control-label" for="remember_me">ログイン状態を保持する</label>
                                             </div>
-                                        </div> -->
+                                        </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block" name="login">
                                             ログイン
                                         </button>
