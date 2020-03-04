@@ -22,10 +22,19 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 ?>
 
 <div class="container-fluid">
-    <h1 class="h3 text-gray-800">セッション管理</h1>
+    <h1 class="h3 text-gray-800 mb-4">セッション管理</h1>
     <div class="row">
         <div class="col-sm-12">
-            <div class="mb-4 mt-3">
+            <?php
+            if (isset($_SESSION['mypage_delete_session'])) {
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
+                echo '<strong>' . $_SESSION['mypage_delete_session'] . '</strong>のセッションを削除しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_delete_session']);
+            }
+            ?>
+            <div class="mb-4">
                 <form method="POST">
                     <table id="sessionList" class="table table-bordered table-striped" style="width: 100%;">
                         <thead>
@@ -33,7 +42,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 <th class="text-nowrap">ログイン日時</th>
                                 <th class="text-nowrap">プラットフォーム</th>
                                 <th class="text-nowrap">ブラウザ</th>
-                                <th class="text-nowrap"></th>
+                                <th class="text-nowrap">削除</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,9 +59,13 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                                 $login_platform = $row['device'];
                                 $login_browser = $row['browser'];
                                 $login_token = $row['token'];
+                                $this_device = '';
+                                if (!empty($_COOKIE['mypage_auto_login']) && $login_token == $_COOKIE['mypage_auto_login']) {
+                                    $this_device = '（この端末）';
+                                }
                                 echo '<tr>';
                                 echo '<td class="text-nowrap">' . $login_datetime . '</td>';
-                                echo '<td class="text-nowrap">' . $login_platform . '</td>';
+                                echo '<td class="text-nowrap">' . $login_platform . $this_device . '</td>';
                                 echo '<td class="text-nowrap">' . $login_browser . '</td>';
                                 echo '<td class="text-nowrap"><button type="submit" name="delete" class="btn btn-danger rounded-circle btn-sm" formaction="./delete_session.php" value="' . $login_token . '"><i class="far fa-trash-alt mt-0"></i></button></td>';
                                 echo '</tr>';

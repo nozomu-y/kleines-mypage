@@ -33,6 +33,8 @@ if (!$result) {
 }
 while ($row = $result->fetch_assoc()) {
     $user_id = $row['id'];
+    $login_platform = $row['device'];
+    $login_browser = $row['browser'];
 }
 if ($user_id == $user->id) {
     $query = "DELETE FROM auto_login WHERE token = '$token'";
@@ -43,6 +45,8 @@ if ($user_id == $user->id) {
         exit();
     }
 }
+
+$_SESSION['mypage_delete_session'] = $login_platform . '(' . $login_browser . ')';
 
 header('Location: /member/mypage/profile/sessions.php');
 exit();
