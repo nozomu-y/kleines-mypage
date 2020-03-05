@@ -1,17 +1,9 @@
 <?php
 ob_start();
 session_start();
-if (isset($_SERVER['HTTP_REFERER'])) {
-    $redirect_url = $_SERVER['HTTP_REFERER'];
-    if (strpos($redirect_url, "chorkleines.com/member/mypage/") === false) {
-        $redirect_url = '/member/mypage/';
-    }
-} else {
-    $redirect_url = '/member/mypage/';
-}
 
 if (isset($_SESSION['mypage_email'])) {
-    header('Location: ' . $redirect_url);
+    header('Location: /member/mypage/');
     exit();
 }
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
@@ -87,7 +79,7 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
             $_SESSION['mypage_email'] = $user->email;
             // create log
             error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in using remember me. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-            header('Location: ' . $redirect_url);
+            header('Location: /member/mypage');
             exit();
         }
     }
@@ -156,7 +148,6 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                                 <label class="custom-control-label" for="remember_me">ログイン状態を保持する</label>
                                             </div>
                                         </div>
-                                        <input type="hidden" name="redirect_url" value="<?php echo $redirect_url; ?>">
                                         <button type="submit" class="btn btn-primary btn-user btn-block" name="login">
                                             ログイン
                                         </button>
