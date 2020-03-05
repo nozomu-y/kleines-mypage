@@ -3,6 +3,9 @@ ob_start();
 session_start();
 if (isset($_SERVER['HTTP_REFERER'])) {
     $redirect_url = $_SERVER['HTTP_REFERER'];
+    if (strpos($redirect_url, "chorkleines.com/member/mypage/") === false) {
+        $redirect_url = '/member/mypage/';
+    }
 } else {
     $redirect_url = '/member/mypage/';
 }
