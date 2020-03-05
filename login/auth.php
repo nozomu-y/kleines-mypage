@@ -8,6 +8,11 @@ if (isset($_SESSION['mypage_email'])) {
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
 if (isset($_POST['login'])) {
+    if (isset($_POST['redirect_url'])) {
+        $redirect_url = $_POST['redirect_url'];
+    } else {
+        $redirect_url = '/member/mypage/';
+    }
     $email = $mysqli->real_escape_string($_POST['email']);
     $password = $_POST['password'];
     // start query
@@ -82,7 +87,7 @@ if (isset($_POST['login'])) {
             $_SESSION['mypage_email'] = $user->email;
             // create log
             error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-            header("Location: /member/mypage/");
+            header("Location: " . $redirect_url);
             exit();
         } else {
             // authentication failure
