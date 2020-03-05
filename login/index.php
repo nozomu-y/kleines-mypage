@@ -1,6 +1,10 @@
 <?php
 ob_start();
 session_start();
+if (isset($_SERVER['HTTP_REFERER'])) {
+    echo $_SERVER['HTTP_REFERER'];
+}
+
 if (isset($_SESSION['mypage_email'])) {
     header('Location: /member/mypage/');
     exit();
