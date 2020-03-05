@@ -2,11 +2,13 @@
 ob_start();
 session_start();
 if (isset($_SERVER['HTTP_REFERER'])) {
-    echo $_SERVER['HTTP_REFERER'];
+    $redirect_url = $_SERVER['HTTP_REFERER'];
+} else {
+    $redirect_url = '/member/mypage/';
 }
 
 if (isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/');
+    header('Location: ' . $redirect_url);
     exit();
 }
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
@@ -82,7 +84,7 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
             $_SESSION['mypage_email'] = $user->email;
             // create log
             error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in using remember me. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-            header("Location: /member/mypage/");
+            header('Location: ' . $redirect_url);
             exit();
         }
     }
