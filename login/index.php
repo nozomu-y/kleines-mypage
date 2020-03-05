@@ -153,6 +153,7 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                                 <label class="custom-control-label" for="remember_me">ログイン状態を保持する</label>
                                             </div>
                                         </div>
+                                        <input type="hidden" name="redirect_url" value="<?php echo $redirect_url; ?>">
                                         <button type="submit" class="btn btn-primary btn-user btn-block" name="login">
                                             ログイン
                                         </button>
