@@ -78,7 +78,7 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
             $_SESSION['mypage_email'] = $user->email;
             // create log
             error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in using remember me. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-            header('Location: /member/mypage');
+            header('Location: /member/mypage/');
             exit();
         }
     }
