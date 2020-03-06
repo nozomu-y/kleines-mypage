@@ -33,6 +33,8 @@ session_destroy();
 
 if (!empty($_COOKIE['mypage_auto_login'])) {
     $token_old = $_COOKIE['mypage_auto_login'];
+    // delete token from browser cookie
+    setcookie("mypage_auto_login", "", time() - 60);
     // delete token from database
     $query = "SELECT * FROM auto_login WHERE token = '$token_old'";
     $result = $mysqli->query($query);
