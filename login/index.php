@@ -32,11 +32,8 @@ setcookie(session_name(), '', time() - 1, '/');
 session_destroy();
 
 if (!empty($_COOKIE['mypage_auto_login'])) {
-    $token_old = $_COOKIE['mypage_auto_login'];
-    // delete token from browser cookie
-    setcookie("mypage_auto_login", "", time() - 60);
-    // delete token from database
-    $query = "SELECT * FROM auto_login WHERE token = '$token_old'";
+    $token = $_COOKIE['mypage_auto_login'];
+    $query = "SELECT * FROM auto_login WHERE token = '$token'";
     $result = $mysqli->query($query);
     if (!$result) {
         print("Query Failed : " . $mysqli->error);
@@ -49,21 +46,6 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
         while ($row = $result->fetch_assoc()) {
             $user_id = $row['id'];
         }
-        // regenerate token
-        $token = sha1(uniqid(rand(), true) . mt_rand(1, 999999999) . '_mypage_auto_login');
-        // expiration time
-        $expiration_time = 3600 * 24 * 30; // token valid for 30 days
-        // update database
-        $query = "UPDATE auto_login SET token = '$token', datetime = now() WHERE token = '$token_old'";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print("Query Failed : " . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        // reset cookie
-        setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
-        // login the user
         // get user info
         $query = "SELECT * FROM members WHERE id='$user_id'";
         $result = $mysqli->query($query);
@@ -73,6 +55,37 @@ if (!empty($_COOKIE['mypage_auto_login'])) {
             exit();
         }
         $user = new User($result->fetch_assoc());
+        // delete token from database
+        $query = "DELETE FROM auto_login WHERE token = '$token'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print("Query Failed : " . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        // delete token from browser cookie
+        setcookie("mypage_auto_login", "", time() - 60);
+        // regenerate token
+        $token = sha1(uniqid(rand(), true) . mt_rand(1, 999999999) . '_mypage_auto_login');
+        // expiration time
+        $expiration_time = 3600 * 24 * 30; // token valid for 30 days
+        // set cookie
+        setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
+        // check device(platform) and browser
+        require '/home/chorkleines/www/member/mypage/login/vendor/autoload.php';
+        $ua_info = parse_user_agent();
+        // check device
+        $browser = $ua_info['browser'];
+        $device = $ua_info['platform'];
+        // add to database
+        $query = "INSERT INTO auto_login (id, token, datetime, device, browser) VALUES ('$user->id', '$token', now(), '$device', '$browser')";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print("Query Failed : " . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        // login the user
         if ($user->status != 2) { // if the user status is not resigned
             // start session
             ob_start();
