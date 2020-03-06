@@ -31,7 +31,7 @@ $_SESSION = array();
 setcookie(session_name(), '', time() - 1, '/');
 session_destroy();
 
-if (!empty($_COOKIE['mypage_auto_login'])) {
+if (isset($_COOKIE['mypage_auto_login'])) {
     $token = $_COOKIE['mypage_auto_login'];
     $query = "SELECT * FROM auto_login WHERE token = '$token'";
     $result = $mysqli->query($query);
