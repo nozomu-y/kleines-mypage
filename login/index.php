@@ -156,12 +156,12 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                                 <?php echo $failure_message; ?>
                                             </span>
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" name="remember_me" id="remember_me" value="checked">
                                                 <label class="custom-control-label" for="remember_me">ログイン状態を保持する</label>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <button type="submit" class="btn btn-primary btn-user btn-block" name="login">
                                             ログイン
                                         </button>
