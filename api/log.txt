@@ -1,6 +1,0 @@
-array(2) {
-  ["email"]=>
-  string(21) "nozoyama38@mgial.com	"
-  ["password"]=>
-  string(9) "ewrdasxfg"
-}
