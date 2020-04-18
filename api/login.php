@@ -1,5 +1,14 @@
 <?php
-file_put_contents('./log.txt', 'err');
+$json = file_get_contents("php://input");
+$contents = json_decode($json, true);
+
+ob_start();
+var_dump($contents);
+$dump = ob_get_contents();
+ob_end_clean();
+
+file_put_contents('./log.txt', $dump);
+
 if (isset($_POST['email'])) {
     file_put_contents('./log.txt', $_POST['email']);
     $email = $mysqli->real_escape_string($_POST['email']);
