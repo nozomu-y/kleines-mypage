@@ -1,5 +1,6 @@
 <?php
 if (isset($_POST['email'])) {
+    file_put_contents('./log.txt', $_POST['email']);
     $email = $mysqli->real_escape_string($_POST['email']);
     $password = $_POST['password'];
     $query = "SELECT * FROM members WHERE email='$email' AND status != 2";
