@@ -1,4 +1,5 @@
 <?php
+file_put_contents('./log.txt', 'err');
 if (isset($_POST['email'])) {
     file_put_contents('./log.txt', $_POST['email']);
     $email = $mysqli->real_escape_string($_POST['email']);
