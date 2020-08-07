@@ -1,6 +1,5 @@
 <?php
-require_once('/home/chorkleines/www/member/mypage/Core/config.php');
-define('MODE','test');
+  define('MODE','test');
 
 if(strcmp(MODE,'test')==0){
   define('DB_NAME','PRPage');
@@ -10,6 +9,7 @@ if(strcmp(MODE,'test')==0){
   define('ROOT',$_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems');
   define('SERVER','//'.$_SERVER['SERVER_NAME'].'/TicketSystems/mypage/TicketSystems');
 }else if(strcmp(MODE,"real")==0){
+  require_once('/home/chorkleines/www/member/mypage/Core/config.php');
   define('ROOT','/home/chorkleines/www/member/mypage/TicketSystems');
   define('SERVER','/member/mypage/TicketSystems');
 }
