@@ -3,13 +3,18 @@
   require_once($_SERVER['DOCUMENT_ROOT'].'/PublicRelationsPage/config/config.php');
   //db接続
   function dbconnect(){
-    $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-    //接続エラーチェック
-    if($mysqli->connect_error){
-      echo $mysqli->connect_error;
-      exit();
-    }else{
-      $mysqli->set_charset("utf8");
+    if(strcmp(MODE,"test")==0){
+      $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+      //接続エラーチェック
+      if($mysqli->connect_error){
+        echo $mysqli->connect_error;
+        exit();
+      }else{
+        $mysqli->set_charset("utf8");
+      }
+    
+    }else if(strcmp(MODE,"real")==0){
+      require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
     }
     return $mysqli;
   }
