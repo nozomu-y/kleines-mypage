@@ -1,6 +1,6 @@
 <?php
   //関数を定義するファイル
-  require_once($_SERVER['DOCUMENT_ROOT'].'/PublicRelationsPage/config/config.php');
+  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
   //db接続
   function dbconnect(){
     if(strcmp(MODE,"test")==0){

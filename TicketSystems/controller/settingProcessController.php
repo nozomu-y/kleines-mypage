@@ -1,5 +1,5 @@
 <?php
-  require_once($_SERVER['DOCUMENT_ROOT'].'/PublicRelationsPage/config/config.php');
+  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
   function assignSettingProcess($process){
     //post['process']に応じて振り分ける、process=initならinitialSettingshandler, =reloadならmemberTicket
     switch($process){

@@ -7,8 +7,8 @@ if(strcmp(MODE,'test')==0){
   define('DB_HOST','localhost');
   define('DB_USER','yakou1000');
   define('DB_PASS','YakouPhpDev');
-  define('ROOT',$_SERVER['DOCUMENT_ROOT'].'/PublicRelationsPage');
-  define('SERVER','//'.$_SERVER['SERVER_NAME'].'/PublicRelationsPage');
+  define('ROOT',$_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems');
+  define('SERVER','//'.$_SERVER['SERVER_NAME'].'/TicketSystems/mypage/TicketSystems');
 }else if(strcmp(MODE,"real")==0){
   define('ROOT','/home/chorkleines/www/member/mypage/TicketSystems');
   define('SERVER','/member/mypage/TicketSystems');

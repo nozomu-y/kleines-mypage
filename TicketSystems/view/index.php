@@ -1,6 +1,6 @@
 <?php
   session_start();
-	require_once($_SERVER['DOCUMENT_ROOT'].'/PublicRelationsPage/config/config.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
   require_once(ROOT.'/controller/functions.php');
 
   $mysqli=dbconnect();

@@ -1,7 +1,7 @@
 <?php
   //passwordを受け取り、合ってたらsession['tp_secret] = "OK"
   //間違ってたらindexにでも飛ばす
-  require_once($_SERVER['DOCUMENT_ROOT'].'/PublicRelationsPage/config/config.php');
+  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
 	require_once(ROOT.'/controller/functions.php');
   session_start();
   if (!isset($_SESSION["mypage_email"])) {  //未ログイン

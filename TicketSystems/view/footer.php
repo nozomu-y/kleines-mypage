@@ -3,7 +3,7 @@
 function getFooter(){
   echo "<!--getFooter-->";
 }
-require_once($_SERVER['DOCUMENT_ROOT'].'/PublicRelationsPage/config/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
 ?>
 <!--end of mainContents-->
   </div>

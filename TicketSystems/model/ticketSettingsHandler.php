@@ -8,7 +8,7 @@
    * 
    */
   //ini_set('display_errors',1);
-  require_once($_SERVER['DOCUMENT_ROOT'].'/PublicRelationsPage/config/config.php');
+  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
   require_once(ROOT.'/controller/functions.php');
   startSecretSession();
   $mysqli = dbconnect();

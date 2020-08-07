@@ -2,7 +2,7 @@
   //ini_set("display_errors",1);
   //error_reporting(E_ALL);
   //DBへの接続
-  require_once($_SERVER['DOCUMENT_ROOT'].'/PublicRelationsPage/config/config.php');
+  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
   require_once(ROOT.'/controller/functions.php');
   //startSession();
   session_start();
