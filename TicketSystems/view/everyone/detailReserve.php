@@ -65,7 +65,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>この預かりを削除しますか？</p><br>
+        <p>このチケット預かりを削除しますか？</p><br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>

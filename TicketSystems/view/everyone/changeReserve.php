@@ -9,10 +9,10 @@
 	$orderID = h($_POST['orderID']);
 
 	//DBで検索
-	$stmt = $mysqli->prepare("SELECT lastName,firstName,lastNameKana,firstNameKana,price,amount,response FROM tp_Reserves INNER JOIN tp_Orders USING(orderID) WHERE orderID = ?");
+	$stmt = $mysqli->prepare("SELECT lastName,firstName,lastNameKana,firstNameKana,price,amount FROM tp_Reserves INNER JOIN tp_Orders USING(orderID) WHERE orderID = ?");
 	$stmt->bind_param('i',$orderID);
 	$stmt->execute();
-	$stmt->bind_result($lname,$fname,$lnameKana,$fnameKana,$price,$amount,$response);
+	$stmt->bind_result($lname,$fname,$lnameKana,$fnameKana,$price,$amount);
 	$result = $stmt->fetch();
 	if(!$result){
 		echo "<!-- fail select from reserve : ".$result->error." -->";

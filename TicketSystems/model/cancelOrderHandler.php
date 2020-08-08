@@ -52,6 +52,7 @@
     $stmt->close();
   }
   //sessionを更新し、historyに飛ばす
+  dbclose($mysqli);
   $_SESSION['mypage_status'] = "cancelOrder";
   header("Location: ".SERVER."/view/everyone/history.php?status=$status");
   exit();
