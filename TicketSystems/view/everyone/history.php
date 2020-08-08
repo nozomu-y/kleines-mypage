@@ -12,6 +12,9 @@
 	if(isset($_SESSION['mypage_status']) && strcmp($_SESSION['mypage_status'],"succeed_delete")==0){
 		echo "<p>チケット預かりの取り消しを完了しました</p>";
 		unset($_SESSION['mypage_status']);
+	}else if(isset($_SESSION['mypage_status']) && strcmp($_SESSION['mypage_status'],"cancelOrder")==0){
+		echo "<p>オーダーの取り消しを完了しました</p>";
+		unset($_SESSION['mypage_status']);
 	}
 	//中身が設定されているチケット預かりのorderIdの一覧を取得
 	$sql = "SELECT orderID FROM tp_Reserves";
@@ -89,11 +92,10 @@
 				<?php if($orderTypeID==5 && in_array($orderID,$reserveIDs,TRUE)):	//orderが預かり利用販売だった場合で、削除されていない預かりデータの場合 ?>
 					<form action='detailReserve.php' method='post'>
 						<input type='hidden' name='orderID' value='<?=$orderID?>'>
-						<input type='submit' class='btn btn-primary' value='詳細'>
+						<input type='submit' class='btn btn-primary btn-sm' value='詳細'>
 					</form>
 				<?php elseif($finishFlag==0&&($orderTypeID==1||$orderTypeID==3)): //未完了のオーダー ?>
-				<?php //memo 取り消しのmodelは未作成 ?>
-					<button type="button" id="btn-confirm" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">
+					<button type="button" id="btn-confirm" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmModal">
 						取消
 					</button>
 					<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
@@ -135,8 +137,11 @@
 									</div>
 								</div>
 								<div class="modal-footer">
+								<form action="<?=SERVER?>/model/cancelOrderHandler.php" method="post">
+									<input type="hidden" name="orderID" value="<?=$orderID?>">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
 									<button type="submit" class="btn btn-danger">取り消す</button>
+								</form>
 								</div>
 							</div>
 						</div>
