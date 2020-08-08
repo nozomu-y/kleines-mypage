@@ -1,4 +1,6 @@
 <?php
+  ini_set("display_errors",1);
+  error_reporting(E_ALL);
   require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
   require_once(ROOT.'/controller/functions.php');
   startSession();
@@ -16,10 +18,10 @@
   $orderID = h($_POST['orderID']);
 
   //変更前の枚数のデータをDBで検索
-	$stmt = $mysqli->prepare("SELECT amount,response,finishFlag FROM tp_Reserves INNER JOIN tp_Orders USING(orderID) WHERE orderID = ?");
+	$stmt = $mysqli->prepare("SELECT amount,response,finishFlag,personID FROM tp_Reserves INNER JOIN tp_Orders USING(orderID) WHERE orderID = ?");
 	$stmt->bind_param('i',$orderID);
 	$stmt->execute();
-	$stmt->bind_result($amount_ori,$response_ori,$finishFlag_ori);
+	$stmt->bind_result($amount_ori,$response_ori,$finishFlag_ori,$personID);
 	$result = $stmt->fetch();
 	if(!$result){
 	  $status .= "FailSelReserves:".$result->error;
@@ -32,7 +34,7 @@
   if($stmt->execute()){
     $status .= "-SucUpdReserve";
   }else{
-    $status .= "-FailUpdReserve";
+    $status .= "-FailUpdReserve:$mysqli->error";
   }
   $stmt->close();
   //枚数が増えた場合か、枚数が減ったが対応済み枚数よりは多い場合、tp_Ordersのamount・finFlag・finTimeも更新
@@ -48,18 +50,23 @@
     $stmt->close();
   }else if($amount < $amount_ori && $amount <= $response_ori){ //枚数が減った場合で、新たなamountがすでに対応済みの枚数以下になった場合
     $delta = $response_ori - $amount;  //減らした結果、余分になった枚数
+    $result = 2;
     if($finishFlag_ori){
       $stmt = $mysqli->prepare("UPDATE tp_Orders SET amount = ?, response = ? WHERE orderID = ?");
-      $stmt->bind_param('ii',$amount,$amount,$orderID);
+      $stmt->bind_param('iii',$amount,$amount,$orderID);
+      $result = $stmt->execute();
     }else{
       $timeStamp = date("Y-m-d H:i:s"); //現在日時
       $stmt = $mysqli->prepare("UPDATE tp_Orders SET amount = ?, response = ?, finishFlag = 1, finishTime = ? WHERE orderID = ?");
-      $stmt->bind_param('isi',$amount,$amount,$timeStamp,$orderID);
+      $stmt->bind_param('iisi',$amount,$amount,$timeStamp,$orderID);
+      $result = $stmt->execute();
     }
-    if($stmt->execute()){
+    if($result==1){
       $status .= "-SucUpdOrder2";
+    }else if($result==0){
+      $status .= "-FailUpdOrder2:$mysqli->error";
     }else{
-      $status .= "-FailUpdOrder2";
+      $status .= "-NoTouchUpdOrder2";
     }
     $stmt->close();
     if($delta>0){
@@ -69,7 +76,15 @@
       if($mysqli->query($q1)&&$mysqli->query($q2)){
         $status .= "-SucUpdTicTot";
       }else{
-        $status .= "-FailUpdTicTot";
+        $status .= "-FailUpdTicTot:$mysqli->error";
+      }
+      //tp_MemberTicketも更新する
+      $stmt = $mysqli->prepare("UPDATE tp_MemberTickets SET sold = sold - ? WHERE personID = ?");
+      $stmt->bind_param('ii',$delta,$personID);
+      if($stmt->execute()){
+        $status .= "-SucUpdMemTic";
+      }else{
+        $status .= "-FailUpdMemTic:$mysqli->error";
       }
     }
   }
