@@ -12,6 +12,9 @@
 	if(isset($_SESSION['mypage_status']) && strcmp($_SESSION['mypage_status'],"succeed_delete")==0){
 		echo "<p>チケット預かりの取り消しを完了しました</p>";
 		unset($_SESSION['mypage_status']);
+	}else if(isset($_SESSION['mypage_status']) && strcmp($_SESSION['mypage_status'],"editReserve")==0){
+		echo "<p>チケット預かりの内容を変更しました</p>";
+		unset($_SESSION['mypage_status']);
 	}else if(isset($_SESSION['mypage_status']) && strcmp($_SESSION['mypage_status'],"cancelOrder")==0){
 		echo "<p>オーダーの取り消しを完了しました</p>";
 		unset($_SESSION['mypage_status']);
