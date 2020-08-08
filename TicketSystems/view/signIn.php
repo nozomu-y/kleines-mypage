@@ -49,8 +49,8 @@
 		</div>
 		<div class="form-group col-9 has-feedback">
 			<input class="form-control" type="email" name="email" required>
+			<div class="invalid-feedback">入力してください</div>
 		</div>
-		<div class="invalid-feedback">入力してください</div>
 	</div>
 	<div class="form-row">
 		<div class="form-group col-3">
@@ -58,55 +58,57 @@
 		</div>
 		<div class="form-group col-9 has-feedback">
 			<input class="form-control" type="password" name="password" required>
+			<div class="invalid-feedback">入力してください</div>
 		</div>
-		<div class="invalid-feedback">入力してください</div>
 	</div>
 	<button type="submit" class="btn btn-primary">Sign In!</button>
 </form>
 <br>
 <h2>メンバー登録はこちら</h2>
 <form action="<?=SERVER?>/model/signUpHandler.php" method="post" class="needs-validation" novalidate>
-	<div class="form-group has-feedback">
+	<div class="form-group">
 		<p class="componentsTitle">学年</p>
 		<?php for($grd=$newestGrade;$grd>=$oldestGrade;$grd--): ?>
 		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="grade" value="<?=$grd?>" required>
+			<input type="radio" class="custom-control-input" name="grade" id="<?=$grd?>" value="<?=$grd?>" required>
 			<label class="custom-control-label" for="<?=$grd?>"><?=$grd?></label>
+			<?php if($grd==$oldestGrade): ?>
+			<div class="invalid-feedback">選択してください</div>
+			<?php endif; ?>
 		</div>
 		<?php endfor; ?>
-		<div class="invalid-feedback">選択してください</div>
 	</div>
-	<div class="form-group has-feedback">
+	<div class="form-group">
 		<p class="componentsTitle">パート</p>
 		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="grade" value="S" required>
+			<input type="radio" class="custom-control-input" name="part" id="S" value="S" required>
 			<label class="custom-control-label" for="S">Sop</label>
 		</div>
 		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="grade" value="A" required>
+			<input type="radio" class="custom-control-input" name="part" id="A" value="A" required>
 			<label class="custom-control-label" for="A">Alt</label>
 		</div>
 		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="grade" value="T" required>
+			<input type="radio" class="custom-control-input" name="part" id="T" value="T" required>
 			<label class="custom-control-label" for="T">Ten</label>
 		</div>
 		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="grade" value="B" required>
+			<input type="radio" class="custom-control-input" name="part" id="B" value="B" required>
 			<label class="custom-control-label" for="B">Bas</label>
+			<div class="invalid-feedback">選択してください</div>
 		</div>
-		<div class="invalid-feedback">パートを選択してください</div>
 	</div>
 	<div class="form-row">
 		<div class="form-group col-6">
 			<p class="componentsTitle">姓</p>
 			<input class="form-control" type="text" name="last_name" required>
+			<div class="invalid-feedback">入力してください</div>
 		</div>
-		<div class="invalid-feedback">入力してください</div>
 		<div class="form-group col-6">
 			<p class="componentsTitle">名</p>
 			<input class="form-control" type="text" name="first_name" required>
+			<div class="invalid-feedback">入力してください</div>
 		</div>
-		<div class="invalid-feedback">入力してください</div>
 	</div>
 	<div class="form-row">
 		<div class="form-group col-3">
@@ -114,8 +116,8 @@
 		</div>
 		<div class="form-group col-9">
 			<input class="form-control" type="email" name="email" required>
+			<div class="invalid-feedback">入力してください</div>
 		</div>
-		<div class="invalid-feedback">入力してください</div>
 	</div>
 	<div class="form-row">
 		<div class="form-group col-3">
@@ -123,8 +125,8 @@
 		</div>
 		<div class="form-group col-9">
 			<input class="form-control" type="password" name="password" required>
+			<div class="invalid-feedback">入力してください</div>
 		</div>
-		<div class="invalid-feedback">入力してください</div>
 	</div>
 	<div class="form-row">
 		<div class="form-group col-3">
@@ -132,8 +134,8 @@
 		</div>
 		<div class="form-group col-9">
 			<input class="form-control" type="password" name="password-confirm" required>
+			<div class="invalid-feedback">入力してください</div>
 		</div>
-		<div class="invalid-feedback">入力してください</div>
 	</div>
 	<button type="submit" class="btn btn-primary">Sign Up!</button>
 </form>
