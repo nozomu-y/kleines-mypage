@@ -29,5 +29,4 @@
 <p><a href="index.php">渉外チーフと秘密の部屋トップに戻る</a></p>
 <?php
 	require_once(ROOT.'/view/footer.php');
-	
 ?>

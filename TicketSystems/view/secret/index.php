@@ -14,6 +14,8 @@
 <br>
 <p><a href="initialSettings.php">(取扱注意)演奏会チケット情報初期化</a></p>
 <br>
+<p><a href="allReturn.php">団員所持チケット総返却命令</a></p>
+<br>
 <p><a href="<?=SERVER?>/view/private/index.php">渉外用チケット管理ページへ</a></p>
 <?php
 	require_once(ROOT.'/view/footer.php');
