@@ -25,7 +25,6 @@
   while($row = $result->fetch_array(MYSQLI_ASSOC)){
     $members[(int)$row['personID']] = (int)$row['personID'];
   }
-  var_dump($members);
   //結果セットを解放
   $result->free();
 
@@ -36,14 +35,12 @@
     $status .= "-FailSelMemTic";
   }
   while($row = $result->fetch_array(MYSQLI_ASSOC)){
-    var_dump($row);
     if((int)$row['have']>0){
       $members[(int)$row['personID']] = (int)$row['have'];  //上書き
     }else{
       $members[(int)$row['personID']] = 0;
     }
   }
-  var_dump($members);
   //結果セットを解放
   $result->free();
 
@@ -56,10 +53,8 @@
   }
   //personIDをindexとする配列に、未解決枚数の和を格納
   while($row = $result->fetch_array(MYSQLI_ASSOC)){
-    var_dump($row);
     $members[(int)$row['personID']] -= (int)($row['sum_amount'] - $row['sum_response']);
   }
-  var_dump($members);
   //結果セットを解放
   $result->free();
   
@@ -83,9 +78,7 @@
     }
   }
 
-  echo $status;
+  dbclose($mysqli);
+  header("Location: ".SERVER."/view/secret/finishSettings.php");
   exit();
-  //飛ばす
-
-  
 ?>
