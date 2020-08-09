@@ -60,7 +60,6 @@
   
 
   //返却希望オーダーを全員分発注
-  //xxx ここを直す
   for($i=1;$i<=count($members);$i++){
     if($members[$i] > 0){
       $stmt = $mysqli->prepare("INSERT INTO tp_Orders (personID,orderTypeID,amount,orderTime,finishFlag) VALUES (?,?,?,?,?)");
