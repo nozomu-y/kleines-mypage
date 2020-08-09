@@ -8,12 +8,12 @@
   $mysqli = dbconnect();
 
   //更新処理
-  if(strcmp($_POST['submit'],"submit")==0){
+  if(strcmp($_POST['submit'],"update")==0){
     //model呼び出し
-
+    require_once(ROOT.'/model/changeAssignHandler.php');
     //SESSION更新
     $_SESSION['tp_status'] = "updateAssign";
-    header("Location:{$_SERVER['PHP_SELF']}");
+    header("Location: ".$_SERVER['PHP_SELF']);
     exit();
   }
   //チケット区分追加処理
@@ -81,11 +81,11 @@
         <td>
           <div class="form-group">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-outline-secondary">
-                <input type="radio" name="AddRem[<?=$row['ticketTypeCode']?>]" value="add" autocomplete="off">&plus;
+              <label class="btn btn-outline-secondary active">
+                <input type="radio" name="AddRem[<?=$row['ticketTypeCode']?>]" id="add<?=$row['ticketTypeCode']?>" value="add" autocomplete="off" checked>&plus;
               </label>
               <label class="btn btn-outline-secondary">
-                <input type="radio" name="AddRem[<?=$row['ticketTypeCode']?>]" value="rem" autocomplete="off">&minus;
+                <input type="radio" name="AddRem[<?=$row['ticketTypeCode']?>]" id="rem<?=$row['ticketTypeCode']?>" value="rem" autocomplete="off">&minus;
               </label>
             </div>
           </div>
@@ -124,7 +124,7 @@
       <?php endforeach; ?>
     </table>
   </div>
-  <input type="hidden" name="submit" value="submit">
+  <input type="hidden" name="submit" value="update">
   <button type="submit" class="btn btn-primary">割り当て変更</button>
 </form>
 <button type="button" id="btn-add-assign" class="btn btn-success" data-toggle="modal" data-target="#addAssign">チケット区分追加</button>
