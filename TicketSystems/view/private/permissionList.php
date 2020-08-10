@@ -5,6 +5,15 @@
 	accessFilter();
   $mysqli = dbconnect();
 
+  if(isset($_POST['submit'])&&strcmp($_POST['submit'],"reloadMaster")==0){
+    //マスターの更新
+    require_once(ROOT."/model/reloadMaster.php");
+    //SESSIONの更新
+    $_SESSION['tp_status'] = "reload";
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
+  }
+
   require_once(ROOT.'/view/header.php');
   getHeader("役職メンバー一覧","private");
 
@@ -23,9 +32,9 @@
   //結果セットを解放
   $result->free();
 	
-	if(isset($_SESSION["submit"])&&strcmp($_SESSION["submit"],"reload")==0){
+	if(isset($_SESSION["tp_status"])&&strcmp($_SESSION["tp_status"],"reload")==0){
     echo "<p>リストを更新しました</p>";
-    unset($_SESSION["submit"]);
+    unset($_SESSION["tp_status"]);
   }
 ?>
 <h2>役職メンバー一覧</h2>
@@ -63,8 +72,11 @@
     </table>
   </div>
 <br>
-<a class="btn btn-secondary" href="permissionEdit.php" role="button" style="margin-bottom:.5rem">権限を編集</a>
-<a class="btn btn-Info" href="<?=SERVER."/model/reloadMaster.php"?>" role="button" style="margin-bottom:.5rem" id="btn-reloadMaster">マスター権限の更新</a>
+<form action="<?=$SERVER['PHP_SELF']?>" method="post">
+  <a class="btn btn-secondary" href="permissionEdit.php" role="button" style="margin-bottom:.5rem">権限を編集</a>
+  <input type="hidden" name="submit" value="reloadMaster">
+  <button type="submit" class="btn btn-Info" style="margin-bottom:.5rem" id="btn-reloadMaster">マスター権限の更新</button>
+</form>
 <br>
 <p><a href="index.php">渉外用チケット管理ページトップに戻る</a></p>
 <?php

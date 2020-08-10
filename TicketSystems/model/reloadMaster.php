@@ -3,8 +3,6 @@
   ini_set('display_errors',1);
   require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
 	require_once(ROOT.'/controller/functions.php');
-	startSession();
-	accessFilter();
   $mysqli = dbconnect();
 
   //permission=1の人を削除する
@@ -42,7 +40,5 @@
     }
   }
   dbclose($mysqli);
-  $_SESSION["submit"] = "reload";
-  header("Location: ".SERVER."/view/private/permissionList.php?status=$status");
-  exit();
+  
 ?>

@@ -3,6 +3,18 @@
 	require_once(ROOT.'/controller/functions.php');
 	startSession();
 	accessFilter();
+
+	if(isset($_POST['submit'])&&strcmp($_POST['submit'],"reloadMemberList")==0){
+		//団員リストを更新
+		require_once(ROOT."/model/reloadMemberListHandler.php");
+		//マスター権限を更新
+		require_once(ROOT."/model/reloadMaster.php");
+		//sessionを更新してリロード
+		$_SESSION['tp_status'] = "reloadMemberList";
+		header("Location: ".$_SERVER['PHP_SELF']);
+		exit();
+	}
+
   require_once(ROOT.'/view/header.php');
 	getHeader("渉外用チケット管理ページトップ","private");
 	
@@ -12,6 +24,10 @@
 	}else if(isset($_SESSION['tp_status'])&&strcmp($_SESSION['tp_status'],"invalidPage")==0){
 		//存在しないオーダーのページにアクセスした場合
 		echo "<p>存在しないページです</p>";
+		unset($_SESSION['tp_status']);
+	}else if(isset($_SESSION['tp_status'])&&strcmp($_SESSION['tp_status'],"reloadMemberList")==0){
+		//団員リスト更新後
+		echo "<p>団員リストを更新しました</p>";
 		unset($_SESSION['tp_status']);
 	}
 
@@ -31,6 +47,7 @@
 <p><a href="ticketInspection.php">チケット中間点検</a></p>
 <p><a href="ticketAssign.php">チケット割り当ての確認・変更</a></p>
 <p><a href="permissionList.php">役職メンバーの一覧・追加</a></p>
+<p><a href="reloadMemberList.php" data-toggle="modal" data-target="#reloadMemberList">団員リストを最新にする</a></p>
 <br>
 <h3>演奏会当日系メニュー</h3>
 <p>未実装</p>
@@ -44,3 +61,29 @@
 <?php
 	require_once(ROOT.'/view/footer.php');
 ?>
+<div class="modal fade" id="reloadMemberList" tabindex="-1" role="dialog" aria-labelledby="label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="label">団員リスト更新</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>団員リストの更新は以下の挙動を示します</p>
+				<p>・現在チケット所持・配布一覧に存在しない団員を、所持数・販売数0で追加する</p>
+				<p>・団員の中のweb管権限を持っている人を最新の状態にする</p>
+				<br>
+				<p>更新してもよろしいですか？</p>
+			</div>
+			<div class="modal-footer">
+				<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
+					<input type="hidden" name="submit" value="reloadMemberList">
+					<button type="submit" class="btn btn-primary">更新する</button>
+				</form>
+			</div>
+    </div>
+  </div>
+</div>
