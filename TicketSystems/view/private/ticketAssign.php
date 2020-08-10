@@ -8,7 +8,7 @@
   $mysqli = dbconnect();
 
   //更新処理
-  if(strcmp($_POST['submit'],"update")==0){
+  if(strcmp($_POST['submit'],"updateAssign")==0){
     //model呼び出し
     require_once(ROOT.'/model/changeAssignHandler.php');
     //SESSION更新
@@ -17,9 +17,9 @@
     exit();
   }
   //チケット区分追加処理
-  if(strcmp($_POST['submit'],"add")==0){
+  if(strcmp($_POST['submit'],"addAssign")==0){
     //model呼び出し
-
+    require_once(ROOT.'/model/addAssignHandler.php');
     //SESSION更新
     $_SESSION['tp_status'] = "addAssign";
     header("Location:{$_SERVER['PHP_SELF']}");
@@ -60,7 +60,7 @@
   <div class="table-responsive">
     <table class='table table-striped'>
       <tr>
-        <th>チケットの種類</th>
+        <th>チケットの種類</th><?php //memo 名称変更はまだできない ?>
         <th>合計枚数</th>
         <th>変更枚数</th>
         <th>増減</th>
@@ -124,7 +124,7 @@
       <?php endforeach; ?>
     </table>
   </div>
-  <input type="hidden" name="submit" value="update">
+  <input type="hidden" name="submit" value="updateAssign">
   <button type="submit" class="btn btn-primary">割り当て変更</button>
 </form>
 <button type="button" id="btn-add-assign" class="btn btn-success" data-toggle="modal" data-target="#addAssign">チケット区分追加</button>
@@ -149,7 +149,7 @@
             <p>初期枚数(渉外所持から移動)</p>
             <input tyoe="text" class="form-control" name="amount">
           </div>
-          <input type="hidden" name="submit" value="add">
+          <input type="hidden" name="submit" value="addAssign">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
