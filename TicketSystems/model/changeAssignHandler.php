@@ -10,8 +10,6 @@
   $amount = $_POST['amount'];
   $addrem = $_POST['AddRem'];
   $sum = 0; //渉外所持の+-のずれ
-  var_dump($_POST);
-  var_dump($amount);
   //フォームが送信されているかを調べる
   $submitted = FALSE;
   foreach($amount as $amo){
@@ -21,8 +19,14 @@
     }
   }
   if($submitted){
+    //チケット区分を取得
+    $q1 = "SELECT ticketTypeCode FROM tp_TicketTotal WHERE ticketTypeCode >= 5";
+    $result = $mysqli->query($q1);
+    while($row = $result->fetch_array(MYSQLI_ASSOC)){
+      $rows[] = (int)$row['ticketTypeCode'];
+    }
     //各チケット区分を更新する
-    for($i=5;$i<=count($amount)+4;$i++){
+    foreach($rows as $i){
       $stmt = "";
       if(strcmp($addrem[$i],"add")==0){
         $stmt = $mysqli->prepare("UPDATE tp_TicketTotal SET amount = amount + ? WHERE ticketTypeCode = ?");

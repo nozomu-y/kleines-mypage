@@ -8,7 +8,7 @@
   $mysqli = dbconnect();
 
   //更新処理
-  if(strcmp($_POST['submit'],"updateAssign")==0){
+  if(isset($_POST['submit'])&&strcmp($_POST['submit'],"updateAssign")==0){
     //model呼び出し
     require_once(ROOT.'/model/changeAssignHandler.php');
     //SESSION更新
@@ -17,11 +17,23 @@
     exit();
   }
   //チケット区分追加処理
-  if(strcmp($_POST['submit'],"addAssign")==0){
+  if(isset($_POST['submit'])&&strcmp($_POST['submit'],"addAssign")==0){
     //model呼び出し
     require_once(ROOT.'/model/addAssignHandler.php');
     //SESSION更新
     $_SESSION['tp_status'] = "addAssign";
+    header("Location:{$_SERVER['PHP_SELF']}");
+    exit();
+  }
+  //チケット区分削除処理
+  if(isset($_GET['submit'])&&strcmp(h($_GET['submit']),"deleteAssign")==0){
+    //model呼び出し
+    require_once(ROOT.'/model/deleteAssignHandler.php');
+    //SESSION更新はmodelで行う
+    header("Location:{$_SERVER['PHP_SELF']}");
+    exit();
+  }else if(isset($_GET['submit'])&&strcmp(h($_GET['submit']),"deleteAssign")!=0){
+    $_SESSION['tp_status'] = "invalidArgs";
     header("Location:{$_SERVER['PHP_SELF']}");
     exit();
   }
@@ -53,9 +65,25 @@
     echo "<p>チケット区分の追加が完了しました</p>";
     unset($_SESSION["tp_status"]);
   }
+  //不正なidでの削除
+  if(isset($_SESSION["tp_status"])&&strcmp($_SESSION['tp_status'],"invalidArgs")==0){
+    echo "<p>不正な操作です</p>";
+    unset($_SESSION["tp_status"]);
+  }
+  //0枚ではないチケット区分の削除
+  if(isset($_SESSION["tp_status"])&&strcmp($_SESSION['tp_status'],"existTicket")==0){
+    echo "<p>チケットの枚数が0枚ではないチケット区分は削除できません。</p>"
+        ."<p>まず渉外所持分にチケットを移してからチケット区分の削除を行ってください。</p>";
+    unset($_SESSION["tp_status"]);
+  }
+  //チケット区分削除完了時
+  if(isset($_SESSION["tp_status"])&&strcmp($_SESSION['tp_status'],"deleteAssign")==0){
+    echo "<p>チケット区分の削除が完了しました</p>";
+    unset($_SESSION["tp_status"]);
+  }
 ?>
 <h2>チケット割り当て確認・変更</h2>
-<p>contents</p>
+<br>
 <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
   <div class="table-responsive">
     <table class='table table-striped'>
@@ -93,13 +121,13 @@
         <!--削除-->
         <td>
           <?php //memo 枚数が残っていたら削除できないようにする ?>
-          <button type="button" id="btn-remove-<?=$row['ticketTypeCode']?>" class="btn btn-danger" data-toggle="modal" data-target="#confirmRemove">削除</button>
+          <button type="button" id="btn-remove-<?=$row['ticketTypeCode']?>" class="btn btn-danger" data-toggle="modal" data-target="#confirmRemove<?=$row['ticketTypeCode']?>">削除</button>
           <!--ConfirmRemove-->
-          <div class="modal fade" id="confirmRemove" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+          <div class="modal fade" id="confirmRemove<?=$row['ticketTypeCode']?>" tabindex="-1" role="dialog" aria-labelledby="label1-<?=$row['ticketTypeCode']?>" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="label1">削除確認</h5>
+                  <h5 class="modal-title" id="label1-<?=$row['ticketTypeCode']?>">削除確認</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -110,7 +138,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-                  <button type="button" class="btn btn-danger">削除する</button>
+                  <a href="<?=$_SERVER['PHP_SELF']?>?submit=deleteAssign&ttcode=<?=$row['ticketTypeCode']?>" type="button" class="btn btn-danger" role="button">削除する</a>
                   <?php //memo 削除ボタンを、フォームとは独立で、例えばURL渡しでmodelに渡す等して削除用のモデルに投げる ?>
                 </div>
               </div>
