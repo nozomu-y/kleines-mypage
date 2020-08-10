@@ -109,10 +109,10 @@
         <td>
           <div class="form-group">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-outline-secondary active">
+              <label class="btn btn-outline-secondary btn-sm active">
                 <input type="radio" name="AddRem[<?=$row['ticketTypeCode']?>]" id="add<?=$row['ticketTypeCode']?>" value="add" autocomplete="off" checked>&plus;
               </label>
-              <label class="btn btn-outline-secondary">
+              <label class="btn btn-outline-secondary btn-sm">
                 <input type="radio" name="AddRem[<?=$row['ticketTypeCode']?>]" id="rem<?=$row['ticketTypeCode']?>" value="rem" autocomplete="off">&minus;
               </label>
             </div>
@@ -121,7 +121,7 @@
         <!--削除-->
         <td>
           <?php //memo 枚数が残っていたら削除できないようにする ?>
-          <button type="button" id="btn-remove-<?=$row['ticketTypeCode']?>" class="btn btn-danger" data-toggle="modal" data-target="#confirmRemove<?=$row['ticketTypeCode']?>">削除</button>
+          <button type="button" id="btn-remove-<?=$row['ticketTypeCode']?>" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmRemove<?=$row['ticketTypeCode']?>">削除</button>
           <!--ConfirmRemove-->
           <div class="modal fade" id="confirmRemove<?=$row['ticketTypeCode']?>" tabindex="-1" role="dialog" aria-labelledby="label1-<?=$row['ticketTypeCode']?>" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -139,7 +139,6 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
                   <a href="<?=$_SERVER['PHP_SELF']?>?submit=deleteAssign&ttcode=<?=$row['ticketTypeCode']?>" type="button" class="btn btn-danger" role="button">削除する</a>
-                  <?php //memo 削除ボタンを、フォームとは独立で、例えばURL渡しでmodelに渡す等して削除用のモデルに投げる ?>
                 </div>
               </div>
             </div>

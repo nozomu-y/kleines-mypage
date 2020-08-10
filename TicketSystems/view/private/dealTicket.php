@@ -78,16 +78,16 @@
 <div class="row">
   <button class="btn btn-secondary" name="filter-part-clear" id="filter-part-clear">Clear</button>
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-secondary">
+    <label class="btn btn-outline-secondary">
       <input type="checkbox" name="filter-part[]" value="S" autocomplete="off">Sop
     </label>
-    <label class="btn btn-secondary">
+    <label class="btn btn-outline-secondary">
       <input type="checkbox" name="filter-part[]" value="A" autocomplete="off">Alt
     </label>
-    <label class="btn btn-secondary">
+    <label class="btn btn-outline-secondary">
       <input type="checkbox" name="filter-part[]" value="T" autocomplete="off">Ten
     </label>
-    <label class="btn btn-secondary">
+    <label class="btn btn-outline-secondary">
       <input type="checkbox" name="filter-part[]" value="B" autocomplete="off">Bas
     </label>
   </div>
@@ -97,7 +97,7 @@
   <button class="btn btn-secondary" name="filter-grade-clear" id="filter-grade-clear">Clear</button>
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <?php for($grd=$newestGrade;$grd>=$oldestGrade;$grd--): ?>
-    <label class="btn btn-secondary">
+    <label class="btn btn-outline-secondary">
       <input type="checkbox" name="filter-grade[]" value="<?=$grd?>" autocomplete="off"><?=$grd?>
     </label>
     <?php endfor; ?>
