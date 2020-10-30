@@ -1,3 +1,3 @@
-# mypage
+# kleines-mypage
 
-mypage developed for Chor Kleines
+Management system developed for Chor Kleines.
