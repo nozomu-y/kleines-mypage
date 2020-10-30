@@ -17,7 +17,7 @@ if (!$result) {
 }
 $user = new User($result->fetch_assoc());
 
-require_once("/home/chorkleines/www/member/mypage/download/PHPExcel-1.8/Classes/PHPExcel.php");
+require_once("/home/chorkleines/www/member/mypage/PHPExcel-1.8/Classes/PHPExcel.php");
 $fpath = './member_list.xlsx';
 $book = new PHPExcel();
 $sheet = $book->getActiveSheet();
