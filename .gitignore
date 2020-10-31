@@ -1,4 +1,6 @@
 Core/
 .DS_Store
 download/*.xlsx
+admin/eticket/
+grouping/
 
