@@ -27,22 +27,20 @@ $backtrace = debug_backtrace()[0]['file'];
 $backtrace = explode('mypage', $backtrace)[1];
 if ($backtrace == '/index.php') {
     $home = 'active';
-} else if (strpos($backtrace, '/admin/account_manage/') !== false) {
+} elseif (strpos($backtrace, '/admin/account_manage/') !== false) {
     $account_manage = 'active';
-} else if (strpos($backtrace, 'accounts/') !== false) {
+} elseif (strpos($backtrace, 'accounts/') !== false) {
     $accounts = 'active';
-} else if (strpos($backtrace, '/accounting/collection/') !== false) {
+} elseif (strpos($backtrace, '/accounting/collection/') !== false) {
     $accounting_collection = 'active';
-} else if (strpos($backtrace, '/accounting/individual/') !== false) {
+} elseif (strpos($backtrace, '/accounting/individual/') !== false) {
     $accounting_individual = 'active';
-} else if (strpos($backtrace, '/admin/accounting/') !== false) {
+} elseif (strpos($backtrace, '/admin/accounting/') !== false) {
     $admin_accounting = 'active';
-} else if (strpos($backtrace, '/admin/individual_accounting/') !== false) {
+} elseif (strpos($backtrace, '/admin/individual_accounting/') !== false) {
     $admin_accounting = 'active';
-} else if (strpos($backtrace, '/admin/camp_accounting/') !== false) {
+} elseif (strpos($backtrace, '/admin/camp_accounting/') !== false) {
     $admin_camp_accounting = 'active';
-} else if (strpos($backtrace, '/admin/eticket/') !== false) {
-    $admin_eticket = 'active';
 }
 ?>
 
@@ -129,7 +127,7 @@ if ($backtrace == '/index.php') {
              * 5 : access to gasshuku shuukinn
              * 
             */
-            if ($user->admin != NULL) {
+            if ($user->admin != null) {
                 echo '<hr class="sidebar-divider">';
                 echo '<div class="sidebar-heading">管理コンソール</div>';
                 if ($user->admin == 1 || $user->admin == 2 || $user->admin == 3) {
@@ -154,9 +152,6 @@ if ($backtrace == '/index.php') {
                 }
                 if ($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5) {
                     echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="/member/mypage/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
-                }
-                if ($user->admin == 1) {
-                    echo '<li class="nav-item ' . $admin_eticket . '"><a class="nav-link" href="/member/mypage/admin/eticket/"><i class="fas fa-qrcode fa-fw"></i></i><span>電子チケット</span></a></li>';
                 }
             }
 
