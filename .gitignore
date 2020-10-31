@@ -3,5 +3,4 @@ Core/
 download/*.xlsx
 admin/eticket/
 grouping/
-googleapi/vendor/
 vendor/
