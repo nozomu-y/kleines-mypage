@@ -5,6 +5,8 @@ if (isset($_SESSION['mypage_email'])) {
     header('Location: /member/mypage/');
     exit();
 }
+require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
+
 if (isset($_SESSION['mypage_auth_error'])) {
     if ($_SESSION['mypage_auth_error'] == "wrong-email") {
         $email_invalid = 'is-invalid';
@@ -21,12 +23,81 @@ if (isset($_SESSION['mypage_auth_error'])) {
         $failure_message = "ログインに10回連続で失敗しています。パスワードをリセットしてください。";
     }
 }
+// if password was set properly at /signup/check_password.php
 if (isset($_SESSION['mypage_password_success'])) {
     $mypage_password_success = true;
 }
 $_SESSION = array();
 setcookie(session_name(), '', time() - 1, '/');
 session_destroy();
+
+if (isset($_COOKIE['mypage_auto_login'])) {
+    $token = $_COOKIE['mypage_auto_login'];
+    $query = "SELECT * FROM auto_login WHERE token = '$token'";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print("Query Failed : " . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $row_cnt = $result->num_rows;
+    // if the token exists in database
+    if ($row_cnt == 1) {
+        while ($row = $result->fetch_assoc()) {
+            $user_id = $row['id'];
+        }
+        // get user info
+        $query = "SELECT * FROM members WHERE id='$user_id'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print("Query Failed : " . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $user = new User($result->fetch_assoc());
+        // delete token from database
+        $query = "DELETE FROM auto_login WHERE token = '$token'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print("Query Failed : " . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        // delete token from browser cookie
+        setcookie("mypage_auto_login", "", time() - 60);
+        // regenerate token
+        $token = sha1(uniqid(rand(), true) . mt_rand(1, 999999999) . '_mypage_auto_login');
+        // expiration time
+        $expiration_time = 3600 * 24 * 30; // token valid for 30 days
+        // set cookie
+        setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
+        // check device(platform) and browser
+        require '/home/chorkleines/www/member/mypage/login/vendor/autoload.php';
+        $ua_info = parse_user_agent();
+        // check device
+        $browser = $ua_info['browser'];
+        $device = $ua_info['platform'];
+        // add to database
+        $query = "INSERT INTO auto_login (id, token, datetime, device, browser) VALUES ('$user->id', '$token', now(), '$device', '$browser')";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print("Query Failed : " . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        // login the user
+        if ($user->status != 2) { // if the user status is not resigned
+            // start session
+            ob_start();
+            session_start();
+            $_SESSION['mypage_email'] = $user->email;
+            // create log
+            error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in using remember me. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
+            header('Location: /member/mypage/');
+            exit();
+        }
+    }
+}
 
 require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
@@ -44,7 +115,8 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css">
+    <!-- <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css"> -->
+    <link rel="stylesheet" href="/member/mypage/Resources/css/ck-sb-admin-2.css">
     <!-- JS -->
     <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js">
 </head>
@@ -86,8 +158,8 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                         </div>
                                         <!-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                                <label class="custom-control-label" for="remember">{{ __('Remember Me') }}</label>
+                                                <input type="checkbox" class="custom-control-input" name="remember_me" id="remember_me" value="checked">
+                                                <label class="custom-control-label" for="remember_me">ログイン状態を保持する</label>
                                             </div>
                                         </div> -->
                                         <button type="submit" class="btn btn-primary btn-user btn-block" name="login">

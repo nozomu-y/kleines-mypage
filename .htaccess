@@ -1,0 +1,5 @@
+Satisfy any
+order allow,deny
+allow from all
+
+ErrorDocument 404 /member/mypage/404.php

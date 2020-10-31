@@ -253,7 +253,7 @@ if ($user->admin == 1 || $user->admin == 5) {
                     <div class="list-group shadow mb-4">
                         <a href="/member/mypage/admin/camp_accounting/add_fee_list/edit.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
                         <a href="/member/mypage/admin/camp_accounting/add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金対象者の選択</a>
-                        <button type="submit" name="delete" formaction="/member/mypage/admin/camp_accounting/delete_fee_list.php" class="list-group-item list-group-item-action text-danger" value="<?php echo $fee_list->id ?>" Onclick="return confirm('集金リスト「<?php echo $fee_list->name; ?>」を削除しますか？\n削除した場合、関連する全ての集金記録・個別会計が削除されます。');">集金リストの削除</button>
+                        <button type="submit" name="delete" formaction="/member/mypage/admin/camp_accounting/delete_fee_list.php" class="list-group-item list-group-item-action text-danger" value="<?php echo $fee_list->id ?>" Onclick="return confirm('集金リスト「<?php echo $fee_list->name; ?>」を削除しますか？\n削除した場合、関連する全ての集金記録が削除されます。');">集金リストの削除</button>
                     </div>
                 </form>
                 <div class="card shadow mb-4">
@@ -357,7 +357,7 @@ while ($row = $result->fetch_assoc()) {
     $row_cnt = $result_2->num_rows;
     if ($row_cnt != 0) {
         while ($row_2 = $result_2->fetch_assoc()) {
-            if ($row_2['datetime'] == NULL) {
+            if ($row_2['datetime'] == null) {
                 $unpaid_cnt += 1;
             } else {
                 $paid_cnt += 1;
@@ -393,7 +393,7 @@ while ($row = $result->fetch_assoc()) {
     $row_cnt = $result_2->num_rows;
     if ($row_cnt != 0) {
         while ($row_2 = $result_2->fetch_assoc()) {
-            if ($row_2['datetime'] == NULL) {
+            if ($row_2['datetime'] == null) {
                 $unpaid_cnt += 1;
             } else {
                 $paid_cnt += 1;
@@ -429,7 +429,7 @@ while ($row = $result->fetch_assoc()) {
     $row_cnt = $result_2->num_rows;
     if ($row_cnt != 0) {
         while ($row_2 = $result_2->fetch_assoc()) {
-            if ($row_2['datetime'] == NULL) {
+            if ($row_2['datetime'] == null) {
                 $unpaid_cnt += 1;
             } else {
                 $paid_cnt += 1;
@@ -465,7 +465,7 @@ while ($row = $result->fetch_assoc()) {
     $row_cnt = $result_2->num_rows;
     if ($row_cnt != 0) {
         while ($row_2 = $result_2->fetch_assoc()) {
-            if ($row_2['datetime'] == NULL) {
+            if ($row_2['datetime'] == null) {
                 $unpaid_cnt += 1;
             } else {
                 $paid_cnt += 1;

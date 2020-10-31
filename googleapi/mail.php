@@ -1,5 +1,5 @@
 <?php
-require '/home/chorkleines/www/member/mypage/googleapi/vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 function getClient()
 {
     $client = new Google_Client();

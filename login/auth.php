@@ -9,7 +9,7 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
 if (isset($_POST['login'])) {
     $email = $mysqli->real_escape_string($_POST['email']);
-    $password = $mysqli->real_escape_string($_POST['password']);
+    $password = $_POST['password'];
     // start query
     $query = "SELECT * FROM members WHERE email='$email' AND status != 2";
     $result = $mysqli->query($query);
@@ -44,12 +44,36 @@ if (isset($_POST['login'])) {
         exit();
     } else {
         if (password_verify($password, $user->password)) {
+            // passed the authentication
             $query = "UPDATE members SET login_failure = 0 WHERE email='$user->email'";
             $result = $mysqli->query($query);
             if (!$result) {
                 print("Query Failed : " . $mysqli->error);
                 $mysqli->close();
                 exit();
+            }
+            // when "remember me" was selected at /login/index.php
+            if (isset($_POST['remember_me']) && $_POST['remember_me'] == "checked") {
+                // generate token
+                $token = sha1(uniqid(rand(), true) . mt_rand(1, 999999999) . '_mypage_auto_login');
+                // expiration time
+                $expiration_time = 3600 * 24 * 30; // token valid for 30 days
+                // set cookie
+                setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
+                // check device(platform) and browser
+                require '/home/chorkleines/www/member/mypage/login/vendor/autoload.php';
+                $ua_info = parse_user_agent();
+                // check device
+                $browser = $ua_info['browser'];
+                $device = $ua_info['platform'];
+                // add to database
+                $query = "INSERT INTO auto_login (id, token, datetime, device, browser) VALUES ('$user->id', '$token', now(), '$device', '$browser')";
+                $result = $mysqli->query($query);
+                if (!$result) {
+                    print("Query Failed : " . $mysqli->error);
+                    $mysqli->close();
+                    exit();
+                }
             }
             $mysqli->close();
             // start session
@@ -58,7 +82,7 @@ if (isset($_POST['login'])) {
             $_SESSION['mypage_email'] = $user->email;
             // create log
             error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-            header("Location: /member/mypage/");
+            header('Location: /member/mypage/');
             exit();
         } else {
             // authentication failure

@@ -27,22 +27,20 @@ $backtrace = debug_backtrace()[0]['file'];
 $backtrace = explode('mypage', $backtrace)[1];
 if ($backtrace == '/index.php') {
     $home = 'active';
-} else if (strpos($backtrace, '/admin/account_manage/') !== false) {
+} elseif (strpos($backtrace, '/admin/account_manage/') !== false) {
     $account_manage = 'active';
-} else if (strpos($backtrace, 'accounts/') !== false) {
+} elseif (strpos($backtrace, 'accounts/') !== false) {
     $accounts = 'active';
-} else if (strpos($backtrace, '/accounting/collection/') !== false) {
+} elseif (strpos($backtrace, '/accounting/collection/') !== false) {
     $accounting_collection = 'active';
-} else if (strpos($backtrace, '/accounting/individual/') !== false) {
+} elseif (strpos($backtrace, '/accounting/individual/') !== false) {
     $accounting_individual = 'active';
-} else if (strpos($backtrace, '/admin/accounting/') !== false) {
+} elseif (strpos($backtrace, '/admin/accounting/') !== false) {
     $admin_accounting = 'active';
-} else if (strpos($backtrace, '/admin/individual_accounting/') !== false) {
+} elseif (strpos($backtrace, '/admin/individual_accounting/') !== false) {
     $admin_accounting = 'active';
-} else if (strpos($backtrace, '/admin/camp_accounting/') !== false) {
+} elseif (strpos($backtrace, '/admin/camp_accounting/') !== false) {
     $admin_camp_accounting = 'active';
-} else if (strpos($backtrace, '/admin/eticket/') !== false) {
-    $admin_eticket = 'active';
 }
 ?>
 
@@ -60,6 +58,7 @@ if ($backtrace == '/index.php') {
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,500&display=swap&subset=japanese" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css">
+    <!-- <link rel="stylesheet" href="/member/mypage/Resources/css/ck-sb-admin-2.css"> -->
     <link rel="stylesheet" href="/member/mypage/Resources/css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-flash-1.6.1/b-html5-1.6.1/datatables.min.css" />
     <!-- JS -->
@@ -128,7 +127,7 @@ if ($backtrace == '/index.php') {
              * 5 : access to gasshuku shuukinn
              * 
             */
-            if ($user->admin != NULL) {
+            if ($user->admin != null) {
                 echo '<hr class="sidebar-divider">';
                 echo '<div class="sidebar-heading">管理コンソール</div>';
                 if ($user->admin == 1 || $user->admin == 2 || $user->admin == 3) {
@@ -153,9 +152,6 @@ if ($backtrace == '/index.php') {
                 }
                 if ($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5) {
                     echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="/member/mypage/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
-                }
-                if ($user->admin == 1) {
-                    echo '<li class="nav-item ' . $admin_eticket . '"><a class="nav-link" href="/member/mypage/admin/eticket/"><i class="fas fa-qrcode fa-fw"></i></i><span>電子チケット</span></a></li>';
                 }
             }
 
@@ -202,7 +198,7 @@ if ($backtrace == '/index.php') {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <!-- <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $user->get_name(); ?></span> -->
-                                <!-- <span class="mr-2 text-gray-600 small"><?php echo $user->get_name(); ?></span> -->
+                                <span class="mr-2 text-gray-600 small"><?php echo $user->get_name(); ?></span>
                                 <i class="fas fa-user fa-fw"></i>
                             </a>
                             <!-- Dropdown - User Information -->
@@ -211,10 +207,10 @@ if ($backtrace == '/index.php') {
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     プロフィール
                                 </a> -->
-                                <!-- <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/member/mypage/profile/sessions.php">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    設定
-                                </a> -->
+                                    セッション管理
+                                </a>
                                 <!-- <div class="dropdown-divider"></div> -->
                                 <a class="dropdown-item" href="/member/mypage/logout.php" data-toggle="modal" data-target="#logoutModal" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
