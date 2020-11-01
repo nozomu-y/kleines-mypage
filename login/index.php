@@ -1,7 +1,15 @@
 <?php
 ob_start();
 session_start();
-if (isset($_SESSION['mypage_email'])) {
+
+require '../Common/function.php';
+if (strcmp(getGitBranch(), "master")) {  // if current branch is not master
+    $maintenance = true;
+} else {
+    $maintenance = false;
+}
+
+if (isset($_SESSION['mypage_email']) && !$maintenance) {
     header('Location: /member/mypage/');
     exit();
 }
@@ -140,36 +148,55 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Kleines Mypage</h1>
                                     </div>
-                                    <form class="user" method="POST" action="./auth.php">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user <?php echo $email_invalid ?>" id="email" name="email" required autocomplete="email" placeholder="メールアドレス">
-                                            <span class="invalid-feedback" role="alert">
-                                                <?php echo $email_message; ?>
-                                            </span>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user <?php echo $password_invalid ?>" id="password" placeholder="パスワード" name="password" required autocomplete="current-password">
-                                            <span class="invalid-feedback" role="alert">
-                                                <?php echo $password_message; ?>
-                                            </span>
-                                            <span class="invalid-feedback" role="alert">
-                                                <?php echo $failure_message; ?>
-                                            </span>
-                                        </div>
-                                        <!-- <div class="form-group">
+                                    <?php
+                                    if (!$maintenance) {
+                                    ?>
+                                        <form class="user" method="POST" action="./auth.php">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control form-control-user <?php echo $email_invalid ?>" id="email" name="email" required autocomplete="email" placeholder="メールアドレス">
+                                                <span class="invalid-feedback" role="alert">
+                                                    <?php echo $email_message; ?>
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" class="form-control form-control-user <?php echo $password_invalid ?>" id="password" placeholder="パスワード" name="password" required autocomplete="current-password">
+                                                <span class="invalid-feedback" role="alert">
+                                                    <?php echo $password_message; ?>
+                                                </span>
+                                                <span class="invalid-feedback" role="alert">
+                                                    <?php echo $failure_message; ?>
+                                                </span>
+                                            </div>
+                                            <!-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" name="remember_me" id="remember_me" value="checked">
                                                 <label class="custom-control-label" for="remember_me">ログイン状態を保持する</label>
                                             </div>
                                         </div> -->
-                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="login">
-                                            ログイン
-                                        </button>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="/member/mypage/signup/">パスワードの発行</a>
-                                    </div>
+                                            <button type="submit" class="btn btn-primary btn-user btn-block" name="login">
+                                                ログイン
+                                            </button>
+                                        </form>
+                                        <hr>
+                                        <div class="text-center">
+                                            <a class="small" href="/member/mypage/signup/">パスワードの発行</a>
+                                        </div>
+                                    <?php
+                                    } else { // maintenance mode
+                                    ?>
+                                        <div class="text-center">
+                                            <p>
+                                                現在メンテナンス中です。
+                                                <br>
+                                                Web管までご連絡ください。
+                                            </p>
+                                            <p>
+                                                <a href="./admin_login.php">管理者ログイン</a>
+                                            </p>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
                                     <?php
                                     if ($mypage_password_success) {
                                         echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
