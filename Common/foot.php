@@ -1,6 +1,27 @@
 </div>
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
+        <?php
+        $email = $_SESSION['mypage_email'];
+        $query = "SELECT * FROM members WHERE email='$email'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('クエリーが失敗しました。' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $user = new User($result->fetch_assoc());
+        $result->close();
+
+        if ($user->admin == 1) {
+            require __DIR__ . '/function.php';
+        ?>
+            <div class="copyright text-center mb-1">
+                <span>Current branch is <i class="fas fa-code-branch"></i> <?= getGitBranch() ?></span>
+            </div>
+        <?php
+        }
+        ?>
         <div class="copyright text-center my-auto">
             <span>Copyright &copy; Chor Kleines <?php echo date("Y") ?></span>
         </div>
