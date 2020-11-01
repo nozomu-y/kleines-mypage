@@ -61,7 +61,7 @@ if (isset($_POST['login'])) {
                 // set cookie
                 setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
                 // check device(platform) and browser
-                require '/home/chorkleines/www/member/mypage/login/vendor/autoload.php';
+                require '../vendor/autoload.php';
                 $ua_info = parse_user_agent();
                 // check device
                 $browser = $ua_info['browser'];
