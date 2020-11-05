@@ -1,23 +1,7 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 $fpath = './member_list_email.xlsx';
 $book = new PHPExcel();
 $sheet = $book->getActiveSheet();
@@ -67,4 +51,4 @@ header('Content-Length: ' . filesize($fpath));
 header('Content-disposition: attachment; filename="' . $fname . '"');
 readfile($fpath);
 /** ログファイル作成の処理 **/
-error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が団員名簿（メアドあり）をダウンロードしました。\n", 3, "/home/chorkleines/www/member/mypage/Core/download.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が団員名簿（メアドあり）をダウンロードしました。\n", 3, __DIR__ . "/../Core/download.log");

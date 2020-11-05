@@ -36,13 +36,8 @@ class User
         $this->status = (int) $user['status'];
         $this->name = $user['last_name'] . $user['first_name'];
 
-        require('/home/chorkleines/www/member/mypage/Core/config.php');
+        require __DIR__.'/../Common/dbconnect.php';
 
-        $mysqli = new mysqli($host, $username, $password, $dbname);
-        if ($mysqli->connect_error) {
-            error_log($mysqli->connect_error);
-            exit;
-        }
         $query = "SELECT * FROM fee_record_$this->id WHERE datetime IS NULL";
         $result = $mysqli->query($query);
         if (!$result) {
@@ -76,11 +71,11 @@ class User
     {
         if ($this->part == 'S') {
             return 'Soprano';
-        } else if ($this->part == 'A') {
+        } elseif ($this->part == 'A') {
             return 'Alto';
-        } else if ($this->part == 'T') {
+        } elseif ($this->part == 'T') {
             return 'Tenor';
-        } else if ($this->part == 'B') {
+        } elseif ($this->part == 'B') {
             return 'Bass';
         }
     }
@@ -98,11 +93,11 @@ class User
     {
         if ($this->admin == 1) {
             return "マスター権限";
-        } else if ($this->admin == 2) {
+        } elseif ($this->admin == 2) {
             return "アカウント管理";
-        } else if ($this->admin == 3) {
+        } elseif ($this->admin == 3) {
             return "会計システム";
-        } else if ($this->admin == 5) {
+        } elseif ($this->admin == 5) {
             return "合宿会計システム";
         } else {
             return '';
@@ -112,11 +107,11 @@ class User
     {
         if ($this->admin == 1) {
             return "master";
-        } else if ($this->admin == 2) {
+        } elseif ($this->admin == 2) {
             return "account management";
-        } else if ($this->admin == 3) {
+        } elseif ($this->admin == 3) {
             return "accounting management";
-        } else if ($this->admin == 5) {
+        } elseif ($this->admin == 5) {
             return "camp accounting management";
         } else {
             return '';
@@ -127,7 +122,7 @@ class User
     {
         if ($this->status == 0) {
             return "在団";
-        } else if ($this->status == 1) {
+        } elseif ($this->status == 1) {
             return "休団";
         } else {
             return "退団";
@@ -141,280 +136,5 @@ class User
     public function get_individual_accounting_total()
     {
         return '￥' . number_format($this->individual_accounting_total);
-    }
-}
-
-class Fee
-{
-    public $id;
-    public $datetime;
-    public $price;
-    public $paid_cash;
-    public $paid_individual;
-    public $status;
-    public $name;
-    public $deadline;
-    public $admin;
-
-    public function __construct($fee)
-    {
-        $this->id = $fee['id'];
-        $this->datetime = $fee['datetime'];
-        $this->price = (int) $fee['price'];
-        $this->paid_cash = (int) $fee['paid_cash'];
-        $this->paid_individual = $this->price - $this->paid_cash;
-        $this->status = $fee['status'];
-
-        require('/home/chorkleines/www/member/mypage/Core/config.php');
-
-        $mysqli = new mysqli($host, $username, $password, $dbname);
-        if ($mysqli->connect_error) {
-            error_log($mysqli->connect_error);
-            exit;
-        }
-
-        $query = "SELECT * FROM fee_list WHERE id = $this->id";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        $row = $result->fetch_assoc();
-        $this->name = $row['name'];
-        $this->deadline = $row['deadline'];
-        $this->admin = $row['admin'];
-    }
-
-    public function get_deadline()
-    {
-        return date('Y/m/d', strtotime($this->deadline));
-    }
-
-    public function get_status()
-    {
-        if ($this->datetime == NULL || strtotime($this->datetime) == 0) {
-            return "未納";
-        } else {
-            return "既納";
-        }
-    }
-
-    public function paid()
-    {
-        if ($this->datetime == NULL || strtotime($this->datetime) == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function get_submission_time()
-    {
-        if ($this->datetime == NULL || strtotime($this->datetime) == 0) {
-            return '';
-        } else {
-            return date('Y/m/d H:i:s', strtotime($this->datetime));
-        }
-    }
-
-    public function get_price()
-    {
-        return "￥" . number_format($this->price);
-    }
-
-    public function get_paid_cash()
-    {
-        if ($this->datetime == NULL) {
-            return '';
-        } else {
-            return "￥" . number_format($this->paid_cash);
-        }
-    }
-
-    public function get_paid_individual()
-    {
-        if ($this->datetime == NULL) {
-            return '';
-        } else {
-            return "￥" . number_format($this->paid_individual);
-        }
-    }
-}
-
-class Individual_Accounting
-{
-    public $id;
-    public $date;
-    public $name;
-    public $price;
-    public $fee_id;
-
-    public function __construct($individual_accounting)
-    {
-        $this->id = $individual_accounting['id'];
-        $this->date = $individual_accounting['date'];
-        $this->name = $individual_accounting['name'];
-        $this->price = $individual_accounting['price'];
-        $this->fee_id = $individual_accounting['fee_id'];
-    }
-
-    public function get_price()
-    {
-        return "￥" . number_format($this->price);
-    }
-
-    public function get_date()
-    {
-        return date('Y/m/d', strtotime($this->date));
-    }
-}
-
-class Fee_List
-{
-    public $id;
-    public $name;
-    public $deadline;
-    public $price;
-    public $admin;
-    public $paid_cnt;
-    public $unpaid_cnt;
-
-    public function __construct($fee)
-    {
-        $this->id = $fee['id'];
-        $this->name = $fee['name'];
-        $this->deadline = $fee['deadline'];
-        $this->price = $fee['price'];
-        $this->admin = (int) $fee['admin'];
-
-        require('/home/chorkleines/www/member/mypage/Core/config.php');
-
-        $mysqli = new mysqli($host, $username, $password, $dbname);
-        if ($mysqli->connect_error) {
-            error_log($mysqli->connect_error);
-            exit;
-        }
-
-        $query = "SELECT * FROM members ORDER BY id";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        $this->paid_cnt = 0;
-        $this->unpaid_cnt = 0;
-        while ($row = $result->fetch_assoc()) {
-            $id = $row['id'];
-            $query = "SELECT * FROM fee_record_$id WHERE id = $this->id";
-            $result_2 = $mysqli->query($query);
-            if (!$result_2) {
-                print('Query Failed : ' . $mysqli->error);
-                $mysqli->close();
-                exit();
-            }
-            $row_cnt = $result_2->num_rows;
-            if ($row_cnt != 0) {
-                while ($row_2 = $result_2->fetch_assoc()) {
-                    if ($row_2['datetime'] == NULL) {
-                        $this->unpaid_cnt += 1;
-                    } else {
-                        $this->paid_cnt += 1;
-                    }
-                }
-            }
-        }
-    }
-
-    public function get_price()
-    {
-        return "￥" . number_format($this->price);
-    }
-
-    public function get_deadline()
-    {
-        return date('Y/m/d', strtotime($this->deadline));
-    }
-
-    public function get_paid_ratio()
-    {
-        if ($this->paid_cnt + $this->unpaid_cnt == 0) {
-            return '0.00 %';
-        } else {
-            return strval(round($this->paid_cnt / ($this->paid_cnt + $this->unpaid_cnt), 3) * 100) . ' %';
-        }
-    }
-}
-
-class Ticket_List
-{
-    public $id;
-    public $name;
-    public $date;
-    public $open_time;
-    public $start_time;
-    public $place;
-    public $ticket_price;
-    public $pre_ticket_price;
-    public $max_num;
-    public $start_num;
-
-    public function __construct($ticket_list)
-    {
-        $this->id = $ticket_list['list_id'];
-        $this->name = $ticket_list['ticket_name'];
-        $this->date = $ticket_list['date'];
-        $this->open_time = $ticket_list['open_time'];
-        $this->start_time = $ticket_list['start_time'];
-        $this->place = $ticket_list['place'];
-        $this->ticket_price = $ticket_list['ticket_price'];
-        $this->pre_ticket_price = $ticket_list['pre_ticket_price'];
-        $this->max_num = $ticket_list['max_num'];
-        $this->start_num = $ticket_list['start_num'];
-    }
-}
-
-class Ticket
-{
-    public $id;
-    public $issue_datetime;
-    public $token;
-    public $use_datetime;
-    public $issue_member_id;
-    public $use_member_id;
-    public $issue_member_name;
-
-    public function __construct($ticket_list)
-    {
-        $this->id = $ticket_list['id'];
-        $this->issue_datetime = $ticket_list['issue_datetime'];
-        $this->token = $ticket_list['token'];
-        $this->use_datetime = $ticket_list['use_datetime'];
-        $this->issue_member_id = $ticket_list['issue_member_id'];
-        $this->use_member_id = $ticket_list['use_member_id'];
-    }
-
-    public function get_issue_member_name()
-    {
-        require('/home/chorkleines/www/member/mypage/Core/config.php');
-
-        $mysqli = new mysqli($host, $username, $password, $dbname);
-        if ($mysqli->connect_error) {
-            error_log($mysqli->connect_error);
-            exit;
-        }
-
-        $query = "SELECT * FROM members WHERE id = $this->issue_member_id";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        while ($row = $result->fetch_assoc()) {
-            $account = new User($row);
-        }
-        return $account->get_name();
     }
 }

@@ -1,11 +1,14 @@
 <?php
 ob_start();
 session_start();
+
+require __DIR__.'/../Common/dbconnect.php';
+require __DIR__ . '/../Class/User.php';
+require __DIR__ .'/../Common/function.php';
 if (isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/');
+    header('Location: '.MYPAGE_ROOT);
     exit();
 }
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
 if (isset($_POST['login'])) {
     $email = $mysqli->real_escape_string($_POST['email']);
@@ -23,16 +26,16 @@ if (isset($_POST['login'])) {
     if ($row_cnt == 0) {
         // there is no such account with the corresponding email
         // create log
-        error_log("[" . date('Y/m/d H:i:s') . "] " . "A non-existing email was entered. (email : " . $email . ", IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
+        error_log("[" . date('Y/m/d H:i:s') . "] " . "A non-existing email was entered. (email : " . $email . ", IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, __DIR__."/../Core/auth.log");
         $_SESSION['mypage_auth_error'] = "wrong-email";
-        header("Location: /member/mypage/login/");
+        header("Location: ".MYPAGE_ROOT."/login/");
         exit();
-    } else if ($row_cnt >= 2) {
+    } elseif ($row_cnt >= 2) {
         // if there is more than 2 accounts with the corresponding email
         // this code is not neccesary, just in case
-        error_log("[" . date('Y/m/d H:i:s') . "] " . "The following email is registered to several accounts. (email : " . $email . ", IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
+        error_log("[" . date('Y/m/d H:i:s') . "] " . "The following email is registered to several accounts. (email : " . $email . ", IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, __DIR__."/../Core/auth.log");
         $_SESSION['mypage_auth_error'] = "wrong-email";
-        header("Location: /member/mypage/login/");
+        header("Location: ".MYPAGE_ROOT."/login/");
         exit();
     }
     $user = new User($result->fetch_assoc());
@@ -40,7 +43,7 @@ if (isset($_POST['login'])) {
     if ($user->login_failure >= 9) {
         // failed the authentication for more than 10 times
         $_SESSION['mypage_auth_error'] = "login-failure";
-        header("Location: /member/mypage/login/");
+        header("Location: ".MYPAGE_ROOT."/login/");
         exit();
     } else {
         if (password_verify($password, $user->password)) {
@@ -59,7 +62,7 @@ if (isset($_POST['login'])) {
                 // expiration time
                 $expiration_time = 3600 * 24 * 30; // token valid for 30 days
                 // set cookie
-                setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
+                setcookie("mypage_auto_login", $token, time() + $expiration_time, MYPAGE_ROOT, WEB_DOMAIN, false, true);
                 // check device(platform) and browser
                 require '../vendor/autoload.php';
                 $ua_info = parse_user_agent();
@@ -81,8 +84,8 @@ if (isset($_POST['login'])) {
             session_start();
             $_SESSION['mypage_email'] = $user->email;
             // create log
-            error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-            header('Location: /member/mypage/');
+            error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in. \n", 3, __DIR__."/../Core/auth.log");
+            header('Location: '.MYPAGE_ROOT);
             exit();
         } else {
             // authentication failure
@@ -95,9 +98,9 @@ if (isset($_POST['login'])) {
             }
             $mysqli->close();
             // create log
-            error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " failed login authentication. " . "(IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
+            error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " failed login authentication. " . "(IP Address : " . $_SERVER["REMOTE_ADDR"] . ")\n", 3, __DIR__."/../Core/auth.log");
             $_SESSION['mypage_auth_error'] = "wrong-password_" . strval($user->login_failure + 1);
-            header("Location: /member/mypage/login/");
+            header("Location: ".MYPAGE_ROOT."/login/");
             exit();
         }
     }
