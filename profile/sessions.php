@@ -1,24 +1,8 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('クエリーが失敗しました。' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-$PAGE_NAME = "セッション管理";
-include_once('/home/chorkleines/www/member/mypage/Common/head.php');
+$PAGE_NAME = "プロフィール";
+include_once __DIR__ . '/../Common/head.php';
 ?>
 
 <div class="container-fluid">
@@ -47,7 +31,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT * FROM auto_login WHERE id = '$user->id' ORDER BY datetime DESC";
+                            $query = "SELECT * FROM auto_login WHERE id = '$USER->id' ORDER BY datetime DESC";
                             $result = $mysqli->query($query);
                             if (!$result) {
                                 print('Query Failed : ' . $mysqli->error);
@@ -104,5 +88,4 @@ $script .= '],
 });';
 $script .= '</script>';
 
-
-include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
+include_once __DIR__ . '/../Common/foot.php';

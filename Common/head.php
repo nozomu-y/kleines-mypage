@@ -1,23 +1,4 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login.php');
-    exit();
-}
-
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('クエリーが失敗しました。' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-$result->close();
-
 if ($PAGE_NAME != "") {
     $PAGE_NAME = " - " . $PAGE_NAME;
 }
@@ -57,12 +38,10 @@ if ($backtrace == '/index.php') {
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,500&display=swap&subset=japanese" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css">
-    <!-- <link rel="stylesheet" href="/member/mypage/Resources/css/ck-sb-admin-2.css"> -->
-    <link rel="stylesheet" href="/member/mypage/Resources/css/style.css">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/sb-admin-2.min.css">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-flash-1.6.1/b-html5-1.6.1/datatables.min.css" />
     <!-- JS -->
-    <!-- <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js"> -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133192700-4"></script>
     <script>
@@ -81,7 +60,7 @@ if ($backtrace == '/index.php') {
     <div id="wrapper">
         <!-- sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/member/mypage/">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= MYPAGE_ROOT ?>">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-music"></i>
                 </div>
@@ -90,14 +69,14 @@ if ($backtrace == '/index.php') {
             <hr class="sidebar-divider my-0">
             <!-- nav item -->
             <li class="nav-item <?php echo $home; ?>">
-                <a class="nav-link" href="/member/mypage/">
+                <a class="nav-link" href="<?= MYPAGE_ROOT ?>">
                     <i class="fas fa-home fa-fw"></i>
                     <span>Home</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item <?php echo $accounts; ?>">
-                <a class="nav-link" href="/member/mypage/accounts/">
+                <a class="nav-link" href="<?= MYPAGE_ROOT ?>/accounts/">
                     <i class="fas fa-users fa-fw"></i>
                     <span>アカウント一覧</span>
                 </a>
@@ -108,13 +87,13 @@ if ($backtrace == '/index.php') {
                 会計システム
             </div>
             <li class="nav-item <?php echo $accounting_collection; ?>">
-                <a class="nav-link" href="/member/mypage/accounting/collection/">
+                <a class="nav-link" href="<?= MYPAGE_ROOT ?>/accounting/collection/">
                     <i class="fas fa-yen-sign fa-fw"></i>
                     <span>集金記録</span>
                 </a>
             </li>
             <li class="nav-item <?php echo $accounting_individual; ?>">
-                <a class="nav-link" href="/member/mypage/accounting/individual/">
+                <a class="nav-link" href="<?= MYPAGE_ROOT ?>/accounting/individual/">
                     <i class="fas fa-wallet fa-fw"></i>
                     <span>個別会計</span>
                 </a>
@@ -127,13 +106,13 @@ if ($backtrace == '/index.php') {
              * 5 : access to gasshuku shuukinn
              * 
             */
-            if ($user->admin != null) {
+            if ($USER->admin != null) {
                 echo '<hr class="sidebar-divider">';
                 echo '<div class="sidebar-heading">管理コンソール</div>';
-                if ($user->admin == 1 || $user->admin == 2 || $user->admin == 3) {
-                    echo '<li class="nav-item ' . $account_manage . '"><a class="nav-link" href="/member/mypage/admin/account_manage/"><i class="fas fa-users-cog fa-fw"></i></i><span>アカウント管理</span></a></li>';
+                if ($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3) {
+                    echo '<li class="nav-item ' . $account_manage . '"><a class="nav-link" href="' . MYPAGE_ROOT . '/admin/account_manage/"><i class="fas fa-users-cog fa-fw"></i></i><span>アカウント管理</span></a></li>';
                 }
-                if ($user->admin == 1 || $user->admin == 3) {
+                if ($USER->admin == 1 || $USER->admin == 3) {
                     echo '<li class="nav-item ' . $admin_accounting . '">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccounting" aria-expanded="true" aria-controls="collapseAccounting">
                     <i class="fas fa-fw fa-coins"></i>
@@ -141,17 +120,17 @@ if ($backtrace == '/index.php') {
                     </a>';
                     echo '<div id="collapseAccounting" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/member/mypage/admin/accounting/">集金リスト</a>
-                    <a class="collapse-item" href="/member/mypage/admin/individual_accounting/">個別会計</a>
+                    <a class="collapse-item" href="' . MYPAGE_ROOT . '/admin/accounting/">集金リスト</a>
+                    <a class="collapse-item" href="' . MYPAGE_ROOT . '/admin/individual_accounting/">個別会計</a>
                     </div>
                     </div>
                     </li>';
                 }
-                if ($user->admin == 2) {
-                    echo '<li class="nav-item ' . $admin_accounting . '"><a class="nav-link" href="/member/mypage/admin/accounting/"><i class="fas fa-coins fa-fw"></i></i><span>会計システム</span></a></li>';
+                if ($USER->admin == 2) {
+                    echo '<li class="nav-item ' . $admin_accounting . '"><a class="nav-link" href="' . MYPAGE_ROOT . '/admin/accounting/"><i class="fas fa-coins fa-fw"></i></i><span>会計システム</span></a></li>';
                 }
-                if ($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5) {
-                    echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="/member/mypage/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
+                if ($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3 || $USER->admin == 5) {
+                    echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="' . MYPAGE_ROOT . '/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
                 }
             }
 
@@ -175,18 +154,6 @@ if ($backtrace == '/index.php') {
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form> -->
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown no-arrow d-md-none">
@@ -197,26 +164,26 @@ if ($backtrace == '/index.php') {
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <!-- <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $user->get_name(); ?></span> -->
-                                <span class="mr-2 text-gray-600 small"><?php echo $user->get_name(); ?></span>
+                                <!-- <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $USER->get_name(); ?></span> -->
+                                <span class="mr-2 text-gray-600 small"><?php echo $USER->get_name(); ?></span>
                                 <i class="fas fa-user fa-fw"></i>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <!-- <a class="dropdown-item" href="/member/mypage/profile/">
+                                <!-- <a class="dropdown-item" href="<?= MYPAGE_ROOT ?>/profile/">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     プロフィール
                                 </a> -->
-                                <a class="dropdown-item" href="/member/mypage/profile/sessions.php">
+                                <a class="dropdown-item" href="<?= MYPAGE_ROOT ?>/profile/sessions.php">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     セッション管理
                                 </a>
                                 <!-- <div class="dropdown-divider"></div> -->
-                                <a class="dropdown-item" href="/member/mypage/logout.php" data-toggle="modal" data-target="#logoutModal" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a class="dropdown-item" href="<?= MYPAGE_ROOT ?>/logout.php" data-toggle="modal" data-target="#logoutModal" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     ログアウト
                                 </a>
-                                <form action="/member/mypage/logout.php" method="POST" style="display: none;" id="logout-form">
+                                <form action="<?= MYPAGE_ROOT ?>/logout.php" method="POST" style="display: none;" id="logout-form">
                                     <input type='hidden' name='logout'>
                                 </form>
                             </div>
