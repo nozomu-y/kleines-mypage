@@ -168,7 +168,7 @@ if (isset($_POST['signup'])) {
                 <h2>本人確認のお知らせ</h2>
                 <p>' . $account->get_name() . 'さん</p>
                 <p>アカウントを登録していただき、ありがとうございます。<br />以下のリンクから24時間以内にパスワードの設定を行ってください。</p>
-                <p class="text-center"><a href="' . $validation_url . '">' . $validation_url . '</a></p>
+                <p><a href="' . $validation_url . '">' . $validation_url . '</a></p>
               </td>
             </tr>
           </table>
