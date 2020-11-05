@@ -21,17 +21,17 @@ if (isset($_SESSION['mypage_auth_error'])) {
     if ($_SESSION['mypage_auth_error'] == "wrong-email") {
         $email_invalid = 'is-invalid';
         $email_message = "メールアドレスが登録されていません";
-    } else if (strpos($_SESSION['mypage_auth_error'], "wrong-password") !== false) {
+    } elseif (strpos($_SESSION['mypage_auth_error'], "wrong-password") !== false) {
         echo $_SESSION['mypage_auth_error'];
         $login_failure = explode("_", $_SESSION['mypage_auth_error'])[1];
         $password_invalid = 'is-invalid';
         $password_message = "パスワードが間違っています。";
         $failure_message = "ログインに" . $login_failure . "回失敗しています。10回失敗するとアカウントがロックされます。";
-    } else if ($_SESSION['mypage_auth_error'] == "login-failure") {
+    } elseif ($_SESSION['mypage_auth_error'] == "login-failure") {
         $email_invalid = 'is-invalid';
         $password_invalid = 'is-invalid';
         $failure_message = "ログインに10回連続で失敗しています。パスワードをリセットしてください。";
-    } else if ($_SESSION['mypage_auth_error'] == "unauthorized") {
+    } elseif ($_SESSION['mypage_auth_error'] == "unauthorized") {
         $failure_message = "アクセス権限がありません。";
     }
 }
@@ -53,7 +53,7 @@ session_destroy();
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/ck-sb-admin-2.css">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/sb-admin-2.min.css">
     <!-- JS -->
     <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/js/sb-admin-2.min.js">
 </head>
