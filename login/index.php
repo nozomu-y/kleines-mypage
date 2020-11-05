@@ -124,7 +124,7 @@ if (isset($_COOKIE['mypage_auto_login'])) {
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="<?=MYPAGE_ROOT?>/Resources/css/ck-sb-admin-2.css">
+    <link rel="stylesheet" href="<?=MYPAGE_ROOT?>/Resources/css/sb-admin-2.min.css">
     <!-- JS -->
     <link rel="stylesheet" href="<?=MYPAGE_ROOT?>/Resources/js/sb-admin-2.min.js">
 </head>
