@@ -15,16 +15,6 @@ if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // i
     $MAINTENANCE = false;
 }
 
-if ($MAINTENANCE) {
-    header('Location: ' . MYPAGE_ROOT . '/login');
-    exit();
-}
-
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: ' . MYPAGE_ROOT . '/login');
-    exit();
-}
-
 $email = $_SESSION['mypage_email'];
 $query = "SELECT * FROM members WHERE email='$email'";
 $result = $mysqli->query($query);
@@ -34,3 +24,13 @@ if (!$result) {
     exit();
 }
 $USER = new User($result->fetch_assoc());
+
+if ($MAINTENANCE && $USER->admin != 1) {
+    header('Location: ' . MYPAGE_ROOT . '/login');
+    exit();
+}
+
+if (!isset($_SESSION['mypage_email'])) {
+    header('Location: ' . MYPAGE_ROOT . '/login');
+    exit();
+}
