@@ -1,29 +1,14 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../../../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
+if (!($USER->admin == 1 || $USER->admin == 3)) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
-$user = new User($result->fetch_assoc());
-
-if (!($user->admin == 1 || $user->admin == 3)) {
-    header('Location: /member/mypage/');
-    exit();
-}
+$PAGE_NAME = "集金リスト";
 
 if (!isset($_POST['submit'])) {
-    header('Location: /member/mypage/admin/accounting/');
+    header('Location: ' . MYPAGE_ROOT . '/admin/accounting/');
     exit();
 }
 
@@ -52,6 +37,6 @@ if (!$result) {
 }
 
 // make log file
-error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が新規集金リスト「" . $name . "」を追加しました。（期限：" . $deadline . "、金額：" . $price . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が新規集金リスト「" . $name . "」を追加しました。（期限：" . $deadline . "、金額：" . $price . "）\n", 3, __DIR__ . "/../../../Core/accounting.log");
 header('Location: subject.php?fee_id=' . $fee_id);
 exit();

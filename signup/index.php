@@ -1,10 +1,27 @@
 <?php
 ob_start();
 session_start();
-if (isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/');
+
+require __DIR__ . '/../Common/dbconnect.php';
+require __DIR__ . '/../Class/User.php';
+require __DIR__ . '/../Common/function.php';
+
+if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // if current branch is not master
+    $maintenance = true;
+} else {
+    $maintenance = false;
+}
+
+if (isset($_SESSION['mypage_email']) && !$maintenance) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
+
+if ($maintenance) {
+    header('Location: ' . MYPAGE_ROOT . '/login');
+    exit();
+}
+
 if (isset($_SESSION['mypage_auth_error'])) {
     if ($_SESSION['mypage_auth_error'] == "wrong-email") {
         $email_invalid = 'is-invalid';
@@ -21,9 +38,6 @@ if (isset($_SESSION['mypage_token_expired'])) {
 $_SESSION = array();
 setcookie(session_name(), '', time() - 1, '/');
 session_destroy();
-
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-
 ?>
 
 <!DOCTYPE html>
@@ -38,9 +52,9 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/sb-admin-2.min.css">
     <!-- JS -->
-    <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/js/sb-admin-2.min.js">
 </head>
 
 <body class="bg-gradient-primary">
@@ -76,12 +90,12 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="/member/mypage/login/">ログインはこちら</a>
+                                        <a class="small" href="<?= MYPAGE_ROOT ?>/login/">ログインはこちら</a>
                                     </div>
                                     <?php
                                     if ($mypage_auth_success) {
                                         echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                                        echo $email . 'にメールを送信しました。<br>24時間以内にリンクをクリックしてパスワードを設定してください。<br>メールが届かない場合は、<a href="mailto:kleines.webmaster@gmail.com" class="alert-link">kleines.webmaster@gmail.com</a>までご連絡ください。';
+                                        echo $email . 'にメールを送信しました。<br>24時間以内にリンクをクリックしてパスワードを設定してください。<br>メールが届かない場合は、<a href="mailto:' . ADMIN_EMAIL . '" class="alert-link">' . ADMIN_EMAIL . '</a>までご連絡ください。';
                                         echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                                         echo '</div>';
                                     }
@@ -106,14 +120,14 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="/member/mypage/Resources/js/jquery.min.js"></script>
-    <script src="/member/mypage/Resources/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/jquery.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="/member/mypage/Resources/js/jquery.easing.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/member/mypage/Resources/js/sb-admin-2.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/sb-admin-2.min.js"></script>
 
 </body>
 

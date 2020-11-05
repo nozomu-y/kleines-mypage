@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-// logout.phpにアクセスしたユーザーをログアウトする
+// logout the user who accessed logout.php
 if (isset($_POST['logout'])) {
     $_SESSION = array();
     setcookie(session_name(), '', time() - 1, '/');
     session_destroy();
 
-    require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
+    require __DIR__.'/Common/dbconnect.php';
     if (!empty($_COOKIE['mypage_auto_login'])) {
         $token = $_COOKIE['mypage_auto_login'];
         // delete token from database
@@ -22,9 +22,9 @@ if (isset($_POST['logout'])) {
         setcookie("mypage_auto_login", "", time() - 60);
     }
 
-    header("Location: /member/mypage/login/");
+    header("Location: ".MYPAGE_ROOT."/login/");
     exit();
 } else {
-    header("Location: /member/mypage/");
+    header("Location: ".MYPAGE_ROOT);
     exit();
 }
