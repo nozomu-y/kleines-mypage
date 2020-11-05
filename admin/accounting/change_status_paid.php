@@ -227,7 +227,7 @@ $body = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://
                 <p>
                   ■本メールに関するご意見・ご要望は、このメールにご返信ください。
                   <br />
-                  ■Kleines Mypageへのアクセスは<a href="' . WEB_DOMAIN . MYPAGE_ROOT . '">こちら</a>から。
+                  ■Kleines Mypageへのアクセスは<a href="https://' . WEB_DOMAIN . MYPAGE_ROOT . '">こちら</a>から。
                 </p>
                 <p class="text-center">&copy; Chor Kleines 2020</p>
               </td>
