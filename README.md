@@ -31,7 +31,7 @@ php quickstart.php
 
 ### Edit config file
 
-Edit `config.php` in the `Core` folder.
+Edit `config_template.php` in the `Core` folder and rename it to `config.php`.
 
 ### Initialize database
 
