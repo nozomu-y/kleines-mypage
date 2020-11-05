@@ -39,7 +39,7 @@ if (isset($_POST['signup'])) {
     }
     $account = new User($row = $result->fetch_assoc());
     $token = md5(uniqid(rand(), true));
-    $validation_url = WEB_DOMAIN . MYPAGE_ROOT . "/signup/auth.php?token=" . $token;
+    $validation_url = 'https://' . WEB_DOMAIN . MYPAGE_ROOT . "/signup/auth.php?token=" . $token;
     $query = "UPDATE members SET token = '$token', validation_time = now() WHERE email = '$email'";
     $result = $mysqli->query($query);
     if (!$result) {
@@ -168,7 +168,7 @@ if (isset($_POST['signup'])) {
                 <h2>本人確認のお知らせ</h2>
                 <p>' . $account->get_name() . 'さん</p>
                 <p>アカウントを登録していただき、ありがとうございます。<br />以下のリンクから24時間以内にパスワードの設定を行ってください。</p>
-                <p class="text-center"><a href="' . $validation_url . '" class="btn">パスワードの設定</a></p>
+                <p class="text-center"><a href="' . $validation_url . '">' . $validation_url . '</a></p>
               </td>
             </tr>
           </table>
@@ -185,7 +185,7 @@ if (isset($_POST['signup'])) {
                 <p>
                   ■本メールに関するご意見・ご要望は、このメールにご返信ください。
                   <br />
-                  ■Kleines Mypageへのアクセスは<a href="' . WEB_DOMAIN . MYPAGE_ROOT . '">こちら</a>から。
+                  ■Kleines Mypageへのアクセスは<a href="https://' . WEB_DOMAIN . MYPAGE_ROOT . '">こちら</a>から。
                 </p>
                 <p class="text-center">&copy; Chor Kleines 2020</p>
               </td>
