@@ -1,28 +1,12 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
+require __DIR__ . '/../../Common/init_page.php';
+
+if (!($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3)) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
-
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5)) {
-    header('Location: /member/mypage/');
-    exit();
-}
-
-include_once('/home/chorkleines/www/member/mypage/Common/head.php');
+$PAGE_NAME = "アカウント管理";
+include_once __DIR__ . '/../../Common/head.php';
 ?>
 
 <div class="container-fluid">
@@ -31,19 +15,17 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/account_manage/">アカウント管理</a></li>
+                    <li class="breadcrumb-item"><a href="./">アカウント管理</a></li>
                     <li class="breadcrumb-item active" aria-current="page">ログ</li>
                 </ol>
             </nav>
             <?php
-            //$log = file_get_contents("../core/logs.log");
-            $filename = "/home/chorkleines/www/member/mypage/Core/account_manage.log";
+            $filename = __DIR__ . "/../../Core/account_manage.log";
             $lines = file($filename);
             $lines = array_reverse($lines);
             foreach ($lines as $line) {
                 echo nl2br($line);
             }
-            //echo nl2br($log);
             ?>
         </div>
         <div class="col-xl-3 col-sm-12">
@@ -54,4 +36,4 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 
 
 <?php
-include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
+include_once __DIR__ . '/../../Common/foot.php';

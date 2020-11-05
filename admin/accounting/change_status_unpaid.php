@@ -1,29 +1,13 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-if (!($user->admin == 1 || $user->admin == 3)) {
-    header('Location: /member/mypage/');
+if (!($USER->admin == 1 || $USER->admin == 3)) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
 if (!isset($_POST['fee_id'])) {
-    header('Location: /member/mypage/admin/accounting/');
+    header('Location: ' . MYPAGE_ROOT . '/admin/accounting/');
     exit();
 }
 
@@ -37,7 +21,7 @@ if (!$result) {
 }
 $fee_list = new Fee_List($result->fetch_assoc());
 if ($fee_list->admin != 3) {
-    header('Location: /member/mypage/admin/accounting/');
+    header('Location: ' . MYPAGE_ROOT . '/admin/accounting/');
     exit();
 }
 
@@ -80,10 +64,10 @@ if (!$result) {
 
 
 /** ログファイル作成の処理 **/
-error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の「" . $fee_list->name . "」の提出状況を未納に変更しました。\n", 3, "/home/chorkleines/www/member/mypage/Core/accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が" . $account->name . "の「" . $fee_list->name . "」の提出状況を未納に変更しました。\n", 3, __DIR__ . "/../../Core/accounting.log");
 
 $_SESSION['mypage_account_name'] = $account->get_name();
 $_SESSION['mypage_fee_status'] = "未納";
 
-header('Location: /member/mypage/admin/accounting/detail.php?fee_id=' . $fee_list->id);
+header('Location: ' . MYPAGE_ROOT . '/admin/accounting/detail.php?fee_id=' . $fee_list->id);
 exit();

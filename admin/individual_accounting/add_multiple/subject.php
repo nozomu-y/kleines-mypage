@@ -1,24 +1,8 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../../../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-if (!($user->admin == 1 || $user->admin == 3)) {
-    header('Location: /member/mypage/');
+if (!($USER->admin == 1 || $USER->admin == 3)) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
@@ -27,11 +11,12 @@ if (isset($_POST['name'])) {
     $date = $_POST['date'];
     $price = $_POST['price'];
 } else {
-    header('Location: /member/mypage/admin/individual_accounting/');
+    header('Location: ' . MYPAGE_ROOT . '/admin/individual_accounting/');
     exit();
 }
 
-include_once('/home/chorkleines/www/member/mypage/Common/head.php');
+$PAGE_NAME = "個別会計管理";
+include_once __DIR__ . '/../../../Common/head.php';
 ?>
 
 <div class="container-fluid">
@@ -40,7 +25,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/individual_accounting/">個別会計管理</a></li>
+                    <li class="breadcrumb-item"><a href="../">個別会計管理</a></li>
                     <li class="breadcrumb-item active" aria-current="page"><?php echo $name ?></li>
                 </ol>
             </nav>
@@ -87,7 +72,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 <input type="hidden" name="date" value="<?php echo $date; ?>">
                 <input type="hidden" name="price" value="<?php echo $price; ?>">
                 <button type="submit" class="btn btn-primary" name="submit">一括追加</button>
-                <a class="btn btn-secondary" href="/member/mypage/admin/individual_accounting/" role="button">キャンセル</a>
+                <a class="btn btn-secondary" href="../" role="button">キャンセル</a>
             </form>
         </div>
     </div>
@@ -144,4 +129,4 @@ $script .= '</script>';
 ?>
 
 <?php
-include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
+include_once __DIR__ . '/../../../Common/foot.php';

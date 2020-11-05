@@ -1,23 +1,6 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
-
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-include_once('/home/chorkleines/www/member/mypage/Common/head.php');
+require __DIR__.'/Common/init_page.php';
+include_once __DIR__.'/Common/head.php';
 ?>
 
 <div class="container-fluid">
@@ -29,7 +12,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary mb-1">個別会計総額</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $user->get_individual_accounting_total(); ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $USER->get_individual_accounting_total(); ?></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-wallet fa-2x text-gray-300"></i>
@@ -44,7 +27,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-danger mb-1">滞納額</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $user->get_delinquent(); ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $USER->get_delinquent(); ?></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-yen-sign fa-2x text-gray-300"></i>
@@ -57,7 +40,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
     <div class="row">
         <div class="col-sm-4">
             <?php
-            $query = "SELECT * FROM fee_record_$user->id";
+            $query = "SELECT * FROM fee_record_$USER->id";
             $result = $mysqli->query($query);
             if (!$result) {
                 print('Query Failed : ' . $mysqli->error);
@@ -68,11 +51,9 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
             $paid = 0;
             while ($row = $result->fetch_assoc()) {
                 $fee = new Fee($row);
-                if ($fee->datetime == NULL) {
-                    // unpaid
+                if ($fee->datetime == null) {
                     $unpaid += $fee->price;
                 } else {
-                    // paid
                     $paid += $fee->price;
                 }
             }
@@ -164,4 +145,4 @@ $script .= '</script>';
 
 
 <?php
-include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
+include_once __DIR__ .'/Common/foot.php';

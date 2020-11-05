@@ -1,24 +1,8 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-if (!($user->admin == 1)) {
-    header('Location: /member/mypage/');
+if (!($USER->admin == 1)) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
@@ -63,7 +47,9 @@ if (isset($_POST['delete'])) {
         exit();
     }
     // make log file
-    error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " deleted the account of " . $account->name . ". \n", 3, "/home/chorkleines/www/member/mypage/Core/account_manage.log");
-    header('Location: /member/mypage/admin/account_manage/');
+    $_SESSION['mypage_delete_user'] = "";
+    $_SESSION['mypage_account_name'] = $account->get_name();
+    error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . " deleted the account of " . $account->name . ". \n", 3, __DIR__ . "/../../Core/account_manage.log");
+    header('Location: ' . MYPAGE_ROOT . '/admin/account_manage/resign_list.php');
     exit();
 }
