@@ -1,26 +1,10 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
-
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('クエリーが失敗しました。' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
+require __DIR__ . '/../Common/init_page.php';
 
 if (isset($_POST['delete'])) {
     $token = $_POST['delete'];
 } else {
-    header('Location: /member/mypage/profile/sessions.php');
+    header('Location: ' . MYPAGE_ROOT . '/profile/sessions.php');
     exit();
 }
 
@@ -36,7 +20,7 @@ while ($row = $result->fetch_assoc()) {
     $login_platform = $row['device'];
     $login_browser = $row['browser'];
 }
-if ($user_id == $user->id) {
+if ($user_id == $USER->id) {
     $query = "DELETE FROM auto_login WHERE token = '$token'";
     $result = $mysqli->query($query);
     if (!$result) {
@@ -48,5 +32,5 @@ if ($user_id == $user->id) {
 
 $_SESSION['mypage_delete_session'] = $login_platform . ' (' . $login_browser . ') ';
 
-header('Location: /member/mypage/profile/sessions.php');
+header('Location: ' . MYPAGE_ROOT . '/profile/sessions.php');
 exit();

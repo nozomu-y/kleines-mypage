@@ -1,23 +1,8 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-include_once('/home/chorkleines/www/member/mypage/Common/head.php');
+$PAGE_NAME = "個別会計";
+include_once __DIR__ . '/../../Common/head.php';
 ?>
 
 <div class="container-fluid">
@@ -35,7 +20,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM individual_accounting_$user->id ORDER BY `date` DESC";
+                        $query = "SELECT * FROM individual_accounting_$USER->id ORDER BY `date` DESC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);
@@ -55,7 +40,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                     <tfoot>
                         <tr>
                             <th colspan="2" style="text-align:right">総計</th>
-                            <th class="text-right"><?php echo $user->get_individual_accounting_total(); ?></th>
+                            <th class="text-right"><?php echo $USER->get_individual_accounting_total(); ?></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -94,4 +79,4 @@ $script .= '</script>';
 
 
 <?php
-include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
+include_once __DIR__ . '/../../Common/foot.php';

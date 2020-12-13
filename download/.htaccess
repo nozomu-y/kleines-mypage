@@ -1,0 +1,3 @@
+<Files ~ ".(xlsx)$">
+deny from all
+</Files>

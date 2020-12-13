@@ -3,3 +3,7 @@ order allow,deny
 allow from all
 
 ErrorDocument 404 /member/mypage/404.php
+
+<Files ~ ".(log|json|xlsx)$">
+deny from all
+</Files>

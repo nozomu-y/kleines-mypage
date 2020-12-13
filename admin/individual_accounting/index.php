@@ -1,28 +1,12 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
+require __DIR__ . '/../../Common/init_page.php';
+
+if (!($USER->admin == 1 || $USER->admin == 3)) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
-
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-if (!($user->admin == 1 || $user->admin == 3)) {
-    header('Location: /member/mypage/');
-    exit();
-}
-
-include_once('/home/chorkleines/www/member/mypage/Common/head.php');
+$PAGE_NAME = "個別会計管理";
+include_once __DIR__ . '/../../Common/head.php';
 ?>
 
 <div class="container-fluid">
@@ -38,52 +22,50 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                 unset($_SESSION['mypage_individual_add_multiple']);
             }
             ?>
-            <form action="/member/mypage/admin/account_manage/change_admin.php" method="POST" id="form">
-                <div class="mb-4">
-                    <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
-                        <thead>
-                            <tr>
-                                <th class="text-nowrap">学年</th>
-                                <th class="text-nowrap">パート</th>
-                                <th class="text-nowrap">氏名</th>
-                                <th class="text-nowrap">個別会計総額</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
-                            $result = $mysqli->query($query);
-                            if (!$result) {
-                                print('Query Failed : ' . $mysqli->error);
-                                $mysqli->close();
-                                exit();
+            <div class="mb-4">
+                <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="text-nowrap">学年</th>
+                            <th class="text-nowrap">パート</th>
+                            <th class="text-nowrap">氏名</th>
+                            <th class="text-nowrap">個別会計総額</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
+                        $result = $mysqli->query($query);
+                        if (!$result) {
+                            print('Query Failed : ' . $mysqli->error);
+                            $mysqli->close();
+                            exit();
+                        }
+                        $row_cnt = $result->num_rows;
+                        while ($row = $result->fetch_assoc()) {
+                            $account = new User($row);
+                            if ($account->status == 2) {
+                                continue;
                             }
-                            $row_cnt = $result->num_rows;
-                            while ($row = $result->fetch_assoc()) {
-                                $account = new User($row);
-                                if ($account->status == 2) {
-                                    continue;
-                                }
-                                echo '<tr>';
-                                echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                                echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                                echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span><a href="detail.php?account_id=' . $account->id . '" class="text-secondary"><u>' . $account->name . '</u></a></td>';
-                                echo '<td class="text-nowrap text-right">' . $account->get_individual_accounting_total() . '</td>';
-                                echo '</tr>';
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <a class="btn btn-primary mb-4" href="/member/mypage/admin/individual_accounting/add_multiple/" role="button">一括追加</a>
-            </form>
+                            echo '<tr>';
+                            echo '<td class="text-nowrap">' . $account->grade . '</td>';
+                            echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
+                            echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span><a href="detail.php?account_id=' . $account->id . '" class="text-secondary"><u>' . $account->name . '</u></a></td>';
+                            echo '<td class="text-nowrap text-right">' . $account->get_individual_accounting_total() . '</td>';
+                            echo '</tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <a class="btn btn-primary mb-4" href="./add_multiple/" role="button">一括追加</a>
         </div>
         <div class="col-xl-3 col-sm-12">
             <div class="card shadow mb-4">
                 <div class="card-header">ログ</div>
                 <div class="card-body">
                     <p>このページで行われる操作は全てログとして残ります。</p>
-                    <a href="/member/mypage/admin/individual_accounting/individual_accounting_log.php">ログを閲覧</a>
+                    <a href="./individual_accounting_log.php">ログを閲覧</a>
                 </div>
             </div>
         </div>
@@ -136,4 +118,4 @@ $script .= '</script>';
 
 
 <?php
-include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
+include_once __DIR__ . '/../../Common/foot.php';

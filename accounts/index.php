@@ -1,23 +1,8 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-include_once('/home/chorkleines/www/member/mypage/Common/head.php');
+$PAGE_NAME = "アカウント一覧";
+include_once __DIR__ . '/../Common/head.php';
 ?>
 
 <div class="container-fluid">
@@ -336,4 +321,4 @@ $script .= '</script>';
 
 
 <?php
-include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
+include_once __DIR__ . '/../Common/foot.php';

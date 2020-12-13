@@ -1,29 +1,13 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../../../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-if (!($user->admin == 1 || $user->admin == 3)) {
-    header('Location: /member/mypage/');
+if (!($USER->admin == 1 || $USER->admin == 3)) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
 if (!isset($_POST['submit'])) {
-    header('Location: /member/mypage/admin/individual_accounting/');
+    header('Location: ' . MYPAGE_ROOT . 'admin/individual_accounting/');
     exit();
 }
 
@@ -60,11 +44,11 @@ foreach ($_POST as $key => $value) {
             $mysqli->close();
             exit();
         }
-        error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の個別会計を追加しました。（項目名：" . $name . "　日付：" . $date . "　金額：" . $price . "）\n", 3, "/home/chorkleines/www/member/mypage/Core/individual_accounting.log");
+        error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が" . $account->name . "の個別会計を追加しました。（項目名：" . $name . "　日付：" . $date . "　金額：" . $price . "）\n", 3, __DIR__ . "/../../../Core/individual_accounting.log");
     }
 }
 
 $_SESSION['mypage_individual_add_multiple'] = $name;
 
-header('Location: /member/mypage/admin/individual_accounting/');
+header('Location: ' . MYPAGE_ROOT . '/admin/individual_accounting/');
 exit();

@@ -1,31 +1,15 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-if (!($user->admin == 1 || $user->admin == 2 || $user->admin == 3 || $user->admin == 5)) {
-    header('Location: /member/mypage/');
+if (!($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3 || $USER->admin == 5)) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
 if (isset($_GET['fee_id'])) {
     $id = $_GET['fee_id'];
 } else {
-    header('Location: /member/mypage/admin/camp_accounting/');
+    header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/');
     exit();
 }
 
@@ -39,15 +23,16 @@ if (!$result) {
 $fee_list = new Fee_List($result->fetch_assoc());
 
 if ($fee_list->admin != 5) {
-    header('Location: /member/mypage/admin/camp_accounting/');
+    header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/');
     exit();
 }
 
-include_once('/home/chorkleines/www/member/mypage/Common/head.php');
+$PAGE_NAME = "合宿集金";
+include_once __DIR__ . '/../../Common/head.php';
 ?>
 
 <?php
-if ($user->admin == 1 || $user->admin == 5) {
+if ($USER->admin == 1 || $USER->admin == 5) {
 ?>
     <script>
         function getPaid(id, name, price) {
@@ -55,7 +40,7 @@ if ($user->admin == 1 || $user->admin == 5) {
             if (result) {
                 var form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '/member/mypage/admin/camp_accounting/change_status_paid.php';
+                form.action = './change_status_paid.php';
 
                 var form_fee_id = document.createElement('input');
                 form_fee_id.type = 'hidden';
@@ -87,7 +72,7 @@ if ($user->admin == 1 || $user->admin == 5) {
             if (result) {
                 var form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '/member/mypage/admin/camp_accounting/change_status_unpaid.php';
+                form.action = './change_status_unpaid.php';
 
                 var form_fee_id = document.createElement('input');
                 form_fee_id.type = 'hidden';
@@ -117,8 +102,10 @@ if ($user->admin == 1 || $user->admin == 5) {
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/camp_accounting/">合宿集金記録一覧</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><? echo $fee_list->name; ?></li>
+                    <li class="breadcrumb-item"><a href="./">合宿集金記録一覧</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <?= $fee_list->name ?>
+                    </li>
                 </ol>
             </nav>
             <?php
@@ -161,7 +148,7 @@ if ($user->admin == 1 || $user->admin == 5) {
                             <th class="text-nowrap">パート</th>
                             <th class="text-nowrap">氏名</th>
                             <?php
-                            if ($user->admin == 1 || $user->admin == 5) {
+                            if ($USER->admin == 1 || $USER->admin == 5) {
                                 echo '<th class="text-nowrap">変更</th>';
                             }
                             ?>
@@ -169,7 +156,7 @@ if ($user->admin == 1 || $user->admin == 5) {
                             <th class="text-nowrap">提出日時</th>
                             <th class="text-nowrap">金額</th>
                             <?php
-                            if ($user->admin == 1 || $user->admin == 5) {
+                            if ($USER->admin == 1 || $USER->admin == 5) {
                                 echo '<th class="text-nowrap">編集</th>';
                             }
                             ?>
@@ -212,13 +199,13 @@ if ($user->admin == 1 || $user->admin == 5) {
                                 echo '<td class="text-nowrap">' . $account->grade . '</td>';
                                 echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
                                 echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                                if ($user->admin == 1 || $user->admin == 5) {
+                                if ($USER->admin == 1 || $USER->admin == 5) {
                                     echo '<td class="text-nowrap"><input type="button" id="paid_' . $id_u . '" name="paid" class="btn btn-secondary btn-sm" value="既納" Onclick="getPaid(\'' . $account->id . '\',\'' . $account->name . '\',\'' . $fee->price . '\');" ' . $disabled_paid . '> <input type="button" id="unpaid_' . $account->id . '" name="unpaid" class="btn btn-secondary btn-sm" value="未納" Onclick="getUnpaid(\'' . $account->id . '\',\'' . $account->name . '\');" ' . $disabled_unpaid . '></td>';
                                 }
                                 echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
                                 echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
                                 echo '<td class="text-nowrap text-right">' . $fee->get_price() . '</td>';
-                                if ($user->admin == 1 || $user->admin == 5) {
+                                if ($USER->admin == 1 || $USER->admin == 5) {
                                     echo '<td class="text-nowrap"><a href="./edit.php?id=' . $account->id . '&fee_id=' . $fee_list->id . '" class="text-secondary"><u>編集</u></a></td>';
                                 }
                                 echo '</tr>';
@@ -247,13 +234,13 @@ if ($user->admin == 1 || $user->admin == 5) {
                 </div>
             </div>
             <?php
-            if ($user->admin == 1 || $user->admin == 5) {
+            if ($USER->admin == 1 || $USER->admin == 5) {
             ?>
                 <form method="post">
                     <div class="list-group shadow mb-4">
-                        <a href="/member/mypage/admin/camp_accounting/add_fee_list/edit.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
-                        <a href="/member/mypage/admin/camp_accounting/add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金対象者の選択</a>
-                        <button type="submit" name="delete" formaction="/member/mypage/admin/camp_accounting/delete_fee_list.php" class="list-group-item list-group-item-action text-danger" value="<?php echo $fee_list->id ?>" Onclick="return confirm('集金リスト「<?php echo $fee_list->name; ?>」を削除しますか？\n削除した場合、関連する全ての集金記録が削除されます。');">集金リストの削除</button>
+                        <a href="./add_fee_list/edit.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
+                        <a href="./add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金対象者の選択</a>
+                        <button type="submit" name="delete" formaction="./delete_fee_list.php" class="list-group-item list-group-item-action text-danger" value="<?php echo $fee_list->id ?>" Onclick="return confirm('集金リスト「<?php echo $fee_list->name; ?>」を削除しますか？\n削除した場合、関連する全ての集金記録が削除されます。');">集金リストの削除</button>
                     </div>
                 </form>
                 <div class="card shadow mb-4">
@@ -273,7 +260,7 @@ if ($user->admin == 1 || $user->admin == 5) {
 
 <?php
 $script = '<script>';
-if ($user->admin == 1 || $user->admin == 5) {
+if ($USER->admin == 1 || $USER->admin == 5) {
     $script .= '$(document).ready(function() {
     $("#accountingList").DataTable({
         "language": {
@@ -536,4 +523,4 @@ $script .= '</script>';
 
 
 <?php
-include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
+include_once __DIR__ . '/../../Common/foot.php';

@@ -1,15 +1,24 @@
 <?php
 ob_start();
 session_start();
-if (isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/');
+
+require __DIR__ . '/../Common/dbconnect.php';
+require __DIR__ . '/../Class/User.php';
+require __DIR__ . '/../Common/function.php';
+
+if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // if current branch is not master
+    $maintenance = true;
+} else {
+    $maintenance = false;
+}
+
+if (isset($_SESSION['mypage_email']) && !$maintenance) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-
-if (!isset($_GET['token'])) {
-    header('Location: /member/mypage/');
+if ($maintenance) {
+    header('Location: ' . MYPAGE_ROOT . '/login');
     exit();
 }
 
@@ -29,16 +38,16 @@ if (!$result) {
 $row_cnt = $result->num_rows;
 if ($row_cnt == 0) {
     $_SESSION['mypage_token_expired'] = "";
-    header('Location: /member/mypage/signup/');
+    header('Location: ' . MYPAGE_ROOT . '/signup');
     exit();
 }
-$account = new User($result->fetch_assoc());
+$USER = new User($result->fetch_assoc());
 
-$validation_time = strtotime($account->validation_time);
+$validation_time = strtotime($USER->validation_time);
 $time_now = strtotime(date("Y-m-d H:i:s"));
-if ($time_now - $validation_time > 86400) {
+if ($time_now - $validation_time > 24 * 60 * 60) {
     $_SESSION['mypage_token_expired'] = "";
-    header('Location: /member/mypage/signup/');
+    header('Location: ' . MYPAGE_ROOT . '/signup');
     exit();
 }
 ?>
@@ -55,9 +64,9 @@ if ($time_now - $validation_time > 86400) {
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/sb-admin-2.min.css">
     <!-- JS -->
-    <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/js/sb-admin-2.min.js">
 </head>
 
 <body class="bg-gradient-primary">
@@ -78,7 +87,7 @@ if ($time_now - $validation_time > 86400) {
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">パスワードの設定</h1>
-                                        <p><?php echo $account->name ?>さん。パスワードを英数字8文字以上で入力してください。</p>
+                                        <p><?php echo $USER->name ?>さん。パスワードを英数字8文字以上で入力してください。</p>
                                     </div>
                                     <form class="user" method="POST" action="./check_password.php">
                                         <div class="form-group">
@@ -97,7 +106,7 @@ if ($time_now - $validation_time > 86400) {
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="/member/mypage/login/">ログインはこちら</a>
+                                        <a class="small" href="<?= MYPAGE_ROOT ?>/login/">ログインはこちら</a>
                                     </div>
                                 </div>
                             </div>
@@ -113,14 +122,14 @@ if ($time_now - $validation_time > 86400) {
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="/member/mypage/Resources/js/jquery.min.js"></script>
-    <script src="/member/mypage/Resources/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/jquery.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="/member/mypage/Resources/js/jquery.easing.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/member/mypage/Resources/js/sb-admin-2.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/sb-admin-2.min.js"></script>
 
 </body>
 

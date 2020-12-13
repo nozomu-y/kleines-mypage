@@ -1,29 +1,13 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
-    exit();
-}
+require __DIR__ . '/../../Common/init_page.php';
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-if (!($user->admin == 1 || $user->admin == 5)) {
-    header('Location: /member/mypage/');
+if (!($USER->admin == 1 || $USER->admin == 5)) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
 if (!isset($_POST['delete'])) {
-    header('Location: /member/mypage/admin/camp_accounting/');
+    header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/');
     exit();
 }
 
@@ -38,7 +22,7 @@ if (!$result) {
 $fee_list = new Fee_List($result->fetch_assoc());
 
 if ($fee_list->admin != 5) {
-    header('Location: /member/mypage/admin/camp_accounting/');
+    header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/');
     exit();
 }
 
@@ -81,6 +65,6 @@ if (!$result) {
 }
 
 // make log file
-error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が集金リスト「" . $fee_list->name . "」を削除しました。\n", 3, "/home/chorkleines/www/member/mypage/Core/camp_accounting.log");
-header('Location: /member/mypage/admin/camp_accounting/');
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が集金リスト「" . $fee_list->name . "」を削除しました。\n", 3, __DIR__ . "/../../Core/camp_accounting.log");
+header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/');
 exit();

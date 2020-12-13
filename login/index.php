@@ -2,30 +2,32 @@
 ob_start();
 session_start();
 
-require '../Common/function.php';
-if (strcmp(getGitBranch(), "master")) {  // if current branch is not master
+require __DIR__.'/../Common/dbconnect.php';
+require __DIR__ . '/../Class/User.php';
+require __DIR__ .'/../Common/function.php';
+
+if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // if current branch is not master
     $maintenance = true;
 } else {
     $maintenance = false;
 }
 
 if (isset($_SESSION['mypage_email']) && !$maintenance) {
-    header('Location: /member/mypage/');
+    header('Location: '.MYPAGE_ROOT);
     exit();
 }
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
 if (isset($_SESSION['mypage_auth_error'])) {
     if ($_SESSION['mypage_auth_error'] == "wrong-email") {
         $email_invalid = 'is-invalid';
         $email_message = "メールアドレスが登録されていません";
-    } else if (strpos($_SESSION['mypage_auth_error'], "wrong-password") !== false) {
+    } elseif (strpos($_SESSION['mypage_auth_error'], "wrong-password") !== false) {
         echo $_SESSION['mypage_auth_error'];
         $login_failure = explode("_", $_SESSION['mypage_auth_error'])[1];
         $password_invalid = 'is-invalid';
         $password_message = "パスワードが間違っています。";
         $failure_message = "ログインに" . $login_failure . "回失敗しています。10回失敗するとアカウントがロックされます。";
-    } else if ($_SESSION['mypage_auth_error'] == "login-failure") {
+    } elseif ($_SESSION['mypage_auth_error'] == "login-failure") {
         $email_invalid = 'is-invalid';
         $password_invalid = 'is-invalid';
         $failure_message = "ログインに10回連続で失敗しています。パスワードをリセットしてください。";
@@ -78,7 +80,7 @@ if (isset($_COOKIE['mypage_auto_login'])) {
         // expiration time
         $expiration_time = 3600 * 24 * 30; // token valid for 30 days
         // set cookie
-        setcookie("mypage_auto_login", $token, time() + $expiration_time, "/member/mypage/", "chorkleines.com", false, true);
+        setcookie("mypage_auto_login", $token, time() + $expiration_time, MYPAGE_ROOT, WEB_DOMAIN, false, true);
         // check device(platform) and browser
         require '../vendor/autoload.php';
         $ua_info = parse_user_agent();
@@ -100,14 +102,13 @@ if (isset($_COOKIE['mypage_auto_login'])) {
             session_start();
             $_SESSION['mypage_email'] = $user->email;
             // create log
-            error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in using remember me. \n", 3, "/home/chorkleines/www/member/mypage/Core/auth.log");
-            header('Location: /member/mypage/');
+            error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in using remember me. \n", 3, __DIR__."/../Core/auth.log");
+            header('Location: '.MYPAGE_ROOT);
             exit();
         }
     }
 }
 
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
 
 ?>
 
@@ -123,10 +124,9 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <!-- CSS -->
-    <!-- <link rel="stylesheet" href="/member/mypage/Resources/css/sb-admin-2.min.css"> -->
-    <link rel="stylesheet" href="/member/mypage/Resources/css/ck-sb-admin-2.css">
+    <link rel="stylesheet" href="<?=MYPAGE_ROOT?>/Resources/css/sb-admin-2.min.css">
     <!-- JS -->
-    <link rel="stylesheet" href="/member/mypage/Resources/js/sb-admin-2.min.js">
+    <link rel="stylesheet" href="<?=MYPAGE_ROOT?>/Resources/js/sb-admin-2.min.js">
 </head>
 
 <body class="bg-gradient-primary">
@@ -179,7 +179,7 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
                                         </form>
                                         <hr>
                                         <div class="text-center">
-                                            <a class="small" href="/member/mypage/signup/">パスワードの発行</a>
+                                        <a class="small" href="<?=MYPAGE_ROOT?>/signup/">パスワードの発行</a>
                                         </div>
                                     <?php
                                     } else { // maintenance mode
@@ -219,14 +219,14 @@ require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="/member/mypage/Resources/js/jquery.min.js"></script>
-    <script src="/member/mypage/Resources/js/bootstrap.bundle.min.js"></script>
+    <script src="<?=MYPAGE_ROOT?>/Resources/js/jquery.min.js"></script>
+    <script src="<?=MYPAGE_ROOT?>/Resources/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="/member/mypage/Resources/js/jquery.easing.min.js"></script>
+    <script src="<?=MYPAGE_ROOT?>/Resources/js/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/member/mypage/Resources/js/sb-admin-2.min.js"></script>
+    <script src="<?=MYPAGE_ROOT?>/Resources/js/sb-admin-2.min.js"></script>
 
 </body>
 

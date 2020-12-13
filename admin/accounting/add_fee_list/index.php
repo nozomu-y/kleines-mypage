@@ -1,28 +1,12 @@
 <?php
-ob_start();
-session_start();
-if (!isset($_SESSION['mypage_email'])) {
-    header('Location: /member/mypage/login/');
+require __DIR__ . '/../../../Common/init_page.php';
+
+if (!($USER->admin == 1 || $USER->admin == 3)) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
-
-require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$user = new User($result->fetch_assoc());
-
-if (!($user->admin == 1 || $user->admin == 3)) {
-    header('Location: /member/mypage/');
-    exit();
-}
-
-include_once('/home/chorkleines/www/member/mypage/Common/head.php');
+$PAGE_NAME = "集金リスト";
+include_once __DIR__ . '/../../../Common/head.php';
 ?>
 
 <div class="container-fluid">
@@ -31,7 +15,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/member/mypage/admin/accounting/">集金リスト一覧</a></li>
+                    <li class="breadcrumb-item"><a href="../">集金リスト一覧</a></li>
                     <li class="breadcrumb-item active" aria-current="page">集金リストの追加</li>
                 </ol>
             </nav>
@@ -52,7 +36,7 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
                         <small id="nameHelp" class="form-text text-muted">設定後、個別に金額を変更することも可能です。</small>
                     </div>
                     <button type="submit" class="btn btn-primary" name="submit">リストを追加</button>
-                    <a class="btn btn-secondary" href="/member/mypage/admin/accounting/" role="button">キャンセル</a>
+                    <a class="btn btn-secondary" href="../" role="button">キャンセル</a>
                 </form>
             </div>
         </div>
@@ -61,4 +45,4 @@ include_once('/home/chorkleines/www/member/mypage/Common/head.php');
 
 
 <?php
-include_once('/home/chorkleines/www/member/mypage/Common/foot.php');
+include_once __DIR__ . '/../../../Common/foot.php';
