@@ -1,6 +1,6 @@
 <html>
 <head>
-<title><?=$pageTitle ?? 'no title'?></title>
+<title><?=$pageTitle.' | '.SITE_NAME ?? 'no title | '.SITE_NAME?></title>
 <link rel="stylesheet\" href="<?=SERVER."/views/css/bootstrap.min.css"?>">
 <link rel="stylesheet" href="<?=SERVER."/views/css/$applyStyle.css"?>"> <!-- 読み込み先に応じて取得するスタイルシートを変更する -->
 <link rel="stylesheet" href="<?=SERVER."/views/css/common.css"?>">
@@ -30,9 +30,12 @@
       </div>
     </div>
     <div id="header-title">
-    <div id="pageTitle">header title</div>
+    <div id="pageTitle">TicketSystem</div>
     </div>
     <div id="header-account">
     <p>header account</p>
     </div>
   </div>
+  <div id="main">
+  <div class="container">
+    <h1><?=$pageTitle?></h1>

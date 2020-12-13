@@ -6,5 +6,5 @@
   <div class="menu-item"><p><a href="">menu 2-3</a></p></div>
   <div class="menu-item"><p><a href="">menu 2-4</a></p></div>
 </div>
-<div class="menu-item"><p><a href="<?=SERVER."views/everyone/index.php"?>">団員用ページへ</a></p></div>
-<div class="menu-item"><p><a href="<?=SERVER."views/private/index.php"?>">渉外用ページへ</a></p></div>
+<div class="menu-item"><p><a href="<?=SERVER."/views/everyone/index.php"?>">団員用ページへ</a></p></div>
+<div class="menu-item"><p><a href="<?=SERVER."/views/private/index.php"?>">渉外用ページへ</a></p></div>
