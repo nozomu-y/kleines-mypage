@@ -9,14 +9,10 @@
   'use strict';
   $('.needs-validation #btn-confirm').on('click',function(event){
     console.log("this time");
-    $('form .needs-validation').validate({
+    /*$('form .needs-validation').validate({
       errorElement: "span",
       errorClass: "invalid-message",
       rules: {
-        /**
-         * email,url,date,number,equalTo(selecter),maxlength,minlength,max,min,step[](設定値の倍数か),renge[](範囲内か)
-         * 
-         */
         email: {
           email: true,
           //minlength,maxlength,date(日付かどうか),number(整数か)
@@ -49,7 +45,7 @@
         element.before(err);
       }
         //lname,fname,lnameKana,fnameKana,
-    });
+    });*/
     
 
     var forms = document.getElementsByClassName('needs-validation');  //formsは配列(HTMLコレクション)となる

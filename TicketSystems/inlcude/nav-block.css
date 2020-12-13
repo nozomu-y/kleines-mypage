@@ -1,0 +1,7 @@
+.nav-block {
+  color: #FFF;
+  border-top: solid .5px rgba(255, 255, 255, 0.85);
+  border-bottom: solid .5px rgba(255, 255, 255, 0.85);
+  text-align: left;
+  padding: 1rem;
+}

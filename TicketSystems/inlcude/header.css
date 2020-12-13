@@ -1,0 +1,38 @@
+#header{
+  height:2rem;
+  text-align:left;
+  padding:.5rem;
+  padding-left:20px;
+  background-color: #2c3e50;
+  width: 100%;
+  white-space:nowrap;
+  
+}
+
+#header-navbar {
+  display: inline-block;
+  width: 30px;
+  vertical-align: bottom;
+  margin-bottom:4px;
+}
+
+#header-title {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+
+#pageTitle{
+  color: #FFF;
+  font-size: 24px;
+}
+
+#header-account {
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 12px;
+  color: #ffffff;
+  position: relative;
+  bottom: 4px;
+  left: 20px;
+}
