@@ -1,4 +1,5 @@
 <?php
+  //require_once($_SERVER['DOCUMENT_ROOT']."/TicketSystems/kleines-mypage/Common/init_page.php");
   require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
   $pageTitle = "団員用TOP";
   $applyStyle = "everyone";
