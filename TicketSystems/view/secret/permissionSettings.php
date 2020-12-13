@@ -30,6 +30,19 @@
     exit();
   }
   
+  //最高学年、最低学年を取得(2000年問題)
+	$stmt = $mysqli->prepare("SELECT max(grade),min(grade) FROM members");
+	$stmt->execute();
+	$stmt->bind_result($Ma,$mi);
+	$result = $stmt->fetch();
+	if($result == NULL){
+    echo "<!--no grade data in members-->";
+    exit();
+	}
+	$newestGrade = $Ma;	//1年生
+	$oldestGrade = $mi;	//最上級生
+  $stmt->close();
+
   //団員検索
   $sql = "SELECT personID,part,grade,last_name,first_name,permission FROM members LEFT JOIN tp_Permissions USING(personID) ORDER BY personID";
   $result = $mysqli->query($sql);
@@ -65,6 +78,47 @@
 <p>※この設定は後から変更できます</p>
 <br>
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+  <h3>操作を選択</h3>
+  <div class="form-row">
+    <div class="col-4">
+      <select name="permission" class="form-control" id="select-permission">
+        <option value="0">権限を削除</option>
+        <option value="11">チーフ権限(11)を付与</option>
+        <option value="12">渉外権限(12)を付与</option>
+      </select>
+    </div>
+  </div>
+  <h3>フィルタリング</h3>
+  <p>パート</p>
+  <div class="row">
+    <button class="btn btn-secondary" name="filter-part-clear" id="filter-part-clear">Clear</button>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-outline-secondary">
+        <input type="checkbox" name="filter-part[]" value="S" autocomplete="off">Sop
+      </label>
+      <label class="btn btn-outline-secondary">
+        <input type="checkbox" name="filter-part[]" value="A" autocomplete="off">Alt
+      </label>
+      <label class="btn btn-outline-secondary">
+        <input type="checkbox" name="filter-part[]" value="T" autocomplete="off">Ten
+      </label>
+      <label class="btn btn-outline-secondary">
+        <input type="checkbox" name="filter-part[]" value="B" autocomplete="off">Bas
+      </label>
+    </div>
+  </div>
+  <p>学年</p>
+  <div class="row">
+    <button class="btn btn-secondary" name="filter-grade-clear" id="filter-grade-clear">Clear</button>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <?php for($grd=$newestGrade;$grd>=$oldestGrade;$grd--): ?>
+      <label class="btn btn-outline-secondary">
+        <input type="checkbox" name="filter-grade[]" value="<?=$grd?>" autocomplete="off"><?=$grd?>
+      </label>
+      <?php endfor; ?>
+    </div>
+  </div>
+  <h3>人を選択</h3>
   <div class="table-responsive">
     <table class='table text-nowrap table-striped'>
       <tr>
@@ -101,15 +155,7 @@
     </table>
   </div>
   <input type="hidden" name="submit" value="permission">
-  <div class="form-row">
-    <div class="col-4">
-      <select name="permission" class="form-control" id="select-permission">
-        <option value="0">権限を削除</option>
-        <option value="11">チーフ権限(11)を付与</option>
-        <option value="12">渉外権限(12)を付与</option>
-      </select>
-    </div>
-  </div>
+
   <button type="submit" class="btn btn-primary">権限を更新</button>
 </form>
 <a class="btn btn-success " href="finishSettings.php" role="button">設定完了</a>
