@@ -1,6 +1,6 @@
 <?php
   require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
-  $pageTitle = "団員用TOP";
+  $pageTitle = "渉外チーフ用TOP";
   $applyStyle = "secret";
   require_once(ROOT.'/include/header.php');
 ?>
