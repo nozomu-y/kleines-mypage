@@ -13,7 +13,21 @@
 <div id="wrapper">
   <div id="header" class="container-fruid">
     <div id="header-navbar">
-      <?php require_once(ROOT."/include/navbar/$applyStyle.php"); ?>
+      <div id="nav-drawer">
+        <input id="nav-input" type="checkbox" class="nav-unshown">
+        <label id="nav-open" for="nav-input"><span></span></label>
+        <label id="nav-close" class="nav-unshown" for="nav-input"></label>
+        <div id="nav-content">
+          <div id="nav-header">
+            <label id="nav-cross" for="nav-input">
+              <span id="cross1"></span><span id="cross2"></span>
+            </label>
+          </div>
+          <div id="nav-menu">
+            <?php require_once(ROOT."/include/navbar/$applyStyle.php"); ?>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="header-title">
     <div id="pageTitle">header title</div>
