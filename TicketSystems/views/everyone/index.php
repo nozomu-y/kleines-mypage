@@ -1,8 +1,9 @@
 <?php
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
-  $pageTitle = "index";
+  //require_once($_SERVER["DOCUMENT_ROOT"].'/TicketSystems/kleines-mypage/Common/init_page.php');
+  include_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
+  $pageTitle = "団員用TOP";
   $applyStyle = "everyone";
-  $return = require_once(ROOT.'/include/header.php');
+  require_once(ROOT.'/include/header.php');
 ?>
 <div id="main">
   <div class="container">
@@ -12,4 +13,4 @@
     <p class="tx">sub title</p>
   </div>
 </div>
-<?php $return = require_once(ROOT.'/include/footer.php'); ?>
+<?php require_once(ROOT.'/include/footer.php'); ?>
