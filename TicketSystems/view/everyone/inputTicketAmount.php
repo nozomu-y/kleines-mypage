@@ -92,7 +92,8 @@
     </div>
   </div>
 </form>
-<script type="text/javascript" src="<?=SERVER?>/view/js/formValidation.js"></script>
+<script type="text/javascript" src="<?=SERVER?>/view/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<?=SERVER?>/view/js/validate-confirm.js"></script>
 <p><a href="index.php">トップ画面に戻る</a></p>
 <?php
 	require_once(ROOT.'/view/footer.php');
