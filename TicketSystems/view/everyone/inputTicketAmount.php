@@ -41,10 +41,7 @@
     <input type="hidden" name="personID" value="<?=h($_SESSION['mypage_personID'])?>">
 		<input type="hidden" name="orderType" value="<?=h($_GET['orderType'])?>">
 	</div>
-  <button type="button" id="btn-confirm" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">
-    入力確認
-    <!--ここでformValidationが発動するようにする-->
-  </button>
+  <button type="button" id="btn-confirm" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">入力確認</button>
   <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
