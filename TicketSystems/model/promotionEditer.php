@@ -6,7 +6,7 @@
   startSession();
   $mysqli = dbconnect();
   
-  $groupName = $_POST['groupName'];
+  $groupName = h($_POST['groupName']);
   $orderID = $_POST['orderID'];
   $date_determined = $_POST['date_determined'];
   $year = $_POST['year'];

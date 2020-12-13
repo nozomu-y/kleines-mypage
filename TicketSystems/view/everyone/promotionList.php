@@ -57,11 +57,11 @@
 		<?php foreach($rows as $row): ?>
 		<tr>
 			<?php //<td class="personID"><?php echo $row['personID'];?\> </td> ?>
-			<td class="grade"><?php echo $row['grade']; ?></td>
-			<td class="part"><?php echo $row['part']; ?></td>
-			<td class="last_name"><?php echo $row['last_name']; ?></td>
-			<td class="first_name"><?php echo $row['first_name']; ?></td>
-			<td class="groupName"><?php echo $row['groupName']; ?></td>
+			<td class="grade"><?php echo h($row['grade']); ?></td>
+			<td class="part"><?php echo h($row['part']); ?></td>
+			<td class="last_name"><?php echo h($row['last_name']); ?></td>
+			<td class="first_name"><?php echo h($row['first_name']); ?></td>
+			<td class="groupName"><?php echo h($row['groupName']); ?></td>
 			<td class="date">
 				<?php 
 					if($row['date']!=NULL){

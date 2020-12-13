@@ -50,7 +50,7 @@
     case 4: //want_promotion : tp_Promotions tableに挿入
       $orderID = $mysqli->insert_id;  //orderIDを取得
       echo "<!--orderID=$orderID-->";
-      $groupName = $_POST['groupName'];
+      $groupName = h($_POST['groupName']);
       if($_POST['date_determined']==1){
         echo "<!-- date is determined -->";
         $year = $_POST['year'];
