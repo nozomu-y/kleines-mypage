@@ -1,5 +1,5 @@
 body {
-  background: rgb(17, 10, 43);
+  background: var(--bg-color);
   margin: 0;
 }
 

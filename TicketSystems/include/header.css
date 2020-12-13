@@ -3,7 +3,7 @@
   text-align:left;
   padding:.5rem;
   padding-left:20px;
-  background-color: #2c3e50;
+  background-color: var(--header-color);
   width: 100%;
   white-space:nowrap;
   
@@ -101,7 +101,7 @@
   width: 100%;
   max-width: 330px;
   height: 100%;
-  background: #23313f;
+  background: var(--navbar-color);
   transition: .25s ease-in-out;
   -webkit-transform: translateX(-105%);
   transform: translateX(-105%);
