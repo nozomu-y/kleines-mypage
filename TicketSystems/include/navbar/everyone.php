@@ -10,4 +10,4 @@
   <div class="menu-item"><p class="nav-link">配布済座席確認(指定席限定)</p><a href=""></a></div>
   <div class="menu-item"><p class="nav-link">自分のチケット状況・履歴確認</p><a href=""></a></div>
 </div>
-<div class="menu-item"><p class="nav-link">渉外用ページへ</p><a href="<?=SERVER."/views/private/index.php"?>"></a></div>
+<div class="menu-item"><p class="nav-link">渉外用ページへ</p><a href="<?=SERVER."/pages/private/index.php"?>"></a></div>

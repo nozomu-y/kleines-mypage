@@ -19,5 +19,5 @@
   <div class="menu-item"><p>団員リストを最新にする</p><a href=""></a></div>
 
 </div>
-<div class="menu-item"><p class="nav-link">団員用ページへ</p><a href="<?=SERVER."/views/everyone/index.php"?>"></a></div>
-<div class="menu-item"><p class="nav-link">渉外チーフ用ページへ</p><a href="<?=SERVER."/views/secret/index.php"?>"></a></div>
+<div class="menu-item"><p class="nav-link">団員用ページへ</p><a href="<?=SERVER."/pages/everyone/index.php"?>"></a></div>
+<div class="menu-item"><p class="nav-link">渉外チーフ用ページへ</p><a href="<?=SERVER."/pages/secret/index.php"?>"></a></div>
