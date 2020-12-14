@@ -7,9 +7,9 @@
 <html>
 <head>
 <title><?=SITE_NAME." - ".$pageTitle?></title>
-<link rel="stylesheet\" href="<?=SERVER."/views/css/bootstrap.min.css"?>">
-<link rel="stylesheet" href="<?=SERVER."/views/css/$applyStyle.css"?>"> <!-- 読み込み先に応じて取得するスタイルシートを変更する -->
-<link rel="stylesheet" href="<?=SERVER."/views/css/common.css"?>">
+<link rel="stylesheet\" href="<?=SERVER."/pages/css/bootstrap.min.css"?>">
+<link rel="stylesheet" href="<?=SERVER."/pages/css/$applyStyle.css"?>"> <!-- 読み込み先に応じて取得するスタイルシートを変更する -->
+<link rel="stylesheet" href="<?=SERVER."/pages/css/common.css"?>">
 <link rel="stylesheet" href="<?=SERVER."/include/header.css"?>">
 <link rel="stylesheet" href="<?=SERVER."/include/footer.css"?>">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -36,7 +36,7 @@
       </div>
     </div>
     <div id="header-title">
-    <div id="pageTitle">TicketSystem</div>
+    <div id="pageTitle">CK_Ticket</div>
     </div>
     <div id="header-account">
     <p>header account</p>
