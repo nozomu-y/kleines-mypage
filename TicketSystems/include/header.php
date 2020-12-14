@@ -1,6 +1,12 @@
+<?php
+  if($pageTitle == ""){
+    $pageTitle = "no title";
+  }
+?>
+
 <html>
 <head>
-<title><?=$pageTitle.' | '.SITE_NAME ?? 'no title | '.SITE_NAME?></title>
+<title><?=SITE_NAME." - ".$pageTitle?></title>
 <link rel="stylesheet\" href="<?=SERVER."/views/css/bootstrap.min.css"?>">
 <link rel="stylesheet" href="<?=SERVER."/views/css/$applyStyle.css"?>"> <!-- 読み込み先に応じて取得するスタイルシートを変更する -->
 <link rel="stylesheet" href="<?=SERVER."/views/css/common.css"?>">
