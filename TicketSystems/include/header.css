@@ -22,9 +22,23 @@
   vertical-align: bottom;
 }
 
-#pageTitle{
+#page-title {
   color: #FFF;
   font-size: 24px;
+}
+
+#page-title a:visited, #page-title a:link {
+  color: #FFF;
+  text-decoration: none;
+}
+
+#page-title a:hover {
+  color: var(--header-link-hover);
+  transition: 0.3s;
+}
+
+#page-title a:active {
+  color: var(--header-link-active);
 }
 
 #header-account {
