@@ -5,7 +5,7 @@ body {
 
 /* 文字に関するスタイル */
 .tx, .tx-sm{
-  font-family: 'YuGothic';
+  font-family: sans-serif;
 }
 h1, h2{
   display: block;
