@@ -44,4 +44,9 @@
   </div>
   <div id="main">
   <div class="container">
+    <?php if($_SESSION['tp_status'] != null): ?>
+    <div class="status-area">
+      <?= $_SESSION['tp_status']; ?>
+    </div>
+    <?php endif; ?>
     <h1><?=$pageTitle?></h1>
