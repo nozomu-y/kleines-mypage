@@ -144,23 +144,26 @@
   white-space:nowrap;
 }
 
-#cross1, #cross2{
-  position: absolute;
-  top: 30px;
+.cross1, .cross2{
   height: 2px;  /*線の太さ*/
   width: 22px;  /*線の長さ*/
   border-radius: 3px;
-  background: rgb(222, 227, 255);
   display: block;
   content: '';
   cursor: pointer;
 }
 
-#cross1{
+#nav-header .cross1, #nav-header .cross2 {
+  position: absolute;
+  top: 30px;
+  background: rgb(222, 227, 255);
+}
+
+.cross1{
   transform: rotate(45deg);
 }
 
-#cross2 {
+.cross2 {
   transform: rotate(-45deg);
 }
 
