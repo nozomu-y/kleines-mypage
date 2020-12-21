@@ -8,7 +8,6 @@
   <div class="menu-item"><p class="nav-link">情宣終了者からチケットを回収する</p><a href=""></a></div>
   <div class="menu-item"><p class="nav-link">本日のチケット受け取り枚数確認</p><a href=""></a></div>
 </div>
-<div class="menu-spacer"></div>
 <div class="menu-block">
   <input type="checkbox" id="menu-bar02" class="menu-bar">
   <label for="menu-bar02">確認系メニュー</label>
