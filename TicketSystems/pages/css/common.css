@@ -12,9 +12,8 @@ h1, h2{
   width: 90%;
   padding-top: 1rem;
   padding-bottom: .2rem;
-  margin-bottom: .3rem;
   margin-block-start: 0;
-  margin-block-end: 0;
+  margin-block-end: .2rem;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   border-bottom: solid 1px #727272;
