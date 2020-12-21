@@ -199,11 +199,11 @@
 
 .menu-item a {
   position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    text-indent:-999px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-indent:-999px;
 }
 
 .menu-block .menu-item {
@@ -214,6 +214,11 @@
   transition: .2s;
   visibility: hidden;
   font-size: 14px;
+}
+
+.menu-spacer {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+  height: .3rem;
 }
 
 .nav-link {
