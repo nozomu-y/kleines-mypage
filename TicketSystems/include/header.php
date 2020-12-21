@@ -7,14 +7,14 @@
 <html>
 <head>
 <title><?=SITE_NAME." - ".$pageTitle?></title>
-<link rel="stylesheet\" href="<?=SERVER."/pages/css/bootstrap.min.css"?>">
 <link rel="stylesheet" href="<?=SERVER."/pages/css/$applyStyle.css"?>"> <!-- 読み込み先に応じて取得するスタイルシートを変更する -->
 <link rel="stylesheet" href="<?=SERVER."/pages/css/common.css"?>">
 <link rel="stylesheet" href="<?=SERVER."/include/header.css"?>">
 <link rel="stylesheet" href="<?=SERVER."/include/footer.css"?>">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+<!-- import js files -->
+<script src="<?=SERVER?>/pages/js/jquery-3.5.1.min.js"></script>
 <!-- header & navbar -->
 <div id="wrapper">
   <div id="header" class="container-fruid">
@@ -26,7 +26,7 @@
         <div id="nav-content">
           <div id="nav-header">
             <label id="nav-cross" for="nav-input">
-              <span id="cross1"></span><span id="cross2"></span>
+              <span class="cross1"></span><span class="cross2"></span>
             </label>
           </div>
           <div id="nav-menu">
