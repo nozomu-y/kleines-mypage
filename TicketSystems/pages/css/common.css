@@ -143,6 +143,14 @@ a:visited {
   border-color: #52585e;
 }
 
+/* フォームのバリデーションに関するCSS */
+.required-feedback, .format-feedback {
+  display: none;
+  /*color: #28a7a7;*/
+  color: #f14343;
+  font-size: 12px;
+}
+
 /* モーダルに関するCSS */
 .modal {
   display: none;
