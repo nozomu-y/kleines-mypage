@@ -13,14 +13,22 @@
 <p class="tx"><?=$message?></p>
 <form method="post" action="#" class="needs-validation" novalidate>
   <div class="form-group">
-    <input type="text" class="form-text" name="amount" id="amount" placeholder="枚数を入力してください" required>
-    <div class="invalid-feedback"><?php //枚数を入力してください ?></div>
+    <input type="text" class="form-text js-form-item" name="amount" id="amount" placeholder="枚数を入力してください" required>
+    <div class="required-feedback">枚数を入力してください</div>
+    <div class="format-feedback">半角数字のみ、0以上の整数で入力してください</div>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-text js-form-item" name="name" id="name" placeholder="あなたの名前を入力してください" required>
+    <div class="required-feedback">名前を入力してください</div>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-text js-form-item" name="exp" id="exp" placeholder="備考欄">
   </div>
   <div class="form-group">
     <?php /*<input type="hidden" name="personID" value="<?=h($_SESSION['mypage_personID'])?>" */ ?>
-    <input type="hidden" name="orderTypeID" value="<?=$orderTypeID?>">
+    <input type="hidden" class="js-form-item" name="orderTypeID" value="<?=$orderTypeID?>">
   </div>
-  <button class="btn btn-primary js-modal-open" data-target="confirmModal">入力確認</button>
+  <button class="btn btn-primary js-modal-open js-form-confirm" data-target="confirmModal">入力確認</button>
   <div class="modal js-modal" id="confirmModal">
     <div class="modal-bg js-modal-close"></div>
     <div class="modal-content">
@@ -28,16 +36,14 @@
         <span class="modal-cross js-modal-close"><span class="cross1"></span><span class="cross2"></span></span>
       </div>
       <div class="modal-main">
-        <p class="tx">
-          この内容で送信してもよろしいですか？<br>
-          名前：???<br>
-          枚数：???<br>
-          オーダー種別：<?=$orderType?>
-        </p>
+        <p class="tx">この内容で送信してもよろしいですか？</p>
+          <div class="js-form-value name">名前 <span>XXX</span></div>
+          <div class="js-form-value amount">枚数 <span>XXX</span></div>
+          <div>オーダー種別：<?=$orderType?></div>
       </div>
       <div class="modal-footer">
         <div class="modal-left">
-          <button class="btn btn-secondary">戻る</button>
+          <button class="btn btn-secondary js-modal-close">戻る</button>
         </div>
         <div class="modal-right">
           <button class="btn btn-primary">送信</button>
@@ -46,7 +52,6 @@
     </div>
   </div>
 </form>
-<!-- validationのjsをおく-->
-
-<script src="<?=SERVER?>/pages/js/modal.js"></script>
+<!-- import js files-->
+<script src="<?=SERVER?>/pages/js/form-modal.js"></script>
 <?php require_once(ROOT.'/include/footer.php'); ?>
