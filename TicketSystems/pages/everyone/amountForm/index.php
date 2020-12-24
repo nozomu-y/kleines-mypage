@@ -16,13 +16,7 @@
     <input type="text" class="form-text js-form-item" name="amount" id="amount" placeholder="枚数を入力してください" required>
     <div class="required-feedback">枚数を入力してください</div>
     <div class="format-feedback">半角数字のみ、0以上の整数で入力してください</div>
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-text js-form-item" name="name" id="name" placeholder="あなたの名前を入力してください" required>
-    <div class="required-feedback">名前を入力してください</div>
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-text js-form-item" name="exp" id="exp" placeholder="備考欄">
+    <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
   </div>
   <div class="form-group">
     <?php /*<input type="hidden" name="personID" value="<?=h($_SESSION['mypage_personID'])?>" */ ?>
