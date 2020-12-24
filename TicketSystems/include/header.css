@@ -4,7 +4,7 @@
   padding:.5rem;
   padding-left:20px;
   background-color: var(--header-color);
-  width: 100%;
+  width: calc(100% - 0.5rem - 20px);
   white-space:nowrap;
   
 }
