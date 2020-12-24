@@ -8,14 +8,18 @@
 
  $(function(){
   var forms = document.getElementsByClassName('needs-validation');
-  var form = forms[0];
 
   //入力確認ボタンをクリックした時の挙動
   $(".js-form-confirm").on('click', function(){
-    var items = form.getElementsByClassName('js-form-item');
+    var num_item = 0;
+    var items;
+    if(forms.length>0){
+      items = forms[0].getElementsByClassName('js-form-item');
+      num_item = items.length;
+    }
     var valid = true;
     //必須項目の入力確認
-    for(var i=0; i<items.length; i++){
+    for(var i=0; i<num_item; i++){
       //必須項目が未入力の場合、対応するフィードバックを表示
       if(items[i].checkValidity() === false){
         show_invalid(items[i], '.required-feedback');
@@ -67,10 +71,9 @@
       var modal_value = modal_main[0].getElementsByClassName('js-form-value');
       //モーダルの中身を置換する
       for(var i=0; i<modal_value.length; i++){
-        for(var j=0; j<items.length; j++){
+        for(var j=0; j<num_item; j++){
           if(modal_value[i].classList.contains(items[j].name)){
             var value = $(modal_value[i]).children('span');
-            var str = value[0].textContent;
             value[0].innerHTML = items[j].value;
           }
         }
@@ -89,12 +92,12 @@
   });
 });
 
-function show_invalid(items, msg_class){
-  $(items).css({'box-shadow':'2px 2px #f14343, -2px -2px #f14343'});
-  $(items).nextAll(msg_class).css({'display':'block'});
+function show_invalid(item, msg_class){
+  $(item).css({'box-shadow':'2px 2px #f14343, -2px -2px #f14343'});
+  $(item).nextAll(msg_class).css({'display':'block'});
 }
 
-function hide_invalid(items, msg_class){
-  $(items).css({'box-shadow':'none'});
-  $(items).nextAll(msg_class).css({'display':'none'});
+function hide_invalid(item, msg_class){
+  $(item).css({'box-shadow':'none'});
+  $(item).nextAll(msg_class).css({'display':'none'});
 }
