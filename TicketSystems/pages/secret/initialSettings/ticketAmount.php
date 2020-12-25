@@ -1,5 +1,12 @@
 <?php
-  require_once(__DIR__.'/initTables.php');
+  //一度だけ処理を行う
+  //TODO ブラウザバックの対応
+  if($_POST['submit']=="submit"){
+    require_once(__DIR__.'/initTables.php');
+    header("Location:".$_SERVER['PHP_SELF']);
+    exit();
+  }
+  
   //require_once($_SERVER['DOCUMENT_ROOT']."/TicketSystems/kleines-mypage/Common/init_page.php");
   require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
   $pageTitle = "チケット枚数設定";
@@ -8,6 +15,7 @@
 ?>
 <p class="tx"><?=$status?></p>
 <p class="tx">チケット枚数設定ページ</p>
+<p class="tx"><?=$_POST['submit'];?></p>
 
 <button class="btn btn-primary js-modal-open js-form-confirm" data-target="#confirmModal">はい</button>
 <div class="modal js-modal" id="confirmModal">
