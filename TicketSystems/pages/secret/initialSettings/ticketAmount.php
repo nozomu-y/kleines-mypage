@@ -1,17 +1,14 @@
 <?php
+  require_once(__DIR__.'/initTables.php');
   //require_once($_SERVER['DOCUMENT_ROOT']."/TicketSystems/kleines-mypage/Common/init_page.php");
   require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
-  $pageTitle = "初期化";
+  $pageTitle = "チケット枚数設定";
   $applyStyle = "secret";
   require_once(ROOT.'/include/header.php');
 ?>
-<p class="tx">初期化時の挙動</p>
-<p class="tx">
-  tp_MemberTickets, tp_TicketTotal, tp_Reserves, tp_Responses, tp_Promotions, tp_Orders,
-  tp_OrderTypes, tp_Permissions の各テーブルを、存在していなかったら作成し、存在していたら空にする。<br>
-  その後、membersから、tp_MemberTicketsに入っていない団員のIDを抽出して挿入する<br>
-  その後、全メンバーについて、have,soldの値を0にセット</p><br>
-<p class="tx">初期化しますか？</p>
+<p class="tx"><?=$status?></p>
+<p class="tx">チケット枚数設定ページ</p>
+
 <button class="btn btn-primary js-modal-open js-form-confirm" data-target="#confirmModal">はい</button>
 <div class="modal js-modal" id="confirmModal">
   <div class="modal-bg js-modal-close"></div>
@@ -27,7 +24,7 @@
         <button class="btn btn-secondary js-modal-close">戻る</button>
       </div>
       <div class="modal-right">
-        <button class="btn btn-primary" onclick="location.href='ticketAmount.php'">初期化する</button>
+        <button class="btn btn-primary">初期化する</button>
       </div>
     </div>
   </div>
