@@ -20,6 +20,7 @@
   </div>
   <div class="form-group">
     <?php /*<input type="hidden" name="personID" value="<?=h($_SESSION['mypage_personID'])?>" */ ?>
+    <?php /*<input type="hidden" name="name" value="<?=h(USER->name)?>"> */?>
     <input type="hidden" class="js-form-item" name="orderTypeID" value="<?=$orderTypeID?>">
   </div>
   <button class="btn btn-primary js-modal-open js-form-confirm" data-target="confirmModal">入力確認</button>
@@ -31,9 +32,10 @@
       </div>
       <div class="modal-main">
         <p class="tx">この内容で送信してもよろしいですか？</p>
-          <div class="js-form-value name">名前 <span>XXX</span></div>
-          <div class="js-form-value amount">枚数 <span>XXX</span></div>
-          <div>オーダー種別：<?=$orderType?></div>
+        <?php //<div class="js-form-value personID">ID <span>XXX</span></div> // ?>
+        <?php //<div class="js-form-value name">名前 <span>XXX</span></div> // ?>
+        <div class="js-form-value amount">枚数 <span>XXX</span></div>
+        <div>オーダー種別：<?=$orderType?></div>
       </div>
       <div class="modal-footer">
         <div class="modal-left">
