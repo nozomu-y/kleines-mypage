@@ -4,26 +4,21 @@
    * tp_OrderTypes, tp_Permissions の各テーブルを、存在していなかったら作成し、存在していたら空にする。
    * その後、必要なタプルを挿入する
    * 外部キーを無効にして行わないと、truncateするときに弾かれる。
+   * テーブル間に外部キー制約があるので順番にも注意。
    */
-
   require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
-  require_once(ROOT."/Common/dbconnect.php");
+  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/Common/dbconnect.php');
 
-  //各テーブルが存在していなかったら作成、存在してたら中身を空にする
-  $status = ""; //エラー表示用
-  if($mysqli->query("SET foreign_key_checks = 0")){ //外部キーのチェックを無効にする
-    $status.="SucForeignKeySet0 ";
-  }else{
-    $status.="FailForeignKeySet0 ";
-  }
+  $res_foreign_key = $mysqli->query("SET foreign_key_checks = 0"); //外部キーのチェックを無効にする
 
   $tables = [ /* 作成するテーブル一覧 */
+    "tp_OrderTypes",
+    "tp_Orders",
     "tp_MemberTickets",
     "tp_TicketTotal",
     "tp_Reserves",
     "tp_Responses",
     "tp_Promotions",
-    "tp_Orders",
     "tp_OrderTypes",
     "tp_Permissions"
   ];
@@ -31,46 +26,25 @@
   foreach($tables as $table){
     //テーブルがあるかどうかを調べる
     $q_exist = "SHOW TABLES LIKE '$table'";
-    $result = $mysqli->query($q_exist);
-    if($result!=NULL && $result->num_rows==1){
+    $res_show = $mysqli->query($q_exist);
+    if($res_show!=NULL && $res_show->num_rows==1){
       //存在した場合、空にする
       $q_truncate = "TRUNCATE TABLE $table";
-      if($mysqli->query($q_truncate)){  //for test
-        $status .= "SucTrunc-$table ";
-      }else{
-        $status .= "FailTrunc-$table ";
-      }
+      $res_trunc = $mysqli->query($q_truncate);
     }else{
       //存在しなかった場合、指定のフォーマットでテーブルを作成
-      $result_create = createTable($table, $mysqli);
-      if($result_create){ //for test
-        $status .= "SucCreate-$table ";
-      }else{
-        $status .= "FailCreate-$table ";
-      }
+      $res_create = createTable($table, $mysqli);
     }
     //挿入するものがある場合、挿入
-    $result_insert = insertInitTuples($table, $mysqli);
-    if($result_insert){ //for test
-      $status .= "SucInsert-$table ";
-    }else{
-      $status .= "FailInsert-$table ";
-    }
+    $res_insert = insertInitTuples($table, $mysqli);
     //close(変数を使い回すのでこれをしないとエラーが起こる)
-    if($result!=NULL){
-      $result->close();
+    if($res_show!=NULL){
+      $res_show->close();
     }
-    echo $status+"\n";
   }
 
   //外部キーのチェックを有効にする
-  if($mysqli->query("SET foreign_key_checks = 1")){
-    $status.="SucFrgnKeySet1";
-  }else{
-    $status.="-FailFrgnKeySet1";
-    echo "<!--$mysqli->error-->";
-      exit();
-  }
+  $res_foreign_key = $mysqli->query("SET foreign_key_checks = 1");
   
   //関数群
   /**
@@ -128,7 +102,7 @@
     }else if(strcmp($table_name,"tp_Responses")==0){
       $q_create = 
       "CREATE TABLE `tp_Responses` (
-      `responseID` int(11) NOT NULL AUTO_INCREMENT,
+      `responseID` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
       `orderID` int(5) NOT NULL,
       `personID` int(5) UNSIGNED ZEROFILL NOT NULL,
       `amount` int(11) NOT NULL,
@@ -136,9 +110,9 @@
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
       $q_key = 
       "ALTER TABLE `tp_Responses`
-      ADD PRIMARY KEY (`responseID`),
       ADD KEY `orderID` (`orderID`),
       ADD KEY `personID` (`personID`)";
+      // ADD PRIMARY KEY (`responseID`),
       $q_constraint = 
       "ALTER TABLE `tp_Responses`
       ADD CONSTRAINT `tp_Responses_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `tp_Orders` (`orderID`),
@@ -162,20 +136,22 @@
     }else if(strcmp($table_name,"tp_Orders")==0){
       $q_create = 
       "CREATE TABLE `tp_Orders` (
-      `orderID` int(11) NOT NULL AUTO_INCREMENT,
+      `orderID` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
       `personID` int(5) UNSIGNED ZEROFILL NOT NULL,
       `orderTypeID` int(3) UNSIGNED ZEROFILL NOT NULL,
       `amount` int(11) NOT NULL,
       `orderTime` datetime NOT NULL,
       `response` int(11) NOT NULL DEFAULT '0',
       `finishFlag` tinyint(1) NOT NULL DEFAULT '0',
-      `finishTime` datetime DEFAULT NULL
+      `finishTime` datetime DEFAULT NULL,
+      `deleteFlag` tinyint(1) NOT NULL DEFAULT '0',
+      `deleteTime` datetime DEFAULT NULL
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
       $q_key = 
       "ALTER TABLE `tp_Orders`
-      ADD PRIMARY KEY (`orderID`),
       ADD KEY `orderTypeID` (`orderTypeID`),
       ADD KEY `personID` (`personID`)";
+      // ADD PRIMARY KEY (`orderID`),
       $q_constraint = 
       "ALTER TABLE `tp_Orders`
       ADD CONSTRAINT `tp_Orders_ibfk_1` FOREIGN KEY (`orderTypeID`) REFERENCES `tp_OrderTypes` (`orderTypeID`),
@@ -221,7 +197,13 @@
       //membersから全員分の名前を挿入
       $q_insert = "INSERT INTO tp_MemberTickets (personID) SELECT personID FROM members WHERE members.status = 0";
     }else if(strcmp($table_name,"tp_TicketTotal")==0){
-      return true;
+      //必ず必要な4つを挿入する
+      $q_insert = 
+      "INSERT INTO `tp_TicketTotal` (`ticketTypeCode`, `ticketTypeValue`, `amount`) VALUES
+      (1, '渉外所持', 0),
+      (2, '預かり用回収済み', 0),
+      (3, '団員所持', 0),
+      (4, '団員販売済(情宣含む)', 0)";
     }else if(strcmp($table_name,"tp_Reserves")==0){
       return true;
     }else if(strcmp($table_name,"tp_Responses")==0){
