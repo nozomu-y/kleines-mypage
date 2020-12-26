@@ -1,4 +1,5 @@
 #header{
+  /*display: block;*/
   height:2rem;
   text-align:left;
   padding:.5rem;
@@ -6,8 +7,12 @@
   background-color: var(--header-color);
   width: calc(100% - 0.5rem - 20px);
   white-space:nowrap;
-  
 }
+/*
+#header div{
+  display: auto;
+}
+*/
 
 #header-navbar {
   display: inline-block;
