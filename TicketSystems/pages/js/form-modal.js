@@ -38,12 +38,12 @@
       }else{
         hide_invalid(items[i], '.invalid-chars');
       }
-      if(items[i].name.match("name")){
+      if(items[i].className.match("js-valid-name")){
         if(items[i].value.match(/\d/)){ //数字が入っていないか
           valid = false;
           valid_item = false;
         }
-      }else if(items[i].name.match("amount")){
+      }else if(items[i].className.match("js-valid-amount")){
         //TODO 枚数オーバーの確認
         var num = Number(items[i].value);
         if(!Number.isInteger(num) || num < 0){  //0以上の整数のみ
@@ -52,7 +52,7 @@
         }else{
           items[i].value = Number.parseInt(num);
         }
-      }else if(items[i].name.match("kana")){
+      }else if(items[i].name.match("js-valid-kana")){
         if(!(items[i].value.match(/^[\u30a0-\u30ff]+$|^[\u3040-\u309f]+$/))){  //全角カナorかなのみ
           valid = false;
           valid_item = false;
