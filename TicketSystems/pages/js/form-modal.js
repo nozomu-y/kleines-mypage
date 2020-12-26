@@ -38,12 +38,12 @@
       }else{
         hide_invalid(items[i], '.invalid-chars');
       }
-      if(items[i].name == "name"){
+      if(items[i].name.match("name")){
         if(items[i].value.match(/\d/)){ //数字が入っていないか
           valid = false;
           valid_item = false;
         }
-      }else if(items[i].name == "amount"){
+      }else if(items[i].name.match("amount")){
         //TODO 枚数オーバーの確認
         var num = Number(items[i].value);
         if(!Number.isInteger(num) || num < 0){  //0以上の整数のみ
