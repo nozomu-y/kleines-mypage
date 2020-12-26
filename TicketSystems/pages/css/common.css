@@ -175,6 +175,28 @@ div {
   border-color: #52585e;
 }
 
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:active {
+  background-color: #ac2b38;
+  border-color: #ac2b38;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:active {
+  background-color: #208a39;
+  border-color: #208a39;
+}
+
 /* フォームのバリデーションに関するCSS */
 .required-feedback, .format-feedback, .invalid-chars {
   display: none;
