@@ -48,11 +48,13 @@
   </div>
   <?php
     /*
-      TODO
       渉外所持を表示し、他の個数が変わるたびに数を更新する(readonly)
       ticketType[index] にして、index+1をIDにしてtp_ticketTotalに挿入
       最初にtp_ticketTotalに既に存在しているものはあらかじめ取得して、削除不可な状態で表示(名前は変更可能にする？)
       その後に、表示用の可変部分をブロック形式で表示する(ブロック形式：削除可能な形態)
+      FIXME: 追加ボタンを押したときにもrequiredのチェックが入る(動作は普通にできる)
+      ↑困ってはないので、優先順位めちゃくちゃ低くて良い
+
     */
   ?>
   <?php
@@ -64,24 +66,22 @@
       <input class="form-text js-form-item col-4" type="text" name="ticketTypeAmount[<?=$i?>]" value="0" required 
       <?php if($i===0) echo("readonly"); //渉外所持は、チケット全体枚数 - その他の枚数で算出するため ?>>
     </div>
+    <button class="btn btn-danger js-fb-remove" style="display:none;">× 削除する</button>
   </div>
   <?php
     endfor;
     for($i_add=0; $i_add<count($add_assign); $i_add++ ):
     $i_all = $i_add + count($default_assign);
   ?>
-  <div class="form-block" id="form-block[<?=$i_all?>]">
+  <div class="form-block js-fb-removable" id="form-block[<?=$i_all?>]">
     <div class="form-group">
       <input class="form-text js-form-item col-8" type="text" name="ticketType[<?=$i_all?>]" value="<?=$add_assign[$i_add]['ticketTypeValue']?>" required>
       <input class="form-text js-form-item col-4" type="text" name="ticketTypeAmount[<?=$i_all?>]" required>
     </div>
-    <button class="btn btn-danger">× 削除する</button>
+    <button class="btn btn-danger js-fb-remove">× 削除する</button>
   </div>
   <?php endfor;?>
-  
-  <div class="form-group">
-    <button class="btn btn-success">+ 追加する</button>
-  </div>
+  <button class="btn btn-success js-fb-add">+ 追加する</button>
   <input type="hidden" name="submit" value="ticket">
   <button class="btn btn-primary js-modal-open js-form-confirm" data-target="#confirmModal">入力確認</button>
   <div class="modal js-modal" id="confirmModal">
@@ -106,5 +106,6 @@
   </div>
 </form>
 <!-- import js files-->
+<script src="<?=SERVER?>/pages/js/form-block-removable.js"></script>
 <script src="<?=SERVER?>/pages/js/form-modal.js"></script>
 <?php require_once(ROOT.'/include/footer.php'); ?>
