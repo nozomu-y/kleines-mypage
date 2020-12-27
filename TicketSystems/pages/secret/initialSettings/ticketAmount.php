@@ -1,42 +1,110 @@
 <?php
   //一度だけ処理を行う
   //TODO ブラウザバックの対応
-  if($_POST['submit']=="submit"){
+  if($_POST['process']=="initTables"){
     require_once(__DIR__.'/initTables.php');
     header("Location:".$_SERVER['PHP_SELF']);
     exit();
   }
-  
+
+  //DBからtp_TicketTotalに既に存在するチケット種別と枚数を取得する
+  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/Common/dbconnect.php');
+  $q_select = "SELECT ticketTypeCode, ticketTypeValue, amount FROM tp_TicketTotal";
+  $result = $mysqli->query($q_select);
+  $default_assign = [];
+  if($result==NULL){
+    //error 
+  }
+  while($row = $result->fetch_array(MYSQLI_ASSOC)){
+    $default_assign[] = $row;
+  }
+  //結果セットを解放
+  $result->free();
+
+  //追加で用意する、可変のチケット区分(枚数は0)
+  $add_assign = [
+    ["ticketTypeValue"=>"CNプレイガイド委託","amount"=>0],
+    ["ticketTypeValue"=>"チケット交換","amount"=>0],
+    ["ticketTypeValue"=>"OVチケット用にキープ","amount"=>0],
+    ["ticketTypeValue"=>"招待チケット用にキープ","amount"=>0],
+    ["ticketTypeValue"=>"当日券用にキープ","amount"=>0]
+  ];
+
   //require_once($_SERVER['DOCUMENT_ROOT']."/TicketSystems/kleines-mypage/Common/init_page.php");
   require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
   $pageTitle = "チケット枚数設定";
   $applyStyle = "secret";
   require_once(ROOT.'/include/header.php');
 ?>
-<p class="tx"><?=$status?></p>
-<p class="tx">チケット枚数設定ページ</p>
-<p class="tx"><?=$_POST['submit'];?></p>
-
-<button class="btn btn-primary js-modal-open js-form-confirm" data-target="#confirmModal">はい</button>
-<div class="modal js-modal" id="confirmModal">
-  <div class="modal-bg js-modal-close"></div>
-  <div class="modal-content">
-    <div class="modal-header"><div class="modal-title">入力確認</div>
-      <span class="modal-cross js-modal-close"><span class="cross1"></span><span class="cross2"></span></span>
+<form action="permission.php" method="post" class="needs-validation">
+  <p class="tx">チケットの全ての合計枚数を入力してください</p>
+  <div class="form-group">
+    <input class="form-text" type="text" name="sum_amount" value="1500">
+  </div>
+  <p class="tx">チケット種別と枚数の初期値を入力してください</p><br>
+  <div class="form-group">
+    <p class="tx col-8">チケット種別名称</p>
+    <p class="tx col-4">初期枚数</p>
+  </div>
+  <?php
+    /*
+      TODO
+      渉外所持を表示し、他の個数が変わるたびに数を更新する(readonly)
+      ticketType[index] にして、index+1をIDにしてtp_ticketTotalに挿入
+      最初にtp_ticketTotalに既に存在しているものはあらかじめ取得して、削除不可な状態で表示(名前は変更可能にする？)
+      その後に、表示用の可変部分をブロック形式で表示する(ブロック形式：削除可能な形態)
+    */
+  ?>
+  <?php
+    for($i=0; $i<count($default_assign); $i++):
+  ?>
+  <div class="form-block" id="form-block[<?=$i?>]">
+    <div class="form-group">
+      <input class="form-text js-form-item col-8" type="text" name="ticketType[<?=$i?>]" value="<?=$default_assign[$i]['ticketTypeValue']?>" required>
+      <input class="form-text js-form-item col-4" type="text" name="ticketTypeAmount[<?=$i?>]" value="0" required 
+      <?php if($i===0) echo("readonly"); //渉外所持は、チケット全体枚数 - その他の枚数で算出するため ?>>
     </div>
-    <div class="modal-main">
-      <p class="tx">本当に初期化しますか？</p>
+  </div>
+  <?php
+    endfor;
+    for($i_add=0; $i_add<count($add_assign); $i_add++ ):
+    $i_all = $i_add + count($default_assign);
+  ?>
+  <div class="form-block" id="form-block[<?=$i_all?>]">
+    <div class="form-group">
+      <input class="form-text js-form-item col-8" type="text" name="ticketType[<?=$i_all?>]" value="<?=$add_assign[$i_add]['ticketTypeValue']?>" required>
+      <input class="form-text js-form-item col-4" type="text" name="ticketTypeAmount[<?=$i_all?>]" required>
     </div>
-    <div class="modal-footer">
-      <div class="modal-left">
-        <button class="btn btn-secondary js-modal-close">戻る</button>
+    <button class="btn btn-danger">× 削除する</button>
+  </div>
+  <?php endfor;?>
+  
+  <div class="form-group">
+    <button class="btn btn-success">+ 追加する</button>
+  </div>
+  <input type="hidden" name="submit" value="ticket">
+  <button class="btn btn-primary js-modal-open js-form-confirm" data-target="#confirmModal">入力確認</button>
+  <div class="modal js-modal" id="confirmModal">
+    <div class="modal-bg js-modal-close"></div>
+    <div class="modal-content">
+      <div class="modal-header"><div class="modal-title">入力確認</div>
+        <span class="modal-cross js-modal-close"><span class="cross1"></span><span class="cross2"></span></span>
       </div>
-      <div class="modal-right">
-        <button class="btn btn-primary">初期化する</button>
+      <div class="modal-main">
+        <p class="tx">チケット区分と枚数は以下の通りでよろしいですか？</p>
+        <p class="tx">~~~</p>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-left">
+          <button class="btn btn-secondary js-modal-close">戻る</button>
+        </div>
+        <div class="modal-right">
+          <button class="btn btn-primary">はい</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</form>
 <!-- import js files-->
 <script src="<?=SERVER?>/pages/js/form-modal.js"></script>
 <?php require_once(ROOT.'/include/footer.php'); ?>
