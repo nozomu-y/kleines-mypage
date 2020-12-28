@@ -39,7 +39,7 @@
 <form action="permission.php" method="post" class="needs-validation">
   <p class="tx">チケットの全ての合計枚数を入力してください</p>
   <div class="form-group">
-    <input class="form-text" type="text" name="sum_amount" value="1500">
+    <input class="form-text" type="text" name="sumAmount" value="1500">
   </div>
   <p class="tx">チケット種別と枚数の初期値を入力してください</p><br>
   <div class="form-group">
@@ -63,8 +63,13 @@
   <div class="form-block" id="form-block[<?=$i?>]">
     <div class="form-group">
       <input class="form-text js-form-item col-8" type="text" name="ticketType[<?=$i?>]" value="<?=$default_assign[$i]['ticketTypeValue']?>" required>
-      <input class="form-text js-form-item col-4" type="text" name="ticketTypeAmount[<?=$i?>]" value="0" required 
+      <div class="required-feedback">名前を入力してください</div>
+      <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+      <input class="form-text js-form-item js-valid-amount　col-4" type="text" name="ticketTypeAmount[<?=$i?>]" value="0" required 
       <?php if($i===0) echo("readonly"); //渉外所持は、チケット全体枚数 - その他の枚数で算出するため ?>>
+      <div class="required-feedback">枚数を入力してください</div>
+      <div class="format-feedback">半角数字のみ、0以上の整数で入力してください</div>
+      <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
     </div>
     <button class="btn btn-danger js-fb-remove" style="display:none;">× 削除する</button>
   </div>
@@ -76,7 +81,12 @@
   <div class="form-block js-fb-removable" id="form-block[<?=$i_all?>]">
     <div class="form-group">
       <input class="form-text js-form-item col-8" type="text" name="ticketType[<?=$i_all?>]" value="<?=$add_assign[$i_add]['ticketTypeValue']?>" required>
-      <input class="form-text js-form-item col-4" type="text" name="ticketTypeAmount[<?=$i_all?>]" required>
+      <div class="required-feedback">名前を入力してください</div>
+      <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+      <input class="form-text js-form-item js-valid-amount　col-4" type="text" name="ticketTypeAmount[<?=$i_all?>]" required>
+      <div class="required-feedback">枚数を入力してください</div>
+      <div class="format-feedback">半角数字のみ、0以上の整数で入力してください</div>
+      <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
     </div>
     <button class="btn btn-danger js-fb-remove">× 削除する</button>
   </div>
@@ -91,8 +101,8 @@
         <span class="modal-cross js-modal-close"><span class="cross1"></span><span class="cross2"></span></span>
       </div>
       <div class="modal-main">
-        <p class="tx">チケット区分と枚数は以下の通りでよろしいですか？</p>
-        <p class="tx">~~~</p>
+        <p class="tx">チケット種別と枚数は以下の通りでよろしいですか？</p>
+        <div class="js-item-list"></div>
       </div>
       <div class="modal-footer">
         <div class="modal-left">

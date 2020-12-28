@@ -66,18 +66,12 @@
       }
     }
     if(valid){
-      //モーダルの中身を取得
-      var modal_main = document.getElementsByClassName('modal-main');
-      var modal_value = modal_main[0].getElementsByClassName('js-form-value');
-      //モーダルの中身を置換する
-      for(var i=0; i<modal_value.length; i++){
-        for(var j=0; j<num_item; j++){
-          if(modal_value[i].classList.contains(items[j].name)){
-            var value = $(modal_value[i]).children('span');
-            value[0].innerHTML = items[j].value;
-          }
-        }
+      //モーダルのjs-form-listを取得し、アイテムを追加していく
+      //TODO: items[].nameを、id的な形ではなく人間がわかる形に変換する関数を作る？
+      for(var i=0; i<num_item; i++){
+        $('.modal-main .js-item-list').append("<p class='tx'>"+items[i].name+" : "+items[i].value+"</p>");
       }
+      
       //モーダルに出力
       $('.js-modal').fadeIn();
       return false;
