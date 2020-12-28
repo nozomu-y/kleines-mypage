@@ -68,6 +68,7 @@
     if(valid){
       //モーダルのjs-form-listを取得し、アイテムを追加していく
       //TODO: items[].nameを、id的な形ではなく人間がわかる形に変換する関数を作る？
+      $('.modal-main .js-item-list').empty(); //一旦空にする
       for(var i=0; i<num_item; i++){
         $('.modal-main .js-item-list').append("<p class='tx'>"+items[i].name+" : "+items[i].value+"</p>");
       }
