@@ -54,6 +54,7 @@
       その後に、表示用の可変部分をブロック形式で表示する(ブロック形式：削除可能な形態)
       FIXME: 追加ボタンを押したときにもrequiredのチェックが入る(動作は普通にできる)
       ↑困ってはないので、優先順位めちゃくちゃ低くて良い
+      TODO: 合計枚数のバリデーションと、渉外所持の自動調節を行うticketAmount.jsを作成する
 
     */
   ?>
@@ -92,7 +93,7 @@
   </div>
   <?php endfor;?>
   <button class="btn btn-success js-fb-add">+ 追加する</button>
-  <input type="hidden" name="submit" value="ticket">
+  <input type="hidden" name="process" value="ticket">
   <button class="btn btn-primary js-modal-open js-form-confirm" data-target="#confirmModal">入力確認</button>
   <div class="modal js-modal" id="confirmModal">
     <div class="modal-bg js-modal-close"></div>
@@ -109,7 +110,7 @@
           <button class="btn btn-secondary js-modal-close">戻る</button>
         </div>
         <div class="modal-right">
-          <button class="btn btn-primary">はい</button>
+          <button class="btn btn-primary" type="submit">はい</button>
         </div>
       </div>
     </div>
