@@ -36,12 +36,17 @@
   $applyStyle = "secret";
   require_once(ROOT.'/include/header.php');
 ?>
+<p class="tx">チケットの種別についての設定を行います。</p>
+<p class="tx">「チケットの全ての合計枚数」は、ホールに呼べる最大数を入力してください。</p>
+<p class="tx">「チケット種別・枚数の初期値」は、それぞれチケットの種類の名前と、それが何枚あるかを入力してください。</p>
+<p class="tx">削除ボタンを押すとそのチケット種別は削除され、追加ボタンを押すと1つ追加できます。</p>
+<p class="tx">「渉外所持」は、合計枚数からその他を除いた分の枚数が自動で入力されます。</p><br>
 <form action="permission.php" method="post" class="needs-validation">
-  <p class="tx">チケットの全ての合計枚数を入力してください</p>
+  <p class="tx">チケットの全ての合計枚数</p>
   <div class="form-group">
     <input class="form-text" type="text" name="sumAmount" value="1500">
   </div>
-  <p class="tx">チケット種別と枚数の初期値を入力してください</p><br>
+  <p class="tx">チケット種別・枚数の初期値</p><br>
   <div class="form-group">
     <p class="tx col-8">チケット種別名称</p>
     <p class="tx col-4">初期枚数</p>
@@ -54,7 +59,6 @@
       その後に、表示用の可変部分をブロック形式で表示する(ブロック形式：削除可能な形態)
       FIXME: 追加ボタンを押したときにもrequiredのチェックが入る(動作は普通にできる)
       ↑困ってはないので、優先順位めちゃくちゃ低くて良い
-      TODO: 合計枚数のバリデーションと、渉外所持の自動調節を行うticketAmount.jsを作成する
 
     */
   ?>
