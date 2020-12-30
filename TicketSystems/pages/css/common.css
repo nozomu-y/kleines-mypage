@@ -145,6 +145,7 @@ div {
 .col-12 { grid-column: span 12;}
 */
 
+/* buttonに関するcss */
 .btn {
   display: inline-block;
   font-weight: 400;
@@ -208,6 +209,18 @@ div {
 .btn-success:active {
   background-color: #208a39;
   border-color: #208a39;
+}
+
+.btn-filter {
+  color: #6c757d;
+  background-color: #FFF;
+  border-color: #6c757d;
+}
+
+.filter-checkbox:checked + .btn-filter {
+  color: #FFF;
+  background-color: #6c757d;
+  border-color: #6c757d;
 }
 
 /* フォームのバリデーションに関するCSS */
