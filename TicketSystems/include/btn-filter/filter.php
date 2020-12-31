@@ -15,20 +15,21 @@
   $grades_rev[$GRADE_NUM-1] .= "以上";  //"(5年生の入学年度)以上"とし、上級生をまとめる
   $grades = array_reverse($grades_rev);
 ?>
-<div class="form-filter js-filter-part">
+<script src="<?=SERVER?>/include/btn-filter/filter.js"></script>
+<div class="js-filter-btn js-filter-part">
   <p class="tx" style="font-size:18px;">学年</p>
-  <button class="btn btn-secondary" name="filter-part-clear" style="display:inline;">Clear</button>
-  <button class="btn btn-secondary" name="filter-part-clear" style="display:inline;">All</button><br>
+  <button class="btn btn-secondary js-filter-clear" name="filter-part-clear" style="display:inline;">Clear</button>
+  <button class="btn btn-secondary js-filter-all" name="filter-part-all" style="display:inline;">All</button><br>
   <?php foreach($parts as $part): ?>
   <input class="filter-checkbox" type="checkbox" name="filter-part[]" id="filter-<?=$part?>" value="<?=$part?>" autocomplete="off" style="display:none;" checked>
   <label for="filter-<?=$part?>" class="btn btn-filter"><?=$part?></label>
   <?php endforeach; ?>
 </div>
 
-<div class="form-filter js-filter-grade">
+<div class="js-filter-btn js-filter-grade">
 <p class="tx" style="font-size:18px;">パート</p>
-  <button class="btn btn-secondary" name="filter-grade-clear" style="display:inline;">Clear</button>
-  <button class="btn btn-secondary" name="filter-part-clear" style="display:inline;">All</button><br>
+  <button class="btn btn-secondary js-filter-clear" name="filter-grade-clear" style="display:inline;">Clear</button>
+  <button class="btn btn-secondary js-filter-all" name="filter-grade-all" style="display:inline;">All</button><br>
   <?php foreach($grades as $grade): ?>
   <input class="filter-checkbox" type="checkbox" name="filter-part[]" id="filter-<?=$grade?>" value="<?=$grade?>" autocomplete="off" style="display:none;" checked>
   <label for="filter-<?=$grade?>" class="btn btn-filter"><?=$grade?></label>
