@@ -229,10 +229,11 @@
       (009, 'transfer_give'),
       (010, 'cancel_reserve')";
     }else if(strcmp($table_name,"tp_Permissions")==0){
-      //マスター権限を持つ活動中の団員を挿入
+      //全ての活動中の団員を挿入
       $q_insert = 
-      "INSERT INTO tp_Permissions (personID,permission) 
-      SELECT personID,admin FROM members WHERE members.admin = 1 AND members.status = 0";
+      "INSERT INTO tp_Permissions (personID, permission) 
+      SELECT personID, CASE admin WHEN 1 then 1 ELSE 999 end as permission 
+      FROM members WHERE members.status = 0";
     }else{
       //テーブル名が間違っている場合
       return false;
