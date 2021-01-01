@@ -85,6 +85,10 @@
   <button class="btn btn-primary" type="submit">権限を適用</button>
 </form>
 <!-- finish button -->
-<a href="../index.php" class="btn btn-success">設定を完了</a>
+<form method="post" action="../index.php">
+  <input type="hidden" name="tp_status" value="complete_init">
+  <button class="btn btn-success" type="submit">設定を完了</button>
+</form>
+
 
 <?php require_once(ROOT.'/include/footer.php'); ?>
