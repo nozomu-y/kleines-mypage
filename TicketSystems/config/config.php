@@ -9,6 +9,7 @@ if(strcmp(MODE,'test')==0){
   define('ROOT',$_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems');
   define('SERVER','//'.$_SERVER['SERVER_NAME'].'/TicketSystems/kleines-mypage/TicketSystems');
   define('SITE_NAME','CK_TicketSystem');
+  session_start();
 }else if(strcmp(MODE,"real")==0){
   require_once('/home/chorkleines/www/member/mypage/Core/config.php');
   define('ROOT','/home/chorkleines/www/member/mypage/TicketSystems');

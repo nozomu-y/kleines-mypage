@@ -8,11 +8,6 @@
   width: calc(100% - 0.5rem - 20px);
   white-space:nowrap;
 }
-/*
-#header div{
-  display: auto;
-}
-*/
 
 #header-navbar {
   display: inline-block;
@@ -254,4 +249,13 @@
   opacity: 1;
   padding: 1rem 2.5rem;
   visibility: visible;
+}
+
+/* メッセージを表示するstatus-area */
+.status-area {
+  width: calc(100% - 2rem);
+  background-color: rgba(223, 223, 223, 1);
+  border: 1.5px solid rgba(210, 210, 210, 1);
+  padding: .875rem;
+  font-size: 14px;
 }

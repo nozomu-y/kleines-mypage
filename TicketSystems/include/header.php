@@ -1,5 +1,5 @@
 <?php
-  if($pageTitle == ""){
+  if(strcmp($pageTitle, "") == 0){
     $pageTitle = "no title";
   }
 ?>
@@ -44,9 +44,17 @@
   </div>
   <div id="main">
   <div class="container">
-    <?php if($_SESSION['tp_status'] != null): ?>
+    <?php if(isset($_SESSION['tp_status']) || isset($_POST['tp_status'])): ?>
     <div class="status-area">
-      <?= $_SESSION['tp_status']; ?>
+      <?php
+        if(isset($_SESSION['tp_status'])){
+          echo($_SESSION['tp_status']."\n");
+          unset($_SESSION['tp_status']);
+        }
+        if(isset($_POST['tp_status'])){
+          echo($_POST['tp_status']."\n");
+        }
+      ?>
     </div>
     <?php endif; ?>
     <h1><?=$pageTitle?></h1>
