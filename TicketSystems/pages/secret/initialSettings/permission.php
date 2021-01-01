@@ -33,7 +33,7 @@
   <h2>操作を選択</h2>
   <div class="selectbox">
     <select name="permission" id="select-permission">
-      <option value="0">権限を削除</option>
+      <option value="999">権限を削除</option>
       <option value="11">チーフ権限(11)を付与</option>
       <option value="12">渉外権限(12)を付与</option>
     </select>
@@ -64,7 +64,7 @@
     <?php foreach($members as $member):?>
       <tr>
         <td class="flag">
-          <?php if($member['permission']==null || $member['permission']!=1): ?>
+          <?php if($member['permission']!=1): ?>
           <input type="checkbox" class="form-check-input" name="personID[]" value="<?=$member['personID']?>">
           <?php endif; ?>
         </td>
@@ -72,13 +72,19 @@
         <td class="part"><?=$member['part']?></td>
         <td class="last_name"><?=$member['last_name']?></td>
         <td class="first_name"><?=$member['first_name']; ?></td>
-        <td class="permission"><?php if($member['permission']!=null) echo $member['permission']; ?></td>
+        <td class="permission">
+          <?php if($member['permission']!=999 ): ?>
+          <?=$member['permission']?>
+          <?php endif; ?>
+        </td>
       </tr>
     <?php endforeach; ?>
   </table>
   <!-- accept button -->
+  <input type="hidden" name="process" value="permission">
   <button class="btn btn-primary" type="submit">権限を適用</button>
 </form>
-  <!-- finish button -->
-  <button class="btn btn-success">設定を完了</button>
+<!-- finish button -->
+<a href="../index.php" class="btn btn-success">設定を完了</a>
+
 <?php require_once(ROOT.'/include/footer.php'); ?>
