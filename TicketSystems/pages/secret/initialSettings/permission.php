@@ -51,7 +51,7 @@
     $result->free();
   ?>
   <table>
-    <tr>
+    <tr class="th">
       <th class="flag">選択</th>
       <th class="grade">学年</th>
       <th class="part">パート</th>
@@ -60,7 +60,7 @@
       <th class="permission">権限</th>
     </tr>
     <?php foreach($members as $member):?>
-      <tr>
+      <tr class="td">
         <td class="flag">
           <?php if($member['permission']!=1): ?>
           <input type="checkbox" class="form-check-input" name="personID[]" value="<?=$member['personID']?>">
