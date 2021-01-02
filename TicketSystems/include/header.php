@@ -44,17 +44,7 @@
   </div>
   <div id="main">
   <div class="container">
-    <?php if(isset($_SESSION['tp_status']) || isset($_POST['tp_status'])): ?>
-    <div class="status-area">
-      <?php
-        if(isset($_SESSION['tp_status'])){
-          echo($_SESSION['tp_status']."\n");
-          unset($_SESSION['tp_status']);
-        }
-        if(isset($_POST['tp_status'])){
-          echo($_POST['tp_status']."\n");
-        }
-      ?>
-    </div>
-    <?php endif; ?>
+    <?php if(isset($_SESSION['tp_status']) || isset($_POST['tp_status']))
+      include(__DIR__."/statusArea.php");
+    ?>
     <h1><?=$pageTitle?></h1>
