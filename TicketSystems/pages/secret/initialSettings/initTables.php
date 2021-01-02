@@ -45,8 +45,6 @@
 
   //外部キーのチェックを有効にする
   $res_foreign_key = $mysqli->query("SET foreign_key_checks = 1");
-
-  $mysqli->close();
   
   //関数群
   /**

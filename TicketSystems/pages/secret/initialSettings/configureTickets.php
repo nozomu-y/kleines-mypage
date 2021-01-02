@@ -21,5 +21,3 @@
       $stmt_insert->close();
     }
   }
-
-  $mysqli->close();
