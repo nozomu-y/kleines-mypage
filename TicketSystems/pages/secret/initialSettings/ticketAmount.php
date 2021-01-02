@@ -2,7 +2,7 @@
   require_once __DIR__.'/../../../include/tp_init.php';
   //一度だけ処理を行う
   //TODO ブラウザバックの対応
-  if($_POST['process']=="initTables"){
+  if(isset($_POST['process']) && $_POST['process']=="initTables"){
     require_once __DIR__.'/initTables.php';
     header("Location:".$_SERVER['PHP_SELF']);
     exit();

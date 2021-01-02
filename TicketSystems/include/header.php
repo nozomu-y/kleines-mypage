@@ -7,14 +7,14 @@
 <html>
 <head>
 <title><?=SITE_NAME." - ".$pageTitle?></title>
-<link rel="stylesheet" href="<?=SERVER."/include/css/$applyStyle.css"?>"> <!-- 読み込み先に応じて取得するスタイルシートを変更する -->
-<link rel="stylesheet" href="<?=SERVER."/include/css/common.css"?>">
-<link rel="stylesheet" href="<?=SERVER."/include/css/header.css"?>">
-<link rel="stylesheet" href="<?=SERVER."/include/css/footer.css"?>">
+<link rel="stylesheet" href="<?=TP_SERVER."/include/css/$applyStyle.css"?>"> <!-- 読み込み先に応じて取得するスタイルシートを変更する -->
+<link rel="stylesheet" href="<?=TP_SERVER."/include/css/common.css"?>">
+<link rel="stylesheet" href="<?=TP_SERVER."/include/css/header.css"?>">
+<link rel="stylesheet" href="<?=TP_SERVER."/include/css/footer.css"?>">
 </head>
 <body>
 <!-- import js files -->
-<script src="<?=SERVER?>/include/js/jquery-3.5.1.min.js"></script>
+<script src="<?=TP_SERVER?>/include/js/jquery-3.5.1.min.js"></script>
 <!-- header & navbar -->
 <div id="wrapper">
   <div id="header" class="container-fruid">
@@ -30,13 +30,13 @@
             </label>
           </div>
           <div id="nav-menu">
-            <?php require_once(ROOT."/include/navbar/$applyStyle.php"); ?>
+            <?php require_once TP_ROOT."/include/navbar/$applyStyle.php"; ?>
           </div>
         </div>
       </div>
     </div>
     <div id="header-title">
-    <div id="page-title"><a href="<?=SERVER."/pages/$applyStyle/index.php"?>">CK_Ticket</a></div>
+    <div id="page-title"><a href="<?=TP_SERVER."/pages/$applyStyle/index.php"?>">CK_Ticket</a></div>
     </div>
     <div id="header-account">
     <p>header account</p>
@@ -45,6 +45,6 @@
   <div id="main">
   <div class="container">
     <?php if(isset($_SESSION['tp_status']) || isset($_POST['tp_status']))
-      include(__DIR__."/statusArea.php");
+      include __DIR__."/statusArea.php";
     ?>
     <h1><?=$pageTitle?></h1>

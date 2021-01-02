@@ -2,13 +2,13 @@
   require_once __DIR__.'/../../../include/tp_init.php';
   //どのページから送られてきたかによって、一度だけ処理を行う
   //TODO: ブラウザバックの対応
-  if($_POST['process']=="ticket"){
+  if(isset($_POST['process']) && $_POST['process']=="ticket"){
     require_once __DIR__.'/configureTickets.php';
     header("Location:".$_SERVER['PHP_SELF']);
     exit();
   }
 
-  if($_POST['process']=='permission'){
+  if(isset($_POST['process']) && $_POST['process']=='permission'){
     require_once __DIR__.'/configurePermission.php';
     header("Location:".$_SERVER['PHP_SELF']);
     exit();

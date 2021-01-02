@@ -1,5 +1,4 @@
 <?php
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/Common/dbconnect.php');
   $parts = ["S", "A", "T", "B"];
   $GRADE_NUM = 5; //4学年+上級生として5つにまとめる
   $q_select = "SELECT DISTINCT(grade) FROM members ORDER BY grade DESC LIMIT $GRADE_NUM";  //上級生をまとめるために逆順で5つ取得
@@ -15,7 +14,7 @@
   $grades_rev[$GRADE_NUM-1] .= "以上";  //"(5年生の入学年度)以上"とし、上級生をまとめる
   $grades = array_reverse($grades_rev);
 ?>
-<script src="<?=SERVER?>/include/btn-filter/filter.js"></script>
+<script src="<?=TP_SERVER?>/include/btn-filter/filter.js"></script>
 <div class="js-filter-btn js-filter-part">
   <p class="tx" style="font-size:18px;">学年</p>
   <button class="btn btn-secondary js-filter-clear" name="filter-part-clear" style="display:inline;">Clear</button>
