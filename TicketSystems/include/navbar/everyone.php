@@ -13,3 +13,12 @@
 <div class="menu-spacer"></div>
 <div class="menu-item"><p class="nav-link">団員用ページTOPへ</p><a href="<?=TP_SERVER."/pages/everyone/index.php"?>"></a></div>
 <div class="menu-item"><p class="nav-link">渉外用ページTOPへ</p><a href="<?=TP_SERVER."/pages/private/index.php"?>"></a></div>
+<div class="menu-spacer"></div>
+<?php if(strcmp(MODE,"test")==0):?>
+<div class="menu-block">
+  <input type="checkbox" id="menu-bar-dev" class="menu-bar">
+  <label for="menu-bar-dev">開発用メニュー</label>
+  <div class="menu-item"><p class="nav-link">サインイン/ユーザー登録</p><a href="<?=TP_SERVER."/develop/signin.php"?>"></a></div>
+  <div class="menu-item"><p class="nav-link">サインアウト</p><a href="<?=TP_SERVER."/develop/signout.php"?>"></a></div>
+</div>
+<?php endif; ?>
