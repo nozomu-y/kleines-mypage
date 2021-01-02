@@ -1,9 +1,3 @@
-/*
-  どこかのamountが入力されるたびに、渉外所持のamount(ticketTypeAmount[0])を再計算するjs
-  sumAmount : 合計
-  sumAmount - sum(ticketTypeAmount[i (1<=i<=length)])
-*/
-
 $(function(){
   calcAmount(); //ロード時に呼び出す
 
@@ -29,7 +23,6 @@ $(function(){
       }
     }
     //渉外所持の枚数を更新
-    console.log(pr_have);
     $("input[name='ticketTypeAmount[0]'").val(pr_have);
   }
 });
