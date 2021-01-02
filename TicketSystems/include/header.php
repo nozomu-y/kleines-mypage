@@ -39,7 +39,13 @@
     <div id="page-title"><a href="<?=TP_SERVER."/pages/$applyStyle/index.php"?>">CK_Ticket</a></div>
     </div>
     <div id="header-account">
-    <p>header account</p>
+    <p><?php
+    if(isset($USER)){
+      echo($USER->get_name());
+    }else{
+      echo("no user account");
+    }
+    ?></p>
     </div>
   </div>
   <div id="main">
