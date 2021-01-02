@@ -89,11 +89,11 @@
 });
 
 function show_invalid(item, msg_class){
-  $(item).css({'box-shadow':'2px 2px #f14343, -2px -2px #f14343'});
+  $(item).css({'border':'2px solid #f14343'});
   $(item).nextAll(msg_class).css({'display':'block'});
 }
 
 function hide_invalid(item, msg_class){
-  $(item).css({'box-shadow':'none'});
+  $(item).css({'border':'1px solid #ced4da'});
   $(item).nextAll(msg_class).css({'display':'none'});
 }

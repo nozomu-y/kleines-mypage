@@ -50,17 +50,6 @@
     <p class="tx col-4">初期枚数</p>
   </div>
   <?php
-    /*
-      渉外所持を表示し、他の個数が変わるたびに数を更新する(readonly)
-      ticketType[index] にして、index+1をIDにしてtp_ticketTotalに挿入
-      最初にtp_ticketTotalに既に存在しているものはあらかじめ取得して、削除不可な状態で表示(名前は変更可能にする？)
-      その後に、表示用の可変部分をブロック形式で表示する(ブロック形式：削除可能な形態)
-      FIXME: 追加ボタンを押したときにもrequiredのチェックが入る(動作は普通にできる)
-      ↑困ってはないので、優先順位めちゃくちゃ低くて良い
-
-    */
-  ?>
-  <?php
     for($i=0; $i<count($default_assign); $i++):
   ?>
   <div class="form-block" id="form-block[<?=$i?>]">
@@ -69,7 +58,7 @@
       <div class="required-feedback">名前を入力してください</div>
       <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
       <input class="form-text js-form-item js-valid-amount　col-4" type="text" name="ticketTypeAmount[<?=$i?>]" value="0" required 
-      <?php if($i===0) echo("readonly"); //渉外所持は、チケット全体枚数 - その他の枚数で算出するため ?>>
+      <?php if($i===0) echo("readonly"); //渉外所持は、チケット全体枚数 - その他の枚数で算出するためreadonly ?>>
       <div class="required-feedback">枚数を入力してください</div>
       <div class="format-feedback">半角数字のみ、0以上の整数で入力してください</div>
       <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
@@ -94,7 +83,7 @@
     <button class="btn btn-danger js-fb-remove">× 削除する</button>
   </div>
   <?php endfor;?>
-  <button class="btn btn-success js-fb-add">+ 追加する</button>
+  <button class="btn btn-success js-fb-add" type="button" formNoValidate>+ 追加する</button><br>
   <input type="hidden" name="process" value="ticket">
   <button class="btn btn-primary js-modal-open js-form-confirm" data-target="#confirmModal">入力確認</button>
   <div class="modal js-modal" id="confirmModal">
@@ -104,7 +93,7 @@
         <span class="modal-cross js-modal-close"><span class="cross1"></span><span class="cross2"></span></span>
       </div>
       <div class="modal-main">
-        <p class="tx">チケット種別と枚数は以下の通りでよろしいですか？</p>
+        <p class="tx">チケット種別と枚数は以下の通りでよろしいですか？</p><br>
         <div class="js-item-list"></div>
       </div>
       <div class="modal-footer">
