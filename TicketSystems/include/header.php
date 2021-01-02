@@ -7,14 +7,14 @@
 <html>
 <head>
 <title><?=SITE_NAME." - ".$pageTitle?></title>
-<link rel="stylesheet" href="<?=SERVER."/pages/css/$applyStyle.css"?>"> <!-- 読み込み先に応じて取得するスタイルシートを変更する -->
-<link rel="stylesheet" href="<?=SERVER."/pages/css/common.css"?>">
-<link rel="stylesheet" href="<?=SERVER."/include/header.css"?>">
-<link rel="stylesheet" href="<?=SERVER."/include/footer.css"?>">
+<link rel="stylesheet" href="<?=SERVER."/include/css/$applyStyle.css"?>"> <!-- 読み込み先に応じて取得するスタイルシートを変更する -->
+<link rel="stylesheet" href="<?=SERVER."/include/css/common.css"?>">
+<link rel="stylesheet" href="<?=SERVER."/include/css/header.css"?>">
+<link rel="stylesheet" href="<?=SERVER."/include/css/footer.css"?>">
 </head>
 <body>
 <!-- import js files -->
-<script src="<?=SERVER?>/pages/js/jquery-3.5.1.min.js"></script>
+<script src="<?=SERVER?>/include/js/jquery-3.5.1.min.js"></script>
 <!-- header & navbar -->
 <div id="wrapper">
   <div id="header" class="container-fruid">

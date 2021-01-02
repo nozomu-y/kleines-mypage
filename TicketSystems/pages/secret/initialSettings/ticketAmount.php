@@ -122,6 +122,6 @@
 </form>
 <!-- import js files-->
 <script src="ticketAmount.js"></script>
-<script src="<?=SERVER?>/pages/js/form-block-removable.js"></script>
-<script src="<?=SERVER?>/pages/js/form-modal.js"></script>
+<script src="<?=SERVER?>/include/js/form-block-removable.js"></script>
+<script src="<?=SERVER?>/include/js/form-modal.js"></script>
 <?php require_once(ROOT.'/include/footer.php'); ?>

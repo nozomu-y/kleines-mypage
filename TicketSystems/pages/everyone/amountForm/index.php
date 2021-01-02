@@ -47,5 +47,5 @@
   </div>
 </form>
 <!-- import js files-->
-<script src="<?=SERVER?>/pages/js/form-modal.js"></script>
+<script src="<?=SERVER?>/include/js/form-modal.js"></script>
 <?php require_once(ROOT.'/include/footer.php'); ?>
