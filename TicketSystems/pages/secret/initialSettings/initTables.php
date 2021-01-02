@@ -58,16 +58,16 @@
     if(strcmp($table_name,"tp_MemberTickets")==0){
       $q_create = 
       "CREATE TABLE tp_MemberTickets (
-      personID int(5) UNSIGNED ZEROFILL NOT NULL,
+      id int(5) UNSIGNED ZEROFILL NOT NULL,
       have int(11) NOT NULL DEFAULT '0',
       sold int(11) NOT NULL DEFAULT '0') 
       ENGINE=InnoDB DEFAULT CHARSET=utf8";
       $q_key = 
       "ALTER TABLE `tp_MemberTickets`
-      ADD KEY `personID` (`personID`)";
+      ADD KEY `id` (`id`)";
       $q_constraint = 
       "ALTER TABLE `tp_MemberTickets` ADD CONSTRAINT `tp_MemberTickets_ibfk_1`
-      FOREIGN KEY (`personID`) REFERENCES `members` (`personID`)";
+      FOREIGN KEY (`id`) REFERENCES `members` (`id`)";
 
     }else if(strcmp($table_name,"tp_TicketTotal")==0){
       $q_create = 
@@ -102,19 +102,19 @@
       "CREATE TABLE `tp_Responses` (
       `responseID` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
       `orderID` int(5) NOT NULL,
-      `personID` int(5) UNSIGNED ZEROFILL NOT NULL,
+      `id` int(5) UNSIGNED ZEROFILL NOT NULL,
       `amount` int(11) NOT NULL,
       `responseTime` datetime DEFAULT NULL
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
       $q_key = 
       "ALTER TABLE `tp_Responses`
       ADD KEY `orderID` (`orderID`),
-      ADD KEY `personID` (`personID`)";
+      ADD KEY `id` (`id`)";
       // ADD PRIMARY KEY (`responseID`),
       $q_constraint = 
       "ALTER TABLE `tp_Responses`
       ADD CONSTRAINT `tp_Responses_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `tp_Orders` (`orderID`),
-      ADD CONSTRAINT `tp_Responses_ibfk_2` FOREIGN KEY (`personID`) REFERENCES `members` (`personID`)";
+      ADD CONSTRAINT `tp_Responses_ibfk_2` FOREIGN KEY (`id`) REFERENCES `members` (`id`)";
 
     }else if(strcmp($table_name,"tp_Promotions")==0){
       $q_create = 
@@ -135,7 +135,7 @@
       $q_create = 
       "CREATE TABLE `tp_Orders` (
       `orderID` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-      `personID` int(5) UNSIGNED ZEROFILL NOT NULL,
+      `id` int(5) UNSIGNED ZEROFILL NOT NULL,
       `orderTypeID` int(3) UNSIGNED ZEROFILL NOT NULL,
       `amount` int(11) NOT NULL,
       `orderTime` datetime NOT NULL,
@@ -148,12 +148,12 @@
       $q_key = 
       "ALTER TABLE `tp_Orders`
       ADD KEY `orderTypeID` (`orderTypeID`),
-      ADD KEY `personID` (`personID`)";
+      ADD KEY `id` (`id`)";
       // ADD PRIMARY KEY (`orderID`),
       $q_constraint = 
       "ALTER TABLE `tp_Orders`
       ADD CONSTRAINT `tp_Orders_ibfk_1` FOREIGN KEY (`orderTypeID`) REFERENCES `tp_OrderTypes` (`orderTypeID`),
-      ADD CONSTRAINT `tp_Orders_ibfk_2` FOREIGN KEY (`personID`) REFERENCES `members` (`personID`)";
+      ADD CONSTRAINT `tp_Orders_ibfk_2` FOREIGN KEY (`id`) REFERENCES `members` (`id`)";
 
     }else if(strcmp($table_name,"tp_OrderTypes")==0){
       $q_create = 
@@ -169,13 +169,13 @@
     }else if(strcmp($table_name,"tp_Permissions")==0){
       $q_create = 
       "CREATE TABLE `tp_Permissions` (
-      `personID` int(5) UNSIGNED ZEROFILL NOT NULL,
+      `id` int(5) UNSIGNED ZEROFILL NOT NULL,
       `permission` int(10) UNSIGNED NOT NULL DEFAULT '0'
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
       $q_key = 
-      "ALTER TABLE `tp_Permissions` ADD KEY `personID` (`personID`)";
+      "ALTER TABLE `tp_Permissions` ADD KEY `id` (`id`)";
       $q_constraint = 
-      "ALTER TABLE `tp_Permissions` ADD CONSTRAINT `tp_Permissions_ibfk_1` FOREIGN KEY (`personID`) REFERENCES `members` (`personID`)";
+      "ALTER TABLE `tp_Permissions` ADD CONSTRAINT `tp_Permissions_ibfk_1` FOREIGN KEY (`id`) REFERENCES `members` (`id`)";
     }else{
       //テーブル名が間違っている場合
       return false;
@@ -193,7 +193,7 @@
   function insertInitTuples($table_name, $mysqli){
     if(strcmp($table_name,"tp_MemberTickets")==0){
       //membersから全員分の名前を挿入
-      $q_insert = "INSERT INTO tp_MemberTickets (personID) SELECT personID FROM members WHERE members.status = 0";
+      $q_insert = "INSERT INTO tp_MemberTickets (id) SELECT id FROM members WHERE members.status = 0";
     }else if(strcmp($table_name,"tp_TicketTotal")==0){
       //必ず必要な4つを挿入する
       $q_insert = 
@@ -227,8 +227,8 @@
     }else if(strcmp($table_name,"tp_Permissions")==0){
       //全ての活動中の団員を挿入
       $q_insert = 
-      "INSERT INTO tp_Permissions (personID, permission) 
-      SELECT personID, CASE admin WHEN 1 then 1 ELSE 999 end as permission 
+      "INSERT INTO tp_Permissions (id, permission) 
+      SELECT id, CASE admin WHEN 1 then 1 ELSE 999 end as permission 
       FROM members WHERE members.status = 0";
     }else{
       //テーブル名が間違っている場合

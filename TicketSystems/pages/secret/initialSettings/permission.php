@@ -41,7 +41,7 @@
   <h2>団員を選択</h2>
   <?php 
     //全団員の名簿を取得する
-    $q_select = "SELECT personID,part,grade,last_name,first_name,permission FROM members LEFT JOIN tp_Permissions USING(personID) ORDER BY grade ASC";
+    $q_select = "SELECT id,part,grade,last_name,first_name,permission FROM members LEFT JOIN tp_Permissions USING(id) ORDER BY grade ASC";
     $result = $mysqli->query($q_select);
     $members = [];
     while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -62,7 +62,7 @@
       <tr class="td">
         <td class="flag">
           <?php if($member['permission']!=1): ?>
-          <input type="checkbox" class="form-check-input" name="personID[]" value="<?=$member['personID']?>">
+          <input type="checkbox" class="form-check-input" name="id[]" value="<?=$member['id']?>">
           <?php endif; ?>
         </td>
         <td class="grade"><?=$member['grade']?></td>

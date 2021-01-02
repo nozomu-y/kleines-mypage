@@ -18,7 +18,7 @@
     <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
   </div>
   <div class="form-group">
-    <?php /*<input type="hidden" name="personID" value="<?=h($_SESSION['mypage_personID'])?>" */ ?>
+    <?php /*<input type="hidden" name="id" value="<?=h($_SESSION['mypage_id'])?>" */ ?>
     <?php /*<input type="hidden" name="name" value="<?=h(USER->name)?>"> */?>
     <input type="hidden" class="js-form-item" name="orderTypeID" value="<?=$orderTypeID?>">
     <input type="hidden" class="js-form-item" name="orderType" value="<?=$orderType?>">
