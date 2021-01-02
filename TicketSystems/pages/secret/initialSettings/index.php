@@ -5,11 +5,16 @@
   require_once TP_ROOT.'/include/header.php';
 ?>
 <p class="tx">初期化時の挙動</p>
-<p class="tx">
-  tp_MemberTickets, tp_TicketTotal, tp_Reserves, tp_Responses, tp_Promotions, tp_Orders,
-  tp_OrderTypes, tp_Permissions の各テーブルを、存在していなかったら作成し、存在していたら空にする。<br>
-  その後、membersから、tp_MemberTicketsに入っていない団員のIDを抽出して挿入する<br>
-  その後、全メンバーについて、have,soldの値を0にセット</p><br>
+<p class="tx">①必要なテーブルを作成する。存在していた時は空にする。</p>
+<p class="tx-sm">必要なテーブル一覧：tp_MemberTickets, tp_TicketTotal, tp_Reserves, tp_Responses, tp_Promotions, tp_Orders,
+  tp_OrderTypes, tp_Permissions</p><br>
+<p class="tx">②必要なタプルを挿入する</p>
+<p class="tx-sm">
+  必要なタプル：<br>
+  　tp_MemberTickets, tp_Permissionsに全団員分のタプル、<br>
+  　tp_TicketTotalに必要な4つのチケット種別、<br>
+  　tp_OrderTypesにオーダー種別を挿入
+</p><br>
 <p class="tx">初期化しますか？</p>
 <button class="btn btn-primary js-modal-open js-form-confirm" data-target="#confirmModal">はい</button>
 <div class="modal js-modal" id="confirmModal">

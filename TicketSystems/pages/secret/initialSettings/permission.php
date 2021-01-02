@@ -18,7 +18,7 @@
   $applyStyle = "secret";
   require_once TP_ROOT.'/include/header.php';
 ?>
-<?php //TODO: 説明を、モーダルやアコーディオン等の、表示・非表示を変更できる形にすると、スクロールが減っていいのではないか？ ?>
+<?php //TODO: 説明を、モーダルやアコーディオン等の隠せる形に変更する ?>
 <p class="tx">権限を設定する団員を選択して、「権限を追加」を押してください。</p>
 <p class="tx">渉外チーフの権限は「権限11」、渉外・フロントの団員の権限は「権限12」です。</p>
 <p class="tx">※注記：権限1はWeb管です</p>
@@ -28,7 +28,7 @@
 <h2>団員フィルター</h2>
 <?php include TP_ROOT."/include/btn-filter/filter.php"; ?>
 <form action="<?=$_SERVER['PHP_SELF'];?>" method="post">
-  <!-- manipulate select -->
+  <!-- manipulation selectbox -->
   <h2>操作を選択</h2>
   <div class="selectbox">
     <select name="permission" id="select-permission">
@@ -47,7 +47,6 @@
     while($row = $result->fetch_array(MYSQLI_ASSOC)){
       $members[] = $row;
     }
-    //結果セットを解放
     $result->free();
   ?>
   <table>

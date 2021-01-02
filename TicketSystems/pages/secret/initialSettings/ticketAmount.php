@@ -18,7 +18,6 @@
   while($row = $result->fetch_array(MYSQLI_ASSOC)){
     $default_assign[] = $row;
   }
-  //結果セットを解放
   $result->free();
 
   //追加で用意する、可変のチケット区分(枚数は0)
@@ -34,6 +33,7 @@
   $applyStyle = "secret";
   require_once TP_ROOT.'/include/header.php';
 ?>
+<?php //TODO: 説明をモーダルやアコーディオン等隠せるものに変更 ?>
 <p class="tx">チケットの種別についての設定を行います。</p>
 <p class="tx">「チケットの全ての合計枚数」は、ホールに呼べる最大数を入力してください。</p>
 <p class="tx">「チケット種別・枚数の初期値」は、それぞれチケットの種類の名前と、それが何枚あるかを入力してください。</p>
