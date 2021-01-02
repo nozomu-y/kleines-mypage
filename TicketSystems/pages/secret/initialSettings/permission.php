@@ -82,8 +82,30 @@
   <button class="btn btn-primary" type="submit">権限を適用</button>
 </form>
 <!-- finish button -->
-<form method="post" action="../index.php">
-  <input type="hidden" name="tp_status" value="complete_init">
-  <button class="btn btn-success" type="submit">設定を完了</button>
-</form>
+<button class="btn btn-success js-modal-open" type="button" >設定を完了</button>
+<div class="modal js-modal" id="confirmModal">
+  <div class="modal-bg js-modal-close"></div>
+  <div class="modal-content">
+    <div class="modal-header"><div class="modal-title">入力確認</div>
+      <span class="modal-cross js-modal-close"><span class="cross1"></span><span class="cross2"></span></span>
+    </div>
+    <div class="modal-main">
+      <p class="tx">設定を完了してよろしいですか？</p>
+      <p class="tx">※チケット種別、権限の設定は、後から変更可能です</p>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-left">
+        <button class="btn btn-secondary js-modal-close">戻る</button>
+      </div>
+      <div class="modal-right">
+        <form method="post" action="../index.php">
+          <input type="hidden" name="tp_status" value="complete_init">
+          <button class="btn btn-primary" type="submit">はい</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- import js files -->
+<script src="<?=TP_SERVER?>/include/js/modal.js"></script>
 <?php require_once TP_ROOT.'/include/footer.php'; ?>
