@@ -1,7 +1,4 @@
 <?php
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/Common/dbconnect.php');
-
   //操作対象のpersonのid、付与する権限を取得
   $personIDs = array();
   if(isset($_POST["personID"]) && is_array($_POST["personID"])){

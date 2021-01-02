@@ -1,23 +1,22 @@
 <?php
+  require_once __DIR__.'/../../../include/tp_init.php';
   //どのページから送られてきたかによって、一度だけ処理を行う
   //TODO: ブラウザバックの対応
   if($_POST['process']=="ticket"){
-    require_once(__DIR__.'/configureTickets.php');
+    require_once __DIR__.'/configureTickets.php';
     header("Location:".$_SERVER['PHP_SELF']);
     exit();
   }
 
   if($_POST['process']=='permission'){
-    require_once(__DIR__.'/configurePermission.php');
+    require_once __DIR__.'/configurePermission.php';
     header("Location:".$_SERVER['PHP_SELF']);
     exit();
   }
 
-  //require_once($_SERVER['DOCUMENT_ROOT']."/TicketSystems/kleines-mypage/Common/init_page.php");
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
   $pageTitle = "権限設定";
   $applyStyle = "secret";
-  require_once(ROOT.'/include/header.php');
+  require_once TP_ROOT.'/include/header.php';
 ?>
 <?php //TODO: 説明を、モーダルやアコーディオン等の、表示・非表示を変更できる形にすると、スクロールが減っていいのではないか？ ?>
 <p class="tx">権限を設定する団員を選択して、「権限を追加」を押してください。</p>
@@ -27,7 +26,7 @@
 <p class="tx">※注記：この設定は後から変更できます</p><br>
 <!-- filters -->
 <h2>団員フィルター</h2>
-<?php include(ROOT."/include/btn-filter/filter.php"); ?>
+<?php include TP_ROOT."/include/btn-filter/filter.php"; ?>
 <form action="<?=$_SERVER['PHP_SELF'];?>" method="post">
   <!-- manipulate select -->
   <h2>操作を選択</h2>
@@ -42,7 +41,6 @@
   <h2>団員を選択</h2>
   <?php 
     //全団員の名簿を取得する
-    require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/Common/dbconnect.php');
     $q_select = "SELECT personID,part,grade,last_name,first_name,permission FROM members LEFT JOIN tp_Permissions USING(personID) ORDER BY grade ASC";
     $result = $mysqli->query($q_select);
     $members = [];
@@ -89,6 +87,4 @@
   <input type="hidden" name="tp_status" value="complete_init">
   <button class="btn btn-success" type="submit">設定を完了</button>
 </form>
-
-
-<?php require_once(ROOT.'/include/footer.php'); ?>
+<?php require_once TP_ROOT.'/include/footer.php'; ?>

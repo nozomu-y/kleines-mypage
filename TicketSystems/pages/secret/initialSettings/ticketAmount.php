@@ -1,14 +1,14 @@
 <?php
+  require_once __DIR__.'/../../../include/tp_init.php';
   //一度だけ処理を行う
   //TODO ブラウザバックの対応
   if($_POST['process']=="initTables"){
-    require_once(__DIR__.'/initTables.php');
+    require_once __DIR__.'/initTables.php';
     header("Location:".$_SERVER['PHP_SELF']);
     exit();
   }
 
   //DBからtp_TicketTotalに既に存在するチケット種別と枚数を取得する
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/Common/dbconnect.php');
   $q_select = "SELECT ticketTypeCode, ticketTypeValue, amount FROM tp_TicketTotal";
   $result = $mysqli->query($q_select);
   $default_assign = [];
@@ -30,11 +30,9 @@
     ["ticketTypeValue"=>"当日券用にキープ","amount"=>0]
   ];
 
-  //require_once($_SERVER['DOCUMENT_ROOT']."/TicketSystems/kleines-mypage/Common/init_page.php");
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
   $pageTitle = "チケット枚数設定";
   $applyStyle = "secret";
-  require_once(ROOT.'/include/header.php');
+  require_once TP_ROOT.'/include/header.php';
 ?>
 <p class="tx">チケットの種別についての設定を行います。</p>
 <p class="tx">「チケットの全ての合計枚数」は、ホールに呼べる最大数を入力してください。</p>
@@ -122,6 +120,6 @@
 </form>
 <!-- import js files-->
 <script src="ticketAmount.js"></script>
-<script src="<?=SERVER?>/include/js/form-block-removable.js"></script>
-<script src="<?=SERVER?>/include/js/form-modal.js"></script>
-<?php require_once(ROOT.'/include/footer.php'); ?>
+<script src="<?=TP_SERVER?>/include/js/form-block-removable.js"></script>
+<script src="<?=TP_SERVER?>/include/js/form-modal.js"></script>
+<?php require_once TP_ROOT.'/include/footer.php'; ?>

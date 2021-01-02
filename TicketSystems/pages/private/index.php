@@ -1,10 +1,10 @@
 <?php
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
+  require_once __DIR__.'/../../include/tp_init.php';
   $pageTitle = "渉外用TOP";
   $applyStyle = "private";
-  require_once(ROOT.'/include/header.php');
+  require_once TP_ROOT.'/include/header.php';
 ?>
 <p class="tx">top page test</p>
 <h2>Sub Title</h2>
 <p class="tx">sub title</p>
-<?php require_once(ROOT.'/include/footer.php'); ?>
+<?php require_once TP_ROOT.'/include/footer.php'; ?>

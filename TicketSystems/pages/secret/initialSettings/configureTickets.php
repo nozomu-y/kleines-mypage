@@ -1,7 +1,4 @@
 <?php 
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/Common/dbconnect.php');
-
   $sum = $_POST["sumAmount"]; //scala
   $ticketType = $_POST["ticketType"]; //array
   $ticketTypeAmount = $_POST["ticketTypeAmount"];  //array

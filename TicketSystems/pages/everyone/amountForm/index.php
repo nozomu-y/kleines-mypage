@@ -1,10 +1,9 @@
 <?php
-  //require_once($_SERVER['DOCUMENT_ROOT']."/TicketSystems/kleines-mypage/Common/init_page.php");
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
-  require_once(__DIR__.'/ticketTypeController.php');
+  require_once __DIR__.'/../../../include/tp_init.php';
+  require_once __DIR__.'/ticketTypeController.php';
   $pageTitle = $pageTitle_;
   $applyStyle = "everyone";
-  require_once(ROOT.'/include/header.php');
+  require_once TP_ROOT.'/include/header.php';
 ?>
 <p class="tx">
   改装中<br>
@@ -47,5 +46,5 @@
   </div>
 </form>
 <!-- import js files-->
-<script src="<?=SERVER?>/include/js/form-modal.js"></script>
-<?php require_once(ROOT.'/include/footer.php'); ?>
+<script src="<?=TP_SERVER?>/include/js/form-modal.js"></script>
+<?php require_once TP_ROOT.'/include/footer.php'; ?>

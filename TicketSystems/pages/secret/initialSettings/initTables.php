@@ -6,8 +6,6 @@
    * 外部キーを無効にして行わないと、truncateするときに弾かれる。
    * テーブル間に外部キー制約があるので順番にも注意。
    */
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/Common/dbconnect.php');
 
   $res_foreign_key = $mysqli->query("SET foreign_key_checks = 0"); //外部キーのチェックを無効にする
 

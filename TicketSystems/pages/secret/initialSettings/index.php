@@ -1,9 +1,8 @@
 <?php
-  //require_once($_SERVER['DOCUMENT_ROOT']."/TicketSystems/kleines-mypage/Common/init_page.php");
-  require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems/config/config.php');
+  require_once __DIR__.'/../../../include/tp_init.php';
   $pageTitle = "初期化";
   $applyStyle = "secret";
-  require_once(ROOT.'/include/header.php');
+  require_once TP_ROOT.'/include/header.php';
 ?>
 <p class="tx">初期化時の挙動</p>
 <p class="tx">
@@ -36,5 +35,5 @@
   </div>
 </div>
 <!-- import js files-->
-<script src="<?=SERVER?>/include/js/form-modal.js"></script>
-<?php require_once(ROOT.'/include/footer.php'); ?>
+<script src="<?=TP_SERVER?>/include/js/form-modal.js"></script>
+<?php require_once TP_ROOT.'/include/footer.php'; ?>
