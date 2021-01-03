@@ -6,6 +6,10 @@ $(function(){
     calcAmount();
   });
 
+  $(".js-form-confirm").on('click',function(event){
+    calcAmount();
+  });
+
   /**
    * 渉外所持の枚数(ticketTypeAmount[0])を自動で計算する関数
    */
