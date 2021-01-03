@@ -1,5 +1,6 @@
 <?php
   require_once __DIR__.'/../../../include/tp_init.php';
+  secretFilter(MAX_CHIEF_PERM, $mysqli);
   //一度だけ処理を行う
   //TODO ブラウザバックの対応
   if(isset($_POST['process']) && $_POST['process']=="initTables"){

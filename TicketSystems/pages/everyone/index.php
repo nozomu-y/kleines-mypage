@@ -1,5 +1,6 @@
 <?php
   require_once __DIR__.'/../../include/tp_init.php';
+  //ここにはaccessFilterをつけない(ここだけは表示できるように)
   $pageTitle = "団員用TOP";
   $applyStyle = "everyone";
   require_once TP_ROOT.'/include/header.php';

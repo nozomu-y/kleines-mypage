@@ -12,6 +12,12 @@
     session_start();
     require_once __DIR__ . '/../../Common/dbconnect.php';
     require_once __DIR__ . '/../develop/User.php';
+    require_once __DIR__ . '/accessFilter.php';
+
+    if (!isset($_SESSION['mypage_email'])) {
+      header('Location: ' . TP_SERVER . '/develop/signin.php');
+      exit();
+    }
 
     $email = $_SESSION['mypage_email'];
     $query = "SELECT * FROM members WHERE email='$email'";
@@ -22,11 +28,6 @@
         exit();
     }
     $USER = new User($result->fetch_assoc());
-
-    if (!isset($_SESSION['mypage_email'])) {
-      header('Location: ' . TP_SERVER . '/develop/signin.php');
-      exit();
-    }
   }
   
   

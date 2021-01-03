@@ -1,5 +1,6 @@
 <?php
   require_once __DIR__.'/../../../include/tp_init.php';
+  secretFilter(NO_PERM_NUM, $mysqli);
   $pageTitle = "情宣一覧";
   $applyStyle = "everyone";
   require_once TP_ROOT.'/include/header.php';

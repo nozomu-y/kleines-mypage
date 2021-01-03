@@ -1,6 +1,8 @@
 <?php
   require_once __DIR__.'/../../../include/tp_init.php';
+  secretFilter(NO_PERM_NUM, $mysqli);
   require_once __DIR__.'/ticketTypeController.php';
+  
   $pageTitle = $pageTitle_;
   $applyStyle = "everyone";
   require_once TP_ROOT.'/include/header.php';

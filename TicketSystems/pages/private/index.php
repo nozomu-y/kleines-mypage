@@ -1,5 +1,6 @@
 <?php
   require_once __DIR__.'/../../include/tp_init.php';
+  secretFilter(MAX_PR_PERM, $mysqli);
   $pageTitle = "渉外用TOP";
   $applyStyle = "private";
   require_once TP_ROOT.'/include/header.php';
