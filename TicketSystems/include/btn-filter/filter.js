@@ -57,7 +57,6 @@ $(function(){
         $(element).show();
         $(element).find('.flag input').prop("disabled",false);
       }
-      
     });
   }
 
