@@ -14,9 +14,9 @@
     }else if(strcmp($key,"not-permittied")==0){
       echo("アクセスする権限がありません");
     }else if(strcmp($key,"succeed-secret")==0){
-      echo("パスワードによる認証に成功しました");
+      echo("パスワードによる認証に成功しました。<br>続いて初期化を行ってください。");
     }else{
-      echo("statusArea.phpで存在しないkey:\n"+$key);
+      echo("statusArea.phpで存在しないkey:<br>"+$key);
     }
   }
 ?>
