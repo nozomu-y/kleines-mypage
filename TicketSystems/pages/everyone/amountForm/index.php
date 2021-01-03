@@ -1,6 +1,6 @@
 <?php
   require_once __DIR__.'/../../../include/tp_init.php';
-  secretFilter(NO_PERM_NUM, $mysqli);
+  secretFilter(NO_PERM_NUM, $USER->id, $mysqli);
   require_once __DIR__.'/ticketTypeController.php';
   
   $pageTitle = $pageTitle_;

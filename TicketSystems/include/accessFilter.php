@@ -2,7 +2,7 @@
   /**
    * 
    */
-  function accessFilter($max_permission, $mysqli){
+  function accessFilter($max_permission, $id, $mysqli){
     if(!isInitialized($mysqli)){
       //初期設定画面へ
       $mysqli->close();
@@ -10,7 +10,7 @@
       exit();
     }
     //テーブルがある場合、アクセス者のpermissionを取得
-    $permission = getPermission($USER->id, $mysqli);
+    $permission = getPermission($id, $mysqli);
     //指定されたmax_permissionと大小比較し、権限がない場合はエラーメッセージを設定してリダイレクト
     if($max_permission < $permission){
       $_SESSION['tp_status'] = "not-permittied";
@@ -24,13 +24,13 @@
    * チーフ専用ページのフィルター
    * 初期設定前の場合、
    */
-  function secretFilter($max_permission, $mysqli){
+  function secretFilter($max_permission, $id, $mysqli){
     //パスワード入力によって権限が足りている場合
     if(isset($_SESSION['tp_secret']) && strcmp($_SESSION['tp_secret'], "allowed")==0){
       return;
     }
     //初期設定前の場合、または初期設定済みだが権限が足りてない時
-    if(!isInitialized($mysqli) || ($max_permission < getPermission($USER->id, $mysqli))){
+    if(!isInitialized($mysqli) || ($max_permission < getPermission($id, $mysqli))){
       $mysqli->close();
       header("Location: ". TP_SERVER . "/pages/secret/backdoor/index.php");
       exit();
