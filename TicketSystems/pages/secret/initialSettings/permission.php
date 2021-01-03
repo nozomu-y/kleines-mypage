@@ -1,6 +1,6 @@
 <?php
   require_once __DIR__.'/../../../include/tp_init.php';
-  secretFilter(MAX_CHIEF_PERM, $mysqli);
+  secretFilter(MAX_CHIEF_PERM, $USER->id, $mysqli);
   //どのページから送られてきたかによって、一度だけ処理を行う
   //TODO: ブラウザバックの対応
   if(isset($_POST['process']) && $_POST['process']=="ticket"){
@@ -21,7 +21,7 @@
 ?>
 <?php //TODO: 説明を、モーダルやアコーディオン等の隠せる形に変更する ?>
 <p class="tx">権限を設定する団員を選択して、「権限を追加」を押してください。</p>
-<p class="tx">渉外チーフの権限は「権限11」、渉外・フロントの団員の権限は「権限12」です。</p>
+<p class="tx">渉外チーフの権限は「権限<?=PR_CHIEF_PERM?>」、渉外・フロントの団員の権限は「権限<?=PR_MEMBER_PERM?>」です。</p>
 <p class="tx">※注記：権限1はWeb管です</p>
 <p class="tx">権限を削除するときは、「権限を削除」を選択してください。</p>
 <p class="tx">※注記：この設定は後から変更できます</p><br>
@@ -33,9 +33,9 @@
   <h2>操作を選択</h2>
   <div class="selectbox">
     <select name="permission" id="select-permission">
-      <option value="999">権限を削除</option>
-      <option value="11">チーフ権限(11)を付与</option>
-      <option value="12">渉外権限(12)を付与</option>
+      <option value="<?=NO_PERM_NUM?>">権限を削除</option>
+      <option value="<?=PR_CHIEF_PERM?>">チーフ権限(<?=PR_CHIEF_PERM?>)を付与</option>
+      <option value="<?=PR_MEMBER_PERM?>">渉外権限(<?=PR_MEMBER_PERM?>)を付与</option>
     </select>
   </div>
   <!-- form tables -->
@@ -71,7 +71,7 @@
         <td class="last_name"><?=$member['last_name']?></td>
         <td class="first_name"><?=$member['first_name']; ?></td>
         <td class="permission">
-          <?php if($member['permission']!=999 ): ?>
+          <?php if($member['permission'] != NO_PERM_NUM ): ?>
           <?=$member['permission']?>
           <?php endif; ?>
         </td>
