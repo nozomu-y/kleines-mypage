@@ -13,7 +13,7 @@
   $stmt->bind_result($id,$pass,$lname,$fname,$part,$grade);
   $result = $stmt->fetch();
   if($result == NULL){
-    $_SESSION['tp_error'] = "wrong-email";
+    $_SESSION['tp_status'] = "wrong-email";
     $stmt->close();
     header("Location: ".TP_SERVER."/develop/signin.php");
     exit();
@@ -23,7 +23,7 @@
   //検索したユーザー名に対してパスワードが正しいかを検証
   //正しくないとき
   if(!password_verify($_POST['password'],$pass)){
-    $_SESSION['tp_error'] = "wrong-password";
+    $_SESSION['tp_status'] = "wrong-password";
     $stmt->close();
     header("Location: ".TP_SERVER."/develop/signin.php");
     exit();

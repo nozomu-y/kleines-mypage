@@ -11,6 +11,10 @@
       echo("存在しないメールアドレスです");
     }else if(strcmp($key,"wrong-password")==0){
       echo("パスワードが違います");
+    }else if(strcmp($key,"not-permittied")==0){
+      echo("アクセスする権限がありません");
+    }else if(strcmp($key,"succeed-secret")==0){
+      echo("パスワードによる認証に成功しました");
     }else{
       echo("statusArea.phpで存在しないkey:\n"+$key);
     }
@@ -23,10 +27,6 @@
       if(isset($_SESSION['tp_status'])){
         printStatusMessage($_SESSION['tp_status']);
         unset($_SESSION['tp_status']);
-      }
-      if(isset($_SESSION['tp_error'])){
-        printStatusMessage($_SESSION['tp_error']);
-        unset($_SESSION['tp_error']);
       }
       if(isset($_POST['tp_status'])){
         printStatusMessage($_POST['tp_status']);
