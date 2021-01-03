@@ -5,6 +5,8 @@
   define('NO_PERM_NUM', 999);
   define('MAX_CHIEF_PERM', 19);
   define('MAX_PR_PERM', 29);
+  define('PR_CHIEF_PERM', 10);
+  define('PR_MEMBER_PERM', 20);
   define('SECRET_PASS', '09yampapa26');
 if(strcmp(MODE,'test')==0){
   define('TP_ROOT', $_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems');
