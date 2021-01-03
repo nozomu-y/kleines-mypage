@@ -228,7 +228,7 @@
       //全ての活動中の団員を挿入
       $q_insert = 
       "INSERT INTO tp_Permissions (id, permission) 
-      SELECT id, CASE admin WHEN 1 then 1 ELSE 999 end as permission 
+      SELECT id, CASE admin WHEN 1 then 1 ELSE ".NO_PERM_NUM." end as permission 
       FROM members WHERE members.status = 0";
     }else{
       //テーブル名が間違っている場合
