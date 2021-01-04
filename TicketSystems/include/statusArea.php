@@ -15,6 +15,10 @@
       echo("アクセスする権限がありません");
     }else if(strcmp($key,"succeed-secret")==0){
       echo("パスワードによる認証に成功しました。<br>続いて初期化を行ってください。");
+    }else if(strcmp($key,"edit-perm")==0){
+      echo("権限の変更を適用しました");
+    }else if(strcmp($key,"complete-perm-edit")==0){
+      echo("権限の設定が完了しました");
     }else{
       echo("statusArea.phpで存在しないkey:<br>"+$key);
     }
