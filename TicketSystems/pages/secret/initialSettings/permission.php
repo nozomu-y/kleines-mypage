@@ -29,7 +29,7 @@
 <p class="tx-sm">・フィルタリングを使用できます。</p>
 <p class="tx-sm">・フィルタリングされている団員には、権限は適用されません。</p>
 <br>
-<p class="tx">③全ての権限設定を完了したら、「設定を完了」を押してください。</p>
+<p class="tx">③全ての権限設定が完了したら、「設定を完了」を押してください。</p>
 <p class="tx-sm">・注記：この設定は後から変更できます</p><br>
 <form action="<?=$_SERVER['PHP_SELF'];?>" method="post">
   <!-- manipulation selectbox -->
