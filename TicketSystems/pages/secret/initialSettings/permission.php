@@ -20,17 +20,20 @@
   require_once TP_ROOT.'/include/header.php';
 ?>
 <?php //TODO: 説明を、モーダルやアコーディオン等の隠せる形に変更する ?>
-<p class="tx">権限を設定する団員を選択して、「権限を追加」を押してください。</p>
-<p class="tx">渉外チーフの権限は「権限<?=PR_CHIEF_PERM?>」、渉外・フロントの団員の権限は「権限<?=PR_MEMBER_PERM?>」です。</p>
-<p class="tx">※注記：権限1はWeb管です</p>
-<p class="tx">権限を削除するときは、「権限を削除」を選択してください。</p>
-<p class="tx">※注記：この設定は後から変更できます</p><br>
-<!-- filters -->
-<h2>団員フィルター</h2>
-<?php include TP_ROOT."/include/btn-filter/filter.php"; ?>
+<p class="tx">①適用する権限を選んでください。</p>
+<p class="tx-sm">・渉外チーフの権限は「権限<?=PR_CHIEF_PERM?>」、渉外・フロントの団員の権限は「権限<?=PR_MEMBER_PERM?>」です。</p>
+<p class="tx-sm">・権限を削除するときは、「権限を削除」を選択してください。</p>
+<p class="tx-sm">・注記：権限1はWeb管です</p>
+<br>
+<p class="tx">②権限を設定する団員を選択して、「権限を適用」を押してください。</p>
+<p class="tx-sm">・フィルタリングを使用できます。</p>
+<p class="tx-sm">・フィルタリングされている団員には、権限は適用されません。</p>
+<br>
+<p class="tx">③全ての権限設定を完了したら、「設定を完了」を押してください。</p>
+<p class="tx-sm">・注記：この設定は後から変更できます</p><br>
 <form action="<?=$_SERVER['PHP_SELF'];?>" method="post">
   <!-- manipulation selectbox -->
-  <h2>操作を選択</h2>
+  <h2>権限を選択</h2>
   <div class="selectbox">
     <select name="permission" id="select-permission">
       <option value="<?=NO_PERM_NUM?>">権限を削除</option>
@@ -38,6 +41,9 @@
       <option value="<?=PR_MEMBER_PERM?>">渉外権限(<?=PR_MEMBER_PERM?>)を付与</option>
     </select>
   </div>
+  <!-- filters -->
+  <h2>団員フィルター</h2>
+  <?php include TP_ROOT."/include/btn-filter/filter.php"; ?>
   <!-- form tables -->
   <h2>団員を選択</h2>
   <?php 
