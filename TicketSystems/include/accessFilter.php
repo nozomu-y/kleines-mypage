@@ -1,6 +1,11 @@
 <?php
   /**
-   * 
+   * permissionの値によってアクセス制限を行う関数
+   * 権限が足りない場合は、everyone/index.phpにリダイレクトする
+   * permissionのテーブルが存在しない(初期設定前)の場合、secret/backdoorにリダイレクトし、初期設定を促す
+   * @param max_permission そのページにアクセス可能な権限の最大値
+   * @param id アクセスする人のid。実際のページではUSERから取得
+   * @param mysqli mysqliオブジェクト
    */
   function accessFilter($max_permission, $id, $mysqli){
     if(!isInitialized($mysqli)){
@@ -22,7 +27,7 @@
 
   /**
    * チーフ専用ページのフィルター
-   * 初期設定前の場合、
+   * 初期設定前の場合、または権限が足りない場合は、パスワード入力ページにリダイレクト
    */
   function secretFilter($max_permission, $id, $mysqli){
     //パスワード入力によって権限が足りている場合
@@ -53,7 +58,7 @@
 
   /**
    * idからアクセス者のpermissionを返すメソッド
-   * 使用前にテーブルが存在するかどうかを確認してください
+   * ※注意：使用前にテーブルが存在するかどうかを確認してください
    */
   function getPermission($id, $mysqli){
     $stmt_select = $mysqli->prepare('SELECT permission FROM tp_Permissions WHERE id = ?');
