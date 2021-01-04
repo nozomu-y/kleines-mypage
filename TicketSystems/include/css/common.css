@@ -319,7 +319,7 @@ div {
   max-height: 15rem;
   border-bottom: .5px solid #aaaaaa;
   border-top: .5px solid #aaaaaa;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .modal form {
