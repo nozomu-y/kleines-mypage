@@ -6,7 +6,7 @@
   require_once TP_ROOT.'/include/header.php';
 ?>
 <p class="tx">権限がある団員の一覧です。</p>
-<?php //TODO: 配列(連想配列？)とか使って、権限の種類網羅を自動化する ?>
+<?php //TODO: 配列orSQL?とか使って、権限の種類網羅を自動化する ?>
 <p class="tx">権限1：web管権限</p>
 <p class="tx">権限<?=PR_CHIEF_PERM?>：渉外チーフ権限</p>
 <p class="tx">権限<?=PR_MEMBER_PERM?>：渉外権限</p>
