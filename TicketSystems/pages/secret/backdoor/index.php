@@ -13,9 +13,9 @@
   $applyStyle = "secret";
   require_once TP_ROOT.'/include/header.php';
 ?>
-<p class="tx">初期設定のためのパスワードを入力してください。</p>
+<p class="tx">先へ進むためのパスワードを入力してください。</p>
 <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-  <input class="form-text" type="password" name="password" required>
+  <input class="form-text form-group" type="password" name="password" required>
   <input type="hidden" name="process" value="secret-pass">
   <button class="btn btn-primary" type="submit">送信</button>
 </form>
