@@ -58,8 +58,15 @@ p {
 }
 
 /* リンクに関するCSS */
+/*
 a:visited {
   color: rgb(45, 206, 218);
+}
+*/
+
+a.btn {
+  color: #ffffff;
+  text-decoration: none;
 }
 
 /* main部分周りのスタイルシート */
@@ -326,6 +333,7 @@ table {
   color: #212529;
   font-size: 14px;
   width: 100%;
+  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
