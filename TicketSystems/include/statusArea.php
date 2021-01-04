@@ -20,7 +20,6 @@
     }
   }
 ?>
-
 <div class="status-area">
   <p class="tx">
     <?php
