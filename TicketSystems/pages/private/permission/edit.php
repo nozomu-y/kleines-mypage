@@ -22,9 +22,9 @@
 <p class="tx">②権限を設定する団員を選択して、「権限を適用」を押してください。</p>
 <p class="tx-sm">・フィルタリングを使用できます</p>
 <p class="tx-sm">・フィルタリングされている団員には、権限は適用されません</p>
-<p class="tx-sm">・自分より強い権限の人は選択できません</p>
+<p class="tx-sm">・自分と自分より強い権限の人は選択できません</p>
 <br>
-<p class="tx">③全ての権限設定を完了したら、「設定を完了」を押してください。</p>
+<p class="tx">③全ての権限設定が完了したら、「設定を完了」を押してください。</p>
 <form action="<?=$_SERVER['PHP_SELF'];?>" method="post">
   <!-- manipulation selectbox -->
   <h2>操作を選択</h2>
@@ -68,7 +68,7 @@
     <?php foreach($members as $member):?>
       <tr class="td">
         <td class="flag">
-          <?php if($member['permission']!=1 && $member['permission'] >= $permission): ?>
+          <?php if($member['permission']!=1 && $member['permission'] >= $permission && $member['id'] != $USER->id): ?>
           <input type="checkbox" class="form-check-input" name="id[]" value="<?=$member['id']?>">
           <?php endif; ?>
         </td>
