@@ -45,6 +45,7 @@
    * @param mysqli mysqliオブジェクト
    */
   function updateTicketTotal($ticketTypeCode, $operator, $amount, $mysqli){
+    if($amount == 0) return;
     if(strcmp($operator, "+") == 0){
       $stmt_TicTot = $mysqli->prepare("UPDATE tp_TicketTotal SET amount = amount + ? WHERE ticketTypeCode = ?");
     }else if(strcmp($operator, "-") == 0){
@@ -68,6 +69,7 @@
    * @param mysqli mysqliオブジェクト
    */
   function updateMemberTickets($type, $operator, $personID, $amount, $mysqli){
+    if($amount == 0) return;
     if((strcmp($type, "have") == 0) && (strcmp($operator, "+") == 0)){
       $stmt_MemTic = $mysqli->prepare("UPDATE tp_MemberTickets SET have = have + ? WHERE id = ?");
     }else if((strcmp($type, "have") == 0) && (strcmp($operator, "-") == 0)){
@@ -90,6 +92,7 @@
    * 
    */
   function updateTicketAmount($personID, $orderTypeID, $amount, $mysqli){
+    if($amount == 0) return;
     switch($orderTypeID){
       case 1: //request
       case 4: //want_promotion
@@ -142,6 +145,7 @@
   }
 
   function transferTicket($give_id, $receive_id, $amount, $mysqli){
+    if($amount == 0) return;
     updateTicketAmount($give_id, 9, $amount, $mysqli);
     updateTicketAmount($receive_id, 8, $amount, $mysqli);
   }
