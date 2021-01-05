@@ -358,7 +358,7 @@ input.form-check-input {
   height: 16px;
 }
 
-select { 
+select.select { 
   width: 100%;
   -webkit-appearance:none;
     appearance:none;
@@ -386,4 +386,14 @@ select {
   border-bottom:#333 2px solid;
   border-right:#333 2px solid;
   transform:rotate(45deg)translateY(-30%);
+}
+
+select.select-sm {
+  width: 100%;
+  padding: .2rem;
+  box-sizing: border-box;
+  font-size: 13px;
+  border:#ccc 1px solid;
+  border-radius: 3px;
+  background:#fff;
 }

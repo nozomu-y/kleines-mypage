@@ -35,7 +35,7 @@
   <!-- manipulation selectbox -->
   <h2>権限を選択</h2>
   <div class="selectbox">
-    <select name="permission" id="select-permission">
+    <select class="select" name="permission" id="select-permission">
       <option value="<?=NO_PERM_NUM?>">権限を削除</option>
       <option value="<?=PR_CHIEF_PERM?>">チーフ権限(<?=PR_CHIEF_PERM?>)を付与</option>
       <option value="<?=PR_MEMBER_PERM?>">渉外権限(<?=PR_MEMBER_PERM?>)を付与</option>
