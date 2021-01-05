@@ -1,7 +1,7 @@
 <div class="menu-block">
   <input type="checkbox" id="menu-bar01" class="menu-bar">
   <label for="menu-bar01">練習日系メニュー</label>
-  <div class="menu-item"><p class="nav-link">団員にチケットを配る</p><a href=""></a></div>
+  <div class="menu-item"><p class="nav-link">団員にチケットを配る</p><a href="<?=TP_SERVER?>/pages/private/ordersList/index.php?orderTypeID=1"></a></div>
   <div class="menu-item"><p class="nav-link">団員からチケットを返却してもらう</p><a href=""></a></div>
   <div class="menu-item"><p class="nav-link">預かりチケットを受け取る</p><a href=""></a></div>
   <div class="menu-item"><p class="nav-link">情宣希望者にチケットを渡す</p><a href=""></a></div>
