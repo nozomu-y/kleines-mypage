@@ -13,6 +13,7 @@
 <div class="menu-spacer"></div>
 <div class="menu-item"><p class="nav-link">団員用ページTOPへ</p><a href="<?=TP_SERVER."/pages/everyone/index.php"?>"></a></div>
 <div class="menu-item"><p class="nav-link">渉外用ページTOPへ</p><a href="<?=TP_SERVER."/pages/private/index.php"?>"></a></div>
+<div class="menu-item"><p class="nav-link">渉外チーフ用ページTOPへ</p><a href="<?=TP_SERVER."/pages/secret/index.php"?>"></a></div>
 <div class="menu-spacer"></div>
 <?php if(strcmp(MODE,"test")==0):?>
 <div class="menu-block">
