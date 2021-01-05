@@ -17,7 +17,7 @@
 <div class="member-filter">
   <script src="<?=TP_SERVER?>/include/btn-filter/filter.js"></script>
   <div class="js-filter-btn js-filter-part">
-    <p class="tx" style="font-size:18px;">パート</p>
+    <p class="tx" style="font-weight:bold;">パート</p>
     <button class="btn btn-secondary js-filter-clear" name="filter-part-clear" type="button" style="display:inline;">Clear</button>
     <button class="btn btn-secondary js-filter-all" name="filter-part-all" type="button" style="display:inline;">All</button><br>
     <?php foreach($parts as $part): ?>
@@ -27,7 +27,7 @@
   </div>
 
   <div class="js-filter-btn js-filter-grade">
-  <p class="tx" style="font-size:18px;">学年</p>
+  <p class="tx" style="font-weight:bold;">学年</p>
     <button class="btn btn-secondary js-filter-clear" name="filter-grade-clear" type="button" style="display:inline;">Clear</button>
     <button class="btn btn-secondary js-filter-all" name="filter-grade-all" type="button" style="display:inline;">All</button><br>
     <?php foreach($grades as $grade): ?>
