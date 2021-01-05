@@ -4,7 +4,7 @@
 
   //一度だけ処理を行う
   if(isset($_POST['process']) && strcmp($_POST['process'], "submit")==0){
-    require_once __DIR__.'/order.php';
+    require_once __DIR__.'/resolveOrder.php';
     $_SESSION['tp_status'] = "succeed-submit";
     header("Location: ".$_SERVER['PHP_SELF']."?orderTypeID=".$_GET['orderTypeID']); //更新対策
     exit();
