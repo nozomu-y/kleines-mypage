@@ -1,6 +1,15 @@
 <?php
   require_once __DIR__.'/../../../include/tp_init.php';
   accessFilter(NO_PERM_NUM, $USER->id, $mysqli);
+  //一度だけ処理を行う
+  if(isset($_POST['process']) && strcmp($_POST['process'], "submit")==0){
+    require_once __DIR__.'/order.php';
+    $_SERVER['tp_status'] = "succeed-submit";
+    header("Location: ".$_SERVER['PHP_SELF']."?orderTypeID=".$_GET['orderTypeID']);
+    exit();
+  }
+
+
   require_once __DIR__.'/ticketTypeController.php';
   
   $pageTitle = $pageTitle_;
@@ -12,7 +21,7 @@
   指定フォーム：<?=$orderType?>
 </p>
 <p class="tx"><?=$message?></p>
-<form method="post" action="#" class="needs-validation" novalidate>
+<form method="post" action="<?=$_SERVER['PHP_SELF']?>?orderTypeID=<?=$_GET['orderTypeID']?>" class="needs-validation" novalidate>
   <div class="form-group">
     <input type="text" class="form-text js-form-item js-valid-amount" name="amount" id="amount" placeholder="枚数を入力してください" required>
     <div class="required-feedback">枚数を入力してください</div>
@@ -20,10 +29,12 @@
     <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
   </div>
   <div class="form-group">
-    <?php /*<input type="hidden" name="id" value="<?=h($_SESSION['mypage_id'])?>" */ ?>
-    <?php /*<input type="hidden" name="name" value="<?=h(USER->name)?>"> */?>
-    <input type="hidden" class="js-form-item" name="orderTypeID" value="<?=$orderTypeID?>">
+    <?php /*
+    TODO: orderType_jpのカラムを作成する
+    <input type="hidden" class="js-form-item" name="orderTypeID" value="<?=$orderTypeID?>"> 
     <input type="hidden" class="js-form-item" name="orderType" value="<?=$orderType?>">
+    */?>
+    <input type="hidden" name="process" value="submit">
   </div>
   <button class="btn btn-primary js-modal-open js-form-confirm" data-target="confirmModal">入力確認</button>
   <div class="modal js-modal" id="confirmModal">

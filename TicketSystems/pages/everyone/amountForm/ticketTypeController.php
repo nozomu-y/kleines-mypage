@@ -17,7 +17,7 @@
     $message = "返品された枚数を入力してください";
   }else{
     //不正な操作が行われた時、それ相応の対応をする
-    $_SESSION['tp_status'] = "invalidPage";
+    $_SESSION['tp_status'] = "invalid-page";
     header("Location: ../index.php");
     exit();
   }
