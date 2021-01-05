@@ -1,11 +1,12 @@
 <?php
   require_once __DIR__.'/../../../include/tp_init.php';
   accessFilter(NO_PERM_NUM, $USER->id, $mysqli);
+
   //一度だけ処理を行う
   if(isset($_POST['process']) && strcmp($_POST['process'], "submit")==0){
     require_once __DIR__.'/order.php';
-    $_SERVER['tp_status'] = "succeed-submit";
-    header("Location: ".$_SERVER['PHP_SELF']."?orderTypeID=".$_GET['orderTypeID']);
+    $_SESSION['tp_status'] = "succeed-submit";
+    header("Location: ".$_SERVER['PHP_SELF']."?orderTypeID=".$_GET['orderTypeID']); //更新対策
     exit();
   }
 
