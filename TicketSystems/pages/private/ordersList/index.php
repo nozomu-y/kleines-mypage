@@ -3,14 +3,12 @@
   accessFilter(MAX_PR_PERM, $USER->id, $mysqli);
 
   //一度だけ処理を行う
-  /*
   if(isset($_POST['process']) && strcmp($_POST['process'], "resolve")==0){
-    require_once __DIR__.'/order.php';
+    require_once __DIR__.'/resolveOrder.php';
     $_SESSION['tp_status'] = "succeed-resolve";
     header("Location: ".$_SERVER['PHP_SELF']."?orderTypeID=".$_GET['orderTypeID']); //更新対策
     exit();
   }
-  */
 
   require_once __DIR__.'/ticketTypeController.php';
   $pageTitle = $pageTitle_;
@@ -22,7 +20,9 @@
   //全ての未解決オーダーを取得
   $q_select = 
     "SELECT id, grade, last_name, first_name, part, amount, response, orderID FROM tp_Orders 
-    INNER JOIN members USING(id) WHERE finishFlag = 0 AND orderTypeID = $orderTypeID ORDER BY grade ASC, part ASC";
+    INNER JOIN members USING(id) 
+    WHERE finishFlag = 0 AND deleteFlag = 0 AND orderTypeID = $orderTypeID 
+    ORDER BY grade ASC, part ASC";
   $mysqli->query($q_select);
   $result = $mysqli->query($q_select);
   $orders = [];
@@ -34,7 +34,7 @@
 <!-- filters -->
 <h2>団員フィルター</h2>
 <?php include TP_ROOT."/include/btn-filter/filter.php"; ?>
-<h2>一覧</h2>
+<h2>オーダーリスト</h2>
 <form action="<?=$_SERVER['PHP_SELF']."?orderTypeID=$orderTypeID"?>" method="post">
   <table class="js-filter-table">
     <tr class="th">
