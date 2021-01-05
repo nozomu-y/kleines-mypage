@@ -20,8 +20,23 @@
 <!-- filters -->
 <h2>団員フィルター</h2>
 <?php include TP_ROOT."/include/btn-filter/filter.php"; ?>
-<h2>一覧</h2>
-<table>
+<h2>集計</h2>
+<p class="tx">現在個別リストに表示されている人の合計です。</p>
+<p class="tx">フィルターと合わせて使用してください。</p>
+<table id="summary">
+  <tr class="th">
+    <th class="count">人数</th>
+    <th class="have">所持</th>
+    <th class="sold">販売</th>
+  </tr>
+  <tr class="td">
+    <td class="count">---</td>
+    <td class="have">---</td>
+    <td class="sold">---</td>
+  </tr>
+</table>
+<h2>個別リスト</h2>
+<table class="js-filter-table">
   <tr class="th">
     <th class="grade">学年</th>
     <th class="part">パート</th>
@@ -41,14 +56,7 @@
   </tr>
   <?php endforeach; ?>
 </table>
-<h2>集計</h2>
-<table>
-  <tr class="th">
-    <th class="grade">学年</th>
-    <th class="part">パート</th>
-    <th class="have">所持</th>
-    <th class="sold">販売</th>
-  </tr>
-</table>
 
+<!-- import js file -->
+<script src="sumAmount.js"></script>
 <?php require_once TP_ROOT.'/include/footer.php'; ?>
