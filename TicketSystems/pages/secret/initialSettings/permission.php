@@ -56,7 +56,7 @@
     }
     $result->free();
   ?>
-  <table>
+  <table class="js-filter-table">
     <tr class="th">
       <th class="flag">選択</th>
       <th class="grade">学年</th>

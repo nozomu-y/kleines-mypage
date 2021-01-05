@@ -35,7 +35,7 @@ $(function(){
     var border = getSeniorGrade(grades);
 
     //各タプルに対して条件分岐と処理を行う
-    $('tr.td').each(function(index, element){
+    $('table.js-filter-table tr.td').each(function(index, element){
       var filtered_grade = false;
       var filtered_part = false;
       if($.inArray($(element).find('td.grade').text(), grades) < 0){  //学年がgradesに含まれないか
