@@ -10,9 +10,7 @@
     exit();
   }
 
-
   require_once __DIR__.'/ticketTypeController.php';
-  
   $pageTitle = $pageTitle_;
   $applyStyle = "everyone";
   require_once TP_ROOT.'/include/header.php';
