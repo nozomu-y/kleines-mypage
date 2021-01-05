@@ -1,6 +1,6 @@
 <?php
   require_once __DIR__.'/../../../include/tp_init.php';
-  secretFilter(MAX_PR_PERM, $USER->id, $mysqli);
+  accessFilter(MAX_PR_PERM, $USER->id, $mysqli);
   //一度だけ処理を行う
   if(isset($_POST['process']) && $_POST['process']=='permission'){
     require_once __DIR__.'/../../secret/initialSettings/configurePermission.php';
