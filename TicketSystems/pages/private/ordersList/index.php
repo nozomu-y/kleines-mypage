@@ -1,6 +1,7 @@
 <?php
   require_once __DIR__.'/../../../include/tp_init.php';
   accessFilter(MAX_PR_PERM, $USER->id, $mysqli);
+  require_once __DIR__.'/ticketTypeController.php';
 
   //一度だけ処理を行う
   if(isset($_POST['process']) && strcmp($_POST['process'], "resolve")==0){
@@ -10,7 +11,6 @@
     exit();
   }
 
-  require_once __DIR__.'/ticketTypeController.php';
   $pageTitle = $pageTitle_;
   $applyStyle = "private";
   require_once TP_ROOT.'/include/header.php';
