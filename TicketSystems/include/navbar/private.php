@@ -6,7 +6,7 @@
   <div class="menu-item"><p class="nav-link">預かりチケットを受け取る</p><a href="<?=TP_SERVER?>/pages/private/ordersList/index.php?orderTypeID=5"></a></div>
   <div class="menu-item"><p class="nav-link">情宣希望者にチケットを渡す</p><a href="<?=TP_SERVER?>/pages/private/ordersList/index.php?orderTypeID=4"></a></div>
   <div class="menu-item"><p class="nav-link">情宣終了者からチケットを回収する</p><a href="<?=TP_SERVER?>/pages/private/ordersList/index.php?orderTypeID=7"></a></div>
-  <div class="menu-item"><p class="nav-link">本日のチケット受け取り枚数確認</p><a href=""></a></div>
+  <div class="menu-item"><p class="nav-link">本日のチケット受け取り枚数確認</p><a href="<?=TP_SERVER?>/pages/private/todaysTickets/index.php"></a></div>
 </div>
 <div class="menu-block">
   <input type="checkbox" id="menu-bar02" class="menu-bar">
