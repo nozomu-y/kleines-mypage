@@ -34,9 +34,12 @@
       case "succeed-submit":
         echo("送信が完了しました");
         break;
+      case "succeed-resolve":
+        echo("オーダーへの対応を完了しました");
+        break;
       default:
-      echo("statusArea.phpで存在しないkey:<br>"+$key);
-      break;
+        echo("statusArea.phpで存在しないkey:<br>".$key);
+        break;
     }
   }
 ?>
