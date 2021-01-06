@@ -337,6 +337,13 @@ table {
   margin-bottom: 1rem;
 }
 
+.table-wide {
+  display: block;
+  overflow-x: scroll;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
 th { 
   background-color: #ccc;
   padding: .5rem .15rem;
