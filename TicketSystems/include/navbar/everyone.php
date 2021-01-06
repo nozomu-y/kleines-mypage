@@ -5,7 +5,7 @@
   <div class="menu-item"><p class="nav-link">チケットを売ったとき</p><a href=""></a></div>
   <div class="menu-item"><p class="nav-link">チケットを渉外に返したいとき</p><a href="<?=TP_SERVER."/pages/everyone/amountForm/index.php?orderTypeID=3"?>"></a></div>
   <div class="menu-item"><p class="nav-link">チケットがお客様から返品されたとき</p><a href="<?=TP_SERVER."/pages/everyone/amountForm/index.php?orderTypeID=6"?>"></a></div>
-  <div class="menu-item"><p class="nav-link">情宣のアポが取れたとき</p><a href=""></a></div>
+  <div class="menu-item"><p class="nav-link">情宣のアポが取れたとき</p><a href="<?=TP_SERVER."/pages/everyone/promotionRequest/index.php"?>"></a></div>
   <div class="menu-item"><p class="nav-link">情宣一覧確認</p><a href=""></a></div>
   <div class="menu-item"><p class="nav-link">配布済座席確認(指定席限定)</p><a href=""></a></div>
   <div class="menu-item"><p class="nav-link">自分のチケット状況・履歴確認</p><a href=""></a></div>

@@ -21,13 +21,24 @@
       echo($mysqli->error);
     }
     $stmt_insert->close();
+    return $mysqli->insert_id;
   }
 
   /**
    * 
+   * @param orderID 対応するtp_Orders中のorderID
+   * @param groupName 訪問先の団体名
+   * @param date dateオブジェクト、またはnull。入力前に選択してください。strtotime(null)は"1970-01-01 00:00:00"を返します
+   * @param mysqli mysqliオブジェクト
    */
-  function insertPromotion(){
-
+  function insertPromotion($orderID, $groupName, $date, $mysqli){
+    $stmt_insert = $mysqli->prepare("INSERT INTO tp_Promotions (orderID, groupName, date) VALUES (?, ?, ?)");
+    $stmt_insert->bind_param('iss', $orderID, $groupName, $date);
+    if(!$stmt_insert->execute()){
+      echo($mysqli->error);
+      exit();
+    }
+    $stmt_insert->close();
   }
 
   /**
