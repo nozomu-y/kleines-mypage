@@ -55,8 +55,11 @@
       echo("orderHandler.updateTicketTotal : invalid operator");
       exit();
     }
-    $stmt_TicTot->bind_param('i', $amount, $ticketTypeCode);
-    if(!$stmt_TicTot->execute()) echo($mysqli->error);
+    $stmt_TicTot->bind_param('ii', $amount, $ticketTypeCode);
+    if(!$stmt_TicTot->execute()){
+      echo($mysqli->error);
+      exit();
+    }
     $stmt_TicTot->close();
   }
 
@@ -80,7 +83,7 @@
       $stmt_MemTic = $mysqli->prepare("UPDATE tp_MemberTickets SET sold = sold - ? WHERE id = ?");
     }else{
       //error
-      echo("orderHandler.updateMemberTickets : invalid type(".$type.") or operator(".$operator.")");
+      echo("orderHandler.updateMemberTickets : invalid type($type) or operator($operator)");
       exit();
     }
     $stmt_MemTic->bind_param('ii', $amount, $personID);
@@ -139,7 +142,7 @@
         break;
       default:
         //error
-        echo("orderHandler.updateTicketAmount : invalid orderTypeID(".$orderTypeID.")");
+        echo("orderHandler.updateTicketAmount : invalid orderTypeID($orderTypeID)");
         exit();
     }
   }
@@ -180,21 +183,21 @@
    * あるオーダーに対処する関数
    * @param personID 対処した団員のid
    * @param orderID 対処したオーダーのid
-   * @param orderTypeID 対処したオーダーのorderTypeID
    * @param amount 対処した枚数
    * @param mysqli mysqliオブジェクト 
    */
-  function responseOrder($personID, $orderID, $orderTypeID, $amount, $mysqli){
+  function responseOrder($personID, $orderID, $amount, $mysqli){
     $timeStamp = date("Y-m-d H:i:s");
-    //そのオーダーの全ての枚数に対応したのかを確認
-    $stmt_select = $mysqli->prepare("SELECT amount, response FROM tp_Orders WHERE orderID = ?");
+    //そのオーダーの情報を取得
+    $stmt_select = $mysqli->prepare("SELECT id, orderTypeID, amount, response FROM tp_Orders WHERE orderID = ?");
     $stmt_select->bind_param('i', $orderID);
     $stmt_select->execute();
-    $stmt_select->bind_result($order_amount, $order_response);
+    $stmt_select->bind_result($order_person, $orderTypeID, $order_amount, $order_response);
     $result = $stmt_select->fetch();
     if($result == null || $result == false){
       //error
     }
+    //そのオーダーの全ての枚数に対応したのかを確認
     $order_rest = $order_amount - $order_response;  //そのオーダーの対応が必要な枚数
     $finishFlag = 0;
     if($order_rest == $amount){
@@ -209,7 +212,7 @@
         "UPDATE tp_Orders SET response = response + ?, finishFlag = ?, finishTime = ? WHERE orderID = ?");
       $stmt_update->bind_param('iisi', $amount, $finishFlag, $finishTime, $orderID);
     }else if($finishFlag == 0){
-      $stmt_udpate = $mysqli->prepare("UPDATE tp_Orders SET response = response + ? WHERE orderID = ?");
+      $stmt_update = $mysqli->prepare("UPDATE tp_Orders SET response = response + ? WHERE orderID = ?");
       $stmt_update->bind_param('ii', $amount, $orderID);
     }
     $result = $stmt_update->execute();
@@ -224,5 +227,5 @@
     $stmt_insert->close();
 
     //tp_MemberTickets、tp_TicketTotalを更新
-    updateTicketAmount($personID, $orderTypeID, $amount, $mysqli);
+    updateTicketAmount($order_person, $orderTypeID, $amount, $mysqli);
   }
