@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded',function(){
       .insertAfter($original)
       .attr('id', 'form-block\[' + max_form_index + '\]') // クローンのid属性を変更
       .end()
-      .find('input').each(function(index,obj){
+      .find('input, select').each(function(index,obj){
         $(obj).attr({
           name: $(obj).attr('name').replace(/\[[0-9]\]+$/, '[' + max_form_index + ']') //nameの書き換え
         });
@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded',function(){
         max_form_index++;
         $(formObj)
           .attr('id', 'form-block\[' + max_form_index + '\]') // id属性を変更
-          .find('input, textarea').each(function(idx, obj) {
+          .find('input, textarea, select').each(function(idx, obj) {
           $(obj).attr({
             name: $(obj).attr('name').replace(/\[[0-9]\]+$/, '[' + max_form_index + ']')
           });
