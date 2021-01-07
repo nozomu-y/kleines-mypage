@@ -15,13 +15,13 @@
   require_once TP_ROOT.'/include/header.php';
 ?>
 <form method="post" action="<?=$_SERVER['PHP_SELF']?>" class="needs-validation" novalidate>
-<br>
-<div class="form-group">
-  <p class="tx">訪問団体名</p>
-  <input class="form-text js-form-item" type="text" name="groupName" placeholder="団体名を入力してください" required>
-  <div class="required-feedback">名前を入力してください</div>
-  <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
-</div>
+  <br>
+  <div class="form-group">
+    <p class="tx">訪問団体名</p>
+    <input class="form-text js-form-item" type="text" name="groupName" placeholder="団体名を入力してください" required>
+    <div class="required-feedback">名前を入力してください</div>
+    <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+  </div>
   <div class="form-group">
     <p class="tx">追加で欲しいチケット枚数</p>
     <input type="text" class="form-text js-form-item js-valid-amount" name="amount" id="amount" placeholder="枚数を入力してください" required>
