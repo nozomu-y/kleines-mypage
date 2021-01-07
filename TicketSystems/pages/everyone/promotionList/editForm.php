@@ -10,39 +10,20 @@
     exit();
   }
 
-  //不正な操作だった時の関数
-  function invalid(){
-    $_SESSION['tp_status'] = "invalid-page";
-    header("Location: list.php");
-    exit();
-  }
-  //orderIDを取得する
-  if(!isset($_GET['orderID'])){ //orderIDが入力されていなかった場合
-    invalid();
-  }
+  //不正な操作だった時、リストにリダイレクト
+  require_once __DIR__ . "/personFilter.php";
   $orderID = htmlspecialchars($_GET['orderID']);
-  if(!is_numeric($orderID)){  //数字以外のorderIDが入力されていた場合
-    invalid();
-  }
+  personFilter($orderID, $USER->id, $mysqli);
 
-  //入力されたorderIDからpromotionの内容を取得
+  //情宣の情報を取得
   $stmt_promotion = $mysqli->prepare(
-    "SELECT id, groupName, date FROM tp_Promotions 
+    "SELECT groupName, date FROM tp_Promotions 
     INNER JOIN tp_Orders USING(orderID) 
     WHERE orderID = ? AND tp_Promotions.finishFlag = 0");
   $stmt_promotion->bind_param('i', $orderID);
   $stmt_promotion->execute();
-  $stmt_promotion->bind_result($personID, $groupName, $date);
+  $stmt_promotion->bind_result($groupName, $date);
   $result = $stmt_promotion->fetch();
-  if($result==null || $result == false){
-    invalid();
-  }
-  $stmt_promotion->close();
-
-  //orderと違う人だった場合、listに飛ばす
-  if($personID != $USER->id){
-    invalid();
-  }
 
   $pageTitle = "情宣詳細編集";
   $applyStyle = "everyone";
