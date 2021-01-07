@@ -58,17 +58,19 @@
   </div>
   <div class="form-group">
 		<p class="tx">日時はすでに決まっていますか？</p>
-    <input type="checkbox" name="date-determined" id="date-determined" value="はい">
+    <input type="checkbox" name="date-determined" id="date-determined" value="はい"
+    <?php if($date!=null) echo("checked"); ?>>
     <label class="tx" for="date-determined">はい</label>
   </div>
   <div class="form-group" id="date-select">
-    <input class="js-form-item" type="date" name="date" disabled>
+    <input class="js-form-item" type="date" name="date" 
+    <?php if($date!=null) echo("value='$date'"); ?>>
     <?php //TODO: datepickerを調べる。IEとかにも対応 ?>
   </div>
   <input type="hidden" name="process" value="update">
   <button class="btn btn-primary js-modal-open js-form-confirm" data-target="confirmModal">入力確認</button>
-
-  <button class="btn btn-secondary">情宣一覧に戻る</button>
+  <br>
+  <a href="list.php" class="btn btn-secondary">情宣一覧に戻る</a>
   <div class="modal js-modal" id="confirmModal">
     <div class="modal-bg js-modal-close"></div>
     <div class="modal-content">
