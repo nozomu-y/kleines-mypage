@@ -67,7 +67,7 @@
           <button class="btn btn-secondary js-modal-close">戻る</button>
         </div>
         <div class="modal-right">
-          <button class="btn btn-primary">送信</button>
+          <button class="btn btn-primary" type="submit">送信</button>
         </div>
       </div>
     </div>
