@@ -10,6 +10,7 @@ $(function(){
       $('#date-select input').prop('disabled', false);
     }else{
       $('#date-select input').prop('disabled', true);
+      $('#date-select input').val('');
     }
   });
 });
