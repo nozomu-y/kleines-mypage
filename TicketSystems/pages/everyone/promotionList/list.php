@@ -68,20 +68,12 @@
     </td>
     <td class="edit">
       <?php if($promotion['finishFlag']==0): ?>
-      <form action="#" method="post">
-        <input type="hidden" name="orderID" value="<?=$promotion['orderID']?>">
-        <input type="hidden" name="personID" value="<?=$promotion['id']?>">
-        <input type="submit" class="btn btn-secondary" value="編集">
-      </form>
+      <a href="editForm.php?orderID=<?=$promotion['orderID']?>" class="btn btn-secondary">編集</a>
       <?php endif; ?>
     </td>
     <td class="done">
-    <?php if($promotion['finishFlag']==0): ?>
-      <form action="#" method="post">
-        <input type="hidden" name="orderID" value="<?=$promotion['orderID']?>">
-        <input type="hidden" name="personID" value="<?=$promotion['id']?>">
-        <input type="submit" class="btn btn-primary" value="完了">
-      </form>
+      <?php if($promotion['finishFlag']==0): ?>
+      <a href="reportForm.php?orderID=<?=$promotion['orderID']?>" class="btn btn-primary">完了</a>
       <?php endif; ?>
     </td>
   </tr>
