@@ -1,14 +1,15 @@
 $(function(){
-  console.log("road promoReq");
-  $("#date-determined").on('click',function(){
-    console.log("click checkbox");
-    if($(this).prop('checked') == false){
-      //未チェックになったときの動作
-      console.log("not checked");
-      $('#date-select input').prop('disabled', true);
+  if($('#date-determined').prop('checked')){  //ページ読み込み時
+    $('#date-select input').prop('disabled', false);
+  }else{
+    $('#date-select input').prop('disabled', true);
+  }
+  
+  $("#date-determined").on('click',function(){  //チェックボックス変更時
+    if($(this).prop('checked')){
+      $('#date-select input').prop('disabled', false);
     }else{
-      console.log("checked");
-      $('#date-select input').prop('disabled',false);
+      $('#date-select input').prop('disabled', true);
     }
   });
 });
