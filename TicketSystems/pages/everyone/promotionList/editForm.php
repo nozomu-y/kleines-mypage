@@ -49,8 +49,8 @@
     <?php //TODO: datepickerを調べる。IEとかにも対応 ?>
   </div>
   <input type="hidden" name="process" value="update">
-  <button class="btn btn-primary js-modal-open js-form-confirm" data-target="confirmModal">入力確認</button>
   <br>
+  <button class="btn btn-primary js-modal-open js-form-confirm" data-target="confirmModal">入力確認</button>
   <a href="list.php" class="btn btn-secondary">情宣一覧に戻る</a>
   <div class="modal js-modal" id="confirmModal">
     <div class="modal-bg js-modal-close"></div>
