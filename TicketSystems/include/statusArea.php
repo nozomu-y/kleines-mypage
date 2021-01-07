@@ -20,7 +20,7 @@
         echo("アクセスする権限がありません");
         break;
       case "invalid-page":
-        echo("不正な操作が行われました");
+        echo("不正な操作です");
         break;
       case "succeed-secret":
         echo("パスワードによる認証に成功しました。<br>続いて初期化を行ってください。");
