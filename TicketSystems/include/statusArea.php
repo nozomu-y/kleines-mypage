@@ -40,6 +40,9 @@
       case "succeed-update-promotion":
         echo("情宣の詳細の編集を完了しました");
         break;
+      case "succeed-promotion-report":
+        echo("情宣の完了報告を完了しました");
+        break;
       default:
         echo("statusArea.phpで存在しないkey:<br>".$key);
         break;
