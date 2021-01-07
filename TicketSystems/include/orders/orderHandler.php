@@ -167,6 +167,8 @@
 
   function transferTicket($give_id, $receive_id, $amount, $mysqli){
     if($amount == 0) return;
+    insertOrder($give_id, 9, $amount, $mysqli);
+    insertOrder($receive_id, 8, $amount, $mysqli);
     updateTicketAmount($give_id, 9, $amount, $mysqli);
     updateTicketAmount($receive_id, 8, $amount, $mysqli);
   }
