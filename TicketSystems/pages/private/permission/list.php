@@ -39,6 +39,6 @@
   </tr>
   <?php endforeach; ?>
 </table>
-<a class="btn btn-primary" href="edit.php">権限を編集</a>
+<a class="btn btn-primary" href="editForm.php">権限を編集</a>
 
 <?php require_once TP_ROOT.'/include/footer.php'; ?>
