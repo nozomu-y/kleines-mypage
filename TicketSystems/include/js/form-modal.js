@@ -68,6 +68,7 @@
     if(valid){
       //モーダルのjs-form-listを取得し、アイテムを追加していく
       //TODO: items[].nameを、id的な形ではなく人間がわかる形に変換する関数を作る？
+      //TODO: selectの場合、items[i].textだとoptionsを全て表示してしまうのだが、それを選択されているもののtextだけを表示できるようにしたい
       //または2個ずつとかできるようにする？
       $('.modal-main .js-item-list').empty(); //一旦空にする
       for(var i=0; i<num_item; i++){
