@@ -17,10 +17,10 @@
   $actualAmount = 0; //情宣で売った枚数
 
   //渉外からもらった枚数を取得
-  $stmt_select = $mysqli->prepare("SELECT amount FROM tp_Orders WHERE orderID = ?");
+  $stmt_select = $mysqli->prepare("SELECT amount, finishFlag FROM tp_Orders WHERE orderID = ?");
 	$stmt_select->bind_param('i', $orderID);
 	$stmt_select->execute();
-	$stmt_select->bind_result($amount_given_all);
+	$stmt_select->bind_result($amount_given_all, $finishFlag);
 	$result = $stmt_select->fetch();
   $stmt_select->close();
 

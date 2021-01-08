@@ -14,9 +14,9 @@
   }
 
   //不正な操作だった時、リストにリダイレクト
-  require_once __DIR__ . "/personFilter.php";
+  require_once __DIR__ . "/promotionFilter.php";
   $orderID = htmlspecialchars($_GET['orderID']);
-  personFilter($orderID, $USER->id, $mysqli);
+  promotionFilter($orderID, $USER->id, $mysqli);
 
   //情宣の情報を取得
   $stmt_promotion = $mysqli->prepare(

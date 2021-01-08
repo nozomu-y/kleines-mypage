@@ -13,7 +13,7 @@
    * @param id USER->id
    * @param mysqli mysqliオブジェクト
    */
-  function personFilter($orderID, $id, $mysqli){
+  function promotionFilter($orderID, $id, $mysqli){
     //orderIDを取得する
     if(!isset($orderID)){ //orderIDが入力されていなかった場合
       invalid();

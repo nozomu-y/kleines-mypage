@@ -11,9 +11,9 @@
   }
 
   //不正な操作だった時、リストにリダイレクト
-  require_once __DIR__ . "/personFilter.php";
+  require_once __DIR__ . "/promotionFilter.php";
   $orderID = htmlspecialchars($_GET['orderID']);
-  personFilter($orderID, $USER->id, $mysqli);
+  promotionFilter($orderID, $USER->id, $mysqli);
   
   //学年を取得
   $q_grade = "SELECT DISTINCT(grade) FROM members ORDER BY grade ASC";
