@@ -1,9 +1,8 @@
 <?php
   /**
    * TODO:
-   * OrdersがfinishFlag===1じゃなかったらやらない
+   * OrdersがfinishFlag===1じゃなかったらやらない(枚数フィルター)
    * 日付のチェック
-   * 最初の人を自動で本人に変更する
    */
   require_once TP_ROOT."/include/orders/orderHandler.php";
   $orderID = htmlspecialchars($_GET['orderID']);
