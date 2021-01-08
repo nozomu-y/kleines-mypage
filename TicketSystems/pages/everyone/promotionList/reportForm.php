@@ -90,19 +90,19 @@
     <p class="tx" style="font-weight:bold;">団員1人分の情報を入力してください</p>
     <br>
     <div class="form-group">
-      <select class="js-form-item js-form-grade" name="grade-acc[0]" required>
+      <select class="js-form-item js-select-grade" name="grade-acc[0]" required>
         <option value="">選択する</option>
         <?php foreach($grades as $grade): ?>
         <option value="<?=$grade?>"><?=$grade?></option>
         <?php endforeach; ?>
       </select>
-      <select class="js-form-item js-form-part" name="part-acc[0]" required>
+      <select class="js-form-item js-select-part" name="part-acc[0]" required>
         <option value="">選択する</option>
         <?php foreach($parts as $part): ?>
         <option value="<?=$part?>"><?=$part?></option>
         <?php endforeach; ?>
       </select>
-      <select class="js-form-item js-form-name" name="id-acc[0]" required>
+      <select class="js-form-item js-select-id" name="id-acc[0]" required>
         <option value="">選択する</option>
         <?php foreach($members as $member): ?>
         <option class="js-grade-<?=$member['grade']?> js-part-<?=$member['part']?>" value="<?=$member['id']?>">
