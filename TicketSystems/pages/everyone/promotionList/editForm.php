@@ -1,4 +1,7 @@
 <?php
+  /**
+   * TODO: 中止できるようにする(finishFlag=2とか？)(order取り消し機構を先に)
+   */
   require_once __DIR__.'/../../../include/tp_init.php';
   accessFilter(NO_PERM_NUM, $USER->id, $mysqli);
 
