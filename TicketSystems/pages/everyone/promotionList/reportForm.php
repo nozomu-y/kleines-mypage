@@ -41,19 +41,6 @@
   require_once TP_ROOT.'/include/header.php';
 ?>
 <form method="post" action="<?=$_SERVER['PHP_SELF']?>?orderID=<?=$orderID?>" class="needs-validation" novalidate>
-  <?php 
-    /**
-     * 提出者(id)
-     * ・もらったチケットからの売り上げ
-     * ・自分のチケットからの売り上げ
-     * 同行者(*)
-     * ・学年パート名前で選んでもらって、value="id"
-     * ・もらったチケットからの売り上げ
-     * ・本人のチケットからの売り上げ
-     * 
-     * 同伴者がいますか？の方式に変更し、本人情報は固定する
-     */
-  ?>
   <div class="block">
     <p class="tx">担当者の情報</p>
     <div class="form-group">
