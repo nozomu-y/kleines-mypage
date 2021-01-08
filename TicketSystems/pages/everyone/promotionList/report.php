@@ -48,7 +48,7 @@
   $amount_rest = $amount_given_all - $sum_given;
 
   //tp_Ordersにfinish_promotionを登録
-  insertOrder($IDs[0], 7, $amount_rest, $mysqli);
+  insertOrder($id_rep, 7, $amount_rest, $mysqli);
 
   //tp_Promotionを更新
   $finishFlag = 1;
