@@ -1,18 +1,9 @@
 <?php
   /**
+   * TODO:
    * OrdersがfinishFlag===1じゃなかったらやらない
-   * 
-   * id[] (, grade, part)
-   * amount-given[]
-   * amount-self[]
-   * 
-   * 人ごとに、soldを登録
-   * 
-   * 渉外からの枚数を合計する
-   * →orderIDからtp_Orders.amountを取得し、残り枚数を算出
-   * 残り枚数をfinish_promotionに登録
-   * 
-   * 全部の販売枚数を合計して、actualAmountを取得
+   * 日付のチェック
+   * 最初の人を自動で本人に変更する
    */
   require_once TP_ROOT."/include/orders/orderHandler.php";
   $orderID = htmlspecialchars($_GET['orderID']);
