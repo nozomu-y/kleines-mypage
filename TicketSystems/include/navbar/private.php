@@ -12,7 +12,7 @@
   <input type="checkbox" id="menu-bar02" class="menu-bar">
   <label for="menu-bar02">確認系メニュー</label>
   <div class="menu-item"><p class="nav-link">団員のチケット所持・配布状況を見る</p><a href="<?=TP_SERVER?>/pages/private/memberStatus/index.php"></a></div>
-  <div class="menu-item"><p class="nav-link">チケット預かりリストを見る</p><a href=""></a></div>
+  <div class="menu-item"><p class="nav-link">チケット預かりリストを見る</p><a href="<?=TP_SERVER?>/pages/private/reservesList/index.php"></a></div>
   <div class="menu-item"><p class="nav-link">チケット枚数の点検</p><a href=""></a></div>
   <div class="menu-item"><p class="nav-link">チケット種別の確認・変更</p><a href=""></a></div>
   <div class="menu-item"><p class="nav-link">役職メンバーの一覧・編集</p><a href="<?=TP_SERVER."/pages/private/permission/list.php"?>"></a></div>
