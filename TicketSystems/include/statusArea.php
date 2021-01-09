@@ -43,6 +43,9 @@
       case "succeed-promotion-report":
         echo("情宣の完了報告を完了しました");
         break;
+      case "succeed-sold":
+        echo("販売報告を完了しました");
+        break;
       default:
         echo("statusArea.phpで存在しないkey:<br>".$key);
         break;

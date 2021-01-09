@@ -5,10 +5,17 @@
   $applyStyle = "everyone";
   require_once TP_ROOT.'/include/header.php';
 
+  //一度だけ処理を行う
+  if(isset($_POST['process']) && strcmp($_POST['process'], "submit")==0){
+    require_once __DIR__.'/sold.php';
+    $_SESSION['tp_status'] = "succeed-sold";
+    header("Location: ".$_SERVER['PHP_SELF']); //更新対策
+    exit();
+  }
 
 ?>
 <p class="tx">チケットを売り上げた情報を入力するフォームです</p>
-<form method="post" action="<?=$_SERVER['PHP_SELF']?>?orderTypeID=<?=$_GET['orderTypeID']?>" class="needs-validation" novalidate>
+<form method="post" action="<?=$_SERVER['PHP_SELF']?>" class="needs-validation" novalidate>
   <div class="form-group">
     <p class="tx">売った合計枚数を入力してください</p>
     <input type="text" class="form-text js-form-item js-valid-amount" name="amount" id="amount" placeholder="枚数を入力してください" required>

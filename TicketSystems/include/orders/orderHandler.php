@@ -44,8 +44,17 @@
   /**
    * 
    */
-  function insertReserve(){
-
+  function insertReserve($orderID, $lname, $fname, $lname_kana, $fname_kana, $price, $mysqli){
+    $stmt_insert = $mysqli->prepare(
+      "INSERT INTO tp_Reserves (orderID, lastName, firstName, lastNameKana, firstNameKana, price, visitFlag)
+       VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $visitFlag = 0;
+    $stmt_insert->bind_param('issssii', $orderID, $lname ,$fname, $lname_kana, $fname_kana, $price, $visitFlag);
+    if(!$stmt_insert->execute()){
+      echo($mysqli->error);
+      exit();
+    }
+    $stmt_insert->close();
   }
 
   /**
