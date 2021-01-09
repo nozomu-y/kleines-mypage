@@ -2,7 +2,7 @@
   <input type="checkbox" id="menu-bar01" class="menu-bar">
   <label for="menu-bar01">団員用メニュー</label>
   <div class="menu-item"><p class="nav-link">チケットが欲しいとき</p><a href="<?=TP_SERVER."/pages/everyone/amountForm/index.php?orderTypeID=1"?>"></a></div>
-  <div class="menu-item"><p class="nav-link">チケットを売ったとき</p><a href=""></a></div>
+  <div class="menu-item"><p class="nav-link">チケットを売ったとき</p><a href="<?=TP_SERVER."/pages/everyone/salesForm/index.php"?>"></a></div>
   <div class="menu-item"><p class="nav-link">チケットを渉外に返したいとき</p><a href="<?=TP_SERVER."/pages/everyone/amountForm/index.php?orderTypeID=3"?>"></a></div>
   <div class="menu-item"><p class="nav-link">チケットがお客様から返品されたとき</p><a href="<?=TP_SERVER."/pages/everyone/amountForm/index.php?orderTypeID=6"?>"></a></div>
   <div class="menu-item"><p class="nav-link">情宣のアポが取れたとき</p><a href="<?=TP_SERVER."/pages/everyone/promotionRequest/index.php"?>"></a></div>

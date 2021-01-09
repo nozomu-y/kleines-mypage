@@ -8,6 +8,7 @@
 
  $(function(){
   var forms = document.getElementsByClassName('needs-validation');
+  var PRICE_UNIT = 100; //金額の最小単位
 
   //入力確認ボタンをクリックした時の挙動
   $(".js-form-confirm").on('click', function(){
@@ -54,6 +55,23 @@
         }
       }else if(items[i].name.match("js-valid-kana")){
         if(!(items[i].value.match(/^[\u30a0-\u30ff]+$|^[\u3040-\u309f]+$/))){  //全角カナorかなのみ
+          valid = false;
+          valid_item = false;
+        }
+      }else if(items[i].name.match("js-valid-price")){
+        //整数確認
+        var num = Number(items[i].value);
+        if(!Number.isInteger(num) || num < 0){  //0以上の整数のみ
+          valid = false;
+          valid_item = false;
+        }else{
+          items[i].value = Number.parseInt(num);
+        }
+        //金額条件
+        if(items[i].value % PRICE_UNIT != 0){
+          //金額のメッセージを追加
+          var message = '<div class="format-feedback">'+PRICE_UNIT+'円単位で入力してください</div>';
+          $(this).after(message);
           valid = false;
           valid_item = false;
         }
