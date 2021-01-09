@@ -21,6 +21,10 @@
     var valid = true;
     //必須項目の入力確認
     for(var i=0; i<num_item; i++){
+      //disabledの要素は無視する
+      if($(items[i]).prop('disabled')){
+        continue;
+      }
       //必須項目が未入力の場合、対応するフィードバックを表示
       if(items[i].checkValidity() === false){
         show_invalid(items[i], '.required-feedback');
@@ -44,7 +48,8 @@
           valid = false;
           valid_item = false;
         }
-      }else if(items[i].className.match("js-valid-amount")){
+      }
+      if(items[i].className.match("js-valid-amount")){
         //TODO 枚数オーバーの確認
         var num = Number(items[i].value);
         if(!Number.isInteger(num) || num < 0){  //0以上の整数のみ
@@ -53,12 +58,14 @@
         }else{
           items[i].value = Number.parseInt(num);
         }
-      }else if(items[i].name.match("js-valid-kana")){
-        if(!(items[i].value.match(/^[\u30a0-\u30ff]+$|^[\u3040-\u309f]+$/))){  //全角カナorかなのみ
+      }
+      if(items[i].className.match("js-valid-kana")){
+        if(!(items[i].value.match(/^[ァ-ン]+$/))){  //全角カナのみ
           valid = false;
           valid_item = false;
         }
-      }else if(items[i].name.match("js-valid-price")){
+      }
+      if(items[i].className.match("js-valid-price")){
         //整数確認
         var num = Number(items[i].value);
         if(!Number.isInteger(num) || num < 0){  //0以上の整数のみ
@@ -69,9 +76,23 @@
         }
         //金額条件
         if(items[i].value % PRICE_UNIT != 0){
-          //金額のメッセージを追加
-          var message = '<div class="format-feedback">'+PRICE_UNIT+'円単位で入力してください</div>';
-          $(this).after(message);
+          //金額のメッセージを追加or表示
+          if($(items[i]).nextAll('.js-message-price').length == 0){
+            var message = '<div class="format-feedback js-message-price">'+PRICE_UNIT+'円単位で入力してください</div>';
+            $(items[i]).after(message);
+          }
+          valid = false;
+          valid_item = false;
+        }
+      }
+      if(items[i].className.match("js-valid-positive")){
+        var num = Number(items[i].value);
+        if(num <= 0){
+          //メッセージを追加or表示
+          if($(items[i]).nextAll('.js-message-add').length == 0){
+            var message = '<div class="format-feedback js-message-positive">0より大きい数のみを入力してください</div>';
+            $(items[i]).after(message);
+          }
           valid = false;
           valid_item = false;
         }

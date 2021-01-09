@@ -4,6 +4,8 @@
   $pageTitle = "チケット販売報告フォーム";
   $applyStyle = "everyone";
   require_once TP_ROOT.'/include/header.php';
+
+
 ?>
 <p class="tx">チケットを売り上げた情報を入力するフォームです</p>
 <form method="post" action="<?=$_SERVER['PHP_SELF']?>?orderTypeID=<?=$_GET['orderTypeID']?>" class="needs-validation" novalidate>
@@ -35,17 +37,17 @@
       <p class="tx">姓(カナ)</p>
       <input class="form-text js-form-item js-valid-kana" type="text" name="lname-kana-guest[0]" required>
       <div class="required-feedback">名前を入力してください</div>
-      <div class="format-feedback">全角かな、または全角カナで入力してください</div>
+      <div class="format-feedback">全角カナで入力してください</div>
       <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
       <p class="tx">名(カナ)</p>
       <input class="form-text js-form-item js-valid-kana" type="text" name="fname-kana-guest[0]" required>
       <div class="required-feedback">名前を入力してください</div>
-      <div class="format-feedback">全角かな、または全角カナで入力してください</div>
+      <div class="format-feedback">全角カナで入力してください</div>
       <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
     </div>
     <div class="form-group">
       <p class="tx">利用枚数</p>
-      <input class="form-text js-form-item js-valid-amount" type="text" name="amount-guest[0]" required>
+      <input class="form-text js-form-item js-valid-amount js-valid-positive" type="text" name="amount-guest[0]" required>
       <div class="required-feedback">枚数を入力してください</div>
       <div class="format-feedback">半角数字のみ、0以上の整数で入力してください</div>
       <div class="invalid-chars"><,>,&,",'は使用できません。</div>
