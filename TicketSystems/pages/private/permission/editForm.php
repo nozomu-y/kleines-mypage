@@ -89,7 +89,7 @@
   <button class="btn btn-primary" type="submit">権限を適用</button>
 </form>
 <!-- finish button -->
-<button class="btn btn-success js-modal-open" type="button" >設定を完了</button>
+<button class="btn btn-success js-modal-open" type="button" data-target="confirmModal">設定を完了</button>
 <div class="modal js-modal" id="confirmModal">
   <div class="modal-bg js-modal-close"></div>
   <div class="modal-content">

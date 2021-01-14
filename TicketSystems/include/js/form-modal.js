@@ -116,7 +116,8 @@
       }
       
       //モーダルに出力
-      $('.js-modal').fadeIn();
+      let modal = '#' + $(this).attr('data-target');
+      $(modal).fadeIn();
       return false;
     }
     return false;  //動作をストップ

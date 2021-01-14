@@ -2,7 +2,9 @@
 
 $(function(){
   $('.js-modal-open').on('click',function(){
-    $('.js-modal').fadeIn();
+    //モーダルに出力
+    let modal = '#' + $(this).attr('data-target');
+    $(modal).fadeIn();
     return false;
   });
 
