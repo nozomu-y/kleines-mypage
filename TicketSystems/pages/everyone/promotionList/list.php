@@ -12,6 +12,7 @@
   INNER JOIN tp_Orders USING(orderID) 
   INNER JOIN members USING(id) ORDER BY date";
   $result = $mysqli->query($sql);
+  $promotions = [];
   //連想配列で取得
   while($row = $result->fetch_array(MYSQLI_ASSOC)){
     $promotions[] = $row;

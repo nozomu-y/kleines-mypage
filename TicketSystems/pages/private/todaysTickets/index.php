@@ -23,7 +23,7 @@
   $sum_orderType = array(); //orderTypeごとの合計枚数
   while($stmt_select->fetch()){
     $sum_orderType[] = array("sum"=>$sum_amount, "orderTypeName"=>$orderTypeName);
-    $sum_all += $sum;
+    $sum_all += $sum_amount;
   }
   $stmt_select->close();
 ?>
