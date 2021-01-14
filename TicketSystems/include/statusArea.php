@@ -46,6 +46,15 @@
       case "succeed-sold":
         echo("販売報告を完了しました");
         break;
+      case "edit-reserve":
+        echo("チケット預かりの情報を変更しました");
+        break;
+      case "delete-reserve":
+        echo("チケット預かりの情報を削除しました");
+        break;
+      case "delete-order":
+        echo("オーダーを削除しました");
+        break;
       default:
         echo("statusArea.phpで存在しないkey:<br>".$key);
         break;
