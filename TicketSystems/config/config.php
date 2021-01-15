@@ -7,7 +7,7 @@
   define('MODE', 'test');
 
   /* ヘッダーやタブに表示されるページ名 */
-  define('SITE_NAME', 'CK_TicketSystem');
+  define('SITE_NAME', 'tiCKetam');
   /* 権限を表す数字の設定 */
   define('NO_PERM_NUM', 999); //一般団員
   define('PR_CHIEF_PERM', 10);  //渉外チーフ権限(10番台は渉外チーフ。複数使い分ける場合は適宜設定してくださいx)
@@ -21,7 +21,7 @@
   
   /* モードごとのパス設定(本番環境や開発環境に合わせて変更してください) */
   if(strcmp(MODE,'test')==0){
-    define('TP_ROOT', $_SERVER['DOCUMENT_ROOT'].'/TicketSystems/kleines-mypage/TicketSystems');
+    define('TP_ROOT', __DIR__ .'/..');
     define('TP_SERVER', '//'.$_SERVER['SERVER_NAME'].'/TicketSystems/kleines-mypage/TicketSystems');
     
   }else if(strcmp(MODE, "real")==0){

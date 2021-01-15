@@ -36,7 +36,7 @@
       </div>
     </div>
     <div id="header-title">
-    <div id="page-title"><a href="<?=TP_SERVER."/pages/$applyStyle/index.php"?>">CK_Ticket</a></div>
+    <div id="page-title"><a href="<?=TP_SERVER."/pages/$applyStyle/index.php"?>"><?=SITE_NAME?></a></div>
     </div>
     <div id="header-account">
     <p><?php
