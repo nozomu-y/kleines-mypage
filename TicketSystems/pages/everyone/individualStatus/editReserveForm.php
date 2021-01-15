@@ -15,10 +15,12 @@
     exit();
   }
 
-  $orderID = $_GET['orderID'];
-  //IDのバリデーション
+  //不正な操作だった時、リストにリダイレクト
+  require_once __DIR__ . "/reserveFilter.php";
+  $orderID = htmlspecialchars($_GET['orderID']);
+  reserveFilter($orderID, $USER->id, $mysqli);
 
-  //情報を取得
+  //チケット預かりの情報を取得
   $stmt_reserves = $mysqli->prepare("SELECT lastName, firstName, lastNameKana, firstNameKana, amount, price FROM tp_Reserves 
   INNER JOIN tp_Orders USING(orderID) INNER JOIN members USING(id) WHERE orderID = ?");
   $stmt_reserves->bind_param('i', $orderID);
