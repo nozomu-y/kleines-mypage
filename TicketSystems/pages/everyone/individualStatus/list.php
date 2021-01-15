@@ -16,7 +16,6 @@
   require_once TP_ROOT.'/include/header.php';
   require_once 'linkHandler.php';
 ?>
-<p class="tx">改装中</p>
 <table class="table-wide">
   <tr class="th">
     <th class="orderID">orderID</th>
