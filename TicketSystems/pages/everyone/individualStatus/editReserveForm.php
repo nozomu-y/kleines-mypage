@@ -31,7 +31,7 @@
     exit();
   }
 
-  $pageTitle = "預かり編集";
+  $pageTitle = "チケット預かり編集";
   $applyStyle = "everyone";
   require_once TP_ROOT.'/include/header.php';
 ?>
