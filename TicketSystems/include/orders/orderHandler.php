@@ -151,15 +151,15 @@
         updateMemberTickets("sold", "-", $personID, $amount, $mysqli);
         break;
       case 10:  //cancel_reserve
-        /*
-        TODO:
-        cancel_reserveはOrderで処理するのか不明なので、一旦保留。
-        未処理オーダーの取り消しの機構で処理しないと、どのreserveをcancelするのか捕捉不能だと思う。
-        未処理オーダーの取り消しの機構を作成する際に改めて検討する。
-
         updateTicketTotal(1, "+", $amount, $mysqli);  //渉外所持を増やす
         updateTicketTotal(2, "-", $amount, $mysqli);  //預かり用回収済みを減らす
-        */
+        //団員販売済みは増やさない
+        updateMemberTickets("sold", "-", $personID, $amount, $mysqli);  //団員のsoldを減らす
+        break;
+      case 11:  //cancel_promotion
+        updateTicketTotal(1, "+", $amount, $mysqli);   //渉外所持を増やす
+        updateTicketTotal(3, "-", $amount, $mysqli);  //団員所持を減らす
+        updateMemberTickets("have", "-", $personID, $amount, $mysqli);  //団員のhaveを減らす
         break;
       case 8: //transfar_receive
         updateMemberTickets("have", "+", $personID, $amount, $mysqli);  //団員のhaveを増やす
@@ -201,12 +201,8 @@
       case 4: //want_promotion
       case 5: //sold_with_reserve
       case 7: //finish_promotion
-      //case 10:  //cancel_reserve
-        /*
-        cancel_reserveはOrderで処理するのか不明なので、一旦保留。
-        未処理オーダーの取り消しの機構で処理しないと、どのreserveをcancelするのか捕捉不能だと思う。
-        未処理オーダーの取り消しの機構を作成する際に改めて検討する。
-        */
+      case 10:  //cancel_reserve
+      case 11:  //cancel_promotion
         return 0;
       default:
         return -1;

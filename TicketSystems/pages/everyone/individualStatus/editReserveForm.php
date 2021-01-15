@@ -9,9 +9,9 @@
     header("Location: list.php"); //更新対策
     exit();
   }else if(isset($_POST['process']) && strcmp($_POST['process'], "delete-submit")==0){
-    require_once __DIR__.'/deleteReserve.php';
-    $_SESSION['tp_status'] = "delete-reserve";
-    header("Location: list.php"); //更新対策
+    require_once __DIR__."/deleteOrder.php";
+    $_SESSION['tp_status'] = "delete-order";
+    header("Location: list.php");
     exit();
   }
 
@@ -103,6 +103,7 @@
 </form>
 <form method="post" action="<?=$_SERVER['PHP_SELF']?>">
   <input type="hidden" name="orderID" value="<?=$orderID?>">
+  <input type="hidden" name="orderTypeID" value="5">
   <input type="hidden" name="process" value="delete-submit">
   <button class="btn btn-danger js-modal-open" type="button" data-target="confirmDelete">この預かり情報を削除</button>
   <div class="modal js-modal" id="confirmDelete">

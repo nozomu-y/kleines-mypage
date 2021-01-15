@@ -1,10 +1,15 @@
 <?php
   function linkHandle($finishFlag, $orderTypeName, $orderID){
-    if($finishFlag == 0){
-      //未処理のやつを消去する
-      echo("<a class='btn btn-sm btn-danger' href='".$_SERVER['PHP_SELF']."?process=deleteOrder'>取消</a>");
-    }else if($finishFlag == 1 && $orderTypeName === "sold_with_reserve"){
-      //預かり編集
-      echo("<a class='btn btn-sm btn-primary' href='editReserveForm.php?orderID=$orderID'>預かり編集</a>");
+    switch($orderTypeName){
+      case "request":
+      case "want_return":
+        //未処理のやつを消去する
+        if($finishFlag == 0){
+          echo("<button class='btn btn-sm btn-danger js-modal-open' type='button' data-target='confirmModal'>取消</button>");
+        }
+        break;
+      case "sold_with_reserve":
+        echo("<a class='btn btn-sm btn-primary' href='editReserveForm.php?orderID=$orderID'>預かり編集</a>");
+        break;
+      }
     }
-  }
