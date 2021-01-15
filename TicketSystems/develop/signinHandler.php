@@ -32,7 +32,7 @@
     $_SESSION['mypage_email'] = htmlspecialchars($_POST['email']);
     $_SESSION['tp_status']="succeed_signin";
     $stmt->close();
-    header("Location: ".TP_SERVER."/develop/signin.php");
+    header("Location: ".TP_SERVER."/pages/everyone/index.php");
     exit();
   }
 ?>
