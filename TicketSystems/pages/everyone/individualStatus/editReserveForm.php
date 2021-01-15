@@ -109,7 +109,7 @@
   <div class="modal js-modal" id="confirmDelete">
     <div class="modal-bg js-modal-close"></div>
     <div class="modal-content">
-      <div class="modal-header"><div class="modal-title">入力確認</div>
+      <div class="modal-header"><div class="modal-title">確認</div>
         <span class="modal-cross js-modal-close"><span class="cross1"></span><span class="cross2"></span></span>
       </div>
       <div class="modal-main">

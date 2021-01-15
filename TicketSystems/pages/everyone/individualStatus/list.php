@@ -24,19 +24,20 @@
     <th class="amount">枚数</th>
     <th class="response">対応済み枚数</th>
     <th class="orderTime">注文時刻</th>
-    <th class="finishFlag">完了フラグ</th>
-    <th class="finishTime">完了時刻</th>
+    <th class="status">渉外対応</th>
+    <th class="finishTime">完了or取消時刻</th>
     <th class="details">詳細・取消</th>
   </tr>
   <?php
     //Order一覧を検索
-    $finishFlag = 0;
     $stmt_history = $mysqli->prepare(
-      "SELECT orderID, orderTypeID, orderTypeName, amount, response, orderTime, finishFlag, finishTime 
-       FROM tp_Orders INNER JOIN tp_OrderTypes USING(orderTypeID) WHERE id = ? AND deleteFlag = ?");
-    $stmt_history->bind_param('ii', $USER->id, $finishFlag);
+      "SELECT orderID, orderTypeID, orderTypeName, amount, response, orderTime, finishFlag, finishTime,
+       deleteFlag, deleteTime FROM tp_Orders INNER JOIN tp_OrderTypes USING(orderTypeID) WHERE id = ?");
+    $stmt_history->bind_param('i', $USER->id);
     $stmt_history->execute(); //SQLの実行
-    $stmt_history->bind_result($orderID, $orderTypeID, $orderTypeName, $amount, $response, $orderTime, $finishFlag, $finishTime);
+    $stmt_history->bind_result(
+      $orderID, $orderTypeID, $orderTypeName, $amount, $response, 
+      $orderTime, $finishFlag, $finishTime, $deleteFlag, $deleteTime);
     //連想配列で取得
     while($result = $stmt_history->fetch()): ?>
   <tr class="td">
@@ -45,10 +46,24 @@
     <td class="orderTypeName js-modal-item"><?=$orderTypeName?></td>
     <td class="amount js-modal-item"><?=$amount?></td>
     <td class="response js-modal-item"><?=$response?></td>
-    <td class="orderTime"><?=$orderTime?></td>
-    <td class="finishFlag"><?=$finishFlag?></td>
-    <td class="finishTime"><?=$finishTime?></td>
-    <td class="details"><?php linkHandle($finishFlag, $orderTypeName, $orderID); ?></td>
+    <td class="orderTime tx-sm"><?=$orderTime?></td>
+    <td class="status">
+      <?php if($deleteFlag == 1){
+        echo("取消");
+      }else if($finishFlag == 1){
+        echo("済");
+      }else{
+        echo("未");
+      } ?>
+    </td>
+    <td class="finishTime tx-sm">
+      <?php if($deleteFlag == 1){
+        echo($deleteTime);
+      }else{
+        echo($finishTime);
+      } ?>
+    </td>
+    <td class="details"><?php linkHandle($finishFlag, $deleteFlag, $orderTypeName, $orderID); ?></td>
   </tr>
   <?php endwhile; ?>
 </table>

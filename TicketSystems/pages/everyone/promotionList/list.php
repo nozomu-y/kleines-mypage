@@ -8,7 +8,7 @@
 <?php
 	//情宣一覧を検索
   $sql = "SELECT tp_Orders.id, members.grade, members.part, members.last_name, members.first_name,  
-  tp_Orders.orderID, groupName, date, tp_Promotions.finishFlag, actualAmount FROM tp_Promotions 
+  tp_Orders.orderID, groupName, date, tp_Promotions.finishFlag, actualAmount, deleteFlag FROM tp_Promotions 
   INNER JOIN tp_Orders USING(orderID) 
   INNER JOIN members USING(id) ORDER BY date";
   $result = $mysqli->query($sql);
@@ -45,18 +45,14 @@
           echo "未定";
         }?>
     </td>
-    <?php /*
-      TODO: 
-        ・中止ボタンを作る or 編集→中止ができるようにする を決める
-        ・編集、完了報告に、可能ならformを使わずに遷移したい(getにする？)
-          getにした場合、遷移した先で妥当性の判断を行う(finishFlag、deleteFlagとかで)
-          ↑ユーザー妥当性判断と一緒に行う
-    */ ?>
     <td class="finishFlag">
-      <?php if($promotion['finishFlag']==0){
-        echo "未完了";
-      }else{
+      <?php
+      if($promotion['deleteFlag'] == 1){
+        echo "中止";
+      }else if($promotion['finishFlag'] == 1){
         echo "完了";
+      }else{
+        echo "未完了";
       }?>
     </td>
     <td class="actualAmount">
@@ -68,12 +64,12 @@
       ?>
     </td>
     <td class="edit">
-      <?php if($promotion['finishFlag']==0): ?>
+      <?php if($promotion['finishFlag']==0 && $promotion['deleteFlag']==0): ?>
       <a href="editForm.php?orderID=<?=$promotion['orderID']?>" class="btn btn-secondary">編集</a>
       <?php endif; ?>
     </td>
     <td class="done">
-      <?php if($promotion['finishFlag']==0): ?>
+      <?php if($promotion['finishFlag']==0 && $promotion['deleteFlag']==0): ?>
       <a href="reportForm.php?orderID=<?=$promotion['orderID']?>" class="btn btn-primary">完了</a>
       <?php endif; ?>
     </td>
