@@ -199,7 +199,7 @@
       $q_insert = 
       "INSERT INTO `tp_TicketTotal` (`ticketTypeCode`, `ticketTypeValue`, `amount`) VALUES
       (1, '渉外所持', 0),
-      (2, '預かり用回収済み', 0),
+      (2, '回収済み預かりチケット', 0),
       (3, '団員所持', 0),
       (4, '団員販売済(情宣含む)', 0)";
     }else if(strcmp($table_name,"tp_Reserves")==0){
@@ -223,7 +223,8 @@
       (007, 'finish_promotion'),
       (008, 'transfer_receive'),
       (009, 'transfer_give'),
-      (010, 'cancel_reserve')";
+      (010, 'cancel_reserve'),
+      (011, 'cancel_promotion')";
     }else if(strcmp($table_name,"tp_Permissions")==0){
       //全ての活動中の団員を挿入
       $q_insert = 
