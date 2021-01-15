@@ -5,6 +5,6 @@
       echo("<a class='btn btn-sm btn-danger' href='".$_SERVER['PHP_SELF']."?process=deleteOrder'>取消</a>");
     }else if($finishFlag == 1 && $orderTypeName === "sold_with_reserve"){
       //預かり編集
-      echo("<a class='btn btn-sm btn-primary' href='editReserve.php?orderID=$orderID'>預かり編集</a>");
+      echo("<a class='btn btn-sm btn-primary' href='editReserveForm.php?orderID=$orderID'>預かり編集</a>");
     }
   }
