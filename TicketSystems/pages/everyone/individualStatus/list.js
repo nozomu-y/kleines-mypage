@@ -14,12 +14,11 @@ $(function(){
         params["orderTypeID"] = element.textContent;
       }
     });
-    console.log(params);
     //パラメータを書き換え
     $('.modal-footer form input').each(function(index, element){
-      console.log($(element).val());
-      $(element).val(params[element.name]);
-      console.log($(element).val());
+      if(params[element.name]){
+        $(element).val(params[element.name]);
+      }
     });
     //モーダルに出力
     let modal = '#' + $(this).attr('data-target');

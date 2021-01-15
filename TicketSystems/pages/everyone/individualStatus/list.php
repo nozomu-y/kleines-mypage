@@ -3,7 +3,7 @@
   accessFilter(NO_PERM_NUM, $USER->id, $mysqli);
 
   //未処理削除
-  if(isset($_POST['process']) && isset($_GET['process']) && $_GET['process'] === "delete"){
+  if(isset($_POST['process']) && strcmp($_POST['process'],"del")==0){
     //処理を行う
     require_once __DIR__."/deleteOrder.php";
     $_SESSION['tp_status'] = "delete-order";
@@ -69,9 +69,10 @@
       </div>
       <div class="modal-right">
         <form method="post" action="<?=$_SERVER['PHP_SELF']?>?process=delete">
+          <input type="hidden" name="process" value="del">
+          <input type="hidden" name="dummy" value="0">
           <input type="hidden" name="orderTypeID" value="0">
           <input type="hidden" name="orderID" value="0">
-          <input type="hidden" name="process" value="delete">
           <button type="submit" class="btn btn-danger">削除する</button>
         </form>
       </div>
