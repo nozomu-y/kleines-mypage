@@ -1,7 +1,4 @@
 <?php
-  /**
-   * TODO: 中止できるようにする(finishFlag=2とか？)(order取り消し機構を先に)
-   */
   require_once __DIR__.'/../../../include/tp_init.php';
   accessFilter(NO_PERM_NUM, $USER->id, $mysqli);
 
@@ -9,6 +6,11 @@
   if(isset($_POST['process']) && strcmp($_POST['process'], "update")==0){
     require_once __DIR__.'/edit.php';
     $_SESSION['tp_status'] = "succeed-update-promotion";
+    header("Location: list.php");
+    exit();
+  }else if(isset($_POST['process']) && strcmp($_POST['process'], "delete")==0){
+    require_once __DIR__.'/../individualStatus/deleteOrder.php';
+    $_SESSION['tp_status'] = "delete-promotion";
     header("Location: list.php");
     exit();
   }
@@ -76,7 +78,33 @@
     </div>
   </div>
 </form>
+<form method="post" action="<?=$_SERVER['PHP_SELF']?>?orderID=<?=$orderID?>">
+  <input type="hidden" name="orderID" value="<?=$orderID?>">
+  <input type="hidden" name="orderTypeID" value="4">
+  <input type="hidden" name="process" value="delete">
+  <button class="btn btn-danger js-modal-open" type="button" data-target="confirmDelete">この情宣を中止</button>
+  <div class="modal js-modal" id="confirmDelete">
+    <div class="modal-bg js-modal-close"></div>
+    <div class="modal-content">
+      <div class="modal-header"><div class="modal-title">確認</div>
+        <span class="modal-cross js-modal-close"><span class="cross1"></span><span class="cross2"></span></span>
+      </div>
+      <div class="modal-main">
+        <p class="tx">この情宣の中止を確定してよろしいですか？</p>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-left">
+          <button class="btn btn-secondary js-modal-close">戻る</button>
+        </div>
+        <div class="modal-right">
+          <button class="btn btn-danger" type="submit">確定する</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
 <!-- import js files -->
 <script src="../promotionRequest/promotionRequest.js"></script>
 <script src="<?=TP_SERVER?>/include/js/form-modal.js"></script>
+<script src="<?=TP_SERVER?>/include/js/modal.js"></script>
 <?php require_once TP_ROOT.'/include/footer.php'; ?>

@@ -55,6 +55,9 @@
       case "delete-order":
         echo("オーダーを削除しました");
         break;
+      case "delete-promotion":
+        echo("情宣を中止しました");
+        break;
       default:
         echo("statusArea.phpで存在しないkey:<br>".$key);
         break;

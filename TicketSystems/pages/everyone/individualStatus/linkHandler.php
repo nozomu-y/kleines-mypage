@@ -1,5 +1,6 @@
 <?php
-  function linkHandle($finishFlag, $orderTypeName, $orderID){
+  function linkHandle($finishFlag, $deleteFlag, $orderTypeName, $orderID){
+    if($deleteFlag == 1) return;
     switch($orderTypeName){
       case "request":
       case "want_return":
