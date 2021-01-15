@@ -5,7 +5,6 @@
   $applyStyle = "private";
   require_once TP_ROOT.'/include/header.php';
 ?>
-<p class="tx">top page test</p>
-<h2>Sub Title</h2>
-<p class="tx">sub title</p>
+<h2>開発用メモ</h2>
+<p class="tx">・cancel_reserveとcancel_promotionに対応できるようにする</p>
 <?php require_once TP_ROOT.'/include/footer.php'; ?>
