@@ -6,12 +6,12 @@
   if(isset($_POST['process']) && strcmp($_POST['process'], "edit-submit")==0){
     require_once __DIR__.'/editReserve.php';
     $_SESSION['tp_status'] = "edit-reserve";
-    header("Location: index.php"); //更新対策
+    header("Location: list.php"); //更新対策
     exit();
   }else if(isset($_POST['process']) && strcmp($_POST['process'], "delete-submit")==0){
     require_once __DIR__.'/deleteReserve.php';
     $_SESSION['tp_status'] = "delete-reserve";
-    header("Location: index.php"); //更新対策
+    header("Location: list.php"); //更新対策
     exit();
   }
 
