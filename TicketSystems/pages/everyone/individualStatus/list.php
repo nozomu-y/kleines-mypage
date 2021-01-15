@@ -16,7 +16,33 @@
   require_once TP_ROOT.'/include/header.php';
   require_once 'linkHandler.php';
 ?>
-<table class="table-wide">
+<h2>チケット状況</h2>
+<p class="tx"><?=$USER->get_name()?> のチケット状況</p>
+<table id="summary">
+  <tr class="th">
+    <th class="have">所持</th>
+    <th class="sold">販売</th>
+  </tr>
+  <?php
+    $stmt_ticket = $mysqli->prepare("SELECT have, sold FROM tp_MemberTickets WHERE id = ?");
+    $stmt_ticket->bind_param('i', $USER->id);
+    $stmt_ticket->execute();
+    $stmt_ticket->bind_result($have, $sold);
+    if(!$stmt_ticket->fetch()){
+      echo($mysqli->error);
+    }
+    $stmt_ticket->close();
+  ?>
+  <tr class="td">
+    <td class="have"><?=$have?></td>
+    <td class="sold"><?=$sold?></td>
+  </tr>
+</table>
+<h2>履歴・預かり編集・取り消し</h2>
+<p class="tx">横に長いので、横スクロールしてください。</p>
+<p class="tx">チケット預かりの内容を変更・削除するとき<br>　→「預かり編集」ボタン</p>
+<p class="tx">オーダーを取り消す時<br>　→「取消」ボタン(未完了時のみ)</p>
+<table id="histroy" class="table-wide">
   <tr class="th">
     <th class="orderID">orderID</th>
     <td class="orderTypeID" style="display:none;">オーダー種別ID</td>
@@ -65,7 +91,10 @@
     </td>
     <td class="details"><?php linkHandle($finishFlag, $deleteFlag, $orderTypeName, $orderID); ?></td>
   </tr>
-  <?php endwhile; ?>
+  <?php
+    endwhile; 
+    $stmt_history->close();
+  ?>
 </table>
 <div class="modal js-modal" id="confirmModal">
   <div class="modal-bg js-modal-close"></div>
