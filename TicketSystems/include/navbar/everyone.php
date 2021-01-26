@@ -21,5 +21,6 @@
   <label for="menu-bar-dev">開発用メニュー</label>
   <div class="menu-item"><p class="nav-link">サインイン/ユーザー登録</p><a href="<?=TP_SERVER."/develop/signin.php"?>"></a></div>
   <div class="menu-item"><p class="nav-link">サインアウト</p><a href="<?=TP_SERVER."/develop/signout.php"?>"></a></div>
+  <div class="menu-item"><p class="nav-link">かんたん初期化</p><a href="<?=TP_SERVER."/develop/initialization.php"?>"></a></div>
 </div>
 <?php endif; ?>
