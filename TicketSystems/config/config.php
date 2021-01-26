@@ -24,10 +24,17 @@
   if(MODE === 'develop'){
     define('TP_ROOT', __DIR__ .'/..');
     define('TP_SERVER', '//'.$_SERVER['SERVER_NAME'].'/TicketSystems/kleines-mypage/TicketSystems');
+    define('TP_MEMBERS', 'tp_TestMembers');
     
   }else if(MODE === "staging" || MODE === "production"){
     define('TP_ROOT', '//' . WEB_DOMAIN . MYPAGE_ROOT . "/TicketSystems");
     define('TP_SERVER', TP_ROOT);
+    if(MODE === "staging"){
+      define('TP_MEMBERS', 'tp_TestMembers');
+    }else{
+      define('TP_MEMBERS', 'members');
+    }
+    
   }else{
     echo("config.MODE is invalid");
     exit();

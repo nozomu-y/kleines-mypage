@@ -10,9 +10,7 @@
 
   $res_foreign_key = $mysqli->query("SET foreign_key_checks = 0"); //外部キーのチェックを無効にする
 
-  //TODO: create tp_TestMembers
   $tables = [ /* 作成するテーブル一覧 */
-    "tp_TestMembers",
     "tp_OrderTypes",
     "tp_Orders",
     "tp_MemberTickets",
@@ -179,6 +177,7 @@
       "ALTER TABLE `tp_Permissions` ADD KEY `id` (`id`)";
       $q_constraint = 
       "ALTER TABLE `tp_Permissions` ADD CONSTRAINT `tp_Permissions_ibfk_1` FOREIGN KEY (`id`) REFERENCES `members` (`id`)";
+    /*
     }else if($table_name === "tp_TestMembers"){
       $q_create = 
       "CREATE TABLE `tp_TestMembers` (
@@ -201,6 +200,7 @@
       $q_constraint = 
       "ALTER TABLE `tp_TestMembers`
       MODIFY `id` int(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1";
+      */
     }else{
       //テーブル名が間違っている場合
       return false;
@@ -256,6 +256,7 @@
       "INSERT INTO tp_Permissions (id, permission) 
       SELECT id, CASE admin WHEN 1 then 1 ELSE ".NO_PERM_NUM." end as permission 
       FROM members WHERE members.status = 0";
+      /*
     }else if($table_name === "tp_TestMembers"){
       $q_insert = 
       "INSERT INTO `tp_TestMembers` (`id`, `email`, `password`, `last_name`, `first_name`, `kana`, `grade`, `part`, `token`, `validation_time`, `login_failure`, `admin`, `status`) VALUES
@@ -284,6 +285,7 @@
       (00023, '20t@mail', '\$2y\$10\$J4H5agTnDGoE9d0mv6j1peYpbvASlKhGEIGJsgMJaefZxkGwFijZ6', '新入', 'ていた', NULL, 20, 'T', NULL, NULL, 0, NULL, 0),
       (00024, '20b@mail', '\$2y\$10\$PG9XCjDGdsQVA1qU8EXk2ud6yzGxansfLzz4P0KVNUtKG.OxrpnjK', '新入', 'びいた', NULL, 20, 'B', NULL, NULL, 0, NULL, 0),
       (00025, '20front@mail', '\$2y\$10\$wU9fsxza6CSav45zZgS8W.dYMKcGerR.cQr/b739n.2Eu2QnSsLe6', 'フロント', 'サブ子', NULL, 20, 'S', NULL, NULL, 0, NULL, 0)";
+    */
     }else{
       //テーブル名が間違っている場合
       return false;
