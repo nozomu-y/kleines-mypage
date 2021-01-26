@@ -1,6 +1,7 @@
 <?php
   /**
    * 前提：membersテーブルは既に存在していないと動きません
+   * ↑必要な場合は、TicketSystems/include/tp_createMembersで作成可能
    * tp_MemberTickets, tp_TicketTotal, tp_Reserves, tp_Responses, tp_Promotions, tp_Orders,
    * tp_OrderTypes, tp_Permissions の各テーブルを、存在していなかったら作成し、存在していたら空にする。
    * その後、必要なタプルを挿入する
