@@ -1,6 +1,6 @@
 <?php
   require_once __DIR__.'/../include/tp_init.php';
-  secretFilter(MAX_CHIEF_PERM, $USER->id, $mysqli); //現状渉外チーフ以上ですが、web管限定でいいと思います
+  //ここにはフィルターをつけない
 
   //初期化する
   if(isset($_POST['process']) && $_POST['process'] === "init"){

@@ -57,19 +57,19 @@
   <?php
     //Order一覧を検索
     $stmt_history = $mysqli->prepare(
-      "SELECT orderID, orderTypeID, orderTypeName, amount, response, orderTime, finishFlag, finishTime,
+      "SELECT orderID, orderTypeID, orderTypeName, orderTypeNameJP, amount, response, orderTime, finishFlag, finishTime,
        deleteFlag, deleteTime FROM tp_Orders INNER JOIN tp_OrderTypes USING(orderTypeID) WHERE id = ?");
     $stmt_history->bind_param('i', $USER->id);
     $stmt_history->execute(); //SQLの実行
     $stmt_history->bind_result(
-      $orderID, $orderTypeID, $orderTypeName, $amount, $response, 
+      $orderID, $orderTypeID, $orderTypeName, $orderTypeNameJP, $amount, $response, 
       $orderTime, $finishFlag, $finishTime, $deleteFlag, $deleteTime);
     //連想配列で取得
     while($result = $stmt_history->fetch()): ?>
   <tr class="td">
     <td class="orderID js-modal-item"><?=$orderID?></td>
     <td class="orderTypeID js-modal-item" style="display:none;"><?=$orderTypeID?></td>
-    <td class="orderTypeName js-modal-item"><?=$orderTypeName?></td>
+    <td class="orderTypeNameJP js-modal-item"><?=$orderTypeNameJP?></td>
     <td class="amount js-modal-item"><?=$amount?></td>
     <td class="response js-modal-item"><?=$response?></td>
     <td class="orderTime tx-sm"><?=$orderTime?></td>

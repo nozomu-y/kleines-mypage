@@ -33,9 +33,17 @@
     }else{
       //存在しなかった場合、指定のフォーマットでテーブルを作成
       $res_create = createTable($table, $mysqli);
+      if(!$res_create){
+        echo($mysqli->error);
+        exit();
+      }
     }
     //挿入するものがある場合、挿入
     $res_insert = insertInitTuples($table, $mysqli);
+    if(!$res_insert){
+      echo($mysqli->error);
+      exit();
+    }
     //close(変数を使い回すのでこれをしないとエラーが起こる)
     if($res_show!=NULL){
       $res_show->close();
@@ -160,7 +168,8 @@
       $q_create = 
       "CREATE TABLE `tp_OrderTypes` (
       `orderTypeID` int(3) UNSIGNED ZEROFILL NOT NULL,
-      `orderTypeName` varchar(50) DEFAULT NULL
+      `orderTypeName` varchar(50) NOT NULL,
+      `orderTypeNameJP` varchar(50) NOT NULL
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
       $q_key =
       "ALTER TABLE `tp_OrderTypes` ADD PRIMARY KEY (`orderTypeID`) USING BTREE";
@@ -215,18 +224,18 @@
     }else if($table_name === "tp_OrderTypes"){
       //オーダー種別を挿入
       $q_insert =
-      "INSERT INTO `tp_OrderTypes` (`orderTypeID`, `orderTypeName`) VALUES
-      (001, 'request'),
-      (002, 'sold'),
-      (003, 'want_return'),
-      (004, 'want_promotion'),
-      (005, 'sold_with_reserve'),
-      (006, 'cancel'),
-      (007, 'finish_promotion'),
-      (008, 'transfer_receive'),
-      (009, 'transfer_give'),
-      (010, 'cancel_reserve'),
-      (011, 'cancel_promotion')";
+      "INSERT INTO `tp_OrderTypes` (`orderTypeID`, `orderTypeName`, `orderTypeNameJP`) VALUES
+      (001, 'request', 'チケット希望'),
+      (002, 'sold', 'チケット販売'),
+      (003, 'want_return', 'チケット返却希望'),
+      (004, 'want_promotion', '情宣希望'),
+      (005, 'sold_with_reserve', '預かり利用販売'),
+      (006, 'cancel', 'チケットキャンセル'),
+      (007, 'finish_promotion', '情宣終了'),
+      (008, 'transfer_receive', 'チケット受取'),
+      (009, 'transfer_give', 'チケット差出'),
+      (010, 'cancel_reserve', '預かりキャンセル'),
+      (011, 'cancel_promotion', '情宣キャンセル')";
     }else if($table_name === "tp_Permissions"){
       //全ての活動中の団員を挿入
       $q_insert = 
