@@ -19,21 +19,32 @@
   
   /* secret以下のページにアクセスするためのパスワード(適宜変えたり暗号化したりしてください) */
   define('SECRET_PASS', '09yampapa26');
+
+  //rootの設定
+  define('TP_ROOT', __DIR__ .'/..');
   
   /* モードごとのパス設定(本番環境や開発環境に合わせて変更してください) */
   if(MODE === 'develop'){
-    define('TP_ROOT', __DIR__ .'/..');
-    define('TP_SERVER', '//'.$_SERVER['SERVER_NAME'].'/TicketSystems/kleines-mypage/TicketSystems');
-    define('TP_MEMBERS', 'tp_TestMembers');
-    
-  }else if(MODE === "staging" || MODE === "production"){
-    define('TP_ROOT', '//' . WEB_DOMAIN . MYPAGE_ROOT . "/TicketSystems");
-    define('TP_SERVER', TP_ROOT);
-    if(MODE === "staging"){
-      define('TP_MEMBERS', 'tp_TestMembers');
-    }else{
-      define('TP_MEMBERS', 'members');
-    }
+    // settings for mysql database
+    define("DB_HOST", "localhost");
+    define("DB_USER", "yakou1000");
+    define("DB_PASS", "YakouPhpDev");
+    define("DB_NAME", "PRPage");
+    //server
+    define('TP_SERVER', '//'. $_SERVER['SERVER_NAME'].'/TicketSystems/kleines-mypage/TicketSystems');
+  }else if(MODE === "staging"){
+    //settings for mysql database
+    /* 本番環境とステージング環境でDBを変える場合、接続情報を保持(tp_initも編集する)
+    define("DB_HOST", "");
+    define("DB_USER", "");
+    define("DB_PASS", "");
+    define("DB_NAME", "");
+    */
+    //server
+    define('TP_SERVER', "chorkleines.com" . "/member/mypage" . "/TicketSystems");
+  }else if(MODE === "production"){
+    //DBで使う定数はCommon/dbconnectでConfigを読み込むときに定義される
+    define('TP_SERVER', "chorkleines.com" . "/member/mypage" . "/TicketSystems");
     
   }else{
     echo("config.MODE is invalid");
