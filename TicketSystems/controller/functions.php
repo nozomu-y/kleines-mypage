@@ -3,7 +3,7 @@
   require_once($_SERVER['DOCUMENT_ROOT'].'/TicketSystems/mypage/TicketSystems/config/config.php');
   //db接続
   function dbconnect(){
-    if(strcmp(MODE,"test")==0){
+    if(MODE === "develop"){
       $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
       //接続エラーチェック
       if($mysqli->connect_error){
@@ -13,7 +13,7 @@
         $mysqli->set_charset("utf8");
       }
     
-    }else if(strcmp(MODE,"real")==0){
+    }else if(MODE === "staging" || MODE === "production"){
       require_once('/home/chorkleines/www/member/mypage/Core/dbconnect.php');
     }
     return $mysqli;
@@ -127,7 +127,7 @@
         $_SESSION['tp_secret'] = "OK";
       }
     }
-    if(strcmp($_SESSION['tp_secret'],"OK")!=0){ //tp_secretが設定された上で許可されてない時
+    if($_SESSION['tp_secret'] !== "OK"){ //tp_secretが設定された上で許可されてない時
       //弾く
       $_SESSION['tp_status'] = "noAdmin";
       unset($_SESSION['tp_secret']);

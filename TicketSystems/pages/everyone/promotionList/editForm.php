@@ -3,12 +3,12 @@
   accessFilter(NO_PERM_NUM, $USER->id, $mysqli);
 
   //編集を実行し、リストに戻る操作
-  if(isset($_POST['process']) && strcmp($_POST['process'], "update")==0){
+  if(isset($_POST['process']) && $_POST['process'] === "update"){
     require_once __DIR__.'/edit.php';
     $_SESSION['tp_status'] = "succeed-update-promotion";
     header("Location: list.php");
     exit();
-  }else if(isset($_POST['process']) && strcmp($_POST['process'], "delete")==0){
+  }else if(isset($_POST['process']) && $_POST['process'] === "delete"){
     require_once __DIR__.'/../individualStatus/deleteOrder.php';
     $_SESSION['tp_status'] = "delete-promotion";
     header("Location: list.php");

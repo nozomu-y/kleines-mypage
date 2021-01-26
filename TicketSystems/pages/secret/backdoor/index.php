@@ -3,7 +3,7 @@
   //ここにはaccessFilterを設定しない
 
   //パスワードの確認
-  if(isset($_POST['process']) && strcmp($_POST['process'], "secret-pass")==0){
+  if(isset($_POST['process']) && $_POST['process'] === "secret-pass"){
     require_once __DIR__ . "/checkPassword.php";
     header("Location: ".$_SERVER['PHP_SELF']);
     exit();

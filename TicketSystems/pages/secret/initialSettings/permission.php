@@ -3,14 +3,14 @@
   secretFilter(MAX_CHIEF_PERM, $USER->id, $mysqli);
   //どのページから送られてきたかによって、一度だけ処理を行う
   //TODO: ブラウザバックの対応
-  if(isset($_POST['process']) && $_POST['process']==="ticket"){
+  if(isset($_POST['process']) && $_POST['process'] === "ticket"){
     require_once __DIR__.'/configureTickets.php';
     configureTickets($_POST["ticketType"], $_POST["ticketTypeAmount"], $mysqli);
     header("Location:".$_SERVER['PHP_SELF']);
     exit();
   }
 
-  if(isset($_POST['process']) && $_POST['process']==='permission'){
+  if(isset($_POST['process']) && $_POST['process'] === 'permission'){
     require_once __DIR__.'/configurePermission.php';
     updatePermission($_POST['id'], $_POST["permission"], $mysqli);
     header("Location:".$_SERVER['PHP_SELF']);

@@ -3,7 +3,7 @@
   accessFilter(NO_PERM_NUM, $USER->id, $mysqli);
 
   //未処理削除
-  if(isset($_POST['process']) && strcmp($_POST['process'],"del")==0){
+  if(isset($_POST['process']) && $_POST['process'] === "del"){
     //処理を行う
     require_once __DIR__."/deleteOrder.php";
     $_SESSION['tp_status'] = "delete-order";

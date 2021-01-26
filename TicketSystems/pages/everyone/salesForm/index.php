@@ -6,7 +6,7 @@
   require_once TP_ROOT.'/include/header.php';
 
   //一度だけ処理を行う
-  if(isset($_POST['process']) && strcmp($_POST['process'], "submit")==0){
+  if(isset($_POST['process']) && $_POST['process'] === "submit"){
     require_once __DIR__.'/sold.php';
     $_SESSION['tp_status'] = "succeed-sold";
     header("Location: ".$_SERVER['PHP_SELF']); //更新対策

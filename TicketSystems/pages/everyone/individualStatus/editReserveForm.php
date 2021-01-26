@@ -3,12 +3,12 @@
   accessFilter(NO_PERM_NUM, $USER->id, $mysqli);
 
   //一度だけ処理を行う
-  if(isset($_POST['process']) && strcmp($_POST['process'], "edit-submit")==0){
+  if(isset($_POST['process']) && $_POST['process'] === "edit-submit"){
     require_once __DIR__.'/editReserve.php';
     $_SESSION['tp_status'] = "edit-reserve";
     header("Location: list.php"); //更新対策
     exit();
-  }else if(isset($_POST['process']) && strcmp($_POST['process'], "delete-submit")==0){
+  }else if(isset($_POST['process']) && $_POST['process'] === "delete-submit"){
     require_once __DIR__."/deleteOrder.php";
     $_SESSION['tp_status'] = "delete-order";
     header("Location: list.php");

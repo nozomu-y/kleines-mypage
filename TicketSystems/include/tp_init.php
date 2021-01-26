@@ -1,10 +1,10 @@
 <?php
   require_once __DIR__ . "/../config/config.php";
 
-  if(strcmp(MODE,"real") == 0){
+  if(MODE === "staging" || MODE === "production"){
     require_once __DIR__ . "/../../Common/init_page.php";
 
-  }else if(strcmp(MODE,"test") == 0){
+  }else if(MODE === "develop"){
     //開発モード
     ini_set("display_errors",1);
     error_reporting(E_ALL);

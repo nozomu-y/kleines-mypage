@@ -3,7 +3,7 @@
   accessFilter(NO_PERM_NUM, $USER->id, $mysqli);
 
   //一度だけ処理を行う
-  if(isset($_POST['process']) && strcmp($_POST['process'], "submit")==0){
+  if(isset($_POST['process']) && $_POST['process'] === "submit"){
     require_once __DIR__.'/report.php';
     $_SESSION['tp_status'] = "succeed-promotion-report";
     header("Location: list.php"); //更新対策

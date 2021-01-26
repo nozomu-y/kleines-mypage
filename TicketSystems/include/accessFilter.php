@@ -31,7 +31,7 @@
    */
   function secretFilter($max_permission, $id, $mysqli){
     //パスワード入力によって権限が足りている場合
-    if(isset($_SESSION['tp_secret']) && strcmp($_SESSION['tp_secret'], "allowed")==0){
+    if(isset($_SESSION['tp_secret']) && $_SESSION['tp_secret'] === "allowed"){
       return;
     }
     //初期設定前の場合、または初期設定済みだが権限が足りてない時

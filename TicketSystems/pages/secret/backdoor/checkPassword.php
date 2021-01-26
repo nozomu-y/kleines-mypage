@@ -4,7 +4,7 @@
     OKだったら、tp_secret=="allowed"に設定
     NGだったら、tp_status = wrong-passwordでリダイレクト(放置でリダイレクトになる)
   */
-  if(strcmp(htmlspecialchars($_POST['password']), SECRET_PASS)==0){
+  if(htmlspecialchars($_POST['password']) === SECRET_PASS){
     $_POST = array();
     $_SESSION['tp_secret'] = "allowed";
     $_SESSION['tp_status'] = "succeed-secret";

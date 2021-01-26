@@ -3,7 +3,7 @@
   secretFilter(MAX_CHIEF_PERM, $USER->id, $mysqli);
   //一度だけ処理を行う
   //TODO ブラウザバックの対応
-  if(isset($_POST['process']) && $_POST['process']=="initTables"){
+  if(isset($_POST['process']) && $_POST['process'] === "initTables"){
     require_once __DIR__.'/initTables.php';
     header("Location:".$_SERVER['PHP_SELF']);
     exit();

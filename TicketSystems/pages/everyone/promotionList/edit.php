@@ -2,7 +2,7 @@
   $orderID = htmlspecialchars($_GET['orderID']);
   $groupName = htmlspecialchars($_POST['groupName']);
   $dateStr = htmlspecialchars($_POST['date']);
-  if(strcmp($dateStr, "") == 0){
+  if($dateStr == ""){
     $date = null;
   }else{
     $date = date("Y-m-d",strtotime($dateStr));

@@ -1,5 +1,5 @@
 <?php
-  if(strcmp($pageTitle, "") == 0){
+  if($pageTitle == ""){
     $pageTitle = "no title";
   }
 ?>

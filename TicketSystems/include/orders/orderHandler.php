@@ -66,9 +66,9 @@
    */
   function updateTicketTotal($ticketTypeCode, $operator, $amount, $mysqli){
     if($amount == 0) return;
-    if(strcmp($operator, "+") == 0){
+    if($operator === "+"){
       $stmt_TicTot = $mysqli->prepare("UPDATE tp_TicketTotal SET amount = amount + ? WHERE ticketTypeCode = ?");
-    }else if(strcmp($operator, "-") == 0){
+    }else if($operator === "-"){
       $stmt_TicTot = $mysqli->prepare("UPDATE tp_TicketTotal SET amount = amount - ? WHERE ticketTypeCode = ?");
     }else{
       //error
@@ -93,13 +93,13 @@
    */
   function updateMemberTickets($type, $operator, $personID, $amount, $mysqli){
     if($amount == 0) return;
-    if((strcmp($type, "have") == 0) && (strcmp($operator, "+") == 0)){
+    if(($type === "have") && ($operator === "+")){
       $stmt_MemTic = $mysqli->prepare("UPDATE tp_MemberTickets SET have = have + ? WHERE id = ?");
-    }else if((strcmp($type, "have") == 0) && (strcmp($operator, "-") == 0)){
+    }else if(($type === "have") && ($operator === "-")){
       $stmt_MemTic = $mysqli->prepare("UPDATE tp_MemberTickets SET have = have - ? WHERE id = ?");
-    }else if((strcmp($type, "sold") == 0) && (strcmp($operator, "+") == 0)){
+    }else if(($type === "sold") && ($operator === "+")){
       $stmt_MemTic = $mysqli->prepare("UPDATE tp_MemberTickets SET sold = sold + ? WHERE id = ?");
-    }else if((strcmp($type, "sold") == 0) && (strcmp($operator, "-") == 0)){
+    }else if(($type === "sold") && ($operator === "-")){
       $stmt_MemTic = $mysqli->prepare("UPDATE tp_MemberTickets SET sold = sold - ? WHERE id = ?");
     }else{
       //error
