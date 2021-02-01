@@ -15,11 +15,8 @@
   $applyStyle = "everyone";
   require_once TP_ROOT.'/include/header.php';
 ?>
-<p class="tx">
-  改装中<br>
-  指定フォーム：<?=$orderType?>
-</p>
-<p class="tx"><?=$message?></p>
+<p class="tx" style="padding:.5rem"><?=$message?></p>
+
 <form method="post" action="<?=$_SERVER['PHP_SELF']?>?orderTypeID=<?=$_GET['orderTypeID']?>" class="needs-validation" novalidate>
   <div class="form-group">
     <input type="text" class="form-text js-form-item js-valid-amount" name="amount" id="amount" placeholder="枚数を入力してください" required>
