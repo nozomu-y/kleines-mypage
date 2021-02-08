@@ -17,7 +17,7 @@
   　tp_OrderTypesにオーダー種別を挿入
 </p><br>
 <p class="tx">初期化しますか？</p>
-<button class="btn btn-primary js-modal-open js-form-confirm" data-target="#confirmModal">はい</button>
+<button class="btn btn-primary js-modal-open js-form-confirm" data-target="confirmModal">はい</button>
 <div class="modal js-modal" id="confirmModal">
   <div class="modal-bg js-modal-close"></div>
   <div class="modal-content">
