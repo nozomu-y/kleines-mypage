@@ -1,6 +1,7 @@
 <?php 
   /**
    * 全てのticketTypeを挿入していく関数
+   * tp_TicketTotalに存在し、ticketTypeに存在しない項目は削除されます。
    * @param ticketType チケット種別の名前が入っている配列
    * @param ticketTypeAmount チケット種別ごとの枚数が入っている配列
    * @param mysqli 
