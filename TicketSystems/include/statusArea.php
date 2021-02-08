@@ -58,6 +58,9 @@
       case "delete-promotion":
         echo("情宣を中止しました");
         break;
+      case "edit-ticketTotal":
+        echo("チケット種別を変更しました");
+        break;
       default:
         echo("statusArea.phpで存在しないkey:<br>".$key);
         break;

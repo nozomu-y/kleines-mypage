@@ -28,6 +28,6 @@
   </tr>
   <?php endforeach; ?>
 </table>
-<a class="btn btn-primary" href="#">チケット種別を編集</a>
+<a class="btn btn-primary" href="edit.php">チケット種別を編集</a>
 
 <?php require_once TP_ROOT.'/include/footer.php'; ?>
