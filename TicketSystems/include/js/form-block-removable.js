@@ -2,14 +2,14 @@
 
 window.addEventListener('DOMContentLoaded',function(){
   //既に存在するform-blockの最大ID
-  var max_form_index = $(".form-block").length - 1;
+  let max_form_index = $(".form-block").length - 1;
 
-  $('button.js-fb-add').on('click',addFormBlock);  //addボタンがクリックされた時の挙動
-  $('button.js-fb-remove').on('click',removeFormBlock);  //removeボタンがクリックされた時の挙動
+  $('button.js-fb-add').on('click', addFormBlock);  //addボタンがクリックされた時の挙動
+  $('button.js-fb-remove').on('click', removeFormBlock);  //removeボタンがクリックされた時の挙動
 
   function addFormBlock(){
     //form-blockの内容をコピーし、次の部分に表示する
-    var $original = $('#form-block\\[' + max_form_index + '\\]'); //最後のブロックを選択
+    let $original = $('#form-block\\[' + max_form_index + '\\]'); //最後のブロックを選択
     max_form_index++; //idの更新
     $original
       .clone(true)
@@ -19,11 +19,12 @@ window.addEventListener('DOMContentLoaded',function(){
       .end()
       .find('input, select').each(function(index,obj){
         $(obj).attr({
-          name: $(obj).attr('name').replace(/\[[0-9]\]+$/, '[' + max_form_index + ']') //nameの書き換え
+          name: $(obj).attr('name').replace(/\[[0-9]+\]+$/, '[' + max_form_index + ']') //nameの書き換え
         });
         $(obj).val('');
+        $(obj).prop("readonly", false);
       });
-    var clone = $('#form-block\\[' + max_form_index + '\\]'); // clone取得
+    let clone = $('#form-block\\[' + max_form_index + '\\]'); // clone取得
     //removableにし、削除ボタンをshow
     $(clone).addClass('js-fb-removable');
     clone.find('.js-fb-remove').show();
@@ -31,7 +32,7 @@ window.addEventListener('DOMContentLoaded',function(){
   };
   
   function removeFormBlock(){
-    var $removeObj = $(this).parents('.js-fb-removable');
+    let $removeObj = $(this).parents('.js-fb-removable');
     //$removeObj.hide('fast', function() {  //fadeout後にfunctionを呼び出し
     $removeObj.remove();
     // 番号振り直し
@@ -43,7 +44,7 @@ window.addEventListener('DOMContentLoaded',function(){
           .attr('id', 'form-block\[' + max_form_index + '\]') // id属性を変更
           .find('input, textarea, select').each(function(idx, obj) {
           $(obj).attr({
-            name: $(obj).attr('name').replace(/\[[0-9]\]+$/, '[' + max_form_index + ']')
+            name: $(obj).attr('name').replace(/\[[0-9]+\]+$/, '[' + max_form_index + ']')
           });
         });
       }
