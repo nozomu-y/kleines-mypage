@@ -6,16 +6,17 @@
    * @param mysqli 
    */
   function configureTickets($ticketType, $ticketTypeAmount, $mysqli){
+    //既に存在するチケット種別を取得
+    $q_select = "SELECT * FROM tp_TicketTotal";
+    $result = $mysqli->query($q_select);
+    $tuples_db = [];
+    while($row = $result->fetch_array(MYSQLI_ASSOC)){
+      $tuples_db[] = $row;
+    }
+    $result->free();
+    $values_db = array_column($tuples_db, 'ticketTypeValue');  //存在するticketTypeValueを配列で取得
     for($i=0; $i<count($ticketTypeAmount); $i++){
-      //既に存在するチケット種別を取得
-      $result = $q_select = "SELECT * FROM tp_TicketTotal";
-      $tuples_db = [];
-      while($row = $result->fetch_array(MYSQLI_ASSOC)){
-        $tuples_db[] = $row;
-      }
-      $result->free();
-      $values_db = array_column($tuples_db, 'ticketTypeValue');  //存在するticketTypeValueを配列で取得
-      //ticketType[$i]がtuples_dbに存在している場合、UPDATE
+      //ticketType[$i]がvalues_dbに存在している場合、UPDATE
       if(in_array($ticketType[$i], $values_db)){
         //DBでのticketTypeCodeを取得
         $index = array_search($ticketType[$i], $values_db);
@@ -41,6 +42,21 @@
         $stmt_insert->close();
       }
     }
+    //削除するもの(tuples_dbに含まれていて、ticketTypeに含まれていないもの)を取得
+    $codes_removed = [];
+    foreach($tuples_db as $tuple){
+      if(!in_array($tuple["ticketTypeValue"], $ticketType) && !$tuple["isDefault"]){
+        $codes_removed[] = $tuple["ticketTypeCode"];
+      }
+    }
+    //codes_removedに含まれるタプルを削除
+    $stmt_delete = $mysqli->prepare("DELETE FROM tp_TicketTotal WHERE ticketTypeCode = ?");
+    $stmt_delete->bind_param('i', $code);
+    foreach($codes_removed as $c){
+      $code = $c;
+      $stmt_delete->execute();
+    }
+    $stmt_delete->close();
   }
 
   
