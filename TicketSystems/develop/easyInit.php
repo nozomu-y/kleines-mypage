@@ -12,13 +12,14 @@
     "団員所持",
     "団員販売済(情宣含む)",
     "オンライン委託",
+    "オンライン委託販売済",
     "チケット交換済",
-    "OVチケット販売済み",
     "OVチケット用にキープ",
+    "OVチケット販売済",
     "招待チケット用にキープ",
     "当日券用にキープ"
   ];
-  $ticketTypeAmount = [1290, 0, 0, 0, 200, 10, 0, 0, 0, 0];
+  $ticketTypeAmount = [1290, 0, 0, 0, 200, 0, 10, 0, 0, 0, 0];
 
   require_once INIT_PATH . '/configureTickets.php';
   configureTickets($ticketType, $ticketTypeAmount, $mysqli);
