@@ -14,14 +14,14 @@ $(function(){
    * 渉外所持の枚数(ticketTypeAmount[0])を自動で計算する関数
    */
   function calcAmount(){
-    var $sumAmount = $("input[name='sumAmount']")[0]; //合計枚数
-    var $items = $('.form-block');
-    var num_item = $items.length;
+    let $sumAmount = $("input[name='sumAmount']")[0]; //合計枚数
+    let $items = $('.form-block');
+    let num_item = $items.length;
     //渉外所持の枚数を計算する
-    var pr_have = $sumAmount.value;
-    for(var i=1; i<num_item; i++){  //i=0は渉外所持なので飛ばす
-      var $item = $("input[name='ticketTypeAmount["+i+"]'");
-      var val = $item[0].value;
+    let pr_have = $sumAmount.value;
+    for(let i=1; i<num_item; i++){  //i=0は渉外所持なので飛ばす
+      let $item = $("input[name='ticketTypeAmount["+i+"]'");
+      let val = $($item[0]).val();
       if($.isNumeric(val)){
         pr_have -= val;
       }
