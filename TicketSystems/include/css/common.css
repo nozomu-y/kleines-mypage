@@ -87,22 +87,6 @@ a.btn {
   padding: 0px;
 }
 
-
-/* grid設定 */
-/*
-.container {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-}
-div {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-}
-* {
-  grid-column: span 12;
-}
-*/
-
 /* formに関するCSS */
 .form-text {
   display: block;
@@ -136,21 +120,6 @@ div {
   -webkit-box-shadow: 0 2px 3px 0 #ddd;
   border-radius:5px;
 }
-
-/*
-.col-1 { grid-column: span 1;}
-.col-2 { grid-column: span 2;}
-.col-3 { grid-column: span 3;}
-.col-4 { grid-column: span 4;}
-.col-5 { grid-column: span 5;}
-.col-6 { grid-column: span 6;}
-.col-7 { grid-column: span 7;}
-.col-8 { grid-column: span 8;}
-.col-9 { grid-column: span 9;}
-.col-10 { grid-column: span 10;}
-.col-11 { grid-column: span 11;}
-.col-12 { grid-column: span 12;}
-*/
 
 /* buttonに関するcss */
 .btn {
@@ -407,4 +376,24 @@ select.select-sm {
   border:#ccc 1px solid;
   border-radius: 3px;
   background:#fff;
+}
+
+/* flexbox */
+.f-container {
+  display: flex;
+  flex-flow: row wrap;
+  /* align-items: flex-start;*/
+  /* align-content: space-around; */
+}
+
+.fb-TicType-name {
+  flex: 1 1 70%;
+}
+
+.fb-TicType-amount {
+  flex: 1 1 30%;
+}
+
+.fb-reserve-name {
+  flex: 1 1 50%;
 }

@@ -21,9 +21,9 @@
   //チケット種別を取得
   $q_select = "SELECT * FROM tp_TicketTotal";
   $result = $mysqli->query($q_select);
-  $ticketTypes = [];
+  $t_types = [];
   while($row = $result->fetch_array(MYSQLI_ASSOC)){
-    $ticketTypes[] = $row;
+    $t_types[] = $row;
   }
   $result->free();
 ?>
@@ -33,32 +33,40 @@
 <p class="tx">追加ボタンを押すと1つ追加でき、削除ボタンを押すとそのチケット種別は削除されます。</p>
 <p class="tx">「渉外所持」は、合計枚数からその他を除いた分の枚数が自動で入力されます。</p><br>
 <form action="<?=$_SERVER['PHP_SELF']?>" method="post" class="needs-validation">
-  <p class="tx">チケットの全ての合計枚数</p>
+  <p class="tx" style="font-weight:400;">チケットの全ての合計枚数</p>
   <div class="form-group">
     <input class="form-text" type="text" name="sumAmount" value="1500">
   </div>
-  <p class="tx">チケット種別・枚数の初期値</p><br>
-  <div class="form-group">
-    <p class="tx col-8">チケット種別名称</p>
-    <p class="tx col-4">初期枚数</p>
-  </div>
+  <p class="tx" style="font-weight:400;">チケット種別・枚数の初期値</p>
   <?php
-    for($i=0; $i<count($ticketTypes); $i++):
+    for($i=0; $i<count($t_types); $i++):
   ?>
-  <div class="form-block <?php if(!$ticketTypes[$i]["isDefault"]) echo("js-fb-removable");?>" id="form-block[<?=$i?>]">
-    <div class="form-group">
-      <input class="form-text js-form-item col-8" type="text" name="ticketType[<?=$i?>]" value="<?=$ticketTypes[$i]['ticketTypeValue']?>" required
-      <?php if($ticketTypes[$i]["isDefault"]) echo("readonly"); ?>>
-      <div class="required-feedback">名前を入力してください</div>
-      <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
-      <input class="form-text js-form-item js-valid-amount　col-4" type="text" name="ticketTypeAmount[<?=$i?>]" value="<?=$ticketTypes[$i]["amount"]?>" required 
-      <?php if($i==0) echo("readonly"); //渉外所持は、チケット全体枚数 - その他の枚数で算出するためreadonly ?>>
-      <div class="required-feedback">枚数を入力してください</div>
-      <div class="format-feedback">半角数字のみ、0以上の整数で入力してください</div>
-      <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+  <div class="form-block <?php if(!$t_types[$i]["isDefault"]) echo("js-fb-removable");?>" id="form-block[<?=$i?>]">
+    <div class="f-container form-group">
+      <div class="fb-TicType-name">
+        <p class="tx">チケット種別名称</p>
+      </div>
+      <div class="fb-TicType-amount">
+        <p class="tx">初期枚数</p>
+      </div>
+      <div class="fb-TicType-name">
+        <input class="form-text js-form-item col-8" type="text" name="ticketType[<?=$i?>]" 
+          value="<?=$t_types[$i]['ticketTypeValue']?>" required 
+          <?php if($t_types[$i]["isDefault"]) echo("readonly"); ?>>
+        <div class="required-feedback">名前を入力してください</div>
+        <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+      </div>
+      
+      <div class="fb-TicType-amount">
+        <input class="form-text js-form-item js-valid-amount　col-4" type="text" name="ticketTypeAmount[<?=$i?>]" value="<?=$t_types[$i]["amount"]?>" required 
+        <?php if($i==0) echo("readonly"); //渉外所持は、チケット全体枚数 - その他の枚数で算出するためreadonly ?>>
+        <div class="required-feedback">枚数を入力してください</div>
+        <div class="format-feedback">半角数字のみ、0以上の整数で入力してください</div>
+        <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+      </div>
     </div>
     <button class="btn btn-danger js-fb-remove" 
-    <?php if($ticketTypes[$i]["isDefault"]) echo('style="display:none;"');?> >× 削除する</button>
+    <?php if($t_types[$i]["isDefault"]) echo('style="display:none;"');?> >× 削除する</button>
   </div>
   <?php endfor;?>
   <button class="btn btn-success js-fb-add" type="button" formNoValidate>+ 追加する</button><br>

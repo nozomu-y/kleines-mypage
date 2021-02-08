@@ -28,29 +28,45 @@
     <input type="checkbox" name="reserve" id="reserve" value="はい">
 		<label class="tx" for="reserve">はい</label>
   </div>
-  <div class="form-block" id="form-block[0]" style="display:none;">
+  <div class="form-block hidden" id="form-block[0]" style="display:none;">
     <p class="tx" style="font-weight:bold;">お客様1グループ分の情報を入力してください</p>
-    <div class="form-group">
-      <p class="tx">姓</p>
-      <input class="form-text js-form-item js-valid-name" type="text" name="lname-guest[0]" required>
-      <div class="required-feedback">名前を入力してください</div>
-      <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
-      <p class="tx">名</p>
-      <input class="form-text js-form-item js-valid-name" type="text" name="fname-guest[0]" required>
-      <div class="required-feedback">名前を入力してください</div>
-      <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+    <div class="form-group f-container">
+      <div class="fb-reserve-name">
+        <p class="tx">代表者 姓</p>
+      </div>
+      <div class="fb-reserve-name">
+        <p class="tx">代表者 名</p>
+      </div>
+      <div class="fb-reserve-name">
+        <input class="form-text js-form-item js-valid-name" type="text" name="lname-guest[0]" required>
+        <div class="required-feedback">名前を入力してください</div>
+        <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+      </div>
+      <div class="fb-reserve-name">
+        <input class="form-text js-form-item js-valid-name" type="text" name="fname-guest[0]" required>
+        <div class="required-feedback">名前を入力してください</div>
+        <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+      </div>
     </div>
-    <div class="form-group">
-      <p class="tx">姓(カナ)</p>
-      <input class="form-text js-form-item js-valid-kana" type="text" name="lname-kana-guest[0]" required>
-      <div class="required-feedback">名前を入力してください</div>
-      <div class="format-feedback">全角カナで入力してください</div>
-      <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
-      <p class="tx">名(カナ)</p>
-      <input class="form-text js-form-item js-valid-kana" type="text" name="fname-kana-guest[0]" required>
-      <div class="required-feedback">名前を入力してください</div>
-      <div class="format-feedback">全角カナで入力してください</div>
-      <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+    <div class="f-container form-group">
+      <div class="fb-reserve-name">
+        <p class="tx">代表者 姓(カナ)</p>
+      </div>
+      <div class="fb-reserve-name">
+        <p class="tx">代表者 名(カナ)</p>
+      </div>
+      <div class="fb-reserve-name">
+        <input class="form-text js-form-item js-valid-kana" type="text" name="lname-kana-guest[0]" required>
+        <div class="required-feedback">名前を入力してください</div>
+        <div class="format-feedback">全角カナで入力してください</div>
+        <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+      </div>
+      <div class="fb-reserve-name">
+        <input class="form-text js-form-item js-valid-kana" type="text" name="fname-kana-guest[0]" required>
+        <div class="required-feedback">名前を入力してください</div>
+        <div class="format-feedback">全角カナで入力してください</div>
+        <div class="invalid-chars"><,>,&,",'は使用できません。使用したい場合は全角で使用してください。</div>
+      </div>
     </div>
     <div class="form-group">
       <p class="tx">利用枚数</p>
@@ -66,12 +82,12 @@
       <div class="format-feedback">半角数字のみ、0以上の整数で入力してください</div>
       <div class="invalid-chars"><,>,&,",'は使用できません。</div>
     </div>
-    <button class="btn btn-success js-fb-add" type="button" formNoValidate>+ グループを追加</button>
     <button class="btn btn-danger js-fb-remove" style="display:none;">× グループを削除</button>
   </div>
-  <div class="form-group">
-    <input type="hidden" name="process" value="submit">
+  <div class="hidden" style="display:none;">
+    <button class="btn btn-success js-fb-add" type="button" formNoValidate>+ グループを追加</button>
   </div>
+  <input type="hidden" name="process" value="submit">
   <button class="btn btn-primary js-modal-open js-form-confirm" data-target="confirmModal">入力確認</button>
   <div class="modal js-modal" id="confirmModal">
     <div class="modal-bg js-modal-close"></div>

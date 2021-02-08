@@ -7,7 +7,7 @@ $(function(){
   //チケット預かりを利用しますか？が変更されたら、form-blockの表示状況を変更する
   if($('#reserve').prop('checked')){
     $('.form-block input, .form-block select').prop('disabled', false);
-    $('.form-block').show('fast');
+    $('.hidden').show('fast');
   }else{
     $('.form-block input, .form-block select').prop('disabled', true);
   }
@@ -15,10 +15,10 @@ $(function(){
   $("#reserve").on('click',function(){
     if ( $(this).prop('checked')) {
       $('.form-block input, .form-block select').prop('disabled', false);
-      $('.form-block').show('fast');
+      $('.hidden').show('fast');
     } else {
       $('.form-block input, .form-block select').prop('disabled', true);
-      $('.form-block').hide('fast');
+      $('.hidden').hide('fast');
     }
   });
 });
