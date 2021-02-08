@@ -84,7 +84,8 @@
       "CREATE TABLE `tp_TicketTotal` (
       `ticketTypeCode` int(11) NOT NULL,
       `ticketTypeValue` varchar(50) NOT NULL,
-      `amount` int(11) NOT NULL DEFAULT '0'
+      `amount` int(11) NOT NULL DEFAULT '0',
+      `default` boolean NOT NULL DEFAULT '0'
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
       $q_key =
       "ALTER TABLE `tp_TicketTotal` ADD PRIMARY KEY (`ticketTypeCode`)";
@@ -207,13 +208,19 @@
       //membersから全員分の名前を挿入
       $q_insert = "INSERT INTO tp_MemberTickets (id) SELECT id FROM members WHERE members.status = 0";
     }else if($table_name === "tp_TicketTotal"){
-      //必ず必要な4つを挿入する
+      //必要なものを挿入する
       $q_insert = 
-      "INSERT INTO `tp_TicketTotal` (`ticketTypeCode`, `ticketTypeValue`, `amount`) VALUES
-      (1, '渉外所持', 0),
-      (2, '回収済み預かりチケット', 0),
-      (3, '団員所持', 0),
-      (4, '団員販売済(情宣含む)', 0)";
+      "INSERT INTO `tp_TicketTotal` (`ticketTypeCode`, `ticketTypeValue`, `amount`, `isDefault`) VALUES
+      (1, '渉外所持', 0, 1),
+      (2, '回収済み預かりチケット', 0, 1),
+      (3, '団員所持', 0, 1),
+      (4, '団員販売済(情宣含む)', 0, 1),
+      (5, 'オンライン委託', 0, 1),
+      (6, 'チケット交換済', 0, 1),
+      (7, 'OVチケット販売済み', 0, 1),
+      (8, 'OVチケット用にキープ', 0, 1),
+      (9, '招待チケット用にキープ', 0, 1),
+      (10, '当日券用にキープ', 0, 1)";
     }else if($table_name === "tp_Reserves"){
       return true;
     }else if($table_name === "tp_Responses"){
