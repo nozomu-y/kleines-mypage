@@ -1,7 +1,7 @@
 <?php
   require_once __DIR__.'/../../../include/tp_init.php';
   accessFilter(MAX_PR_PERM, $USER->id, $mysqli);
-  $pageTitle = "チケット種別の確認・変更";
+  $pageTitle = "チケット種別の確認・編集";
   $applyStyle = "private";
   require_once TP_ROOT.'/include/header.php';
 ?>
