@@ -59,22 +59,30 @@ include_once __DIR__ . '/../Common/head.php';
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
+                        $query = "SELECT profiles.grade, profiles.part, profiles.last_name, profiles.first_name, profiles.name_kana, users.status FROM profiles INNER JOIN users ON profiles.user_id=users.user_id ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);
                             $mysqli->close();
                             exit();
                         }
-                        $row_cnt = $result->num_rows;
                         while ($row = $result->fetch_assoc()) {
-                            $account = new User($row);
-                            if ($account->status != 2) {
+                            $grade = $row['grade'];
+                            $part = $row['part'];
+                            $name = $row['last_name'] . $row['first_name'];
+                            $name_kana = $row['name_kana'];
+                            $status = $row['status'];
+                            if (strcmp($status, "RESIGNED")) {
+                                if (!strcmp($status, "PRESENT")) {
+                                    $status = "在団";
+                                } else {
+                                    $status = "休団";
+                                }
                                 echo '<tr>';
-                                echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                                echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                                echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                                echo '<td class="text-nowrap">' . $account->get_status() . '</td>';
+                                echo '<td class="text-nowrap">' . $grade . '</td>';
+                                echo '<td class="text-nowrap">' . $part . '</td>';
+                                echo '<td class="text-nowrap"><span class="d-none">' . $name_kana . '</span>' . $name . '</td>';
+                                echo '<td class="text-nowrap">' . $status . '</td>';
                                 echo '</tr>';
                             }
                         }
@@ -131,38 +139,24 @@ $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
 $script .= '</script>';
 
 
-$query = "SELECT * FROM members WHERE part='S' AND status != 2";
+$query = "SELECT profiles.part, COUNT(*) FROM profiles INNER JOIN users ON profiles.user_id=users.user_id WHERE users.status != 'RESIGNED' group by profiles.part";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
     $mysqli->close();
     exit();
 }
-$sop_num = $result->num_rows;
-$query = "SELECT * FROM members WHERE part='A' AND status != 2";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
+while ($row = $result->fetch_assoc()) {
+    if ($row['part'] == 'S') {
+        $sop_num = $row['COUNT(*)'];
+    } else if ($row['part'] == 'A') {
+        $alt_num = $row['COUNT(*)'];
+    } else if ($row['part'] == 'T') {
+        $ten_num = $row['COUNT(*)'];
+    } else if ($row['part'] == 'B') {
+        $bas_num = $row['COUNT(*)'];
+    }
 }
-$alt_num = $result->num_rows;
-$query = "SELECT * FROM members WHERE part='T' AND status != 2";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$ten_num = $result->num_rows;
-$query = "SELECT * FROM members WHERE part='B' AND status != 2";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$bas_num = $result->num_rows;
 
 $script .= '<script>';
 $script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", "sans-serif";Chart.defaults.global.defaultFontColor = "#858796";';
@@ -213,7 +207,7 @@ $script .= 'var myPieChart = new Chart(ctx, {
     });';
 $script .= '</script>';
 
-$query = "SELECT grade FROM members WHERE status != 2 GROUP BY grade";
+$query = "SELECT profiles.grade, COUNT(*) FROM profiles INNER JOIN users ON profiles.user_id=users.user_id WHERE users.status != 'RESIGNED' group by profiles.grade";
 $result = $mysqli->query($query);
 if (!$result) {
     print('クエリーが失敗しました。' . $mysqli->error);
@@ -222,17 +216,7 @@ if (!$result) {
 }
 $grade_list = [];
 while ($row = $result->fetch_assoc()) {
-    foreach ($row as $grade) {
-        $query = "SELECT * FROM members WHERE grade=$grade AND status != 2";
-        $result_1 = $mysqli->query($query);
-        if (!$result_1) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        // $grade_list = array_merge($grade_list, array($grade => $result_1->num_rows));
-        $grade_list[$grade] = $result_1->num_rows;
-    }
+    $grade_list[$row['grade']] = $row['COUNT(*)'];
 }
 $script .= '<script>';
 $script .= 'Chart.defaults.global.defaultFontFamily = "Noto Sans JP", "sans-serif";Chart.defaults.global.defaultFontColor = "#858796";';
