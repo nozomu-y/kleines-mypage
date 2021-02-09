@@ -10,3 +10,8 @@ function getGitBranch()
     }
     return null;
 }
+
+function format_price($price)
+{
+    return '￥' . number_format($price);
+}

@@ -106,13 +106,13 @@ if ($backtrace == '/index.php') {
              * 5 : access to gasshuku shuukinn
              * 
             */
-            if ($USER->admin != null) {
+            if ($USER->isManager() || $USER->isAccountant() || $USER->isCamp()) {
                 echo '<hr class="sidebar-divider">';
                 echo '<div class="sidebar-heading">管理コンソール</div>';
-                if ($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3) {
+                if ($USER->isManager() || $USER->isAccountant()) {
                     echo '<li class="nav-item ' . $account_manage . '"><a class="nav-link" href="' . MYPAGE_ROOT . '/admin/account_manage/"><i class="fas fa-users-cog fa-fw"></i></i><span>アカウント管理</span></a></li>';
                 }
-                if ($USER->admin == 1 || $USER->admin == 3) {
+                if ($USER->isAccountant()) {
                     echo '<li class="nav-item ' . $admin_accounting . '">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccounting" aria-expanded="true" aria-controls="collapseAccounting">
                     <i class="fas fa-fw fa-coins"></i>
@@ -126,14 +126,11 @@ if ($backtrace == '/index.php') {
                     </div>
                     </li>';
                 }
-                if ($USER->admin == 2) {
+                if ($USER->isManager() && !$USER->isAccountant()) {
                     echo '<li class="nav-item ' . $admin_accounting . '"><a class="nav-link" href="' . MYPAGE_ROOT . '/admin/accounting/"><i class="fas fa-coins fa-fw"></i></i><span>会計システム</span></a></li>';
                 }
-                if ($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3 || $USER->admin == 5) {
-                    echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="' . MYPAGE_ROOT . '/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
-                }
+                echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="' . MYPAGE_ROOT . '/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
             }
-
             ?>
             <hr class="sidebar-divider d-none d-md-block">
             <div class="text-center d-none d-md-inline">
@@ -164,7 +161,6 @@ if ($backtrace == '/index.php') {
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <!-- <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $USER->get_name(); ?></span> -->
                                 <span class="mr-2 text-gray-600 small"><?php echo $USER->get_name(); ?></span>
                                 <i class="fas fa-user fa-fw"></i>
                             </a>
