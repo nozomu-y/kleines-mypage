@@ -68,7 +68,15 @@ include_once __DIR__ . '/../Common/head.php';
                         }
                         while ($row = $result->fetch_assoc()) {
                             $grade = $row['grade'];
-                            $part = $row['part'];
+                            if ($row['part'] == 'S') {
+                                $part = "Soprano";
+                            } else if ($row['part'] == 'A') {
+                                $part = "Alto";
+                            } else if ($row['part'] == 'T') {
+                                $part = "Tenor";
+                            } else if ($row['part'] == 'B') {
+                                $part = "Bass";
+                            }
                             $name = $row['last_name'] . $row['first_name'];
                             $name_kana = $row['name_kana'];
                             $status = $row['status'];
