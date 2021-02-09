@@ -14,26 +14,15 @@ class Fee
 
     public function __construct($fee)
     {
-        $this->id = $fee['id'];
+        $this->id = $fee['accounting_id'];
         $this->datetime = $fee['datetime'];
         $this->price = (int) $fee['price'];
         $this->paid_cash = (int) $fee['paid_cash'];
         $this->paid_individual = $this->price - $this->paid_cash;
         $this->status = $fee['status'];
-
-        require __DIR__.'/../Common/dbconnect.php';
-
-        $query = "SELECT * FROM fee_list WHERE id = $this->id";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        $row = $result->fetch_assoc();
-        $this->name = $row['name'];
-        $this->deadline = $row['deadline'];
-        $this->admin = $row['admin'];
+        $this->name = $fee['name'];
+        $this->deadline = $fee['deadline'];
+        $this->admin = $fee['admin'];
     }
 
     public function get_deadline()

@@ -3,68 +3,39 @@
 class User
 {
     public $id;
-    public $email;
-    public $password;
     public $last_name;
     public $first_name;
     public $kana;
     public $grade;
     public $part;
-    public $token;
-    public $validation_time;
-    public $login_failure;
-    public $admin;
-    public $status;
     public $name;
-    public $delinquent;
-    public $individual_accounting_total;
+    public $email;
 
     public function __construct($user)
     {
-        $this->id = $user['id'];
-        $this->email = $user['email'];
-        $this->password = $user['password'];
-        $this->last_name = $user['last_name'];
-        $this->first_name = $user['first_name'];
-        $this->kana = $user['kana'];
-        $this->grade = $user['grade'];
-        $this->part = $user['part'];
-        $this->token = $user['token'];
-        $this->validation_time = $user['validation_time'];
-        $this->login_failure = $user['login_failure'];
-        $this->admin = (int) $user['admin'];
-        $this->status = (int) $user['status'];
-        $this->name = $user['last_name'] . $user['first_name'];
+        $this->id = $user;
 
-        require __DIR__.'/../Common/dbconnect.php';
-
-        $query = "SELECT * FROM fee_record_$this->id WHERE datetime IS NULL";
+        require __DIR__ . '/../Common/dbconnect.php';
+        $query = "SELECT * FROM profiles INNER JOIN users ON profiles.user_id=users.user_id WHERE profiles.user_id='$this->id'";
         $result = $mysqli->query($query);
         if (!$result) {
             print('Query Failed : ' . $mysqli->error);
             $mysqli->close();
             exit();
         }
-        $this->delinquent = 0;
-        while ($row = $result->fetch_assoc()) {
-            $this->delinquent += $row['price'];
-        }
-        $query = "SELECT * FROM individual_accounting_$this->id";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        $this->individual_accounting_total = 0;
-        while ($row = $result->fetch_assoc()) {
-            $this->individual_accounting_total += $row['price'];
-        }
+        $profiles = $result->fetch_assoc();
+        $this->last_name = $profiles['last_name'];
+        $this->first_name = $profiles['first_name'];
+        $this->kana = $profiles['name_kana'];
+        $this->grade = $profiles['grade'];
+        $this->part = $profiles['part'];
+        $this->name = $this->grade . $this->part . ' ' . $this->last_name . $this->first_name;
+        $this->email = $profiles['email'];
     }
 
     public function get_name()
     {
-        return $this->grade . $this->part . ' ' . $this->name;
+        return $this->grade . $this->part . ' ' . $this->last_name . $this->first_name;
     }
 
     public function get_part()
@@ -89,52 +60,143 @@ class User
         }
     }
 
-    public function get_admin()
+    public function isAdmin()
     {
-        if ($this->admin == 1) {
-            return "マスター権限";
-        } elseif ($this->admin == 2) {
-            return "アカウント管理";
-        } elseif ($this->admin == 3) {
-            return "会計システム";
-        } elseif ($this->admin == 5) {
-            return "合宿会計システム";
+        require __DIR__ . '/../Common/dbconnect.php';
+        $query = "SELECT * FROM admins WHERE user_id='$this->id'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $row_cnt = $result->num_rows;
+        if ($row_cnt >= 1) {
+            return True;
         } else {
-            return '';
+            return False;
         }
     }
-    public function get_admin_en()
+
+    public function isMaster()
     {
-        if ($this->admin == 1) {
-            return "master";
-        } elseif ($this->admin == 2) {
-            return "account management";
-        } elseif ($this->admin == 3) {
-            return "accounting management";
-        } elseif ($this->admin == 5) {
-            return "camp accounting management";
+        require __DIR__ . '/../Common/dbconnect.php';
+        $query = "SELECT * FROM admins WHERE user_id='$this->id' AND role='MASTER'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $row_cnt = $result->num_rows;
+        if ($row_cnt == 1) {
+            return True;
         } else {
-            return '';
+            return False;
+        }
+    }
+
+    public function isManager()
+    {
+        require __DIR__ . '/../Common/dbconnect.php';
+        $query = "SELECT * FROM admins WHERE user_id='$this->id' AND (role='MANAGER' OR role='MASTER')";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $row_cnt = $result->num_rows;
+        if ($row_cnt == 1) {
+            return True;
+        } else {
+            return False;
+        }
+    }
+
+    public function isAccountant()
+    {
+        require __DIR__ . '/../Common/dbconnect.php';
+        $query = "SELECT * FROM admins WHERE user_id='$this->id' AND (role='ACCOUNTANT' OR role='MASTER')";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $row_cnt = $result->num_rows;
+        if ($row_cnt == 1) {
+            return True;
+        } else {
+            return False;
+        }
+    }
+
+    public function isCamp()
+    {
+        require __DIR__ . '/../Common/dbconnect.php';
+        $query = "SELECT * FROM admins WHERE user_id='$this->id' AND (role='CAMP' OR role='MASTER')";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $row_cnt = $result->num_rows;
+        if ($row_cnt == 1) {
+            return True;
+        } else {
+            return False;
         }
     }
 
     public function get_status()
     {
-        if ($this->status == 0) {
+        require __DIR__ . '/../Common/dbconnect.php';
+        $query = "SELECT status FROM users WHERE user_id='$this->id'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $status = $result->fetch_assoc()['status'];
+        if (strcmp($status, "PRESENT") == 0) {
             return "在団";
-        } elseif ($this->status == 1) {
+        } elseif (strcmp($status, "ABSENT") == 0) {
             return "休団";
-        } else {
+        } elseif (strcmp($status, "RESIGNED") == 0) {
             return "退団";
         }
     }
 
     public function get_delinquent()
     {
-        return '￥' . number_format($this->delinquent);
+        require __DIR__ . '/../Common/dbconnect.php';
+        $query = "SELECT SUM(price) FROM accounting_records WHERE user_id='$this->id' AND datetime IS NULL";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $delinquent = $result->fetch_assoc()['SUM(price)'];
+
+        return  "￥" . number_format($delinquent);
     }
+
     public function get_individual_accounting_total()
     {
-        return '￥' . number_format($this->individual_accounting_total);
+        require __DIR__ . '/../Common/dbconnect.php';
+        $query = "SELECT SUM(price) FROM individual_accounting_records WHERE user_id='$this->id'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $individual_accounting_total = $result->fetch_assoc()['SUM(price)'];
+
+        return "￥" . number_format($individual_accounting_total);
     }
 }
