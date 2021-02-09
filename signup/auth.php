@@ -12,7 +12,7 @@ if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // i
     $maintenance = false;
 }
 
-if (isset($_SESSION['mypage_email']) && !$maintenance) {
+if (isset($_SESSION['mypage_user_id']) && !$maintenance) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
@@ -28,7 +28,7 @@ if (isset($_SESSION['mypage_password_error'])) {
 }
 
 $token = $_GET["token"];
-$query = "SELECT * FROM members WHERE token = '$token'";
+$query = "SELECT * FROM identity_verifications WHERE token = '$token'";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -41,9 +41,12 @@ if ($row_cnt == 0) {
     header('Location: ' . MYPAGE_ROOT . '/signup');
     exit();
 }
-$USER = new User($result->fetch_assoc());
+$row = $result->fetch_assoc();
+$user_id = $row['user_id'];
+$validation_time = $row['datetime'];
+$USER = new User($user_id);
 
-$validation_time = strtotime($USER->validation_time);
+$validation_time = strtotime($validation_time);
 $time_now = strtotime(date("Y-m-d H:i:s"));
 if ($time_now - $validation_time > 24 * 60 * 60) {
     $_SESSION['mypage_token_expired'] = "";
@@ -87,7 +90,7 @@ if ($time_now - $validation_time > 24 * 60 * 60) {
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">パスワードの設定</h1>
-                                        <p><?php echo $USER->name ?>さん。パスワードを英数字8文字以上で入力してください。</p>
+                                        <p><?php echo $USER->get_name() ?>さん。パスワードを英数字8文字以上で入力してください。</p>
                                     </div>
                                     <form class="user" method="POST" action="./check_password.php">
                                         <div class="form-group">

@@ -12,7 +12,7 @@ if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // i
     $maintenance = false;
 }
 
-if (isset($_SESSION['mypage_email']) && !$maintenance) {
+if (isset($_SESSION['mypage_user_id']) && !$maintenance) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
@@ -26,6 +26,9 @@ if (isset($_SESSION['mypage_auth_error'])) {
     if ($_SESSION['mypage_auth_error'] == "wrong-email") {
         $email_invalid = 'is-invalid';
         $email_message = "このメールアドレスは登録されていません";
+    } else if ($_SESSION['mypage_auth_error'] == "resigned") {
+        $email_invalid = 'is-invalid';
+        $email_message = "退団者はログインできません";
     }
 }
 if (isset($_SESSION['mypage_auth_success'])) {
@@ -94,13 +97,13 @@ session_destroy();
                                     </div>
                                     <?php
                                     if ($mypage_auth_success) {
-                                        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                                        echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
                                         echo $email . 'にメールを送信しました。<br>24時間以内にリンクをクリックしてパスワードを設定してください。<br>メールが届かない場合は、<a href="mailto:' . ADMIN_EMAIL . '" class="alert-link">' . ADMIN_EMAIL . '</a>までご連絡ください。';
                                         echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                                         echo '</div>';
                                     }
                                     if ($mypage_token_expired) {
-                                        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                                        echo '<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">';
                                         echo 'リンクの期限が切れました。再度メール認証を行い、リンクを発行してください。';
                                         echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                                         echo '</div>';
