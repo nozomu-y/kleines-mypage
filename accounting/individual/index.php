@@ -20,7 +20,7 @@ include_once __DIR__ . '/../../Common/head.php';
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM individual_accounting_$USER->id ORDER BY `date` DESC";
+                        $query = "SELECT * FROM individual_accounting_records WHERE user_id=$USER->id ORDER BY `datetime` DESC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);

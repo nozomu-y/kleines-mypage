@@ -24,10 +24,10 @@ include_once __DIR__ . '/../../Common/head.php';
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM fee_record_$USER->id ORDER BY id DESC";
+                        $query = "SELECT * FROM accounting_lists INNER JOIN (SELECT * FROM accounting_records WHERE user_id='$USER->id') as accounting_records ON accounting_lists.accounting_id = accounting_records.accounting_id ORDER BY accounting_lists.deadline DESC";
                         $result = $mysqli->query($query);
                         if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
+                            print('Query Failed 1: ' . $mysqli->error);
                             $mysqli->close();
                             exit();
                         }
