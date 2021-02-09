@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3)) {
+if (!($USER->isManager() || $USER->isAccountant())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
@@ -38,12 +38,14 @@ if (!isset($_POST['submit'])) {
                     </thead>
                     <tbody>
                         <?php
+                        $valid = TRUE;
                         $array_csv = array();
                         $lines = explode("\n", $_POST["csv"]);
                         foreach ($lines as $line) {
                             $array_csv[] = str_getcsv($line);
                         }
                         foreach ($array_csv as $line) {
+
                             if ($line[0] == NULL) continue;
                             $grade = trim($line[0]);
                             $part = trim($line[1]);
@@ -51,6 +53,9 @@ if (!isset($_POST['submit'])) {
                             $first_name = trim($line[3]);
                             $kana = trim($line[4]);
                             $address = trim($line[5]);
+                            if (!($part == 'S' || $part == 'A' || $part == 'T' || $part == 'B')) {
+                                $valid = FALSE;
+                            }
                         ?>
                             <tr>
                                 <td class="text-nowrap"><?= $grade ?></td>
@@ -67,9 +72,28 @@ if (!isset($_POST['submit'])) {
                 </table>
                 <form method="POST" action="./add_user.php">
                     <input type="hidden" name="csv" value="<?= $_POST['csv'] ?>">
-                    <button type="submit" class="btn btn-primary" name="submit">アカウントを追加</button>
+                    <?php
+                    if ($valid) {
+                    ?>
+                        <button type="submit" class="btn btn-primary" name="submit">アカウントを追加</button>
+                    <?php
+                    } else {
+                    ?>
+                        <button type="submit" class="btn btn-primary disabled" disabled>アカウントを追加</button>
+                    <?php
+                    }
+                    ?>
                     <a class="btn btn-secondary" href="./" role="button">キャンセル</a>
                 </form>
+                <?php
+                if (!$valid) {
+                ?>
+                    <div class="alert alert-danger fade show mt-3" role="alert">
+                        パート名が不正です。S, A, T, Bのいずれかで入力してください。
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </div>

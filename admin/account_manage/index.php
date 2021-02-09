@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3)) {
+if (!($USER->isManager() || $USER->isAccountant())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
@@ -12,7 +12,7 @@ include_once __DIR__ . '/../../Common/head.php';
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">アカウント管理</h1>
     <div class="row">
-        <div class=" col-xl-12 col-sm-12">
+        <div class=" col-xl-9 col-sm-12">
             <?php
             if (isset($_SESSION['mypage_status'])) {
                 echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
@@ -53,25 +53,13 @@ include_once __DIR__ . '/../../Common/head.php';
                     <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
                         <thead>
                             <tr>
-                                <?php
-                                if ($USER->admin == 1) {
-                                    echo '<th class="text-nowrap"></th>';
-                                }
-                                ?>
                                 <th class="text-nowrap">学年</th>
                                 <th class="text-nowrap">パート</th>
                                 <th class="text-nowrap">氏名</th>
                                 <?php
-                                if ($USER->admin == 1 || $USER->admin == 3) {
+                                if ($USER->isAccountant()) {
                                     echo '<th class="text-nowrap">滞納額</th>';
                                     echo '<th class="text-nowrap">個別会計</th>';
-                                }
-                                ?>
-                                <th class="text-nowrap">メールアドレス</th>
-                                <?php
-                                if ($USER->admin == 1) {
-                                    echo '<th class="text-nowrap">パスワード</th>';
-                                    echo '<th class="text-nowrap">管理者権限</th>';
                                 }
                                 ?>
                                 <th class="text-nowrap">ステータス</th>
@@ -80,7 +68,7 @@ include_once __DIR__ . '/../../Common/head.php';
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
+                            $query = "SELECT profiles.grade, profiles.part, profiles.last_name, profiles.first_name, profiles.name_kana, users.status, users.user_id, (SELECT SUM(price) FROM accounting_records WHERE user_id=users.user_id AND datetime IS NULL) AS delinquent, (SELECT SUM(price) FROM individual_accounting_records WHERE user_id=users.user_id) AS individual_accounting_total FROM profiles INNER JOIN users ON profiles.user_id=users.user_id ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
                             $result = $mysqli->query($query);
                             if (!$result) {
                                 print('Query Failed : ' . $mysqli->error);
@@ -89,46 +77,46 @@ include_once __DIR__ . '/../../Common/head.php';
                             }
                             $row_cnt = $result->num_rows;
                             while ($row = $result->fetch_assoc()) {
-                                $account = new User($row);
-                                if ($account->status == 2) {
+                                if ($row['status'] == 'RESIGNED') {
                                     continue;
                                 }
                                 echo '<tr>';
-                                if ($USER->admin == 1) {
-                                    echo '<td><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="check[]" value="' . $account->id . '"></div></td>';
+                                echo '<td class="text-nowrap">' . $row['grade'] . '</td>';
+                                if ($row['part'] == 'S') {
+                                    echo '<td class="text-nowrap">Soprano</td>';
+                                } elseif ($row['part'] == 'A') {
+                                    echo '<td class="text-nowrap">Alto</td>';
+                                } elseif ($row['part'] == 'T') {
+                                    echo '<td class="text-nowrap">Tenor</td>';
+                                } elseif ($row['part'] == 'B') {
+                                    echo '<td class="text-nowrap">Bass</td>';
                                 }
-                                echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                                echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                                echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                                if ($USER->admin == 1 || $USER->admin == 3) {
-                                    echo '<td class="text-nowrap text-right">' . $account->get_delinquent() . '</td>';
-                                    echo '<td class="text-nowrap text-right">' . $account->get_individual_accounting_total() . '</td>';
+                                echo '<td class="text-nowrap"><span class="d-none">' . $row['name_kana'] . '</span><a href="./detail.php?user_id=' . $row['user_id'] . '" class="text-secondary"><u>' . $row['last_name'] . $row['first_name'] . '</u></a></td>';
+                                if ($USER->isAccountant()) {
+                                    echo '<td class="text-nowrap text-right">' . format_price($row['delinquent']) . '</td>';
+                                    echo '<td class="text-nowrap text-right">' . format_price($row['individual_accounting_total']) . '</td>';
                                 }
-                                echo '<td class="text-nowrap">' . $account->email . '</td>';
-                                if ($USER->admin == 1) {
-                                    echo '<td class="text-nowrap">' . $account->get_password() . '</td>';
-                                    echo '<td class="text-nowrap">' . $account->get_admin() . '</td>';
+                                if ($row['status'] == 'PRESENT') {
+                                    echo '<td class="text-nowrap">在団</td>';
+                                } elseif ($row['status'] == 'ABSENT') {
+                                    echo '<td class="text-nowrap">休団</td>';
                                 }
-                                echo '<td class="text-nowrap">' . $account->get_status() . '</td>';
-                                switch ($account->status) {
-                                    case 0:
+                                switch ($row['status']) {
+                                    case 'PRESENT':
                                         $disabled_present = "disabled";
                                         $disabled_absent = "";
                                         $disabled_resign = "";
                                         break;
-                                    case 1:
+                                    case 'ABSENT':
                                         $disabled_present = "";
                                         $disabled_absent = "disabled";
                                         $disabled_resign = "";
                                         break;
                                 }
-                                if ($account->admin != NULL) {
-                                    $disabled_resign = "disabled";
-                                }
                                 echo '<td class="text-nowrap">
-                                <button type="submit" name="present" formaction="./change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを在団にしますか？\');" ' . $disabled_present . '>在団</button>
-                                <button type="submit" name="absent" formaction="./change_status.php" class="btn btn-secondary btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを休団にしますか？\');" ' . $disabled_absent . '>休団</button>
-                                <button type="submit" name="resign" formaction="./change_status.php" class="btn btn-danger btn-sm" value="' . $account->id . '" Onclick="return confirm(\'' . $account->name . 'さんのステータスを退団にしますか？\');" ' . $disabled_resign . '>退団</button>
+                                <button type="submit" name="present" formaction="./change_status.php" class="btn btn-secondary btn-sm" value="' .  $row['user_id'] . '" Onclick="return confirm(\'' .  $row['last_name'] . $row['first_name'] . 'さんのステータスを在団にしますか？\');" ' . $disabled_present . '>在団</button>
+                                <button type="submit" name="absent" formaction="./change_status.php" class="btn btn-secondary btn-sm" value="' .  $row['user_id'] . '" Onclick="return confirm(\'' .  $row['last_name'] . $row['first_name'] . 'さんのステータスを休団にしますか？\');" ' . $disabled_absent . '>休団</button>
+                                <button type="submit" name="resign" formaction="./change_status.php" class="btn btn-danger btn-sm" value="' .  $row['user_id'] . '" Onclick="return confirm(\'' .  $row['last_name'] . $row['first_name'] . 'さんのステータスを退団にしますか？\');">退団</button>
                                 </td>';
                                 echo '</tr>';
                             }
@@ -136,24 +124,6 @@ include_once __DIR__ . '/../../Common/head.php';
                         </tbody>
                     </table>
                 </div>
-                <?php
-                if ($USER->admin == 1) {
-                ?>
-                    <span class="dropdown">
-                        <a class="btn btn-primary dropdown-toggle mb-4" href="" id="dropdownMenu-admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            管理者権限を付与
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu-admin">
-                            <button class="dropdown-item" type="submit" name="admin-give-1">マスター権限</button>
-                            <button class="dropdown-item" type="submit" name="admin-give-2">アカウント管理</button>
-                            <button class="dropdown-item" type="submit" name="admin-give-3">会計システム</button>
-                            <button class="dropdown-item" type="submit" name="admin-give-5">合宿会計システム</button>
-                        </div>
-                    </span>
-                    <button type="submit" class="btn btn-secondary mb-4" name="admin-take">管理者権限を剥奪</button>
-                <?php
-                }
-                ?>
             </form>
             <a class="btn btn-primary mb-4" href="./add_user/" role="button">アカウントの追加</a>
         </div>
@@ -171,23 +141,84 @@ include_once __DIR__ . '/../../Common/head.php';
                     <a href="./resign_list.php">退団者リスト</a>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-3 col-sm-12">
             <div class="card shadow mb-4">
                 <div class="card-header">ログ</div>
                 <div class="card-body">
                     <p>このページで行われる操作は全てログとして残ります。</p>
                     <a href="./account_log.php">ログを閲覧</a>
                     <?php
-                    if ($USER->admin == 1) {
+                    if ($USER->isMaster()) {
                         echo '<br><a href="./auth_log.php">認証ログを閲覧</a>';
                     }
-                    if ($USER->admin == 1) {
+                    if ($USER->isMaster()) {
                         echo '<br><a href="./download_log.php">ダウンロードログを閲覧</a>';
                     }
                     ?>
                 </div>
             </div>
+            <?php
+            if ($USER->isMaster()) {
+            ?>
+                <div class="card shadow mb-4">
+                    <div class="card-header">管理者</div>
+                    <div class="card-body">
+                        <strong>Web管理人</strong><br>
+                        <?php
+                        $query = "SELECT profiles.last_name, profiles.first_name, profiles.grade, profiles.part FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id WHERE admins.role = 'MASTER' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
+                        $result = $mysqli->query($query);
+                        if (!$result) {
+                            print('Query Failed : ' . $mysqli->error);
+                            $mysqli->close();
+                            exit();
+                        }
+                        while ($row = $result->fetch_assoc()) {
+                            echo $row['grade'] . $row['part'] . ' ' . $row['last_name'] . $row['first_name'] . '<br>';
+                        }
+                        ?>
+                        <strong>運営</strong><br>
+                        <?php
+                        $query = "SELECT profiles.last_name, profiles.first_name, profiles.grade, profiles.part FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id WHERE admins.role = 'MANAGER' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
+                        $result = $mysqli->query($query);
+                        if (!$result) {
+                            print('Query Failed : ' . $mysqli->error);
+                            $mysqli->close();
+                            exit();
+                        }
+                        while ($row = $result->fetch_assoc()) {
+                            echo $row['grade'] . $row['part'] . ' ' . $row['last_name'] . $row['first_name'] . '<br>';
+                        }
+                        ?>
+                        <strong>会計</strong><br>
+                        <?php
+                        $query = "SELECT profiles.last_name, profiles.first_name, profiles.grade, profiles.part FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id WHERE admins.role = 'ACCOUNTANT' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
+                        $result = $mysqli->query($query);
+                        if (!$result) {
+                            print('Query Failed : ' . $mysqli->error);
+                            $mysqli->close();
+                            exit();
+                        }
+                        while ($row = $result->fetch_assoc()) {
+                            echo $row['grade'] . $row['part'] . ' ' . $row['last_name'] . $row['first_name'] . '<br>';
+                        }
+                        ?>
+                        <strong>合宿委員</strong><br>
+                        <?php
+                        $query = "SELECT profiles.last_name, profiles.first_name, profiles.grade, profiles.part FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id WHERE admins.role = 'CAMP' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
+                        $result = $mysqli->query($query);
+                        if (!$result) {
+                            print('Query Failed : ' . $mysqli->error);
+                            $mysqli->close();
+                            exit();
+                        }
+                        while ($row = $result->fetch_assoc()) {
+                            echo $row['grade'] . $row['part'] . ' ' . $row['last_name'] . $row['first_name'] . '<br>';
+                        }
+                        ?>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </div>
@@ -202,18 +233,16 @@ $script .= '$(document).ready(function() {
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
         columnDefs: [';
-if ($USER->admin == 1) {
-    $script .= '{ "orderable": false, "targets": 0 },
-            { "orderable": false, "targets": 7 },
-            { "orderable": false, "targets": 10 },
-            { "orderable": true, "orderDataType": "part", "targets": 2 },
-            { type: "currency", targets: 4 },
-            { type: "currency", targets: 5 }';
-} else if ($USER->admin == 2) {
-    $script .= '{ "orderable": false, "targets": 5 },
+if ($USER->isMaster()) {
+    $script .= '{ "orderable": true, "orderDataType": "part", "targets": 1 },
+            { "orderable": false, "targets": 6 },
+            { type: "currency", targets: 3 },
+            { type: "currency", targets: 4 }';
+} else if ($USER->isManager()) {
+    $script .= '{ "orderable": false, "targets": 4 },
             { "orderable": true, "orderDataType": "part", "targets": 1 }';
-} else if ($USER->admin == 3) {
-    $script .= '{ "orderable": false, "targets": 7 },
+} else if ($USER->isAccountant()) {
+    $script .= '{ "orderable": false, "targets": 6 },
             { "orderable": true, "orderDataType": "part", "targets": 1 },
             { type: "currency", targets: 3 },
             { type: "currency", targets: 4 }';
