@@ -64,7 +64,7 @@ if (!$result) {
 
 
 /** ログファイル作成の処理 **/
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が" . $account->name . "の「" . $fee_list->name . "」の提出状況を未納に変更しました。\n", 3, __DIR__ . "/../../Core/accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が" . $account->get_name() . "の「" . $fee_list->name . "」の提出状況を未納に変更しました。\n", 3, __DIR__ . "/../../Core/accounting.log");
 
 $_SESSION['mypage_account_name'] = $account->get_name();
 $_SESSION['mypage_fee_status'] = "未納";

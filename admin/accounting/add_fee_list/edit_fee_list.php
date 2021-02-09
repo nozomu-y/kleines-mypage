@@ -39,6 +39,6 @@ if (!$result) {
 $_SESSION['mypage_update_fee'] = '';
 
 // make log file
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が新規集金リスト「" . $name . "」を編集しました。（期限：" . $deadline . "）\n", 3, __DIR__ . "/../../../Core/accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が新規集金リスト「" . $name . "」を編集しました。（期限：" . $deadline . "）\n", 3, __DIR__ . "/../../../Core/accounting.log");
 header('Location: ' . MYPAGE_ROOT . '/admin/accounting/detail.php?fee_id=' . $fee_id);
 exit();
