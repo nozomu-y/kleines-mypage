@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../Common/init_page.php';
 
-if (!($USER->admin == 1)) {
+if (!($USER->isMaster())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
