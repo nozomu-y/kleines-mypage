@@ -2,9 +2,9 @@
 ob_start();
 session_start();
 
-require __DIR__.'/../Common/dbconnect.php';
+require __DIR__ . '/../Common/dbconnect.php';
 require __DIR__ . '/../Class/User.php';
-require __DIR__ .'/../Common/function.php';
+require __DIR__ . '/../Common/function.php';
 
 if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // if current branch is not master
     $maintenance = true;
@@ -12,8 +12,8 @@ if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // i
     $maintenance = false;
 }
 
-if (isset($_SESSION['mypage_email']) && !$maintenance) {
-    header('Location: '.MYPAGE_ROOT);
+if (isset($_SESSION['mypage_user_id']) && !$maintenance) {
+    header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
@@ -21,6 +21,9 @@ if (isset($_SESSION['mypage_auth_error'])) {
     if ($_SESSION['mypage_auth_error'] == "wrong-email") {
         $email_invalid = 'is-invalid';
         $email_message = "メールアドレスが登録されていません";
+    } else if ($_SESSION['mypage_auth_error'] == "resigned") {
+        $email_invalid = 'is-invalid';
+        $email_message = "退団者はログインできません";
     } elseif (strpos($_SESSION['mypage_auth_error'], "wrong-password") !== false) {
         echo $_SESSION['mypage_auth_error'];
         $login_failure = explode("_", $_SESSION['mypage_auth_error'])[1];
@@ -41,73 +44,73 @@ $_SESSION = array();
 setcookie(session_name(), '', time() - 1, '/');
 session_destroy();
 
-if (isset($_COOKIE['mypage_auto_login'])) {
-    $token = $_COOKIE['mypage_auto_login'];
-    $query = "SELECT * FROM auto_login WHERE token = '$token'";
-    $result = $mysqli->query($query);
-    if (!$result) {
-        print("Query Failed : " . $mysqli->error);
-        $mysqli->close();
-        exit();
-    }
-    $row_cnt = $result->num_rows;
-    // if the token exists in database
-    if ($row_cnt == 1) {
-        while ($row = $result->fetch_assoc()) {
-            $user_id = $row['id'];
-        }
-        // get user info
-        $query = "SELECT * FROM members WHERE id='$user_id'";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print("Query Failed : " . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        $user = new User($result->fetch_assoc());
-        // delete token from database
-        $query = "DELETE FROM auto_login WHERE token = '$token'";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print("Query Failed : " . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        // delete token from browser cookie
-        setcookie("mypage_auto_login", "", time() - 60);
-        // regenerate token
-        $token = sha1(uniqid(rand(), true) . mt_rand(1, 999999999) . '_mypage_auto_login');
-        // expiration time
-        $expiration_time = 3600 * 24 * 30; // token valid for 30 days
-        // set cookie
-        setcookie("mypage_auto_login", $token, time() + $expiration_time, MYPAGE_ROOT, WEB_DOMAIN, false, true);
-        // check device(platform) and browser
-        require '../vendor/autoload.php';
-        $ua_info = parse_user_agent();
-        // check device
-        $browser = $ua_info['browser'];
-        $device = $ua_info['platform'];
-        // add to database
-        $query = "INSERT INTO auto_login (id, token, datetime, device, browser) VALUES ('$user->id', '$token', now(), '$device', '$browser')";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print("Query Failed : " . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-        // login the user
-        if ($user->status != 2) { // if the user status is not resigned
-            // start session
-            ob_start();
-            session_start();
-            $_SESSION['mypage_email'] = $user->email;
-            // create log
-            error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . " logged in using remember me. \n", 3, __DIR__."/../Core/auth.log");
-            header('Location: '.MYPAGE_ROOT);
-            exit();
-        }
-    }
-}
+// if (isset($_COOKIE['mypage_auto_login'])) {
+//     $token = $_COOKIE['mypage_auto_login'];
+//     $query = "SELECT * FROM auto_login WHERE token = '$token'";
+//     $result = $mysqli->query($query);
+//     if (!$result) {
+//         print("Query Failed : " . $mysqli->error);
+//         $mysqli->close();
+//         exit();
+//     }
+//     $row_cnt = $result->num_rows;
+//     // if the token exists in database
+//     if ($row_cnt == 1) {
+//         while ($row = $result->fetch_assoc()) {
+//             $user_id = $row['id'];
+//         }
+//         // get user info
+//         $query = "SELECT * FROM members WHERE id='$user_id'";
+//         $result = $mysqli->query($query);
+//         if (!$result) {
+//             print("Query Failed : " . $mysqli->error);
+//             $mysqli->close();
+//             exit();
+//         }
+//         $user = new User($result->fetch_assoc());
+//         // delete token from database
+//         $query = "DELETE FROM auto_login WHERE token = '$token'";
+//         $result = $mysqli->query($query);
+//         if (!$result) {
+//             print("Query Failed : " . $mysqli->error);
+//             $mysqli->close();
+//             exit();
+//         }
+//         // delete token from browser cookie
+//         setcookie("mypage_auto_login", "", time() - 60);
+//         // regenerate token
+//         $token = sha1(uniqid(rand(), true) . mt_rand(1, 999999999) . '_mypage_auto_login');
+//         // expiration time
+//         $expiration_time = 3600 * 24 * 30; // token valid for 30 days
+//         // set cookie
+//         setcookie("mypage_auto_login", $token, time() + $expiration_time, MYPAGE_ROOT, WEB_DOMAIN, false, true);
+//         // check device(platform) and browser
+//         require '../vendor/autoload.php';
+//         $ua_info = parse_user_agent();
+//         // check device
+//         $browser = $ua_info['browser'];
+//         $device = $ua_info['platform'];
+//         // add to database
+//         $query = "INSERT INTO auto_login (id, token, datetime, device, browser) VALUES ('$user->id', '$token', now(), '$device', '$browser')";
+//         $result = $mysqli->query($query);
+//         if (!$result) {
+//             print("Query Failed : " . $mysqli->error);
+//             $mysqli->close();
+//             exit();
+//         }
+//         // login the user
+//         if ($user->status != 2) { // if the user status is not resigned
+//             // start session
+//             ob_start();
+//             session_start();
+//             $_SESSION['mypage_email'] = $user->email;
+//             // create log
+//             error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . " logged in using remember me. \n", 3, __DIR__ . "/../Core/auth.log");
+//             header('Location: ' . MYPAGE_ROOT);
+//             exit();
+//         }
+//     }
+// }
 
 
 ?>
@@ -124,9 +127,9 @@ if (isset($_COOKIE['mypage_auto_login'])) {
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="<?=MYPAGE_ROOT?>/Resources/css/sb-admin-2.min.css">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/sb-admin-2.min.css">
     <!-- JS -->
-    <link rel="stylesheet" href="<?=MYPAGE_ROOT?>/Resources/js/sb-admin-2.min.js">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/js/sb-admin-2.min.js">
 </head>
 
 <body class="bg-gradient-primary">
@@ -179,7 +182,7 @@ if (isset($_COOKIE['mypage_auto_login'])) {
                                         </form>
                                         <hr>
                                         <div class="text-center">
-                                        <a class="small" href="<?=MYPAGE_ROOT?>/signup/">パスワードの発行</a>
+                                            <a class="small" href="<?= MYPAGE_ROOT ?>/signup/">パスワードの発行</a>
                                         </div>
                                     <?php
                                     } else { // maintenance mode
@@ -199,7 +202,7 @@ if (isset($_COOKIE['mypage_auto_login'])) {
                                     ?>
                                     <?php
                                     if ($mypage_password_success) {
-                                        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                                        echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
                                         echo 'パスワードの設定が完了しました。';
                                         echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                                         echo '</div>';
@@ -219,14 +222,14 @@ if (isset($_COOKIE['mypage_auto_login'])) {
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="<?=MYPAGE_ROOT?>/Resources/js/jquery.min.js"></script>
-    <script src="<?=MYPAGE_ROOT?>/Resources/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/jquery.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="<?=MYPAGE_ROOT?>/Resources/js/jquery.easing.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="<?=MYPAGE_ROOT?>/Resources/js/sb-admin-2.min.js"></script>
+    <script src="<?= MYPAGE_ROOT ?>/Resources/js/sb-admin-2.min.js"></script>
 
 </body>
 
