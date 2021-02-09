@@ -81,6 +81,10 @@ include_once __DIR__ . '/../../Common/head.php';
                     <label for="email">メールアドレス</label>
                     <input type="email" name="email" class="form-control" id="email" value="<?= $account->email ?>" required="">
                 </div>
+                <div class="form-group">
+                    <label for="email">パスワード</label>
+                    <input type="text" name="password" class="form-control" id="password" value="<?= $account->get_password() ?>" readonly>
+                </div>
                 <?php
                 if ($USER->isMaster()) {
                     $master = '';

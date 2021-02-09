@@ -10,6 +10,7 @@ class User
     public $part;
     public $name;
     public $email;
+    private $password;
 
     public function __construct($user)
     {
@@ -31,6 +32,11 @@ class User
         $this->part = $profiles['part'];
         $this->name = $this->grade . $this->part . ' ' . $this->last_name . $this->first_name;
         $this->email = $profiles['email'];
+        if ($profiles['password'] != '') {
+            $this->password = '**********';
+        } else {
+            $this->password = '';
+        }
     }
 
     public function get_name()
@@ -54,9 +60,9 @@ class User
     public function get_password()
     {
         if ($this->password != '') {
-            return '**********';
+            return '**********（登録済）';
         } else {
-            return '';
+            return '----------（未登録）';
         }
     }
 
