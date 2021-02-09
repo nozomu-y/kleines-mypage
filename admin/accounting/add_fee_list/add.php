@@ -37,6 +37,6 @@ if (!$result) {
 }
 
 // make log file
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が新規集金リスト「" . $name . "」を追加しました。（期限：" . $deadline . "、金額：" . $price . "）\n", 3, __DIR__ . "/../../../Core/accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が新規集金リスト「" . $name . "」を追加しました。（期限：" . $deadline . "、金額：" . $price . "）\n", 3, __DIR__ . "/../../../Core/accounting.log");
 header('Location: subject.php?fee_id=' . $fee_id);
 exit();

@@ -57,6 +57,6 @@ if (!$result) {
 
 $_SESSION['mypage_individual'] = $name;
 
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が" . $account->name . "の個別会計を編集しました。（項目名：" . $name . "　日付：" . $date . "　金額：" . $price . "）\n", 3, __DIR__ . "/../../Core/individual_accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が" . $account->get_name() . "の個別会計を編集しました。（項目名：" . $name . "　日付：" . $date . "　金額：" . $price . "）\n", 3, __DIR__ . "/../../Core/individual_accounting.log");
 header('Location: detail.php?account_id=' . $account->id);
 exit();

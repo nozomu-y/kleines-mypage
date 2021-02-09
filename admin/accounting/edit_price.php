@@ -50,6 +50,6 @@ $_SESSION['mypage_update_price'] = $price;
 $_SESSION['mypage_account_name'] = $account->get_name();
 
 // make log file
-error_log("[" . date('Y/m/d H:i:s') . "] " . $user->name . "が" . $account->name . "の集金リスト「" . $fee->name . "」の金額を変更しました。（金額：" . $price . "）\n", 3, __DIR__ . "/../../Core/accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が" . $account->get_name() . "の集金リスト「" . $fee->name . "」の金額を変更しました。（金額：" . $price . "）\n", 3, __DIR__ . "/../../Core/accounting.log");
 header('Location: ' . MYPAGE_ROOT . '/admin/accounting/detail.php?fee_id=' . $fee_id);
 exit();

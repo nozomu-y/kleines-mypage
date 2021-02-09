@@ -75,6 +75,6 @@ if (!$result) {
 }
 
 // make log file
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が集金リスト「" . $fee_list->name . "」を削除しました。\n", 3, __DIR__ . "/../../Core/accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が集金リスト「" . $fee_list->name . "」を削除しました。\n", 3, __DIR__ . "/../../Core/accounting.log");
 header('Location: ' . MYPAGE_ROOT . '/admin/accounting/');
 exit();

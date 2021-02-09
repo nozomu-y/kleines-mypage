@@ -222,7 +222,7 @@ $msg->setRaw($data);
 $service = new Google_Service_Gmail($client);
 $message = $msg;
 $message = $service->users_messages->send("me", $message);
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が" . $account->name . "の「" . $fee_list->name . "」の提出状況を既納に変更し、現金で￥" . $price . "受け取りました。\n", 3, __DIR__ . "/../../Core/camp_accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が" . $account->get_name() . "の「" . $fee_list->name . "」の提出状況を既納に変更し、現金で￥" . $price . "受け取りました。\n", 3, __DIR__ . "/../../Core/camp_accounting.log");
 
 $_SESSION['mypage_account_name'] = $account->get_name();
 $_SESSION['mypage_fee_status'] = "既納";
