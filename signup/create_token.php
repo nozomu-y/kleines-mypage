@@ -196,7 +196,7 @@ if (isset($_POST['signup'])) {
                   <br />
                   ■Kleines Mypageへのアクセスは<a href="https://' . WEB_DOMAIN . MYPAGE_ROOT . '">こちら</a>から。
                 </p>
-                <p class="text-center">&copy; Chor Kleines 2020</p>
+                <p class="text-center">&copy; Chor Kleines ' . date("Y") . '</p>
               </td>
             </tr>
           </table>
