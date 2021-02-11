@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 3)) {
+if (!($USER->isAccountant())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
@@ -14,9 +14,8 @@ if (!isset($_POST['submit'])) {
 
 $name = $mysqli->real_escape_string($_POST['name']);
 $deadline = $mysqli->real_escape_string($_POST['deadline']);
-$price = $mysqli->real_escape_string($_POST['price']);
 
-$query = "SELECT id FROM fee_list ORDER BY id ASC";
+$query = "SELECT accounting_id FROM accounting_lists ORDER BY accounting_id ASC";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -24,11 +23,10 @@ if (!$result) {
     exit();
 }
 while ($row = $result->fetch_assoc()) {
-    $fee_id = $row['id'];
+    $accounting_id = $row['accounting_id'];
 }
-$fee_admin = 3;
-$fee_id = $fee_id + 1;
-$query = "INSERT INTO fee_list (id, name, deadline, price, admin) VALUES ('$fee_id', '$name', '$deadline', '$price', '$fee_admin')";
+$accounting_id = $accounting_id + 1;
+$query = "INSERT INTO accounting_lists (accounting_id, name, deadline, admin) VALUES ('$accounting_id', '$name', '$deadline', 'GENERAL')";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -37,6 +35,6 @@ if (!$result) {
 }
 
 // make log file
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が新規集金リスト「" . $name . "」を追加しました。（期限：" . $deadline . "、金額：" . $price . "）\n", 3, __DIR__ . "/../../../Core/accounting.log");
-header('Location: subject.php?fee_id=' . $fee_id);
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が新規集金リスト「" . $name . "」を追加しました。（期限：" . $deadline . "）\n", 3, __DIR__ . "/../../../Core/accounting.log");
+header('Location: ../detail.php?fee_id=' . $accounting_id);
 exit();

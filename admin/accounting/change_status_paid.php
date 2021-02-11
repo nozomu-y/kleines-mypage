@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 3)) {
+if (!($USER->isAccountant())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
@@ -11,17 +11,10 @@ if (!isset($_POST['fee_id'])) {
     exit();
 }
 
-$fee_id = $_POST['fee_id'];
-$query = "SELECT * FROM fee_list WHERE id=$fee_id";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
+$accounting_id = $_POST['fee_id'];
+$accounting = new AccountingList($accounting_id);
 
-$fee_list = new Fee_List($result->fetch_assoc());
-if ($fee_list->admin != 3) {
+if ($accounting->admin != 'GENERAL') {
     header('Location: ' . MYPAGE_ROOT . '/admin/accounting/');
     exit();
 }
@@ -30,18 +23,11 @@ $user_id = $_POST['user_id'];
 $price = $_POST['price'];
 $paid_cash = $_POST['paid_cash'];
 
-$query = "SELECT * FROM members WHERE id='$user_id'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$account = new User($result->fetch_assoc());
+$account = new User($user_id);
 
 // amount of money paid from individual accounting
 $paid_individual = '-' . strval(intval($price) - intval($paid_cash));
-$query = "UPDATE fee_record_$account->id SET datetime = now(), paid_cash = $paid_cash WHERE id = $fee_id";
+$query = "UPDATE accounting_records SET datetime = now(), paid_cash=$paid_cash WHERE user_id=$user_id AND accounting_id=$accounting_id";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -51,18 +37,7 @@ if (!$result) {
 
 // if individual accounting was used
 if (intval($price) - intval($paid_cash) > 0) {
-    $query = "SELECT id FROM individual_accounting_$account->id ORDER BY id ASC";
-    $result = $mysqli->query($query);
-    if (!$result) {
-        print('Query Failed : ' . $mysqli->error);
-        $mysqli->close();
-        exit();
-    }
-    while ($row = $result->fetch_assoc()) {
-        $list_id = $row['id'];
-    }
-    $list_id = $list_id + 1;
-    $query = "INSERT INTO individual_accounting_$account->id (id, date, name, price, fee_id) VALUES ('$list_id', now(), '$fee_list->name', $paid_individual, '$fee_list->id')";
+    $query = "INSERT INTO individual_accounting_records (user_id, datetime, name, price, accounting_id) VALUES ('$user_id', now(), '$accounting->name', '$paid_individual','$accounting_id')";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
@@ -80,7 +55,7 @@ $data .= "To: " . $account->email . "\n";
 $data .= "Cc: \n";
 $from = "コール・クライネス会計";
 $data .= "From: " . mb_encode_mimeheader($from, 'utf-8') . " <kleines.webmaster@gmail.com>\n";
-$subject = '【' . $fee_list->name . '】集金完了のお知らせ';
+$subject = '【' . $accounting->name . '】集金完了のお知らせ';
 $data .= "Subject: " . mb_encode_mimeheader($subject, 'utf-8') . "\n";
 $data .= "MIME-Version: 1.0\n";
 $data .= "Content-Type: text/html; charset=utf-8\n";
@@ -192,7 +167,7 @@ $body = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://
               <td>
                 <h2>' . $subject . '</h2>
                 <p>' . $account->get_name() . 'さん</p>
-                <p>コール・クライネス会計です。<br />' . $fee_list->name . '（￥' . $price . '）の集金が完了致しました。<br/>お支払いただきありがとうございます。</p>
+                <p>コール・クライネス会計です。<br />' . $accounting->name . '（￥' . $price . '）の集金が完了致しました。<br/>お支払いただきありがとうございます。</p>
                 <table style="border-collapse: collapse">
                   <tr>
                     <td><strong>内訳</strong></td>
@@ -229,7 +204,7 @@ $body = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://
                   <br />
                   ■Kleines Mypageへのアクセスは<a href="https://' . WEB_DOMAIN . MYPAGE_ROOT . '">こちら</a>から。
                 </p>
-                <p class="text-center">&copy; Chor Kleines 2020</p>
+                <p class="text-center">&copy; Chor Kleines ' . date("Y") . '</p>
               </td>
             </tr>
           </table>
@@ -249,13 +224,13 @@ $message = $msg;
 $message = $service->users_messages->send("me", $message);
 $paid_individual *= -1;
 if (intval($price) - intval($paid_cash) == 0) {
-    error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が" . $account->get_name() . "の「" . $fee_list->name . "」の提出状況を既納に変更し、現金で￥" . $paid_cash . "受け取りました。\n", 3, __DIR__ . "/../../Core/accounting.log");
+    error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が" . $account->get_name() . "の「" . $accounting->name . "」の提出状況を既納に変更し、現金で￥" . $paid_cash . "受け取りました。\n", 3, __DIR__ . "/../../Core/accounting.log");
 } else {
-    error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が" . $account->get_name() . "の「" . $fee_list->name . "」の提出状況を既納に変更し、現金で￥" . $paid_cash . "受け取り、個別会計から￥" . $paid_individual . "差し引きました。\n", 3, __DIR__ . "/../../Core/accounting.log");
+    error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が" . $account->get_name() . "の「" . $accounting->name . "」の提出状況を既納に変更し、現金で￥" . $paid_cash . "受け取り、個別会計から￥" . $paid_individual . "差し引きました。\n", 3, __DIR__ . "/../../Core/accounting.log");
 }
 
 $_SESSION['mypage_account_name'] = $account->get_name();
 $_SESSION['mypage_fee_status'] = "既納";
 
-header('Location: ' . MYPAGE_ROOT . '/admin/accounting/detail.php?fee_id=' . $fee_list->id);
+header('Location: ' . MYPAGE_ROOT . '/admin/accounting/detail.php?fee_id=' . $accounting->accounting_id);
 exit();
