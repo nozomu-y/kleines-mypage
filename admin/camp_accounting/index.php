@@ -1,11 +1,11 @@
 <?php
 require __DIR__ . '/../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3 || $USER->admin == 5)) {
+if (!($USER->isManager() || $USER->isAccountant() || $USER->isCamp())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
-$PAGE_NAME = "合宿集金";
+$PAGE_NAME = "合宿集金リスト";
 include_once __DIR__ . '/../../Common/head.php';
 ?>
 
@@ -20,13 +20,12 @@ include_once __DIR__ . '/../../Common/head.php';
                             <tr>
                                 <th class="text-nowrap">集金リスト</th>
                                 <th class="text-nowrap">期限</th>
-                                <th class="text-nowrap">金額</th>
                                 <th class="text-nowrap">集金率</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT * FROM fee_list ORDER BY deadline DESC";
+                            $query = "SELECT accounting_id, name, deadline, (SELECT COUNT(*) FROM accounting_records WHERE accounting_id=accounting_lists.accounting_id) as all_count, (SELECT COUNT(*) FROM accounting_records WHERE accounting_id=accounting_lists.accounting_id AND datetime IS NOT NULL) as paid_count FROM accounting_lists WHERE admin='CAMP' ORDER BY deadline DESC";
                             $result = $mysqli->query($query);
                             if (!$result) {
                                 print('Query Failed : ' . $mysqli->error);
@@ -34,15 +33,18 @@ include_once __DIR__ . '/../../Common/head.php';
                                 exit();
                             }
                             while ($row = $result->fetch_assoc()) {
-                                $fee_list = new Fee_List($row);
-                                if ($fee_list->admin == 5) {
-                                    echo '<tr>';
-                                    echo '<td class="text-nowrap"><a href="./detail.php?fee_id=' . $fee_list->id . '" class="text-secondary"><u>' . $fee_list->name . '</u></a></td>';
-                                    echo '<td class="text-nowrap">' . $fee_list->get_deadline() . '</td>';
-                                    echo '<td class="text-nowrap text-right">' . $fee_list->get_price() . '</td>';
-                                    echo '<td class="text-nowrap text-right">' . $fee_list->get_paid_ratio() . '</td>';
-                                    echo '</tr>';
+                                if ($row['paid_count'] == 0) {
+                                    $paid_rate = '0.00 %';
+                                } else {
+                                    $paid_rate = strval(round($row['paid_count'] / $row['all_count'], 3) * 100) . ' %';
                                 }
+                            ?>
+                                <tr>
+                                    <td class="text-nowrap"><a href="./detail.php?fee_id=<?= $row['accounting_id'] ?>" class="text-secondary"><u><?= $row['name'] ?></u></a></td>
+                                    <td class="text-nowrap"><?= date('Y/m/d', strtotime($row['deadline'])) ?></td>
+                                    <td class="text-nowrap text-right"><?= $paid_rate ?></td>
+                                </tr>
+                            <?php
                             }
                             ?>
                         </tbody>
@@ -50,16 +52,16 @@ include_once __DIR__ . '/../../Common/head.php';
                 </div>
             </form>
             <?php
-            if ($USER->admin == 1 || $USER->admin == 5) {
+            if ($USER->isCamp()) {
             ?>
-                <a class="btn btn-primary mb-4" href="./add_fee_list/" role="button">集金リストの追加</a>
+                <a class="btn btn-primary mb-4" href="./add_accounting_list/" role="button">集金リストの追加</a>
             <?php
             }
             ?>
         </div>
         <div class="col-xl-3 col-sm-12">
             <?php
-            if ($USER->admin == 1 || $USER->admin == 5) {
+            if ($USER->isCamp()) {
             ?>
                 <div class="card shadow mb-4">
                     <div class="card-header">ログ</div>

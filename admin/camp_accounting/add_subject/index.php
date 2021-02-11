@@ -1,32 +1,26 @@
 <?php
 require __DIR__ . '/../../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 5)) {
+if (!($USER->isCamp())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
 if (isset($_GET['fee_id'])) {
-    $fee_id = $_GET['fee_id'];
+    $accounting_id = $_GET['fee_id'];
 } else {
     header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/');
     exit();
 }
 
-$query = "SELECT * FROM fee_list WHERE id='$fee_id'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$fee_list = new Fee_List($result->fetch_assoc());
-if ($fee_list->admin != 5) {
-    header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/');
+$accounting = new AccountingList($accounting_id);
+
+if ($accounting->admin != 'CAMP') {
+    header('Location: ' . MYPAGE_ROOT . '/admin/accounting/');
     exit();
 }
 
-$PAGE_NAME = "合宿集金";
+$PAGE_NAME = "合宿集金リスト";
 include_once __DIR__ . '/../../../Common/head.php';
 ?>
 
@@ -37,18 +31,16 @@ include_once __DIR__ . '/../../../Common/head.php';
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../">合宿集金リスト一覧</a></li>
-                    <?php
-                    if (strpos($_SERVER['HTTP_REFERER'], "add_fee_list") === false) {
-                    ?>
-                        <li class="breadcrumb-item"><a href="../detail.php?fee_id=<?php echo $fee_list->id ?>"><?php echo $fee_list->name ?></a></li>
-                    <?php
-                    }
-                    ?>
+                    <li class="breadcrumb-item"><a href="../detail.php?fee_id=<?= $accounting->accounting_id ?>"><?= $accounting->name ?></a></li>
                     <li class="breadcrumb-item active" aria-current="page">集金対象者の編集</li>
                 </ol>
             </nav>
-            <p>集金対象者を選択し、除外したい人の選択を解除してください。既納の場合は変更できません。</p>
-            <form method="post" action="./change_subject.php" name="form" class="mb-4">
+            <p>金額を入力し、追加したい集金対象者を選択してください。<br>金額は後から変更可能です。</p>
+            <form method="post" action="./add_subject.php" name="form" class="mb-4">
+                <div class="form-group">
+                    <label for="price">金額</label>
+                    <input type="number" name="price" class="form-control" id="price" required>
+                </div>
                 <input type="button" class="btn btn-primary mb-2" value="全て選択" onclick="allcheck(true);">
                 <input type="button" class="btn btn-primary mb-2" value="選択解除" onclick="allcheck(false);">
                 <div class="mb-4">
@@ -64,7 +56,7 @@ include_once __DIR__ . '/../../../Common/head.php';
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT * FROM members ORDER BY CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, grade ASC, kana ASC";
+                            $query = "SELECT profiles.grade, profiles.part, profiles.last_name, profiles.first_name, profiles.name_kana, profiles.user_id, users.status, accounting_records.price, accounting_records.datetime, accounting_records.accounting_id FROM profiles INNER JOIN users ON profiles.user_id=users.user_id LEFT OUTER JOIN (SELECT accounting_records.price, accounting_records.datetime, accounting_records.accounting_id, accounting_records.user_id FROM accounting_records WHERE accounting_id=$accounting_id) as accounting_records ON users.user_id=accounting_records.user_id WHERE accounting_records.accounting_id IS NULL AND users.status!='RESIGNED' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
                             $result = $mysqli->query($query);
                             if (!$result) {
                                 print('Query Failed : ' . $mysqli->error);
@@ -72,60 +64,47 @@ include_once __DIR__ . '/../../../Common/head.php';
                                 exit();
                             }
                             while ($row = $result->fetch_assoc()) {
-                                $account = new User($row);
-                                $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_id";
-                                $result_1 = $mysqli->query($query);
-                                if (!$result_1) {
-                                    print('Query Failed : ' . $mysqli->error);
-                                    $mysqli->close();
-                                    exit();
+                                $user_status = $row['status'];
+                                $accounting_datetime = $row['datetime'];
+                                $account_id = $row['user_id'];
+                                $grade = $row['grade'];
+                                if ($row['part'] == 'S') {
+                                    $part = "Soprano";
+                                } else if ($row['part'] == 'A') {
+                                    $part = "Alto";
+                                } else if ($row['part'] == 'T') {
+                                    $part = "Tenor";
+                                } else if ($row['part'] == 'B') {
+                                    $part = "Bass";
                                 }
-                                $row_cnt = $result_1->num_rows;
-                                if ($row_cnt != 0) {
-                                    // when the user is already added to the list
-                                    $fee = new Fee($result_1->fetch_assoc());
-                                    if ($fee->datetime != NULL) {
-                                        // if it is already paid
-                                        $check = 'checked="checked"';
-                                        $hidden = 'type="hidden"';
-                                    } else {
-                                        // if it is not paid yet
-                                        $check = 'checked="checked"';
-                                        $hidden = '';
-                                    }
-                                } else {
-                                    // when the user is not added to the list
-                                    $check = '';
-                                    $hidden = '';
+                                $name = $row['last_name'] . $row['first_name'];
+                                $kana = $row['name_kana'];
+                                if ($row['status'] == "PRESENT") {
+                                    $status = "在団";
+                                } else if ($row['status'] == "ABSENT") {
+                                    $status = "休団";
+                                } else if ($row['status'] == "RESIGNED") {
+                                    $status = "退団";
                                 }
-
-                                if (!($account->status == 2 && $row_cnt == 0)) {
-                                    echo '<tr>';
-                                    echo '<td><div class="form-check form-check-inline"><input type="hidden" name="check_' . $account->id . '" value="0"><input ' . $hidden . ' class="form-check-input" ' . $check . ' type="checkbox" name="check_' . $account->id . '" value="1"></div></td>';
-                                    echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                                    echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                                    echo '<td class="text-nowrap">' . $account->name . '</td>';
-                                    echo '<td class="text-nowrap">' . $account->get_status() . '</td>';
-                                    echo '</tr>';
-                                }
+                            ?>
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-inline"><input type="hidden" name="check_<?= $account_id ?>" value="0"><input class="form-check-input" type="checkbox" name="check_<?= $account_id ?>" value="1"></div>
+                                    </td>
+                                    <td class="text-nowrap"><?= $grade ?></td>
+                                    <td class="text-nowrap"><?= $part ?></td>
+                                    <td class="text-nowrap"><?= $name ?></td>
+                                    <td class="text-nowrap"><?= $status ?></td>
+                                </tr>
+                            <?php
                             }
                             ?>
                         </tbody>
                     </table>
                 </div>
-                <input type="hidden" name="fee_id" value="<?php echo $fee_list->id; ?>">
+                <input type="hidden" name="fee_id" value="<?= $accounting->accounting_id ?>">
                 <button type="submit" class="btn btn-primary" name="submit">集金対象に追加</button>
-                <?php
-                if (strpos($_SERVER['HTTP_REFERER'], "add_fee_list") === false) {
-                ?>
-                    <a class="btn btn-secondary" href="../detail.php?fee_id=<?= $fee_list->id ?>" role="button">キャンセル</a>
-                <?php
-                } else {
-                ?>
-                    <a class="btn btn-secondary" href="../" role="button">キャンセル</a>
-                <?php
-                }
-                ?>
+                <a class="btn btn-secondary" href="../detail.php?fee_id=<?= $accounting->accounting_id ?>" role="button">キャンセル</a>
             </form>
         </div>
     </div>

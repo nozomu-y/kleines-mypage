@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 5)) {
+if (!($USER->isCamp())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
@@ -11,17 +11,10 @@ if (!isset($_POST['fee_id'])) {
     exit();
 }
 
-$fee_id = $_POST['fee_id'];
-$query = "SELECT * FROM fee_list WHERE id=$fee_id";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
+$accounting_id = $_POST['fee_id'];
+$accounting = new AccountingList($accounting_id);
 
-$fee_list = new Fee_List($result->fetch_assoc());
-if ($fee_list->admin != 5) {
+if ($accounting->admin != 'CAMP') {
     header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/');
     exit();
 }
@@ -29,16 +22,9 @@ if ($fee_list->admin != 5) {
 $user_id = $_POST['user_id'];
 $price = $_POST['price'];
 
-$query = "SELECT * FROM members WHERE id='$user_id'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$account = new User($result->fetch_assoc());
+$account = new User($user_id);
 
-$query = "UPDATE fee_record_$account->id SET datetime = now(), paid_cash = $price WHERE id = $fee_id";
+$query = "UPDATE accounting_records SET datetime = now(), paid_cash=$price WHERE user_id=$user_id AND accounting_id=$accounting_id";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -55,7 +41,7 @@ $data .= "To: " . $account->email . "\n";
 $data .= "Cc: \n";
 $from = "コール・クライネス合宿委員";
 $data .= "From: " . mb_encode_mimeheader($from, 'utf-8') . " <kleines.webmaster@gmail.com>\n";
-$subject = '【' . $fee_list->name . '】集金完了のお知らせ';
+$subject = '【' . $accounting->name . '】集金完了のお知らせ';
 $data .= "Subject: " . mb_encode_mimeheader($subject, 'utf-8') . "\n";
 $data .= "MIME-Version: 1.0\n";
 $data .= "Content-Type: text/html; charset=utf-8\n";
@@ -167,7 +153,7 @@ $body = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://
               <td>
                 <h2>' . $subject . '</h2>
                 <p>' . $account->get_name() . 'さん</p>
-                <p>コール・クライネス合宿委員です。<br />' . $fee_list->name . '（￥' . $price . '）の集金が完了致しました。<br/>お支払いただきありがとうございます。</p>
+                <p>コール・クライネス合宿委員です。<br />' . $accounting->name . '（￥' . $price . '）の集金が完了致しました。<br/>お支払いただきありがとうございます。</p>
                 <table style="border-collapse: collapse">
                   <tr>
                     <td><strong>内訳</strong></td>
@@ -204,7 +190,7 @@ $body = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://
                   <br />
                   ■Kleines Mypageへのアクセスは<a href="https://' . WEB_DOMAIN . MYPAGE_ROOT . '">こちら</a>から。
                 </p>
-                <p class="text-center">&copy; Chor Kleines 2020</p>
+                <p class="text-center">&copy; Chor Kleines ' . date("Y") . '</p>
               </td>
             </tr>
           </table>
@@ -222,10 +208,10 @@ $msg->setRaw($data);
 $service = new Google_Service_Gmail($client);
 $message = $msg;
 $message = $service->users_messages->send("me", $message);
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が" . $account->get_name() . "の「" . $fee_list->name . "」の提出状況を既納に変更し、現金で￥" . $price . "受け取りました。\n", 3, __DIR__ . "/../../Core/camp_accounting.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が" . $account->get_name() . "の「" . $accounting->name . "」の提出状況を既納に変更し、現金で￥" . $price . "受け取りました。\n", 3, __DIR__ . "/../../Core/camp_accounting.log");
 
 $_SESSION['mypage_account_name'] = $account->get_name();
 $_SESSION['mypage_fee_status'] = "既納";
 
-header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/detail.php?fee_id=' . $fee_list->id);
+header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/detail.php?fee_id=' . $accounting->accounting_id);
 exit();

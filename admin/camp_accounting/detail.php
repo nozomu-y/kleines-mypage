@@ -1,29 +1,21 @@
 <?php
 require __DIR__ . '/../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3 || $USER->admin == 5)) {
+if (!($USER->isManager() || $USER->isAccountant() || $USER->isCamp())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
 if (isset($_GET['fee_id'])) {
-    $id = $_GET['fee_id'];
+    $accounting_id = $_GET['fee_id'];
 } else {
     header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/');
     exit();
 }
 
-$query = "SELECT * FROM fee_list WHERE id=$id";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$fee_list = new Fee_List($result->fetch_assoc());
-
-if ($fee_list->admin != 5) {
-    header('Location: ' . MYPAGE_ROOT . '/admin/camp_accounting/');
+$accounting = new AccountingList($accounting_id);
+if ($accounting->admin != 'CAMP') {
+    header('Location: ' . MYPAGE_ROOT . '/admin/accounting/');
     exit();
 }
 
@@ -32,7 +24,7 @@ include_once __DIR__ . '/../../Common/head.php';
 ?>
 
 <?php
-if ($USER->admin == 1 || $USER->admin == 5) {
+if ($USER->isCamp()) {
 ?>
     <script>
         function getPaid(id, name, price) {
@@ -45,7 +37,7 @@ if ($USER->admin == 1 || $USER->admin == 5) {
                 var form_fee_id = document.createElement('input');
                 form_fee_id.type = 'hidden';
                 form_fee_id.name = 'fee_id';
-                form_fee_id.value = '<?php echo $fee_list->id; ?>';
+                form_fee_id.value = '<?= $accounting->accounting_id ?>';
                 form.appendChild(form_fee_id);
 
                 var form_price = document.createElement('input');
@@ -77,7 +69,7 @@ if ($USER->admin == 1 || $USER->admin == 5) {
                 var form_fee_id = document.createElement('input');
                 form_fee_id.type = 'hidden';
                 form_fee_id.name = 'fee_id';
-                form_fee_id.value = '<?php echo $fee_list->id; ?>';
+                form_fee_id.value = '<?= $accounting->accounting_id ?>';
                 form.appendChild(form_fee_id);
 
                 var form_user_id = document.createElement('input');
@@ -104,7 +96,7 @@ if ($USER->admin == 1 || $USER->admin == 5) {
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="./">合宿集金記録一覧</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <?= $fee_list->name ?>
+                        <?= $accounting->name ?>
                     </li>
                 </ol>
             </nav>
@@ -124,12 +116,26 @@ if ($USER->admin == 1 || $USER->admin == 5) {
                 echo '</div>';
                 unset($_SESSION['mypage_update_fee']);
             }
-            if (isset($_SESSION['mypage_update_subject'])) {
+            if (isset($_SESSION['mypage_add_subject'])) {
                 echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
-                echo '集金対象者を更新しました。';
+                echo '集金対象者を追加しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
-                unset($_SESSION['mypage_update_subject']);
+                unset($_SESSION['mypage_add_subject']);
+            }
+            if (isset($_SESSION['mypage_change_price'])) {
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
+                echo '集金金額を変更しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_change_price']);
+            }
+            if (isset($_SESSION['mypage_delete_subject'])) {
+                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                echo '集金対象者を削除しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_delete_subject']);
             }
             if (isset($_SESSION['mypage_update_price'])) {
                 echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
@@ -148,15 +154,15 @@ if ($USER->admin == 1 || $USER->admin == 5) {
                             <th class="text-nowrap">パート</th>
                             <th class="text-nowrap">氏名</th>
                             <?php
-                            if ($USER->admin == 1 || $USER->admin == 5) {
+                            if ($USER->isCamp()) {
                                 echo '<th class="text-nowrap">変更</th>';
                             }
                             ?>
                             <th class="text-nowrap">提出状況</th>
                             <th class="text-nowrap">提出日時</th>
-                            <th class="text-nowrap">金額</th>
+                            <th class="text-nowrap">集金金額</th>
                             <?php
-                            if ($USER->admin == 1 || $USER->admin == 5) {
+                            if ($USER->isCamp()) {
                                 echo '<th class="text-nowrap">編集</th>';
                             }
                             ?>
@@ -164,57 +170,78 @@ if ($USER->admin == 1 || $USER->admin == 5) {
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM members ORDER BY CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, grade ASC, kana ASC";
+                        $query = "SELECT profiles.grade, profiles.part, profiles.last_name, profiles.first_name, profiles.name_kana, profiles.user_id, accounting_records.price, accounting_records.paid_cash, accounting_records.datetime FROM profiles INNER JOIN accounting_records ON profiles.user_id=accounting_records.user_id WHERE accounting_records.accounting_id=$accounting_id ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);
                             $mysqli->close();
                             exit();
                         }
-                        $row_cnt = $result->num_rows;
                         while ($row = $result->fetch_assoc()) {
-                            $account = new User($row);
-                            $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
-                            $result_1 = $mysqli->query($query);
-                            if (!$result_1) {
-                                print('Query Failed : ' . $mysqli->error);
-                                $mysqli->close();
-                                exit();
+                            $grade = $row['grade'];
+                            if ($row['part'] == 'S') {
+                                $part = "Soprano";
+                            } else if ($row['part'] == 'A') {
+                                $part = "Alto";
+                            } else if ($row['part'] == 'T') {
+                                $part = "Tenor";
+                            } else if ($row['part'] == 'B') {
+                                $part = "Bass";
                             }
-                            if ($result_1->num_rows != 0) {
-                                // if the list exists
-                                $fee = new Fee($result_1->fetch_assoc());
-                                if ($fee->paid()) {
-                                    $disabled_paid = "disabled";
-                                    $disabled_unpaid = "";
-                                } else {
-                                    $disabled_paid = "";
-                                    $disabled_unpaid = "disabled";
-                                }
-                                if ($account->status == 2 && !$fee->paid()) {
-                                    echo '<tr class="table-danger">';
-                                } else {
-                                    echo '<tr>';
-                                }
-                                echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                                echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                                echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span>' . $account->name . '</td>';
-                                if ($USER->admin == 1 || $USER->admin == 5) {
-                                    echo '<td class="text-nowrap"><input type="button" id="paid_' . $id_u . '" name="paid" class="btn btn-secondary btn-sm" value="既納" Onclick="getPaid(\'' . $account->id . '\',\'' . $account->name . '\',\'' . $fee->price . '\');" ' . $disabled_paid . '> <input type="button" id="unpaid_' . $account->id . '" name="unpaid" class="btn btn-secondary btn-sm" value="未納" Onclick="getUnpaid(\'' . $account->id . '\',\'' . $account->name . '\');" ' . $disabled_unpaid . '></td>';
-                                }
-                                echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
-                                echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
-                                echo '<td class="text-nowrap text-right">' . $fee->get_price() . '</td>';
-                                if ($USER->admin == 1 || $USER->admin == 5) {
-                                    echo '<td class="text-nowrap"><a href="./edit.php?id=' . $account->id . '&fee_id=' . $fee_list->id . '" class="text-secondary"><u>編集</u></a></td>';
-                                }
-                                echo '</tr>';
+                            $name = $row['last_name'] . $row['first_name'];
+                            $kana = $row['name_kana'];
+                            $user_id = $row['user_id'];
+                            $price = $row['price'];
+                            $paid_cash = $row['paid_cash'];
+                            $datetime = $row['datetime'];
+                            if ($datetime != NULL && strtotime($datetime) != 0) {
+                                $disabled_paid = "disabled";
+                                $disabled_unpaid = "";
+                                $status = "既納";
+                                $datetime = date('Y/m/d H:i:s', strtotime($row['datetime']));
+                            } else {
+                                $disabled_paid = "";
+                                $disabled_unpaid = "disabled";
+                                $status = "未納";
+                                $datetime = "";
                             }
+                        ?>
+                            <tr>
+                                <td class="text-nowrap"><?= $grade ?></td>
+                                <td class="text-nowrap"><?= $part ?></td>
+                                <td class="text-nowrap"><span class="d-none"><?= $kana ?></span><?= $name ?></td>
+                                <?php
+                                if ($USER->isCamp()) {
+                                ?>
+                                    <td class="text-nowrap"><input type="button" id="paid_<?= $user_id ?>" name="paid" class="btn btn-secondary btn-sm" value="既納" Onclick="getPaid('<?= $user_id ?>','<?= $name ?>','<?= $price ?>');" <?= $disabled_paid ?>> <input type="button" id="unpaid_<?= $user_id ?>" name="unpaid" class="btn btn-secondary btn-sm" value="未納" Onclick="getUnpaid('<?= $user_id ?>','<?= $name ?>');" <?= $disabled_unpaid ?>></td>
+                                <?php
+                                }
+                                ?>
+                                <td class="text-nowrap"><?= $status ?></td>
+                                <td class="text-nowrap"><?= $datetime ?></td>
+                                <td class="text-nowrap text-right"><?= "￥" . number_format($price) ?></td>
+                                <?php
+                                if ($USER->isCamp()) {
+                                ?>
+                                    <td class="text-nowrap"><a href="./change_price/?id=<?= $user_id ?>&fee_id=<?= $accounting_id ?>" class="text-secondary"><u>編集</u></a></td>
+                                <?php
+                                }
+                                ?>
+                            </tr>
+                        <?php
                         }
                         ?>
                     </tbody>
                 </table>
             </div>
+            <?php
+            if ($USER->isCamp()) {
+            ?>
+                <a class="btn btn-primary mb-4" href="./add_subject/?fee_id=<?= $accounting_id ?>" role="button">集金対象者の追加</a>
+                <a class="btn btn-danger mb-4" href="./delete_subject/?fee_id=<?= $accounting_id ?>" role="button">集金対象者の削除</a>
+            <?php
+            }
+            ?>
         </div>
         <div class="col-xl-3 col-sm-12">
             <div class="card shadow mb-4">
@@ -234,13 +261,13 @@ if ($USER->admin == 1 || $USER->admin == 5) {
                 </div>
             </div>
             <?php
-            if ($USER->admin == 1 || $USER->admin == 5) {
+            if ($USER->isCamp()) {
             ?>
                 <form method="post">
                     <div class="list-group shadow mb-4">
-                        <a href="./add_fee_list/edit.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
-                        <a href="./add_fee_list/subject.php?fee_id=<?php echo $fee_list->id; ?>" class="list-group-item list-group-item-action">集金対象者の選択</a>
-                        <button type="submit" name="delete" formaction="./delete_fee_list.php" class="list-group-item list-group-item-action text-danger" value="<?php echo $fee_list->id ?>" Onclick="return confirm('集金リスト「<?php echo $fee_list->name; ?>」を削除しますか？\n削除した場合、関連する全ての集金記録が削除されます。');">集金リストの削除</button>
+                        <a href="./edit_accounting_list/?fee_id=<?= $accounting_id ?>" class="list-group-item list-group-item-action">集金リストの編集</a>
+                        <a href="./change_price_multiple/?fee_id=<?= $accounting_id ?>" class="list-group-item list-group-item-action">集金金額の一括変更</a>
+                        <button type="submit" name="delete" formaction="./delete_accounting_list.php" class="list-group-item list-group-item-action text-danger" value="<?= $accounting_id ?>" Onclick="return confirm('集金リスト「<?= $accounting->name ?>」を削除しますか？\n削除した場合、関連する全ての集金記録が削除されます。');">集金リストの削除</button>
                     </div>
                 </form>
                 <div class="card shadow mb-4">
@@ -260,7 +287,7 @@ if ($USER->admin == 1 || $USER->admin == 5) {
 
 <?php
 $script = '<script>';
-if ($USER->admin == 1 || $USER->admin == 5) {
+if ($USER->isCamp()) {
     $script .= '$(document).ready(function() {
     $("#accountingList").DataTable({
         "language": {
@@ -322,148 +349,21 @@ $script .= '$.fn.dataTable.ext.order["part"] = function(settings, col) {
         }';
 $script .= '</script>';
 
-// sop
-$query = "SELECT * FROM members WHERE part = 'S'";
+$query = "SELECT profiles.part, (SELECT COUNT(*) FROM accounting_records INNER JOIN profiles AS prof ON accounting_records.user_id=prof.user_id WHERE accounting_records.accounting_id=$accounting_id AND prof.part=profiles.part) AS all_cnt,(SELECT COUNT(*) FROM accounting_records INNER JOIN profiles AS prof ON accounting_records.user_id=prof.user_id WHERE accounting_records.accounting_id=$accounting_id AND prof.part=profiles.part AND accounting_records.datetime IS NOT NULL) AS paid_cnt FROM profiles GROUP BY profiles.part";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
     $mysqli->close();
     exit();
 }
-$paid_cnt = 0;
-$unpaid_cnt = 0;
 while ($row = $result->fetch_assoc()) {
-    $account = new User($row);
-    $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
-    $result_2 = $mysqli->query($query);
-    if (!$result_2) {
-        print('Query Failed : ' . $mysqli->error);
-        $mysqli->close();
-        exit();
+    $all_cnt = $row['all_cnt'];
+    $paid_cnt = $row['paid_cnt'];
+    if ($all_cnt == 0) {
+        $ratio[$row['part']] = 0;
+    } else {
+        $ratio[$row['part']] = round($paid_cnt / ($all_cnt), 3) * 100;
     }
-    $row_cnt = $result_2->num_rows;
-    if ($row_cnt != 0) {
-        while ($row_2 = $result_2->fetch_assoc()) {
-            if ($row_2['datetime'] == null) {
-                $unpaid_cnt += 1;
-            } else {
-                $paid_cnt += 1;
-            }
-        }
-    }
-}
-if ($paid_cnt + $unpaid_cnt == 0) {
-    $sop_ratio = 0;
-} else {
-    $sop_ratio = round($paid_cnt / ($paid_cnt + $unpaid_cnt), 3) * 100;
-}
-
-// alt
-$query = "SELECT * FROM members WHERE part = 'A'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$paid_cnt = 0;
-$unpaid_cnt = 0;
-while ($row = $result->fetch_assoc()) {
-    $account = new User($row);
-    $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
-    $result_2 = $mysqli->query($query);
-    if (!$result_2) {
-        print('Query Failed : ' . $mysqli->error);
-        $mysqli->close();
-        exit();
-    }
-    $row_cnt = $result_2->num_rows;
-    if ($row_cnt != 0) {
-        while ($row_2 = $result_2->fetch_assoc()) {
-            if ($row_2['datetime'] == null) {
-                $unpaid_cnt += 1;
-            } else {
-                $paid_cnt += 1;
-            }
-        }
-    }
-}
-if ($paid_cnt + $unpaid_cnt == 0) {
-    $alt_ratio = 0;
-} else {
-    $alt_ratio = round($paid_cnt / ($paid_cnt + $unpaid_cnt), 3) * 100;
-}
-
-// ten
-$query = "SELECT * FROM members WHERE part = 'T'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$paid_cnt = 0;
-$unpaid_cnt = 0;
-while ($row = $result->fetch_assoc()) {
-    $account = new User($row);
-    $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
-    $result_2 = $mysqli->query($query);
-    if (!$result_2) {
-        print('Query Failed : ' . $mysqli->error);
-        $mysqli->close();
-        exit();
-    }
-    $row_cnt = $result_2->num_rows;
-    if ($row_cnt != 0) {
-        while ($row_2 = $result_2->fetch_assoc()) {
-            if ($row_2['datetime'] == null) {
-                $unpaid_cnt += 1;
-            } else {
-                $paid_cnt += 1;
-            }
-        }
-    }
-}
-if ($paid_cnt + $unpaid_cnt == 0) {
-    $ten_ratio = 0;
-} else {
-    $ten_ratio = round($paid_cnt / ($paid_cnt + $unpaid_cnt), 3) * 100;
-}
-
-// bas
-$query = "SELECT * FROM members WHERE part = 'B'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$paid_cnt = 0;
-$unpaid_cnt = 0;
-while ($row = $result->fetch_assoc()) {
-    $account = new User($row);
-    $query = "SELECT * FROM fee_record_$account->id WHERE id = $fee_list->id";
-    $result_2 = $mysqli->query($query);
-    if (!$result_2) {
-        print('Query Failed : ' . $mysqli->error);
-        $mysqli->close();
-        exit();
-    }
-    $row_cnt = $result_2->num_rows;
-    if ($row_cnt != 0) {
-        while ($row_2 = $result_2->fetch_assoc()) {
-            if ($row_2['datetime'] == null) {
-                $unpaid_cnt += 1;
-            } else {
-                $paid_cnt += 1;
-            }
-        }
-    }
-}
-if ($paid_cnt + $unpaid_cnt == 0) {
-    $bas_ratio = 0;
-} else {
-    $bas_ratio = round($paid_cnt / ($paid_cnt + $unpaid_cnt), 3) * 100;
 }
 
 $script .= '<script>';
@@ -474,7 +374,7 @@ $script .= 'var myPieChart = new Chart(ctx, {
         data: {
             labels: ["Soprano", "Alto", "Tenor", "Bass"],
             datasets: [{
-                data: [' . $sop_ratio . ', ' . $alt_ratio . ', ' . $ten_ratio . ', ' . $bas_ratio . '],
+                data: [' . $ratio['S'] . ', ' . $ratio['A'] . ', ' . $ratio['T'] . ', ' . $ratio['B'] . '],
                 backgroundColor: ["#f6c23e", "#e74a3b", "#36b9cc", "#1cc88a"],
                 hoverBackgroundColor: ["#f6c23e", "#e74a3b", "#36b9cc", "#1cc88a"],
                 hoverBorderColor: "rgba(234, 236, 244, 1)",
