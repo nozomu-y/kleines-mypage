@@ -4,6 +4,8 @@ session_start();
 
 require __DIR__ . '/dbconnect.php';
 require __DIR__ . '/../Class/User.php';
+require __DIR__ . '/../Class/AccountingRecord.php';
+require __DIR__ . '/../Class/AccountingList.php';
 require __DIR__ . '/../Class/Fee.php';
 require __DIR__ . '/../Class/Fee_List.php';
 require __DIR__ . '/../Class/Individual_Accounting.php';

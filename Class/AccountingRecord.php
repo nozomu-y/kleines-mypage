@@ -1,6 +1,6 @@
 <?php
 
-class Fee
+class AccountingRecord
 {
     public $id;
     public $datetime;
@@ -9,34 +9,26 @@ class Fee
     public $paid_individual;
     public $status;
     public $name;
-    public $deadline;
     public $admin;
 
-    public function __construct($fee)
+    public function __construct($accounting)
     {
-        $this->id = $fee['accounting_id'];
-        $this->datetime = $fee['datetime'];
-        $this->price = (int) $fee['price'];
-        $this->paid_cash = (int) $fee['paid_cash'];
+        $this->id = $accounting['accounting_id'];
+        $this->user_id = $accounting['user_id'];
+        $this->datetime = $accounting['datetime'];
+        $this->price = (int) $accounting['price'];
+        $this->paid_cash = (int) $accounting['paid_cash'];
         $this->paid_individual = $this->price - $this->paid_cash;
-        $this->status = $fee['status'];
-        $this->name = $fee['name'];
-        $this->deadline = $fee['deadline'];
-        $this->admin = $fee['admin'];
-    }
-
-    public function get_deadline()
-    {
-        return date('Y/m/d', strtotime($this->deadline));
+        if ($this->datetime == null || strtotime($this->datetime) == 0) {
+            $this->status = "未納";
+        } else {
+            $this->status = "既納";
+        }
     }
 
     public function get_status()
     {
-        if ($this->datetime == null || strtotime($this->datetime) == 0) {
-            return "未納";
-        } else {
-            return "既納";
-        }
+        return $this->status;
     }
 
     public function paid()
