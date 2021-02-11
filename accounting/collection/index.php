@@ -43,7 +43,7 @@ include_once __DIR__ . '/../../Common/head.php';
                             }
                             $accounting_paid_cash = $row['paid_cash'];
                             if ($row['datetime'] == NULL || strtotime($row['datetime'] == 0)) {
-                                $accounting_individual = '';
+                                $accounting_paid_individual = '';
                                 $accounting_paid_cash = '';
                             } else {
                                 $accounting_paid_individual = $accounting_price - $accounting_paid_cash;
@@ -67,15 +67,6 @@ include_once __DIR__ . '/../../Common/head.php';
                                 <td class="text-nowrap"><?= $accounting_datetime ?></td>
                             </tr>
                         <?php
-                            // echo '<tr>';
-                            // echo '<td class="text-nowrap">' . $accounting_record->name . '</td>';
-                            // echo '<td class="text-nowrap text-right">' . $accounting_record->get_price() . '</td>';
-                            // echo '<td class="text-nowrap">' . $accounting_record->get_deadline() . '</td>';
-                            // echo '<td class="text-nowrap">' . $accounting_record->get_status() . '</td>';
-                            // echo '<td class="text-nowrap text-right">' . $accounting_record->get_paid_cash() . '</td>';
-                            // echo '<td class="text-nowrap text-right">' . $accounting_record->get_paid_individual() . '</td>';
-                            // echo '<td class="text-nowrap">' . $accounting_record->get_submission_time() . '</td>';
-                            // echo '</tr>';
                         }
                         ?>
                     </tbody>
