@@ -1,27 +1,35 @@
 <?php
-require __DIR__ . '/../../Common/init_page.php';
+require __DIR__ . '/../../../Common/init_page.php';
 
 if (!($USER->isAccountant())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
+
+if (isset($_GET['accounting_id'])) {
+    $accounting_id = $_GET['accounting_id'];
+} else {
+    header('Location: ' . MYPAGE_ROOT . '/admin/individual_accounting/accounting/');
+    exit();
+}
+
+$accounting = new AccountingList($accounting_id);
+
 $PAGE_NAME = "個別会計管理";
-include_once __DIR__ . '/../../Common/head.php';
+include_once __DIR__ . '/../../../Common/head.php';
 ?>
 
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">個別会計管理</h1>
     <div class="row">
         <div class=" col-xl-9 col-sm-12">
-            <?php
-            if (isset($_SESSION['mypage_individual_add_multiple'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                echo '<strong>' . $_SESSION['mypage_individual_add_multiple'] . '</strong>を追加しました。';
-                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-                echo '</div>';
-                unset($_SESSION['mypage_individual_add_multiple']);
-            }
-            ?>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../">個別会計管理</a></li>
+                    <li class="breadcrumb-item"><a href="./">集金時の個別会計利用</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><?= $accounting->name ?></li>
+                </ol>
+            </nav>
             <div class="mb-4">
                 <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
                     <thead>
@@ -29,12 +37,13 @@ include_once __DIR__ . '/../../Common/head.php';
                             <th class="text-nowrap">学年</th>
                             <th class="text-nowrap">パート</th>
                             <th class="text-nowrap">氏名</th>
-                            <th class="text-nowrap">個別会計総額</th>
+                            <th class="text-nowrap">金額</th>
+                            <th class="text-nowrap">日付</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT profiles.grade, profiles.part, profiles.last_name, profiles.first_name, profiles.name_kana, users.status, users.user_id, (SELECT SUM(price) FROM individual_accounting_records WHERE user_id=users.user_id) AS individual_accounting_total FROM profiles INNER JOIN users ON profiles.user_id=users.user_id AND users.status!='RESIGNED' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
+                        $query = "SELECT profiles.grade, profiles.part, profiles.last_name, profiles.first_name, profiles.name_kana, profiles.user_id, individual_accounting_records.price, individual_accounting_records.datetime FROM profiles INNER JOIN individual_accounting_records ON profiles.user_id=individual_accounting_records.user_id WHERE individual_accounting_records.accounting_id=$accounting_id ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);
@@ -55,33 +64,22 @@ include_once __DIR__ . '/../../Common/head.php';
                             $name = $row['last_name'] . $row['first_name'];
                             $kana = $row['name_kana'];
                             $user_id = $row['user_id'];
-                            $individual_accounting_total = $row['individual_accounting_total'];
+                            $price = $row['price'];
+                            $date = date('Y/m/d', strtotime($row['datetime']));
+
                         ?>
                             <tr>
                                 <td class="text-nowrap"><?= $grade ?></td>
                                 <td class="text-nowrap"><?= $part ?></td>
-                                <td class="text-nowrap"><span class="d-none">'<?= $kana ?></span><a href="./user/?user_id=<?= $user_id ?>" class="text-secondary"><u><?= $name ?></u></a></td>
-                                <td class="text-nowrap text-right">￥<?= number_format($individual_accounting_total) ?></td>
+                                <td class="text-nowrap"><span class="d-none">'<?= $kana ?></span><a href="../user/?user_id=<?= $user_id ?>" class="text-secondary"><u><?= $name ?></u></a></td>
+                                <td class="text-nowrap text-right">￥<?= number_format($price) ?></td>
+                                <td class="text-nowrap"><?= $date ?></td>
                             </tr>
                         <?php
                         }
                         ?>
                     </tbody>
                 </table>
-            </div>
-            <!-- <a class="btn btn-primary mb-4" href="./add_multiple/" role="button">一括追加</a> -->
-        </div>
-        <div class="col-xl-3 col-sm-12">
-            <div class="list-group shadow mb-4">
-                <a href="./accounting/" class="list-group-item list-group-item-action">集金時の個別会計利用</a>
-                <a href="./list/" class="list-group-item list-group-item-action">個別会計一覧</a>
-            </div>
-            <div class="card shadow mb-4">
-                <div class="card-header">ログ</div>
-                <div class="card-body">
-                    <p>このページで行われる操作は全てログとして残ります。</p>
-                    <a href="./individual_accounting_log.php">ログを閲覧</a>
-                </div>
             </div>
         </div>
     </div>
@@ -133,4 +131,4 @@ $script .= '</script>';
 
 
 <?php
-include_once __DIR__ . '/../../Common/foot.php';
+include_once __DIR__ . '/../../../Common/foot.php';

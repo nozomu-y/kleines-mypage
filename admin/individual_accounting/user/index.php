@@ -1,29 +1,22 @@
 <?php
-require __DIR__ . '/../../Common/init_page.php';
+require __DIR__ . '/../../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 3)) {
+if (!($USER->isAccountant())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
 
-if (isset($_GET['account_id'])) {
-    $account_id = $_GET['account_id'];
+if (isset($_GET['user_id'])) {
+    $user_id = $_GET['user_id'];
 } else {
     header('Location: ' . MYPAGE_ROOT . '/admin/individual_accounting/');
     exit();
 }
 
-$query = "SELECT * FROM members WHERE id=$account_id";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$account = new User($result->fetch_assoc());
+$account = new User($user_id);
 
 $PAGE_NAME = "個別会計管理";
-include_once __DIR__ . '/../../Common/head.php';
+include_once __DIR__ . '/../../../Common/head.php';
 ?>
 
 <div class="container-fluid">
@@ -32,7 +25,7 @@ include_once __DIR__ . '/../../Common/head.php';
         <div class=" col-xl-9 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="./">個別会計管理</a></li>
+                    <li class="breadcrumb-item"><a href="../">個別会計管理</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
                         <?= $account->get_name() ?>
                     </li>
@@ -40,25 +33,18 @@ include_once __DIR__ . '/../../Common/head.php';
             </nav>
             <?php
             if (isset($_SESSION['mypage_individual'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
                 echo '個別会計「<strong>' . $_SESSION['mypage_individual'] . '</strong>」を編集しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
                 unset($_SESSION['mypage_individual']);
             }
             if (isset($_SESSION['mypage_individual_delete'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
                 echo '個別会計「<strong>' . $_SESSION['mypage_individual_delete'] . '</strong>」を削除しました。';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                 echo '</div>';
                 unset($_SESSION['mypage_individual_delete']);
-            }
-            if (isset($_SESSION['mypage_individual_add'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
-                echo '個別会計「<strong>' . $_SESSION['mypage_individual_add'] . '</strong>」を追加しました。';
-                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-                echo '</div>';
-                unset($_SESSION['mypage_individual_add']);
             }
             ?>
             <div class="mb-4">
@@ -75,7 +61,7 @@ include_once __DIR__ . '/../../Common/head.php';
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT * FROM individual_accounting_$account->id ORDER BY `date` ASC";
+                            $query = "SELECT individual_accounting_records.price, individual_accounting_records.datetime, individual_accounting_records.accounting_id, individual_accounting_records.list_id, CONCAT(IFNULL(individual_accounting_lists.name,''),IFNULL(accounting_lists.name,'')) AS name FROM individual_accounting_records LEFT OUTER JOIN individual_accounting_lists ON individual_accounting_records.list_id=individual_accounting_lists.list_id LEFT OUTER JOIN accounting_lists ON individual_accounting_records.accounting_id=accounting_lists.accounting_id WHERE user_id=$user_id ORDER BY `datetime` DESC";
                             $result = $mysqli->query($query);
                             if (!$result) {
                                 print('Query Failed : ' . $mysqli->error);
@@ -83,21 +69,50 @@ include_once __DIR__ . '/../../Common/head.php';
                                 exit();
                             }
                             while ($row = $result->fetch_assoc()) {
-                                $individual = new Individual_Accounting($row);
-                                echo '<tr>
-                                <td class="text-nowrap">' . $individual->get_date() . '</td>
-                                <td class="text-nowrap">' . $individual->name . '</td>
-                                <td class="text-nowrap text-right">' . $individual->get_price() . '</td>
-                                <td class="text-nowrap">';
-                                if ($individual->fee_id == NULL) {
-                                    echo '<a href="edit.php?account_id=' . $account->id . '&list_id=' . $individual->id . '" class="text-secondary"><u>編集</u></a>';
-                                }
-                                echo '</td>';
-                                echo '<td class="text-nowrap">';
-                                if ($individual->fee_id == NULL) {
-                                    echo '<button type="submit" name="delete" formaction="delete.php" class="btn btn-danger btn-sm" value="' . $account->id . '_' . $individual->id . '" Onclick="return confirm(\'個別会計「' . $individual->name . '」を削除しますか？\');">削除</button>';
-                                }
-                                echo '</td></tr>';
+                                $date = date('Y/m/d', strtotime($row['datetime']));
+                                $name = $row['name'];
+                                $price = "￥" . number_format($row['price']);
+                                $list_id = $row['list_id'];
+                                $accounting_id = $row['accounting_id'];
+                            ?>
+                                <tr>
+                                    <td class="text-nowrap"><?= $date ?></td>
+                                    <?php
+                                    if ($row['accounting_id'] == NULL) {
+                                    ?>
+                                        <td class="text-nowrap">
+                                            <a href="../list/detail.php?list_id=<?= $list_id ?>" class="text-secondary"><u><?= $name ?></u></a>
+                                        </td>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <td class="text-nowrap">
+                                            <a href="../accounting/detail.php?accounting_id=<?= $accounting_id ?>" class="text-secondary"><u><?= $name ?></u></a>
+                                        </td>
+                                    <?php
+                                    }
+                                    ?>
+                                    <td class="text-nowrap text-right"><?= $price ?></td>
+                                    <td class="text-nowrap">
+                                        <?php
+                                        if ($row['accounting_id'] == NULL) {
+                                        ?>
+                                            <a href="edit/?user_id=<?= $user_id ?>&list_id=<?= $list_id ?>" class="text-secondary"><u>編集</u></a>
+                                        <?php
+                                        }
+                                        ?>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <?php
+                                        if ($row['accounting_id'] == NULL) {
+                                        ?>
+                                            <button type="submit" name="delete" formaction="delete.php" class="btn btn-danger btn-sm" value="<?= $user_id ?>_<?= $list_id ?>" Onclick="return confirm('個別会計「<?= $name ?>」を削除しますか？');">削除</button>
+                                        <?php
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php
                             }
                             ?>
                         </tbody>
@@ -111,7 +126,6 @@ include_once __DIR__ . '/../../Common/head.php';
                     </table>
                 </form>
             </div>
-            <a class="btn btn-primary" href="add.php?account_id=<?php echo $account->id; ?>" role="button">項目の追加</a>
         </div>
     </div>
 </div>
@@ -165,4 +179,4 @@ $script .= '</script>';
 
 
 <?php
-include_once __DIR__ . '/../../Common/foot.php';
+include_once __DIR__ . '/../../../Common/foot.php';
