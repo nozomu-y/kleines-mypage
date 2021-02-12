@@ -152,11 +152,10 @@ if (!$result) {
 
 $query = "
 CREATE TABLE individual_accounting_lists (
-    individual_accounting_id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
+    list_id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
     name varchar(256),
     datetime datetime,
-    price int(10),
-    PRIMARY KEY (individual_accounting_id)
+    PRIMARY KEY (list_id)
 );";
 $result = $mysqli->query($query);
 if (!$result) {
@@ -169,10 +168,9 @@ $query = "
 CREATE TABLE individual_accounting_records (
     user_id int(5) UNSIGNED ZEROFILL,
     datetime datetime,
-    name varchar(256),
     price int(10),
     accounting_id int(5) UNSIGNED ZEROFILL,
-    individual_accounting_id int(5) UNSIGNED ZEROFILL
+    list_id int(5) UNSIGNED ZEROFILL
 );";
 $result = $mysqli->query($query);
 if (!$result) {
