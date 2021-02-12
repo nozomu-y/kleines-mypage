@@ -9,3 +9,4 @@ Resources/css/ck-sb-admin-2.css
 Resources/js/sb-admin-2.js
 Resources/scss/
 Resources/vendor/
+*.sql
