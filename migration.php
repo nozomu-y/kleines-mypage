@@ -154,11 +154,10 @@ if (!$result) {
 
 $query = "
 CREATE TABLE individual_accounting_lists (
-    individual_accounting_id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
+    list_id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
     name varchar(256),
     datetime datetime,
-    price int(10),
-    PRIMARY KEY (individual_accounting_id)
+    PRIMARY KEY (list_id)
 );";
 $result = $mysqli_new->query($query);
 if (!$result) {
@@ -174,7 +173,7 @@ CREATE TABLE individual_accounting_records (
     name varchar(256),
     price int(10),
     accounting_id int(5) UNSIGNED ZEROFILL,
-    individual_accounting_id int(5) UNSIGNED ZEROFILL
+    list_id int(5) UNSIGNED ZEROFILL
 );";
 $result = $mysqli_new->query($query);
 if (!$result) {
@@ -360,4 +359,39 @@ while ($row = $members->fetch_assoc()) {
         }
     }
     print("Finished: " . $grade . $part . " " . $last_name . $first_name . "\n");
+}
+
+$query = "SELECT name, MIN(datetime) AS datetime from individual_accounting_records WHERE accounting_id IS NULL GROUP BY name";
+$result = $mysqli_new->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli_new->error . ' on line ' . __LINE__);
+    $mysqli_new->close();
+    exit();
+}
+while ($row = $result->fetch_assoc()) {
+    $name = $row['name'];
+    $datetime = $row['datetime'];
+    $query_1 = "INSERT INTO individual_accounting_lists (name, datetime) VALUES ('$name', '$datetime')";
+    $result_1 = $mysqli_new->query($query_1);
+    if (!$result_1) {
+        print('Query Failed : ' . $mysqli_new->error . ' on line ' . __LINE__);
+        $mysqli_new->close();
+        exit();
+    }
+    $list_id = $mysqli_new->insert_id;
+    $query_1 = "UPDATE individual_accounting_records SET list_id='$list_id' WHERE name='$name'";
+    $result_1 = $mysqli_new->query($query_1);
+    if (!$result_1) {
+        print('Query Failed : ' . $mysqli_new->error . ' on line ' . __LINE__);
+        $mysqli_new->close();
+        exit();
+    }
+}
+
+$query = "ALTER TABLE individual_accounting_records DROP name";
+$result = $mysqli_new->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli_new->error . ' on line ' . __LINE__);
+    $mysqli_new->close();
+    exit();
 }

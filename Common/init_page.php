@@ -6,7 +6,7 @@ require __DIR__ . '/dbconnect.php';
 require __DIR__ . '/../Class/User.php';
 require __DIR__ . '/../Class/AccountingRecord.php';
 require __DIR__ . '/../Class/AccountingList.php';
-require __DIR__ . '/../Class/Individual_Accounting.php';
+require __DIR__ . '/../Class/IndividualAccountingList.php';
 require __DIR__ . '/function.php';
 
 if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // if current branch is not master

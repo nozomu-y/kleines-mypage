@@ -64,28 +64,26 @@ mysql> DESC identity_verifications;
 
 ```
 mysql> DESC individual_accounting_lists;
-+--------------------------+--------------------------+------+-----+---------+----------------+
-| Field                    | Type                     | Null | Key | Default | Extra          |
-+--------------------------+--------------------------+------+-----+---------+----------------+
-| individual_accounting_id | int(5) unsigned zerofill | NO   | PRI | NULL    | auto_increment |
-| name                     | varchar(256)             | YES  |     | NULL    |                |
-| datetime                 | datetime                 | YES  |     | NULL    |                |
-| price                    | int(10)                  | YES  |     | NULL    |                |
-+--------------------------+--------------------------+------+-----+---------+----------------+
++----------+--------------------------+------+-----+---------+----------------+
+| Field    | Type                     | Null | Key | Default | Extra          |
++----------+--------------------------+------+-----+---------+----------------+
+| list_id  | int(5) unsigned zerofill | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(256)             | YES  |     | NULL    |                |
+| datetime | datetime                 | YES  |     | NULL    |                |
++----------+--------------------------+------+-----+---------+----------------+
 ```
 
 ```
 mysql> DESC individual_accounting_records;
-+--------------------------+--------------------------+------+-----+---------+-------+
-| Field                    | Type                     | Null | Key | Default | Extra |
-+--------------------------+--------------------------+------+-----+---------+-------+
-| user_id                  | int(5) unsigned zerofill | YES  |     | NULL    |       |
-| datetime                 | datetime                 | YES  |     | NULL    |       |
-| name                     | varchar(256)             | YES  |     | NULL    |       |
-| price                    | int(10)                  | YES  |     | NULL    |       |
-| accounting_id            | int(5) unsigned zerofill | YES  |     | NULL    |       |
-| individual_accounting_id | int(5) unsigned zerofill | YES  |     | NULL    |       |
-+--------------------------+--------------------------+------+-----+---------+-------+
++---------------+--------------------------+------+-----+---------+-------+
+| Field         | Type                     | Null | Key | Default | Extra |
++---------------+--------------------------+------+-----+---------+-------+
+| user_id       | int(5) unsigned zerofill | YES  |     | NULL    |       |
+| datetime      | datetime                 | YES  |     | NULL    |       |
+| price         | int(10)                  | YES  |     | NULL    |       |
+| accounting_id | int(5) unsigned zerofill | YES  |     | NULL    |       |
+| list_id       | int(5) unsigned zerofill | YES  |     | NULL    |       |
++---------------+--------------------------+------+-----+---------+-------+
 ```
 
 ```
