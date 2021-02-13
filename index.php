@@ -6,7 +6,7 @@ include_once __DIR__ . '/Common/head.php';
 <div class="container-fluid">
     <!-- <h1 class="h3 text-gray-800 mb-4">Home</h1> -->
     <div class="row">
-        <div class="col-sm-3 mb-3">
+        <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -21,7 +21,7 @@ include_once __DIR__ . '/Common/head.php';
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 mb-3">
+        <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card border-left-danger shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -38,7 +38,7 @@ include_once __DIR__ . '/Common/head.php';
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-xl-4 col-sm-6">
             <?php
             $query = "SELECT * FROM accounting_records WHERE user_id='$USER->id'";
             $result = $mysqli->query($query);
@@ -89,7 +89,7 @@ include_once __DIR__ . '/Common/head.php';
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-xl-4 col-sm-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">団員名簿</h6>
@@ -99,6 +99,19 @@ include_once __DIR__ . '/Common/head.php';
                         最新の団員名簿をダウンロードできます。
                     </p>
                     <a href="./download/memberlist_download.php">ダウンロード</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">開発者募集中</h6>
+                </div>
+                <div class="card-body">
+                    <p>
+                        マイページの開発に協力してくれる方を募集しています。<br>Web管理人以外でも大丈夫です。
+                    </p>
+                    <a href="https://github.com/nozomu-y/kleines-mypage" target="_blank"><img class="img-fluid" src="https://gh-card.dev/repos/nozomu-y/kleines-mypage.svg?fullname="></a>
                 </div>
             </div>
         </div>
