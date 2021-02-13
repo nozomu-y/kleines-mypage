@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../Common/init_page.php';
+require __DIR__ . '/../../../Common/init_page.php';
 
 if (!($USER->isManager() || $USER->isAccountant())) {
     header('Location: ' . MYPAGE_ROOT . '/admin/account_manage/');
@@ -51,9 +51,8 @@ if (!$result) {
     exit();
 }
 
-$admin = '';
-$admin_old = '';
 if ($USER->isMaster()) {
+    $admin = $_POST['admin'];
     $query = "SELECT * FROM admins WHERE user_id=$user_id";
     $result = $mysqli->query($query);
     if (!$result) {
@@ -62,61 +61,40 @@ if ($USER->isMaster()) {
         exit();
     }
     while ($row = $result->fetch_assoc()) {
-        $admin_old .= ',';
-        $admin_old .= $row['role'];
+        $admin_old = ',' . $row['role'];
     }
-
-    $query = "DELETE FROM admins WHERE user_id=$user_id";
-    $result = $mysqli->query($query);
-    if (!$result) {
-        print('Query Failed : ' . $mysqli->error);
-        $mysqli->close();
-        exit();
-    }
-
-    if (isset($_POST['master'])) {
-        $admin .= ',MASTER';
-        $query = "INSERT INTO admins (user_id, role) VALUES ('$user_id', 'MASTER')";
+    if ($admin == 'general') {
+        $query = "DELETE FROM admins WHERE user_id=$user_id";
         $result = $mysqli->query($query);
         if (!$result) {
             print('Query Failed : ' . $mysqli->error);
             $mysqli->close();
             exit();
         }
-    }
-    if (isset($_POST['manager'])) {
-        $admin .= ',MANAGER';
-        $query = "INSERT INTO admins (user_id, role) VALUES ('$user_id', 'MANAGER')";
+        $admin = '';
+    } else {
+        if ($admin == 'master') {
+            $admin = 'MASTER';
+        } else if ($admin == 'manager') {
+            $admin = 'MANAGER';
+        } else if ($admin == 'accountant') {
+            $admin = 'ACCOUNTANT';
+        } else if ($admin == 'camp') {
+            $admin = 'CAMP';
+        }
+        $query = "INSERT INTO admins (user_id, role) VALUES ('$user_id', '$admin') ON DUPLICATE KEY UPDATE role='$admin'";
         $result = $mysqli->query($query);
         if (!$result) {
             print('Query Failed : ' . $mysqli->error);
             $mysqli->close();
             exit();
         }
-    }
-    if (isset($_POST['accountant'])) {
-        $admin .= ',ACCOUNTANT';
-        $query = "INSERT INTO admins (user_id, role) VALUES ('$user_id', 'ACCOUNTANT')";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
-    }
-    if (isset($_POST['camp'])) {
-        $admin .= ',CAMP';
-        $query = "INSERT INTO admins (user_id, role) VALUES ('$user_id', 'CAMP')";
-        $result = $mysqli->query($query);
-        if (!$result) {
-            print('Query Failed : ' . $mysqli->error);
-            $mysqli->close();
-            exit();
-        }
+        $admin = ',' . $admin;
     }
 }
 
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "がユーザーの情報を編集しました。（編集前：" . $grade_old . "," . $part_old . "," . $last_name_old . "," . $first_name_old . "," . $name_kana_old . "," . $email_old . $admin_old . "）（編集後：" . $grade . "," . $part . "," . $last_name . "," . $first_name . "," . $name_kana . "," . $email . $admin . "）\n", 3, __DIR__ . "/../../Core/account_manage.log");
+$_SESSION['mypage_edit_user'] = $grade_old . $part_old . " " . $last_name_old . $first_name_old;
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "がユーザーの情報を編集しました。（編集前：" . $grade_old . "," . $part_old . "," . $last_name_old . "," . $first_name_old . "," . $name_kana_old . "," . $email_old . $admin_old . "）（編集後：" . $grade . "," . $part . "," . $last_name . "," . $first_name . "," . $name_kana . "," . $email . $admin . "）\n", 3, __DIR__ . "/../../../Core/account_manage.log");
 
 header('Location: ' . MYPAGE_ROOT . '/admin/account_manage/');
 exit();

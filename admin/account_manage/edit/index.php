@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../Common/init_page.php';
+require __DIR__ . '/../../../Common/init_page.php';
 
 if (!($USER->isManager() || $USER->isAccountant())) {
     header('Location: ' . MYPAGE_ROOT);
@@ -13,21 +13,19 @@ if (isset($_GET['user_id'])) {
 }
 $account = new User($user_id);
 $PAGE_NAME = "アカウント管理";
-include_once __DIR__ . '/../../Common/head.php';
+include_once __DIR__ . '/../../../Common/head.php';
 ?>
 
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">アカウント管理</h1>
     <div class="row">
-        <div class=" col-xl-12 col-sm-12">
+        <div class=" col-xl-6 col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="./">アカウント管理</a></li>
+                    <li class="breadcrumb-item"><a href="../">アカウント管理</a></li>
                     <li class="breadcrumb-item active" aria-current="page"><?php echo $account->name; ?></li>
                 </ol>
             </nav>
-        </div>
-        <div class="col-xl-6 col-sm-12">
             <form method="post" action="./edit.php" class="mb-4">
                 <div class="form-group">
                     <div class="row">
@@ -82,71 +80,68 @@ include_once __DIR__ . '/../../Common/head.php';
                     <input type="email" name="email" class="form-control" id="email" value="<?= $account->email ?>" required="">
                 </div>
                 <div class="form-group">
-                    <label for="email">パスワード</label>
+                    <label for="password">パスワード</label>
                     <input type="text" name="password" class="form-control" id="password" value="<?= $account->get_password() ?>" readonly>
                 </div>
                 <?php
+                $admin = '一般';
+                $master = '';
+                $manager = '';
+                $accountant = '';
+                $camp = '';
+                $general = 'selected';
+                $query = "SELECT * FROM admins WHERE user_id=$account->id";
+                $result = $mysqli->query($query);
+                if (!$result) {
+                    print('Query Failed : ' . $mysqli->error);
+                    $mysqli->close();
+                    exit();
+                }
+                while ($row = $result->fetch_assoc()) {
+                    $general = '';
+                    if ($row['role'] == 'MASTER') {
+                        $admin = '管理人';
+                        $master = 'selected';
+                    } elseif ($row['role'] == 'MANAGER') {
+                        $admin = '運営';
+                        $manager = 'selected';
+                    } elseif ($row['role'] == 'ACCOUNTANT') {
+                        $admin = '会計';
+                        $accountant = 'selected';
+                    } elseif ($row['role'] == 'CAMP') {
+                        $admin = '合宿委員';
+                        $camp = 'selected';
+                    }
+                }
                 if ($USER->isMaster()) {
-                    $master = '';
-                    $manager = '';
-                    $accountant = '';
-                    $camp = '';
-                    $query = "SELECT * FROM admins WHERE user_id=$account->id";
-                    $result = $mysqli->query($query);
-                    if (!$result) {
-                        print('Query Failed : ' . $mysqli->error);
-                        $mysqli->close();
-                        exit();
-                    }
-                    while ($row = $result->fetch_assoc()) {
-                        if ($row['role'] == 'MASTER') {
-                            $master = 'checked';
-                        } elseif ($row['role'] == 'MANAGER') {
-                            $manager = 'checked';
-                        } elseif ($row['role'] == 'ACCOUNTANT') {
-                            $accountant = 'checked';
-                        } elseif ($row['role'] == 'CAMP') {
-                            $camp = 'checked';
-                        }
-                    }
                 ?>
                     <div class="form-group">
-                        <label>管理人</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="master" name="master" <?= $master ?>>
-                            <label class="form-check-label" for="master">
-                                Web管理人
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="manager" name="manager" <?= $manager ?>>
-                            <label class="form-check-label" for="manager">
-                                運営
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="accountant" name="accountant" <?= $accountant ?>>
-                            <label class="form-check-label" for="accountant">
-                                会計
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="camp" name="camp" <?= $camp ?>>
-                            <label class="form-check-label" for="camp">
-                                合宿委員
-                            </label>
-                        </div>
+                        <label for="admin">アカウント権限</label>
+                        <select class="form-control" id="admin" name="admin" required>
+                            <option value="general" <?= $general ?>>一般</option>
+                            <option value="master" <?= $master ?>>管理人</option>
+                            <option value="manager" <?= $manager ?>>運営</option>
+                            <option value="accountant" <?= $accountant ?>>会計</option>
+                            <option value="camp" <?= $camp ?>>合宿委員</option>
+                        </select>
+                    </div>
+                <?php
+                } else {
+                ?>
+                    <div class="form-group">
+                        <label for="admin">アカウント権限</label>
+                        <input type="text" name="admin" class="form-control" id="admin" value="<?= $admin ?>" readonly>
                     </div>
                 <?php
                 }
                 ?>
                 <input type="hidden" name="user_id" value="<?= $account->id ?>">
                 <button type="submit" class="btn btn-primary" name="submit">更新</button>
-                <a class="btn btn-secondary" href="./" role="button">キャンセル</a>
+                <a class="btn btn-secondary" href="../" role="button">キャンセル</a>
             </form>
         </div>
     </div>
 </div>
 
 <?php
-include_once __DIR__ . '/../../Common/foot.php';
+include_once __DIR__ . '/../../../Common/foot.php';

@@ -46,6 +46,13 @@ include_once __DIR__ . '/../../Common/head.php';
                 unset($_SESSION['mypage_status_failure']);
                 unset($_SESSION['mypage_account_name']);
             }
+            if (isset($_SESSION['mypage_edit_user'])) {
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
+                echo '<strong>' . $_SESSION['mypage_edit_user'] . '</strong>のアカウント情報を編集しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_edit_user']);
+            }
             ?>
 
             <form action="./change_admin.php" method="POST" id="form">
@@ -109,7 +116,7 @@ include_once __DIR__ . '/../../Common/head.php';
                                 <tr>
                                     <td class="text-nowrap"><?= $grade ?></td>
                                     <td class="text-nowrap"><?= $part ?></td>
-                                    <td class="text-nowrap"><span class="d-none"><?= $kana ?></span><a href="./detail.php?user_id=<?= $user_id ?>" class="text-secondary"><u><?= $name ?></u></a></td>
+                                    <td class="text-nowrap"><span class="d-none"><?= $kana ?></span><a href="./edit/?user_id=<?= $user_id ?>" class="text-secondary"><u><?= $name ?></u></a></td>
                                     <?php
                                     if ($USER->isAccountant()) {
                                     ?>
@@ -171,45 +178,39 @@ include_once __DIR__ . '/../../Common/head.php';
                     ?>
                 </div>
             </div>
-            <?php
-            if ($USER->isMaster()) {
-            ?>
-                <div class="card shadow mb-4">
-                    <div class="card-header">管理者</div>
-                    <div class="card-body">
-                        <?php
-                        $query = "SELECT CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) AS name, admins.role FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
-                        $result = $mysqli->query($query);
-                        if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
-                            $mysqli->close();
-                            exit();
+            <div class="card shadow mb-4">
+                <div class="card-header">管理者</div>
+                <div class="card-body">
+                    <?php
+                    $query = "SELECT CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) AS name, admins.role FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
+                    $result = $mysqli->query($query);
+                    if (!$result) {
+                        print('Query Failed : ' . $mysqli->error);
+                        $mysqli->close();
+                        exit();
+                    }
+                    while ($row = $result->fetch_assoc()) {
+                        if ($row['role'] == 'MASTER') {
+                            $webmaster .= $row['name'] . '<br>';
+                        } else if ($row['role'] == 'MANAGER') {
+                            $manager .= $row['name'] . '<br>';
+                        } else if ($row['role'] == 'ACCOUNTANT') {
+                            $accountant .= $row['name'] . '<br>';
+                        } else if ($row['role'] == 'CAMP') {
+                            $camp .= $row['name'] . '<br>';
                         }
-                        while ($row = $result->fetch_assoc()) {
-                            if ($row['role'] == 'MASTER') {
-                                $webmaster .= $row['name'] . '<br>';
-                            } else if ($row['role'] == 'MANAGER') {
-                                $manager .= $row['name'] . '<br>';
-                            } else if ($row['role'] == 'ACCOUNTANT') {
-                                $accountant .= $row['name'] . '<br>';
-                            } else if ($row['role'] == 'CAMP') {
-                                $camp .= $row['name'] . '<br>';
-                            }
-                        }
-                        ?>
-                        <strong>Web管理人</strong><br>
-                        <?= $webmaster ?>
-                        <strong>運営</strong><br>
-                        <?= $manager ?>
-                        <strong>会計</strong><br>
-                        <?= $accountant ?>
-                        <strong>合宿委員</strong><br>
-                        <?= $camp ?>
-                    </div>
+                    }
+                    ?>
+                    <strong>管理人</strong><br>
+                    <?= $webmaster ?>
+                    <strong>運営</strong><br>
+                    <?= $manager ?>
+                    <strong>会計</strong><br>
+                    <?= $accountant ?>
+                    <strong>合宿委員</strong><br>
+                    <?= $camp ?>
                 </div>
-            <?php
-            }
-            ?>
+            </div>
         </div>
     </div>
 </div>
