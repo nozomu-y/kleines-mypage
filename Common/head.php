@@ -99,13 +99,6 @@ if ($backtrace == '/index.php') {
                 </a>
             </li>
             <?php
-            /* 1 : access to all
-             * 2 : access to account edit
-             * 3 : acccess to kaikei
-             * 4 : access to practice plan
-             * 5 : access to gasshuku shuukinn
-             * 
-            */
             if ($USER->isManager() || $USER->isAccountant() || $USER->isCamp()) {
                 echo '<hr class="sidebar-divider">';
                 echo '<div class="sidebar-heading">管理コンソール</div>';
@@ -170,9 +163,9 @@ if ($backtrace == '/index.php') {
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     プロフィール
                                 </a> -->
-                                <a class="dropdown-item" href="<?= MYPAGE_ROOT ?>/profile/sessions.php">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    セッション管理
+                                <a class="dropdown-item" href="<?= MYPAGE_ROOT ?>/profile/login_history.php">
+                                    <i class="fas fa-history fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    ログイン履歴
                                 </a>
                                 <!-- <div class="dropdown-divider"></div> -->
                                 <a class="dropdown-item" href="<?= MYPAGE_ROOT ?>/logout.php" data-toggle="modal" data-target="#logoutModal" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
