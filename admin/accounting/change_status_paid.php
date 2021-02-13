@@ -37,7 +37,7 @@ if (!$result) {
 
 // if individual accounting was used
 if (intval($price) - intval($paid_cash) > 0) {
-    $query = "INSERT INTO individual_accounting_records (user_id, datetime, name, price, accounting_id) VALUES ('$user_id', now(), '$accounting->name', '$paid_individual','$accounting_id')";
+    $query = "INSERT INTO individual_accounting_records (user_id, datetime, price, accounting_id) VALUES ('$user_id', now(), '$paid_individual','$accounting_id')";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
