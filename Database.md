@@ -47,7 +47,7 @@ mysql> DESC admins;
 | Field   | Type                     | Null | Key | Default | Extra |
 +---------+--------------------------+------+-----+---------+-------+
 | user_id | int(5) unsigned zerofill | NO   | PRI | NULL    |       |
-| role    | varchar(32)              | NO   | PRI | NULL    |       |
+| role    | varchar(32)              | YES  |     | NULL    |       |
 +---------+--------------------------+------+-----+---------+-------+
 ```
 

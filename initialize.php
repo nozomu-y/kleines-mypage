@@ -67,7 +67,7 @@ $query = "
 CREATE TABLE admins (
     user_id int(5) UNSIGNED ZEROFILL,
     role varchar(32),
-    PRIMARY KEY (user_id, role)
+    PRIMARY KEY (user_id)
 );";
 $result = $mysqli->query($query);
 if (!$result) {
