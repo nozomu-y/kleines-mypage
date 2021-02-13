@@ -4,9 +4,9 @@ session_start();
 
 require __DIR__ . '/dbconnect.php';
 require __DIR__ . '/../Class/User.php';
-require __DIR__ . '/../Class/Fee.php';
-require __DIR__ . '/../Class/Fee_List.php';
-require __DIR__ . '/../Class/Individual_Accounting.php';
+require __DIR__ . '/../Class/AccountingRecord.php';
+require __DIR__ . '/../Class/AccountingList.php';
+require __DIR__ . '/../Class/IndividualAccountingList.php';
 require __DIR__ . '/function.php';
 
 if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // if current branch is not master
@@ -15,22 +15,14 @@ if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // i
     $MAINTENANCE = false;
 }
 
-$email = $_SESSION['mypage_email'];
-$query = "SELECT * FROM members WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$USER = new User($result->fetch_assoc());
+$USER = new User($_SESSION['mypage_user_id']);
 
-if ($MAINTENANCE && $USER->admin != 1) {
+if ($MAINTENANCE && !$USER->isMaster()) {
     header('Location: ' . MYPAGE_ROOT . '/login');
     exit();
 }
 
-if (!isset($_SESSION['mypage_email'])) {
+if (!isset($_SESSION['mypage_user_id'])) {
     header('Location: ' . MYPAGE_ROOT . '/login');
     exit();
 }

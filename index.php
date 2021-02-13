@@ -1,6 +1,6 @@
 <?php
-require __DIR__.'/Common/init_page.php';
-include_once __DIR__.'/Common/head.php';
+require __DIR__ . '/Common/init_page.php';
+include_once __DIR__ . '/Common/head.php';
 ?>
 
 <div class="container-fluid">
@@ -40,7 +40,7 @@ include_once __DIR__.'/Common/head.php';
     <div class="row">
         <div class="col-sm-4">
             <?php
-            $query = "SELECT * FROM fee_record_$USER->id";
+            $query = "SELECT * FROM accounting_records WHERE user_id='$USER->id'";
             $result = $mysqli->query($query);
             if (!$result) {
                 print('Query Failed : ' . $mysqli->error);
@@ -50,11 +50,12 @@ include_once __DIR__.'/Common/head.php';
             $unpaid = 0;
             $paid = 0;
             while ($row = $result->fetch_assoc()) {
-                $fee = new Fee($row);
-                if ($fee->datetime == null) {
-                    $unpaid += $fee->price;
+                $price = $row['price'];
+                $datetime = $row['datetime'];
+                if ($datetime == null) {
+                    $unpaid += $price;
                 } else {
-                    $paid += $fee->price;
+                    $paid += $price;
                 }
             }
             ?>
@@ -145,4 +146,4 @@ $script .= '</script>';
 
 
 <?php
-include_once __DIR__ .'/Common/foot.php';
+include_once __DIR__ . '/Common/foot.php';

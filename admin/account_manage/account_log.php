@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 2 || $USER->admin == 3)) {
+if (!($USER->isManager() || $USER->isAccountant())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }

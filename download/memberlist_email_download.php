@@ -22,8 +22,7 @@ $sheet->setCellValue('E1', "フリガナ");
 $sheet->setCellValue('F1', "メールアドレス");
 $sheet->setCellValue('G1', "ステータス");
 $ROW = 2;
-// $query = "SELECT * FROM members WHERE status != 2 ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
-$query = "SELECT * FROM members WHERE status != 2 ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
+$query = "SELECT profiles.grade, profiles.part, profiles.last_name, profiles.first_name, profiles.name_kana, users.status, users.email FROM profiles INNER JOIN users ON profiles.user_id=users.user_id ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -31,14 +30,35 @@ if (!$result) {
     exit();
 }
 while ($row = $result->fetch_assoc()) {
-    $account = new User($row);
-    $sheet->setCellValue('A' . $ROW, $account->grade);
-    $sheet->setCellValue('B' . $ROW, $account->get_part());
-    $sheet->setCellValue('C' . $ROW, $account->last_name);
-    $sheet->setCellValue('D' . $ROW, $account->first_name);
-    $sheet->setCellValue('E' . $ROW, $account->kana);
-    $sheet->setCellValue('F' . $ROW, $account->email);
-    $sheet->setCellValue('G' . $ROW, $account->get_status());
+    if ($row['status'] == 'RESIGNED') {
+        continue;
+    }
+    $grade = $row['grade'];
+    if ($row['part'] == 'S') {
+        $part = "Soprano";
+    } else if ($row['part'] == 'A') {
+        $part = "Alto";
+    } else if ($row['part'] == 'T') {
+        $part = "Tenor";
+    } else if ($row['part'] == 'B') {
+        $part = "Bass";
+    }
+    $last_name = $row['last_name'];
+    $first_name = $row['first_name'];
+    $kana = $row['name_kana'];
+    if ($row['status'] == "PRESENT") {
+        $status = "在団";
+    } else if ($row['status'] == "ABSENT") {
+        $status = "休団";
+    }
+    $email = $row['email'];
+    $sheet->setCellValue('A' . $ROW, $grade);
+    $sheet->setCellValue('B' . $ROW, $part);
+    $sheet->setCellValue('C' . $ROW, $last_name);
+    $sheet->setCellValue('D' . $ROW, $first_name);
+    $sheet->setCellValue('E' . $ROW, $kana);
+    $sheet->setCellValue('F' . $ROW, $email);
+    $sheet->setCellValue('G' . $ROW, $status);
     $ROW += 1;
 }
 
@@ -51,4 +71,4 @@ header('Content-Length: ' . filesize($fpath));
 header('Content-disposition: attachment; filename="' . $fname . '"');
 readfile($fpath);
 /** ログファイル作成の処理 **/
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "が団員名簿（メアドあり）をダウンロードしました。\n", 3, __DIR__ . "/../Core/download.log");
+error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が団員名簿（メアドあり）をダウンロードしました。\n", 3, __DIR__ . "/../Core/download.log");
