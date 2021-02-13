@@ -24,6 +24,14 @@ while ($row = $result->fetch_assoc()) {
     $name = $row['name'];
 }
 
+$query = "DELETE FROM individual_accounting_records WHERE list_id=$list_id";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('クエリーが失敗しました。' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
 $query = "DELETE FROM individual_accounting_lists WHERE list_id=$list_id";
 $result = $mysqli->query($query);
 if (!$result) {

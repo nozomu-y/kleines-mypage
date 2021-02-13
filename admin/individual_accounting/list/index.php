@@ -21,13 +21,6 @@ include_once __DIR__ . '/../../../Common/head.php';
                 </ol>
             </nav>
             <?php
-            if (isset($_SESSION['mypage_individual'])) {
-                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
-                echo '個別会計「<strong>' . $_SESSION['mypage_individual'] . '</strong>」を編集しました。';
-                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-                echo '</div>';
-                unset($_SESSION['mypage_individual']);
-            }
             if (isset($_SESSION['mypage_individual_add'])) {
                 echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
                 echo '個別会計「<strong>' . $_SESSION['mypage_individual_add'] . '</strong>」を追加しました。';
@@ -50,13 +43,12 @@ include_once __DIR__ . '/../../../Common/head.php';
                             <tr>
                                 <th class="text-nowrap">項目</th>
                                 <th class="text-nowrap">作成日</th>
-                                <th class="text-nowrap">編集</th>
-                                <th class="text-nowrap">削除</th>
+                                <th class="text-nowrap">登録者数</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT individual_accounting_lists.list_id, individual_accounting_lists.name, individual_accounting_lists.datetime FROM individual_accounting_lists ORDER BY individual_accounting_lists.datetime DESC";
+                            $query = "SELECT individual_accounting_lists.list_id, individual_accounting_lists.name, individual_accounting_lists.datetime, (SELECT COUNT(*) FROM individual_accounting_records WHERE list_id=individual_accounting_lists.list_id) AS num FROM individual_accounting_lists ORDER BY individual_accounting_lists.datetime DESC";
                             $result = $mysqli->query($query);
                             if (!$result) {
                                 print('Query Failed : ' . $mysqli->error);
@@ -67,18 +59,14 @@ include_once __DIR__ . '/../../../Common/head.php';
                                 $name = $row['name'];
                                 $datetime = date('Y/m/d', strtotime($row['datetime']));
                                 $list_id = $row['list_id'];
+                                $num = $row['num'];
                             ?>
                                 <tr>
                                     <td class="text-nowrap">
                                         <a href="detail.php?list_id=<?= $list_id ?>" class="text-secondary"><u><?= $name ?></u></a>
                                     </td>
                                     <td class="text-nowrap"><?= $datetime ?></td>
-                                    <td class="text-nowrap">
-                                        <a href="edit_list/?list_id=<?= $list_id ?>" class="text-secondary"><u>編集</u></a>
-                                    </td>
-                                    <td class="text-nowrap">
-                                        <button type="submit" name="delete" formaction="delete_list.php" class="btn btn-danger btn-sm" value="<?= $list_id ?>" Onclick="return confirm('個別会計「<?= $name ?>」を削除しますか？');">削除</button>
-                                    </td>
+                                    <td class="text-nowrap"><?= $num ?>人</td>
                                 </tr>
                             <?php
                             }
@@ -101,7 +89,7 @@ $script .= '$(document).ready(function() {
         },
         order: [], // 初期表示時には並び替えをしない
         lengthMenu: [[ 25, 50, 100, -1 ],[25, 50, 100, "全件"]],
-        columnDefs: [{ "orderable": false, "targets": 0 }],
+        columnDefs: [{ "orderable": false, "targets": 0 },{ "type": "currency", "targets": 2 }],
         deferRender : false,
         autowidth: false,
         scrollX: true,
