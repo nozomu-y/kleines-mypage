@@ -28,12 +28,16 @@ include_once __DIR__ . '/../../Common/head.php';
                             exit();
                         }
                         while ($row = $result->fetch_assoc()) {
-                            $individual_accounting = new Individual_Accounting($row);
-                            echo '<tr>';
-                            echo '<td class="text-nowrap">' . $individual_accounting->get_date() . '</td>';
-                            echo '<td class="text-nowrap">' . $individual_accounting->name . '</td>';
-                            echo '<td class="text-nowrap text-right">' . $individual_accounting->get_price() . '</td>';
-                            echo '</tr>';
+                            $name = $row['name'];
+                            $date = date('Y/m/d', strtotime($row['datetime']));
+                            $price = number_format($row['price']);
+                        ?>
+                            <tr>
+                                <td class="text-nowrap"><?= $date ?></td>
+                                <td class="text-nowrap"><?= $name ?></td>
+                                <td class="text-nowrap text-right">￥<?= $price ?></td>
+                            </tr>
+                        <?php
                         }
                         ?>
                     </tbody>
