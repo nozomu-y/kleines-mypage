@@ -57,7 +57,8 @@ include_once __DIR__ . '/../../../../Common/head.php';
                     </div>
                     <div class="form-group">
                         <label for="price">金額</label>
-                        <input type="number" name="price" id="price" class="form-control" value="<?= $price ?>" required>
+                        <input type="number" name="price" id="price" class="form-control" aria-describedby="priceHelp" value="<?= $price ?>" required>
+                        <small id="priceHelp" class="form-text text-muted">個別会計から差し引く場合は負の値、個別会計に追加する場合は正の値を入力してください。</small>
                     </div>
                     <input type="hidden" name="user_id" value="<?= $user_id ?>">
                     <input type="hidden" name="list_id" value="<?= $list_id ?>">
