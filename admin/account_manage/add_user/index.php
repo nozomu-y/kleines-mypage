@@ -15,7 +15,7 @@ include_once __DIR__ . '/../../../Common/head.php';
         <div class="col-sm-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="./">アカウント管理</a></li>
+                    <li class="breadcrumb-item"><a href="../">アカウント管理</a></li>
                     <li class="breadcrumb-item active" aria-current="page">アカウントの追加</li>
                 </ol>
             </nav>
