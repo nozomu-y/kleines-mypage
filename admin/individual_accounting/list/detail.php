@@ -52,6 +52,13 @@ include_once __DIR__ . '/../../../Common/head.php';
                 echo '</div>';
                 unset($_SESSION['mypage_individual']);
             }
+            if (isset($_SESSION['mypage_individual_list'])) {
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
+                echo '個別会計「<strong>' . $_SESSION['mypage_individual_list'] . '</strong>」を編集しました。';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                echo '</div>';
+                unset($_SESSION['mypage_individual_list']);
+            }
             ?>
             <div class="mb-4">
                 <form method="POST">
@@ -115,6 +122,14 @@ include_once __DIR__ . '/../../../Common/head.php';
                 </form>
             </div>
             <a class="btn btn-primary mb-4" href="./add_subject/?list_id=<?= $list_id ?>" role="button">対象者の追加</a>
+        </div>
+        <div class=" col-xl-3 col-sm-12">
+            <form method="post">
+                <div class="list-group shadow mb-4">
+                    <a href="./edit_list/?list_id=<?= $list_id ?>" class="list-group-item list-group-item-action">個別会計の編集</a>
+                    <button type="submit" name="delete" formaction="./delete_list.php" class="list-group-item list-group-item-action text-danger" value="<?= $list_id ?>" Onclick="return confirm('個別会計「<?= $individual_accounting->name ?>」を削除しますか？');">個別会計の削除</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

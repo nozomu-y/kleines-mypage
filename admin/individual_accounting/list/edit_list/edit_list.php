@@ -39,8 +39,8 @@ if (!$result) {
     exit();
 }
 
-$_SESSION['mypage_individual'] = $name;
+$_SESSION['mypage_individual_list'] = $name;
 
 error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が個別会計を編集しました。（項目名：" . $name_old . "→" . $name . "）\n", 3, __DIR__ . "/../../../../Core/individual_accounting.log");
-header('Location: ../');
+header('Location: ../detail.php?list_id=' . $list_id);
 exit();
