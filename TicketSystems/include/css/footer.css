@@ -1,0 +1,22 @@
+/* footer周りのスタイルシート */
+#footer{
+  /*display: block;*/
+  height:3rem;
+  color:#ffffff;
+  background-color: var(--header-color);
+  width: 100%;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+/*
+#footer div {
+  display: block;
+}
+*/
+
+#footer .tx, #footer .tx-sm {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  text-align: center;
+}

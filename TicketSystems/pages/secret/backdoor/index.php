@@ -1,0 +1,22 @@
+<?php
+  require_once __DIR__.'/../../../include/tp_init.php';
+  //ここにはaccessFilterを設定しない
+
+  //パスワードの確認
+  if(isset($_POST['process']) && $_POST['process'] === "secret-pass"){
+    require_once __DIR__ . "/checkPassword.php";
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
+  }
+
+  $pageTitle = "パスワード入力";
+  $applyStyle = "secret";
+  require_once TP_ROOT.'/include/header.php';
+?>
+<p class="tx">先へ進むためのパスワードを入力してください。</p>
+<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+  <input class="form-text form-group" type="password" name="password" required>
+  <input type="hidden" name="process" value="secret-pass">
+  <button class="btn btn-primary" type="submit">送信</button>
+</form>
+<?php require_once TP_ROOT.'/include/footer.php'; ?>
