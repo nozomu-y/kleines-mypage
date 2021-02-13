@@ -190,6 +190,7 @@ if (!$fee_list) {
     $mysqli_old->close();
     exit();
 }
+$zenkoku_list = [];
 while ($row = $fee_list->fetch_assoc()) {
     $accounting_id = $row['id'];
     $name = $row['name'];
@@ -202,6 +203,8 @@ while ($row = $fee_list->fetch_assoc()) {
         $admin_new = "GENERAL";
     } elseif ($admin == 5) {
         $admin_new = "CAMP";
+        array_push($zenkoku_list, $accounting_id);
+        continue;
     }
 
     $query = "INSERT INTO accounting_lists (accounting_id, name, deadline, admin) VALUES ('$accounting_id', '$name', '$deadline', '$admin_new')";
@@ -213,6 +216,14 @@ while ($row = $fee_list->fetch_assoc()) {
     }
     print("Finished: " . $name . "\n");
 }
+$query = "INSERT INTO accounting_lists (name, deadline, admin) VALUES ('全国大会集金', '2019/10/31', 'CAMP')";
+$result = $mysqli_new->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli_new->error . ' on line ' . __LINE__);
+    $mysqli_new->close();
+    exit();
+}
+$zenkoku_id = $mysqli_new->insert_id;
 
 $query = "SELECT * FROM members ORDER BY id ASC";
 $members = $mysqli_old->query($query);
@@ -320,6 +331,9 @@ while ($row = $members->fetch_assoc()) {
         $paid_cash = $row['paid_cash'];
         if ($paid_cash == null) {
             $paid_cash = 0;
+        }
+        if (in_array($accounting_id, $zenkoku_list)) {
+            $accounting_id = $zenkoku_id;
         }
         if ($datetime != null) {
             $query = "INSERT INTO accounting_records (accounting_id, user_id, price, paid_cash, datetime) VALUES ('$accounting_id', '$user_id', '$price', '$paid_cash', '$datetime')";
