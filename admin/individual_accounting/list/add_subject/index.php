@@ -35,7 +35,8 @@ include_once __DIR__ . '/../../../../Common/head.php';
             <form method="post" action="./add_subject.php" name="form" class="mb-4">
                 <div class="form-group">
                     <label for="price">金額</label>
-                    <input type="number" name="price" class="form-control" id="price" required>
+                    <input type="number" name="price" class="form-control" aria-describedby="priceHelp" id="price" required>
+                    <small id="priceHelp" class="form-text text-muted">個別会計から差し引く場合は負の値、個別会計に追加する場合は正の値を入力してください。</small>
                 </div>
                 <input type="button" class="btn btn-primary mb-2" value="全て選択" onclick="allcheck(true);">
                 <input type="button" class="btn btn-primary mb-2" value="選択解除" onclick="allcheck(false);">
