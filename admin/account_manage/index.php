@@ -80,27 +80,19 @@ include_once __DIR__ . '/../../Common/head.php';
                                 if ($row['status'] == 'RESIGNED') {
                                     continue;
                                 }
-                                echo '<tr>';
-                                echo '<td class="text-nowrap">' . $row['grade'] . '</td>';
+                                $grade = $row['grade'];
                                 if ($row['part'] == 'S') {
-                                    echo '<td class="text-nowrap">Soprano</td>';
+                                    $part = 'Soprano';
                                 } elseif ($row['part'] == 'A') {
-                                    echo '<td class="text-nowrap">Alto</td>';
+                                    $part = 'Alto';
                                 } elseif ($row['part'] == 'T') {
-                                    echo '<td class="text-nowrap">Tenor</td>';
+                                    $part = 'Tenor';
                                 } elseif ($row['part'] == 'B') {
-                                    echo '<td class="text-nowrap">Bass</td>';
+                                    $part = 'Bass';
                                 }
-                                echo '<td class="text-nowrap"><span class="d-none">' . $row['name_kana'] . '</span><a href="./detail.php?user_id=' . $row['user_id'] . '" class="text-secondary"><u>' . $row['last_name'] . $row['first_name'] . '</u></a></td>';
-                                if ($USER->isAccountant()) {
-                                    echo '<td class="text-nowrap text-right">' . format_price($row['delinquent']) . '</td>';
-                                    echo '<td class="text-nowrap text-right">' . format_price($row['individual_accounting_total']) . '</td>';
-                                }
-                                if ($row['status'] == 'PRESENT') {
-                                    echo '<td class="text-nowrap">在団</td>';
-                                } elseif ($row['status'] == 'ABSENT') {
-                                    echo '<td class="text-nowrap">休団</td>';
-                                }
+                                $user_id = $row['user_id'];
+                                $kana = $row['kana'];
+                                $name = $row['last_name'] . $row['first_name'];
                                 switch ($row['status']) {
                                     case 'PRESENT':
                                         $disabled_present = "disabled";
@@ -113,12 +105,35 @@ include_once __DIR__ . '/../../Common/head.php';
                                         $disabled_resign = "";
                                         break;
                                 }
-                                echo '<td class="text-nowrap">
-                                <button type="submit" name="present" formaction="./change_status.php" class="btn btn-secondary btn-sm" value="' .  $row['user_id'] . '" Onclick="return confirm(\'' .  $row['last_name'] . $row['first_name'] . 'さんのステータスを在団にしますか？\');" ' . $disabled_present . '>在団</button>
-                                <button type="submit" name="absent" formaction="./change_status.php" class="btn btn-secondary btn-sm" value="' .  $row['user_id'] . '" Onclick="return confirm(\'' .  $row['last_name'] . $row['first_name'] . 'さんのステータスを休団にしますか？\');" ' . $disabled_absent . '>休団</button>
-                                <button type="submit" name="resign" formaction="./change_status.php" class="btn btn-danger btn-sm" value="' .  $row['user_id'] . '" Onclick="return confirm(\'' .  $row['last_name'] . $row['first_name'] . 'さんのステータスを退団にしますか？\');">退団</button>
-                                </td>';
-                                echo '</tr>';
+                            ?>
+                                <tr>
+                                    <td class="text-nowrap"><?= $grade ?></td>
+                                    <td class="text-nowrap"><?= $part ?></td>
+                                    <td class="text-nowrap"><span class="d-none"><?= $kana ?></span><a href="./detail.php?user_id=<?= $user_id ?>" class="text-secondary"><u><?= $name ?></u></a></td>
+                                    <?php
+                                    if ($USER->isAccountant()) {
+                                    ?>
+                                        <td class="text-nowrap text-right"><?= format_price($row['delinquent']) ?></td>
+                                        <td class="text-nowrap text-right"><?= format_price($row['individual_accounting_total']) ?></td>
+                                    <?php
+                                    }
+                                    if ($row['status'] == 'PRESENT') {
+                                    ?>
+                                        <td class="text-nowrap">在団</td>
+                                    <?php
+                                    } elseif ($row['status'] == 'ABSENT') {
+                                    ?>
+                                        <td class="text-nowrap">休団</td>
+                                    <?php
+                                    }
+                                    ?>
+                                    <td class="text-nowrap">
+                                        <button type="submit" name="present" formaction="./change_status.php" class="btn btn-secondary btn-sm" value="<?= $row['user_id'] ?>" Onclick="return confirm('<?= $name ?>さんのステータスを在団にしますか？');" <?= $disabled_present ?>>在団</button>
+                                        <button type="submit" name="absent" formaction="./change_status.php" class="btn btn-secondary btn-sm" value="<?= $row['user_id'] ?>" Onclick="return confirm('<?= $name ?>さんのステータスを休団にしますか？');" <?= $disabled_absent ?>>休団</button>
+                                        <button type="submit" name="resign" formaction="./change_status.php" class="btn btn-danger btn-sm" value="<?= $row['user_id'] ?>" Onclick="return confirm('<?= $name ?>さんのステータスを退団にしますか？');" <?= $disabled_resign ?>>退団</button>
+                                    </td>
+                                </tr>
+                            <?php
                             }
                             ?>
                         </tbody>
@@ -162,58 +177,34 @@ include_once __DIR__ . '/../../Common/head.php';
                 <div class="card shadow mb-4">
                     <div class="card-header">管理者</div>
                     <div class="card-body">
+                        <?php
+                        $query = "SELECT CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) AS name, admins.role FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
+                        $result = $mysqli->query($query);
+                        if (!$result) {
+                            print('Query Failed : ' . $mysqli->error);
+                            $mysqli->close();
+                            exit();
+                        }
+                        while ($row = $result->fetch_assoc()) {
+                            if ($row['role'] == 'MASTER') {
+                                $webmaster .= $row['name'] . '<br>';
+                            } else if ($row['role'] == 'MANAGER') {
+                                $manager .= $row['name'] . '<br>';
+                            } else if ($row['role'] == 'ACCOUNTANT') {
+                                $accountant .= $row['name'] . '<br>';
+                            } else if ($row['role'] == 'CAMP') {
+                                $camp .= $row['name'] . '<br>';
+                            }
+                        }
+                        ?>
                         <strong>Web管理人</strong><br>
-                        <?php
-                        $query = "SELECT profiles.last_name, profiles.first_name, profiles.grade, profiles.part FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id WHERE admins.role = 'MASTER' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
-                        $result = $mysqli->query($query);
-                        if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
-                            $mysqli->close();
-                            exit();
-                        }
-                        while ($row = $result->fetch_assoc()) {
-                            echo $row['grade'] . $row['part'] . ' ' . $row['last_name'] . $row['first_name'] . '<br>';
-                        }
-                        ?>
+                        <?= $webmaster ?>
                         <strong>運営</strong><br>
-                        <?php
-                        $query = "SELECT profiles.last_name, profiles.first_name, profiles.grade, profiles.part FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id WHERE admins.role = 'MANAGER' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
-                        $result = $mysqli->query($query);
-                        if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
-                            $mysqli->close();
-                            exit();
-                        }
-                        while ($row = $result->fetch_assoc()) {
-                            echo $row['grade'] . $row['part'] . ' ' . $row['last_name'] . $row['first_name'] . '<br>';
-                        }
-                        ?>
+                        <?= $manager ?>
                         <strong>会計</strong><br>
-                        <?php
-                        $query = "SELECT profiles.last_name, profiles.first_name, profiles.grade, profiles.part FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id WHERE admins.role = 'ACCOUNTANT' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
-                        $result = $mysqli->query($query);
-                        if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
-                            $mysqli->close();
-                            exit();
-                        }
-                        while ($row = $result->fetch_assoc()) {
-                            echo $row['grade'] . $row['part'] . ' ' . $row['last_name'] . $row['first_name'] . '<br>';
-                        }
-                        ?>
+                        <?= $accountant ?>
                         <strong>合宿委員</strong><br>
-                        <?php
-                        $query = "SELECT profiles.last_name, profiles.first_name, profiles.grade, profiles.part FROM admins INNER JOIN profiles ON profiles.user_id=admins.user_id WHERE admins.role = 'CAMP' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
-                        $result = $mysqli->query($query);
-                        if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
-                            $mysqli->close();
-                            exit();
-                        }
-                        while ($row = $result->fetch_assoc()) {
-                            echo $row['grade'] . $row['part'] . ' ' . $row['last_name'] . $row['first_name'] . '<br>';
-                        }
-                        ?>
+                        <?= $camp ?>
                     </div>
                 </div>
             <?php
