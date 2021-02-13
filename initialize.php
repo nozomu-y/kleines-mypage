@@ -31,21 +31,12 @@ if ($result->fetch_assoc() != null) {
 }
 
 $query = "
-CREATE TABLE members (
-    id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
+CREATE TABLE users (
+    user_id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
     email varchar(256) UNIQUE,
     password varchar(256),
-    last_name varchar(32),
-    first_name varchar(32),
-    kana varchar(32),
-    grade int(2),
-    part varchar(1),
-    token varchar(256),
-    validation_time datetime,
-    login_failure int(2),
-    admin int(1),
-    status int(1) DEFAULT 0,
-    PRIMARY KEY (id)
+    status varchar(32),
+    PRIMARY KEY (user_id)
 );";
 $result = $mysqli->query($query);
 if (!$result) {
@@ -55,12 +46,131 @@ if (!$result) {
 }
 
 $query = "
-CREATE TABLE fee_list (
-    id int(3) UNSIGNED ZEROFILL PRIMARY KEY,
-    name varchar(32),
-    deadline datetime,
+CREATE TABLE profiles (
+    user_id int(5) UNSIGNED ZEROFILL,
+    last_name varchar(256),
+    first_name varchar(256),
+    name_kana varchar(256),
+    grade int(2) UNSIGNED ZEROFILL,
+    part varchar(1),
+    birthday date,
+    PRIMARY KEY (user_id)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE admins (
+    user_id int(5) UNSIGNED ZEROFILL,
+    role varchar(32),
+    PRIMARY KEY (user_id)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE login_histories (
+    user_id int(5) UNSIGNED ZEROFILL,
+    datetime datetime,
+    success int(1),
+    IP varchar(32),
+    PRIMARY KEY (user_id, datetime)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE password_updates (
+    user_id int(5) UNSIGNED ZEROFILL,
+    datetime datetime,
+    IP varchar(32),
+    PRIMARY KEY (user_id, datetime)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE identity_verifications (
+    user_id int(5) UNSIGNED ZEROFILL,
+    datetime datetime,
+    token varchar(64),
+    PRIMARY KEY (user_id)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE accounting_lists (
+    accounting_id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
+    name varchar(256),
+    deadline date,
+    admin varchar(32),
+    PRIMARY KEY (accounting_id)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE accounting_records (
+    accounting_id int(5) UNSIGNED ZEROFILL,
+    user_id int(5) UNSIGNED ZEROFILL,
     price int(10),
-    admin int(0)
+    paid_cash int(10),
+    datetime datetime,
+    PRIMARY KEY (accounting_id, user_id)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE individual_accounting_lists (
+    list_id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
+    name varchar(256),
+    datetime datetime,
+    PRIMARY KEY (list_id)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE individual_accounting_records (
+    user_id int(5) UNSIGNED ZEROFILL,
+    datetime datetime,
+    price int(10),
+    accounting_id int(5) UNSIGNED ZEROFILL,
+    list_id int(5) UNSIGNED ZEROFILL
 );";
 $result = $mysqli->query($query);
 if (!$result) {
@@ -74,7 +184,7 @@ $grade = 0;
 $email = $mysqli->real_escape_string(ADMIN_EMAIL);
 $part = "S";
 $password = password_hash("password", PASSWORD_DEFAULT);
-$query = "INSERT INTO members (email, last_name, grade, part, password, admin) VALUES ('$email', '$last_name','$grade', '$part', '$password', 1)";
+$query = "INSERT INTO users (email, password, status) VALUES ('$email', '$password', 'PRESENT')";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -82,7 +192,7 @@ if (!$result) {
     exit();
 }
 
-$query = "SELECT id FROM members WHERE email='$email'";
+$query = "SELECT user_id FROM users WHERE email='$email'";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -90,42 +200,27 @@ if (!$result) {
     exit();
 }
 while ($row = $result->fetch_assoc()) {
-    $id = $row['id'];
+    $user_id = $row['user_id'];
 }
 
-$id = sprintf('%05d', $id);
-$id = strval($id);
-$query = "
-          CREATE TABLE individual_accounting_$id (
-            id int(3) UNSIGNED ZEROFILL PRIMARY KEY,
-            date date,
-            name varchar(256),
-            memo varchar(256),
-            price int(10),
-            fee_id int(3) UNSIGNED ZEROFILL
-          );";
+$query = "INSERT INTO profiles (user_id, last_name, grade, part) VALUES ('$user_id', '$last_name', '$grade', '$part')";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
     $mysqli->close();
     exit();
 }
-$query = "
-          CREATE TABLE fee_record_$id (
-            id int(3) UNSIGNED ZEROFILL PRIMARY KEY,
-            datetime datetime,
-            price int(10),
-            paid_cash int(10),
-            status int(1)
-          );";
+$query = "INSERT INTO admins (user_id, role) VALUES ('$user_id', 'MASTER')";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
     $mysqli->close();
     exit();
 }
+
+
 
 print("Database initialization finished!\n");
 print("Login as admin...\n");
-print("Email: kleines-mypage@example.com\n");
+print("Email: " . ADMIN_EMAIL . "\n");
 print("Password: password");

@@ -24,24 +24,49 @@ include_once __DIR__ . '/../../Common/head.php';
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM fee_record_$USER->id ORDER BY id DESC";
+                        $query = "SELECT * FROM accounting_lists INNER JOIN (SELECT * FROM accounting_records WHERE user_id='$USER->id') as accounting_records ON accounting_lists.accounting_id = accounting_records.accounting_id ORDER BY accounting_lists.deadline DESC";
                         $result = $mysqli->query($query);
                         if (!$result) {
-                            print('Query Failed : ' . $mysqli->error);
+                            print('Query Failed 1: ' . $mysqli->error);
                             $mysqli->close();
                             exit();
                         }
                         while ($row = $result->fetch_assoc()) {
-                            $fee = new Fee($row);
-                            echo '<tr>';
-                            echo '<td class="text-nowrap">' . $fee->name . '</td>';
-                            echo '<td class="text-nowrap text-right">' . $fee->get_price() . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->get_deadline() . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->get_status() . '</td>';
-                            echo '<td class="text-nowrap text-right">' . $fee->get_paid_cash() . '</td>';
-                            echo '<td class="text-nowrap text-right">' . $fee->get_paid_individual() . '</td>';
-                            echo '<td class="text-nowrap">' . $fee->get_submission_time() . '</td>';
-                            echo '</tr>';
+                            $accounting_name = $row['name'];
+                            $accounting_price = $row['price'];
+                            $accounting_deadline = $row['deadline'];
+                            $accounting_deadline = date('Y/m/d', strtotime($accounting_deadline));
+                            if ($row['datetime'] != NULL) {
+                                $accounting_status = "既納";
+                            } else {
+                                $accounting_status = "未納";
+                            }
+                            $accounting_paid_cash = $row['paid_cash'];
+                            if ($row['datetime'] == NULL || strtotime($row['datetime'] == 0)) {
+                                $accounting_paid_individual = '';
+                                $accounting_paid_cash = '';
+                            } else {
+                                $accounting_paid_individual = $accounting_price - $accounting_paid_cash;
+                                $accounting_paid_cash = "￥" . number_format($accounting_paid_cash);
+                                $accounting_paid_individual = "￥" . number_format($accounting_paid_individual);
+                            }
+                            $accounting_price = "￥" . number_format($accounting_price);
+                            if ($row['datetime'] == NULL || strtotime($row['datetime'] == 0)) {
+                                $accounting_datetime = '';
+                            } else {
+                                $accounting_datetime = date('Y/m/d H:i:s', strtotime($row['datetime']));
+                            }
+                        ?>
+                            <tr>
+                                <td class="text-nowrap"><?= $accounting_name ?></td>
+                                <td class="text-nowrap text-right"><?= $accounting_price ?></td>
+                                <td class="text-nowrap"><?= $accounting_deadline ?></td>
+                                <td class="text-nowrap"><?= $accounting_status ?></td>
+                                <td class="text-nowrap text-right"><?= $accounting_paid_cash ?></td>
+                                <td class="text-nowrap text-right"><?= $accounting_paid_individual ?></td>
+                                <td class="text-nowrap"><?= $accounting_datetime ?></td>
+                            </tr>
+                        <?php
                         }
                         ?>
                     </tbody>

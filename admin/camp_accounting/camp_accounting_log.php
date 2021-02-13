@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../Common/init_page.php';
 
-if (!($USER->admin == 1 ||  $USER->admin == 5)) {
+if (!($USER->isCamp())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }

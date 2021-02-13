@@ -12,7 +12,7 @@ if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // i
     $maintenance = false;
 }
 
-if (isset($_SESSION['mypage_email']) && !$maintenance) {
+if (isset($_SESSION['mypage_user_id']) && !$maintenance) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
@@ -24,14 +24,16 @@ if ($maintenance) {
 
 if (isset($_POST['set_password'])) {
     $token = $_POST['token'];
-    $query = "SELECT * FROM members WHERE token = '$token' AND status != 2";
+    $query = "SELECT * FROM identity_verifications WHERE token = '$token'";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
         $mysqli->close();
         exit();
     }
-    $USER = new User($result->fetch_assoc());
+    $row = $result->fetch_assoc();
+    $user_id = $row['user_id'];
+    $USER = new User($user_id);
 
     $password1 = $mysqli->real_escape_string($_POST['password1']);
     $password2 = $mysqli->real_escape_string($_POST['password2']);
@@ -40,7 +42,8 @@ if (isset($_POST['set_password'])) {
         header('Location: ' . MYPAGE_ROOT . '/signup/auth.php?token=' . $token);
         exit();
     }
-    $query = "UPDATE members SET login_failure = 0 WHERE email='$email'";
+    $IP = $_SERVER["REMOTE_ADDR"];
+    $query = "INSERT INTO password_updates (user_id, datetime, IP) VALUES ('$user_id', now(), '$IP')";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
@@ -48,14 +51,14 @@ if (isset($_POST['set_password'])) {
         exit();
     }
     $pass_hash = password_hash($password1, PASSWORD_DEFAULT);
-    $query = "UPDATE members SET password = '$pass_hash', token = NULL, validation_time = NULL WHERE token = '$token'";
+    $query = "UPDATE users SET password = '$pass_hash' WHERE user_id='$user_id'";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
         $mysqli->close();
         exit();
     }
-    error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->name . "がパスワードを設定しました。\n", 3, __DIR__ . "/../Core/auth.log");
+    error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "がパスワードを設定しました。\n", 3, __DIR__ . "/../Core/auth.log");
     $_SESSION['mypage_password_success'] = '';
     header('Location: ' . MYPAGE_ROOT . '/login');
     exit();

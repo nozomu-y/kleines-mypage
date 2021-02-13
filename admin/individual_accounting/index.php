@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../Common/init_page.php';
 
-if (!($USER->admin == 1 || $USER->admin == 3)) {
+if (!($USER->isAccountant())) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
@@ -34,33 +34,48 @@ include_once __DIR__ . '/../../Common/head.php';
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM members ORDER BY grade ASC, CASE WHEN part LIKE 'S' THEN 1 WHEN part LIKE 'A' THEN 2 WHEN part LIKE 'T' THEN 3 WHEN part LIKE 'B' THEN 4 END ASC, kana ASC";
+                        $query = "SELECT profiles.grade, profiles.part, profiles.last_name, profiles.first_name, profiles.name_kana, users.status, users.user_id, (SELECT SUM(price) FROM individual_accounting_records WHERE user_id=users.user_id) AS individual_accounting_total FROM profiles INNER JOIN users ON profiles.user_id=users.user_id AND users.status!='RESIGNED' ORDER BY profiles.grade ASC, CASE WHEN profiles.part LIKE 'S' THEN 1 WHEN profiles.part LIKE 'A' THEN 2 WHEN profiles.part LIKE 'T' THEN 3 WHEN profiles.part LIKE 'B' THEN 4 END ASC, profiles.name_kana ASC";
                         $result = $mysqli->query($query);
                         if (!$result) {
                             print('Query Failed : ' . $mysqli->error);
                             $mysqli->close();
                             exit();
                         }
-                        $row_cnt = $result->num_rows;
                         while ($row = $result->fetch_assoc()) {
-                            $account = new User($row);
-                            if ($account->status == 2) {
-                                continue;
+                            $grade = $row['grade'];
+                            if ($row['part'] == 'S') {
+                                $part = "Soprano";
+                            } else if ($row['part'] == 'A') {
+                                $part = "Alto";
+                            } else if ($row['part'] == 'T') {
+                                $part = "Tenor";
+                            } else if ($row['part'] == 'B') {
+                                $part = "Bass";
                             }
-                            echo '<tr>';
-                            echo '<td class="text-nowrap">' . $account->grade . '</td>';
-                            echo '<td class="text-nowrap">' . $account->get_part() . '</td>';
-                            echo '<td class="text-nowrap"><span class="d-none">' . $account->kana . '</span><a href="detail.php?account_id=' . $account->id . '" class="text-secondary"><u>' . $account->name . '</u></a></td>';
-                            echo '<td class="text-nowrap text-right">' . $account->get_individual_accounting_total() . '</td>';
-                            echo '</tr>';
+                            $name = $row['last_name'] . $row['first_name'];
+                            $kana = $row['name_kana'];
+                            $user_id = $row['user_id'];
+                            $individual_accounting_total = $row['individual_accounting_total'];
+                        ?>
+                            <tr>
+                                <td class="text-nowrap"><?= $grade ?></td>
+                                <td class="text-nowrap"><?= $part ?></td>
+                                <td class="text-nowrap"><span class="d-none">'<?= $kana ?></span><a href="./user/?user_id=<?= $user_id ?>" class="text-secondary"><u><?= $name ?></u></a></td>
+                                <td class="text-nowrap text-right">￥<?= number_format($individual_accounting_total) ?></td>
+                            </tr>
+                        <?php
                         }
                         ?>
                     </tbody>
                 </table>
             </div>
-            <a class="btn btn-primary mb-4" href="./add_multiple/" role="button">一括追加</a>
+            <!-- <a class="btn btn-primary mb-4" href="./add_multiple/" role="button">一括追加</a> -->
         </div>
         <div class="col-xl-3 col-sm-12">
+            <div class="list-group shadow mb-4">
+                <a href="./accounting/" class="list-group-item list-group-item-action">集金時の個別会計利用</a>
+                <a href="./list/" class="list-group-item list-group-item-action">個別会計一覧</a>
+            </div>
             <div class="card shadow mb-4">
                 <div class="card-header">ログ</div>
                 <div class="card-body">

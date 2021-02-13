@@ -12,7 +12,7 @@ if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // i
     $maintenance = false;
 }
 
-if (isset($_SESSION['mypage_email']) && !$maintenance) {
+if (isset($_SESSION['mypage_user_id']) && !$maintenance) {
     header('Location: ' . MYPAGE_ROOT);
     exit();
 }
@@ -24,7 +24,7 @@ if ($maintenance) {
 
 if (isset($_POST['signup'])) {
     $email = $mysqli->real_escape_string($_POST['email']);
-    $query = "SELECT * FROM members WHERE email = '$email' AND status != 2";
+    $query = "SELECT * FROM users WHERE email = '$email'";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
@@ -32,15 +32,24 @@ if (isset($_POST['signup'])) {
         exit();
     }
     $row_cnt = $result->num_rows;
-    if ($row_cnt == 0) {
+    if ($row_cnt != 1) {
         $_SESSION['mypage_auth_error'] = "wrong-email";
         header('Location: ' . MYPAGE_ROOT . '/signup');
         exit();
     }
-    $account = new User($row = $result->fetch_assoc());
+    $row = $result->fetch_assoc();
+    $user_id = $row['user_id'];
+    $status = $row['status'];
+    if (!strcmp($stauts, "RESIGNED")) {
+        $_SESSION['mypage_auth_error'] = "resigned";
+        header('Location: ' . MYPAGE_ROOT . '/signup');
+        exit();
+    }
+
+    $account = new User($user_id);
     $token = md5(uniqid(rand(), true));
     $validation_url = 'https://' . WEB_DOMAIN . MYPAGE_ROOT . "/signup/auth.php?token=" . $token;
-    $query = "UPDATE members SET token = '$token', validation_time = now() WHERE email = '$email'";
+    $query = "REPLACE INTO identity_verifications (user_id, datetime, token) VALUES ('$user_id', now(), '$token')";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
@@ -187,7 +196,7 @@ if (isset($_POST['signup'])) {
                   <br />
                   ■Kleines Mypageへのアクセスは<a href="https://' . WEB_DOMAIN . MYPAGE_ROOT . '">こちら</a>から。
                 </p>
-                <p class="text-center">&copy; Chor Kleines 2020</p>
+                <p class="text-center">&copy; Chor Kleines ' . date("Y") . '</p>
               </td>
             </tr>
           </table>
