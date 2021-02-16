@@ -86,7 +86,7 @@ include_once __DIR__ . '/../../Common/head.php';
                 <div class="card-header">個別会計データ</div>
                 <div class="card-body">
                     <p>全ての個別会計データをダウンロードできます。（退団者も含む）</p>
-                    <a class="btn" style="color: #fff; background-color:#1d6f42; border-color:#1d6f42;" href="../../download/individual_accounting.php"><i class="fas fa-file-excel mr-2"></i>ダウンロード</a>
+                    <a href="../../download/individual_accounting.php"><i class="fas fa-file-download mr-2"></i>ダウンロード</a>
                 </div>
             </div>
         </div>

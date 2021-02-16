@@ -46,7 +46,7 @@ include_once __DIR__ . '/../Common/head.php';
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-xl-9 col-sm-12">
             <div class="mb-4">
                 <table id="accountList" class="table table-bordered table-striped" style="width: 100%;">
                     <thead>
@@ -100,6 +100,13 @@ include_once __DIR__ . '/../Common/head.php';
             </div>
         </div>
         <div class="col-xl-3 col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">団員名簿</div>
+                <div class="card-body">
+                    <p>最新の団員名簿をダウンロードできます。</p>
+                    <a href="../download/memberlist.php"><i class="fas fa-file-download mr-2"></i>ダウンロード</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
