@@ -15,7 +15,7 @@ Kleines Mypage is a management system developed for Chor Kleines.
 ### Libraries
 
 - [googleapis / google-api-php-client](https://github.com/googleapis/google-api-php-client)
-- [PHPOffice / PHPExcel](https://github.com/PHPOffice/PHPExcel)
+- [PHPOffice / PhpSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)
 - [donatj / PhpUserAgent](https://github.com/donatj/PhpUserAgent)
 
 To install all dependencies, execute the following command in the root directory.
