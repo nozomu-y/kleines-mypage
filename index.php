@@ -98,7 +98,7 @@ include_once __DIR__ . '/Common/head.php';
                     <p>
                         最新の団員名簿をダウンロードできます。
                     </p>
-                    <a href="./download/memberlist.php">ダウンロード</a>
+                    <a class="btn" style="color: #fff; background-color:#1d6f42; border-color:#1d6f42;" href="./download/memberlist.php"><i class="fas fa-file-excel mr-2"></i>ダウンロード</a>
                 </div>
             </div>
         </div>

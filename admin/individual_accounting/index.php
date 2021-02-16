@@ -69,7 +69,6 @@ include_once __DIR__ . '/../../Common/head.php';
                     </tbody>
                 </table>
             </div>
-            <!-- <a class="btn btn-primary mb-4" href="./add_multiple/" role="button">一括追加</a> -->
         </div>
         <div class="col-xl-3 col-sm-12">
             <div class="list-group shadow mb-4">
@@ -81,6 +80,13 @@ include_once __DIR__ . '/../../Common/head.php';
                 <div class="card-body">
                     <p>このページで行われる操作は全てログとして残ります。</p>
                     <a href="./individual_accounting_log.php">ログを閲覧</a>
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-header">個別会計データ</div>
+                <div class="card-body">
+                    <p>全ての個別会計データをダウンロードできます。（退団者も含む）</p>
+                    <a class="btn" style="color: #fff; background-color:#1d6f42; border-color:#1d6f42;" href="../../download/individual_accounting.php"><i class="fas fa-file-excel mr-2"></i>ダウンロード</a>
                 </div>
             </div>
         </div>
