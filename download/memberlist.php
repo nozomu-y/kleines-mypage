@@ -2,16 +2,24 @@
 require __DIR__ . '/../Common/init_page.php';
 
 require __DIR__ . '/../vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use \PhpOffice\PhpSpreadsheet\Style\Border;
+
 $fpath = './member_list.xlsx';
-$book = new PHPExcel();
-$sheet = $book->getActiveSheet();
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
 $sheet->getColumnDimension('E')->setWidth('25');
-$borderStyle = array(
-    'borders' => array(
-        'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
-    )
-);
-$sheet->getStyle('A1:F1')->applyFromArray($borderStyle);
+// $borderStyle = [
+//     'borders' => [
+//         'bottom' => [
+//             'borderStyle' => Border::BORDER_THIN,
+//             'color' => ['rgb' => '0000000'],
+//         ]
+//     ]
+// ];
+// $sheet->getStyle('A1:F1')->applyFromArray($borderStyle);
 $sheet->freezePane('A2');
 $sheet->setCellValue('A1', "学年");
 $sheet->setCellValue('B1', "パート");
@@ -58,13 +66,14 @@ while ($row = $result->fetch_assoc()) {
     $ROW += 1;
 }
 
-$writer = PHPExcel_IOFactory::createWriter($book, 'Excel2007');
+$writer = new Xlsx($spreadsheet);
 $writer->save($fpath);
 
-$fname = 'クライネス最新名簿（' . date("Y年m月d日H時i分s秒") . '現在）.xlsx';
+$fname = 'クライネス最新名簿（' . date("Y年m月d日 H時i分s秒") . '時点）.xlsx';
 header('Content-Type: application/force-download');
 header('Content-Length: ' . filesize($fpath));
 header('Content-disposition: attachment; filename="' . $fname . '"');
 readfile($fpath);
 /** ログファイル作成の処理 **/
 error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "が団員名簿（メアドなし）をダウンロードしました。\n", 3, __DIR__ . "/../Core/download.log");
+unlink($fpath);
