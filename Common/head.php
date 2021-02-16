@@ -159,10 +159,14 @@ if ($backtrace == '/index.php') {
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <!-- <a class="dropdown-item" href="<?= MYPAGE_ROOT ?>/profile/">
+                                <a class="dropdown-item" href="<?= MYPAGE_ROOT ?>/profile/edit/">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    プロフィール
-                                </a> -->
+                                    プロフィール設定
+                                </a>
+                                <a class="dropdown-item" href="<?= MYPAGE_ROOT ?>/profile/password_update/">
+                                    <i class="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    パスワード更新
+                                </a>
                                 <a class="dropdown-item" href="<?= MYPAGE_ROOT ?>/profile/login_history.php">
                                     <i class="fas fa-history fa-sm fa-fw mr-2 text-gray-400"></i>
                                     ログイン履歴

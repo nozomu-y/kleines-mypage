@@ -29,13 +29,19 @@ while ($row = $result->fetch_assoc()) {
     $email_old = $row['email'];
 }
 
-$last_name = $mysqli->real_escape_string($_POST['last_name']);
-$first_name = $mysqli->real_escape_string($_POST['first_name']);
-$name_kana = $mysqli->real_escape_string($_POST['name_kana']);
-$email = $mysqli->real_escape_string($_POST['email']);
-$grade = $mysqli->real_escape_string($_POST['grade']);
-$part = $mysqli->real_escape_string($_POST['part']);
-$query = "UPDATE profiles SET last_name='$last_name', first_name='$first_name', name_kana='$name_kana', part='$part', grade='$grade' WHERE user_id=$user_id";
+if ($USER->isMaster()) {
+    $last_name = $mysqli->real_escape_string($_POST['last_name']);
+    $first_name = $mysqli->real_escape_string($_POST['first_name']);
+    $name_kana = $mysqli->real_escape_string($_POST['name_kana']);
+    $email = $mysqli->real_escape_string($_POST['email']);
+    $grade = $mysqli->real_escape_string($_POST['grade']);
+    $part = $mysqli->real_escape_string($_POST['part']);
+    $query = "UPDATE profiles SET last_name='$last_name', first_name='$first_name', name_kana='$name_kana', part='$part', grade='$grade' WHERE user_id=$user_id";
+} else {
+    $email = $mysqli->real_escape_string($_POST['email']);
+    $part = $mysqli->real_escape_string($_POST['part']);
+    $query = "UPDATE profiles SET part='$part' WHERE user_id=$user_id";
+}
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -94,7 +100,12 @@ if ($USER->isMaster()) {
 }
 
 $_SESSION['mypage_edit_user'] = $grade_old . $part_old . " " . $last_name_old . $first_name_old;
-error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "がユーザーの情報を編集しました。（編集前：" . $grade_old . "," . $part_old . "," . $last_name_old . "," . $first_name_old . "," . $name_kana_old . "," . $email_old . $admin_old . "）（編集後：" . $grade . "," . $part . "," . $last_name . "," . $first_name . "," . $name_kana . "," . $email . $admin . "）\n", 3, __DIR__ . "/../../../Core/account_manage.log");
+
+if ($USER->isMaster()) {
+    error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "がユーザーの情報を編集しました。（編集前：" . $grade_old . "," . $part_old . "," . $last_name_old . "," . $first_name_old . "," . $name_kana_old . "," . $email_old . $admin_old . "）（編集後：" . $grade . "," . $part . "," . $last_name . "," . $first_name . "," . $name_kana . "," . $email . $admin . "）\n", 3, __DIR__ . "/../../../Core/account_manage.log");
+} else {
+    error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "がユーザーの情報を編集しました。（編集前：" . $part_old . "," . $email_old . "）（編集後：" . $part . "," . $email . "）\n", 3, __DIR__ . "/../../../Core/account_manage.log");
+}
 
 header('Location: ' . MYPAGE_ROOT . '/admin/account_manage/');
 exit();
