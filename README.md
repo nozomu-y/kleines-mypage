@@ -7,7 +7,7 @@ Kleines Mypage is a management system developed for Chor Kleines.
 
 
 ## Requirements 
-* PHP 7
+* PHP >= 7.3
 * MySQL 5.7
 
 ## Installation
