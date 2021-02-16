@@ -12,6 +12,13 @@ if (isset($_GET['user_id'])) {
     exit();
 }
 $account = new User($user_id);
+
+if ($USER->isMaster()) {
+    $tag = 'required';
+} else {
+    $tag = 'readonly';
+}
+
 $PAGE_NAME = "アカウント管理";
 include_once __DIR__ . '/../../../Common/head.php';
 ?>
@@ -26,28 +33,29 @@ include_once __DIR__ . '/../../../Common/head.php';
                     <li class="breadcrumb-item active" aria-current="page"><?php echo $account->name; ?></li>
                 </ol>
             </nav>
+            <p>氏名・学年・アカウント権限の編集は管理人のみが行えます。</p>
             <form method="post" action="./edit.php" class="mb-4">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-sm-6">
                             <label for="last_name">姓</label>
-                            <input type="text" class="form-control" name="last_name" id="last_name" value="<?= $account->last_name ?>" required="">
+                            <input type="text" class="form-control" name="last_name" id="last_name" value="<?= $account->last_name ?>" <?= $tag ?>>
                         </div>
                         <div class="col-sm-6">
                             <label for="first_name">名</label>
-                            <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $account->first_name ?>" required="">
+                            <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $account->first_name ?>" <?= $tag ?>>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="name_kana">カナ</label>
-                    <input type="text" class="form-control" name="name_kana" id="name_kana" value="<?= $account->kana ?>" required="">
+                    <input type="text" class="form-control" name="name_kana" id="name_kana" value="<?= $account->kana ?>" <?= $tag ?>>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-sm-6">
                             <label for="grade">学年</label>
-                            <input type="number" class="form-control" name="grade" id="grade" value="<?= $account->grade ?>" required="">
+                            <input type="number" class="form-control" name="grade" id="grade" value="<?= $account->grade ?>" <?= $tag ?>>
                         </div>
                         <?php
                         $sop = '';
@@ -77,7 +85,7 @@ include_once __DIR__ . '/../../../Common/head.php';
                 </div>
                 <div class="form-group">
                     <label for="email">メールアドレス</label>
-                    <input type="email" name="email" class="form-control" id="email" value="<?= $account->email ?>" required="">
+                    <input type="email" name="email" class="form-control" id="email" value="<?= $account->email ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="password">パスワード</label>

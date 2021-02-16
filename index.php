@@ -4,8 +4,27 @@ include_once __DIR__ . '/Common/head.php';
 ?>
 
 <div class="container-fluid">
-    <!-- <h1 class="h3 text-gray-800 mb-4">Home</h1> -->
     <div class="row">
+        <?php
+        if (isset($_SESSION['mypage_edit_profile'])) {
+            echo '<div class="col-sm-12">';
+            echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
+            echo 'プロフィールを編集しました。';
+            echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+            echo '</div>';
+            echo '</div>';
+            unset($_SESSION['mypage_edit_profile']);
+        }
+        if (isset($_SESSION['mypage_password_success'])) {
+            echo '<div class="col-sm-12">';
+            echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
+            echo 'パスワードを更新しました。';
+            echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+            echo '</div>';
+            echo '</div>';
+            unset($_SESSION['mypage_password_success']);
+        }
+        ?>
         <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
