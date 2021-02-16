@@ -92,19 +92,6 @@ include_once __DIR__ . '/Common/head.php';
         <div class="col-xl-4 col-sm-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">団員名簿</h6>
-                </div>
-                <div class="card-body">
-                    <p>
-                        最新の団員名簿をダウンロードできます。
-                    </p>
-                    <a class="btn" style="color: #fff; background-color:#1d6f42; border-color:#1d6f42;" href="./download/memberlist.php"><i class="fas fa-file-excel mr-2"></i>ダウンロード</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-sm-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">開発者募集中</h6>
                 </div>
                 <div class="card-body">

@@ -182,7 +182,7 @@ include_once __DIR__ . '/../../Common/head.php';
                 <div class="card-header">団員名簿</div>
                 <div class="card-body">
                     <p>最新の団員名簿をダウンロードできます。（メアドあり）</p>
-                    <a class="btn" style="color: #fff; background-color:#1d6f42; border-color:#1d6f42;" href="../../download/memberlist_email.php"><i class="fas fa-file-excel mr-2"></i>ダウンロード</a>
+                    <a href="../../download/memberlist_email.php"><i class="fas fa-file-download mr-2"></i>ダウンロード</a>
                 </div>
             </div>
             <div class="card shadow mb-4">
