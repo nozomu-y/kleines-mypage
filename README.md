@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="100px" src="https://www.chorkleines.com/logo.png" align="center" alt="Chor Kleines Logo"></img>
+    <img width="180px" src="https://www.chorkleines.com/logo.png" align="center" alt="Chor Kleines Logo"></img>
     <h1 align="center">Kleines Mypage</h1>
     <p align="center">A management system developed for <a href="https://chorkleines.com" target="_blank">Chor Kleines</a>.</p>
     <p align="center">
