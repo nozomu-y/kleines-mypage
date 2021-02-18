@@ -2,14 +2,6 @@
 require __DIR__ . '/../Common/init_page.php';
 include_once __DIR__ . '/../Common/head.php';
 ?>
-<style>
-    h2:after {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-        border: 0;
-        border-top: 1px solid rgba(0, 0, 0, .1);
-    }
-</style>
 <div class="container-fluid">
     <div class="row justify-content-xl-center">
         <div class="col-xl-6 mb-3">
