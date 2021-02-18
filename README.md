@@ -30,7 +30,6 @@
 * Member management
 * Access control
 * Accounting management
-* e-ticketing
 
 ## Requirements 
 * PHP >= 7.3
