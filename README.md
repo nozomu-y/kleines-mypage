@@ -1,7 +1,7 @@
 <p align="center">
     <img width="180px" src="https://www.chorkleines.com/logo.png" align="center" alt="Chor Kleines Logo"></img>
     <h1 align="center">Kleines Mypage</h1>
-    <p align="center">A management system developed for <a href="https://chorkleines.com" target="_blank">Chor Kleines</a>.</p>
+    <p align="center">An internal system developed for <a href="https://chorkleines.com" target="_blank">Chor Kleines</a>.</p>
     <p align="center">
         <a href="https://github.com/nozomu-y/kleines-mypage/blob/master/LICENSE">
             <img src="https://img.shields.io/github/license/nozomu-y/kleines-mypage" alt="License"></img>
@@ -26,6 +26,10 @@
     </p>
 </p>
 
+## Features
+* Member management
+* Access Control
+* Accounting management
 
 ## Requirements 
 * PHP >= 7.3
