@@ -22,6 +22,8 @@ if ($backtrace == '/index.php') {
     $admin_accounting = 'active';
 } elseif (strpos($backtrace, '/admin/camp_accounting/') !== false) {
     $admin_camp_accounting = 'active';
+} elseif (strpos($backtrace, '/info/') !== false) {
+    $info = 'active';
 }
 ?>
 
@@ -125,6 +127,13 @@ if ($backtrace == '/index.php') {
                 echo '<li class="nav-item ' . $admin_camp_accounting . '"><a class="nav-link" href="' . MYPAGE_ROOT . '/admin/camp_accounting/"><i class="fas fa-coins fa-fw"></i></i><span>合宿集金</span></a></li>';
             }
             ?>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item <?php echo $info; ?>">
+                <a class="nav-link" href="<?= MYPAGE_ROOT ?>/info/">
+                    <i class="fas fa-info-circle fa-fw"></i>
+                    <span>Info</span>
+                </a>
+            </li>
             <hr class="sidebar-divider d-none d-md-block">
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
