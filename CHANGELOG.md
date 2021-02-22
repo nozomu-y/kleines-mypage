@@ -1,6 +1,10 @@
 Changelog
 ===
 
+## [1.0.2] - 2021-02-22
+### Changed
+* Deletion of authentication token after password update or expiration
+
 ## [1.0.1] - 2021-02-18
 ### Added
 * Password update by every users
@@ -13,6 +17,7 @@ Changelog
 ## [1.0.0] - 2021-02-13
 #### Initial Release
 
+[1.0.2]: https://github.com/nozomu-y/kleines-mypage/releases/tag/v1.0.2
 [1.0.1]: https://github.com/nozomu-y/kleines-mypage/releases/tag/v1.0.1
 [1.0.0]: https://github.com/nozomu-y/kleines-mypage/releases/tag/v1.0.0
 
