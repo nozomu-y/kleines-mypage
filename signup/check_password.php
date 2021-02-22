@@ -22,7 +22,7 @@ if ($maintenance) {
     exit();
 }
 
-if (isset($_POST['set_password'])) {
+if (isset($_POST['set_password']) && isset($_POST['token']) && isset($_POST['password1']) && isset($_POST['password2'])) {
     $token = $_POST['token'];
     $query = "SELECT * FROM identity_verifications WHERE token = '$token'";
     $result = $mysqli->query($query);
@@ -31,8 +31,29 @@ if (isset($_POST['set_password'])) {
         $mysqli->close();
         exit();
     }
+    $row_cnt = $result->num_rows;
+    if ($row_cnt == 0) {
+        $_SESSION['mypage_token_expired'] = "";
+        header('Location: ' . MYPAGE_ROOT . '/signup');
+        exit();
+    }
     $row = $result->fetch_assoc();
     $user_id = $row['user_id'];
+    $validation_time = $row['datetime'];
+    $validation_time = strtotime($validation_time);
+    $time_now = strtotime(date("Y-m-d H:i:s"));
+    if ($time_now - $validation_time > 24 * 60 * 60) {
+        $query = "DELETE FROM identity_verifications WHERE token='$token'";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+        $_SESSION['mypage_token_expired'] = "";
+        header('Location: ' . MYPAGE_ROOT . '/signup');
+        exit();
+    }
     $USER = new User($user_id);
 
     $password1 = $mysqli->real_escape_string($_POST['password1']);
@@ -58,8 +79,18 @@ if (isset($_POST['set_password'])) {
         $mysqli->close();
         exit();
     }
+    $query = "DELETE FROM identity_verifications WHERE token='$token'";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
     error_log("[" . date('Y/m/d H:i:s') . "] " . $USER->get_name() . "がパスワードを設定しました。\n", 3, __DIR__ . "/../Core/auth.log");
     $_SESSION['mypage_password_success'] = '';
     header('Location: ' . MYPAGE_ROOT . '/login');
+    exit();
+} else {
+    header('Location: ' . MYPAGE_ROOT . '/signup');
     exit();
 }
