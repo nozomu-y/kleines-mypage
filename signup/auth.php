@@ -27,6 +27,10 @@ if (isset($_SESSION['mypage_password_error'])) {
     $password_message = "パスワードが一致しません。";
 }
 
+if (!isset($_POST['token'])) {
+    header('Location: ' . MYPAGE_ROOT . '/signup');
+    exit();
+}
 $token = $_GET["token"];
 $query = "SELECT * FROM identity_verifications WHERE token = '$token'";
 $result = $mysqli->query($query);
@@ -49,6 +53,13 @@ $USER = new User($user_id);
 $validation_time = strtotime($validation_time);
 $time_now = strtotime(date("Y-m-d H:i:s"));
 if ($time_now - $validation_time > 24 * 60 * 60) {
+    $query = "DELETE FROM identity_verifications WHERE token='$token'";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
     $_SESSION['mypage_token_expired'] = "";
     header('Location: ' . MYPAGE_ROOT . '/signup');
     exit();
