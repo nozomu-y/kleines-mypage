@@ -27,9 +27,24 @@
 </p>
 
 ## Features
-* Member management
-* Access control
-* Accounting management
+#### User Profile
+* Name
+* Grade
+* Voice part
+* Email address
+
+#### Member management
+* Management of enrollment status between present, temporarily absent, and resigned
+
+#### Accounting Management
+* Management of collection deadlines and amounts
+* Sending of payment confirmation emails 
+* Management of individual accounting balances
+
+#### Access control
+* Access restriction to member management 
+* Access restriction to accounting management
+
 
 ## Requirements 
 * PHP >= 7.3
@@ -38,6 +53,9 @@
 ## [Installation]
 
 ## [Changelog]
+
+## License
+This software is licensed under [the MIT License](https://github.com/nozomu-y/kleines-mypage/blob/master/LICENSE). 
 
 [Installation]: https://github.com/nozomu-y/kleines-mypage/blob/master/INSTALLATION.md
 [Changelog]: https://github.com/nozomu-y/kleines-mypage/blob/master/CHANGELOG.md
