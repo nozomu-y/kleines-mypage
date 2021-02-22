@@ -18,11 +18,6 @@
             <img src="https://img.shields.io/github/issues-pr/nozomu-y/kleines-mypage?color=4e73df" alt="GitHub pull requests"></img>
         </a>
         <img src="https://img.shields.io/github/commits-since/nozomu-y/kleines-mypage/latest/master" alt="GitHub commits since tagged version"></img>
-        <br>
-        <img src="https://img.shields.io/badge/php-%3E=7.3-777bb4?logo=php&logoColor=FFF&labelColor=777bb4" alt="PHP>=7.3"></img>
-        <img src="https://img.shields.io/badge/MySQL-5.7-4479A1?logo=mysql&logoColor=FFF&labelColor=4479A1" alt="MySQL5.7"></img>
-        <img src="https://img.shields.io/badge/Bootstrap-4.3.1-563D7C.svg?logo=bootstrap&labelColor=563D7C" alt="Bootstrap"></img>
-        <img src="https://img.shields.io/badge/jQuery-3.4.1-0769AD.svg?logo=jquery&labelColor=0769AD" alt="jQuery"></img>
     </p>
 </p>
 
