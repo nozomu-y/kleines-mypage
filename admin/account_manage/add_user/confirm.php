@@ -40,7 +40,7 @@ if (!isset($_POST['submit'])) {
                         <?php
                         $valid = TRUE;
                         $array_csv = array();
-                        $lines = explode("\n", $_POST["csv"]);
+                        $lines = preg_split("/[\r\n|\n|\r]/", $_POST['csv']);
                         foreach ($lines as $line) {
                             $array_csv[] = str_getcsv($line);
                         }
