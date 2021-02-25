@@ -24,6 +24,8 @@ if ($backtrace == '/index.php') {
     $admin_camp_accounting = 'active';
 } elseif (strpos($backtrace, '/info/') !== false) {
     $info = 'active';
+} elseif (strpos($backtrace, '/bulletin_board/') !== false) {
+    $bulletin_board = 'active';
 }
 ?>
 
@@ -47,7 +49,7 @@ if ($backtrace == '/index.php') {
 <body id="page-top" class="sidebar-toggled">
     <div id="wrapper">
         <!-- sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= MYPAGE_ROOT ?>">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-music"></i>
@@ -67,6 +69,13 @@ if ($backtrace == '/index.php') {
                 <a class="nav-link" href="<?= MYPAGE_ROOT ?>/accounts/">
                     <i class="fas fa-users fa-fw"></i>
                     <span>アカウント一覧</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item <?php echo $bulletin_board; ?>">
+                <a class="nav-link" href="<?= MYPAGE_ROOT ?>/bulletin_board/">
+                    <i class="fas fa-clipboard fa-fw"></i>
+                    <span>掲示板</span>
                 </a>
             </li>
             <hr class="sidebar-divider">
