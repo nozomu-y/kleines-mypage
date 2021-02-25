@@ -166,113 +166,120 @@ if (!$result) {
     exit();
 }
 
-
-while (true) {
-    echo 'Last Name: ';
-    $last_name = trim(fgets(STDIN));
-    if (preg_match('/^\S+$/', $last_name)) {
-        break;
-    } else {
-        echo 'Format not expected.\n';
-    }
-}
-
-while (true) {
-    echo 'First Name: ';
-    $first_name = trim(fgets(STDIN));
-    if (preg_match('/^\S+$/', $first_name)) {
-        break;
-    } else {
-        echo 'Format not expected.\n';
-    }
-}
-
-while (true) {
-    echo 'Name Kana: ';
-    $name_kana = trim(fgets(STDIN));
-    if (preg_match('/^[ァ-ヶー]+$/u', $name_kana)) {
-        break;
-    } else {
-        echo 'Format not expected.\n';
-    }
-}
-
-while (true) {
-    echo 'Grade (integer): ';
-    $grade = trim(fgets(STDIN));
-    if (preg_match('/^\d+$/', $grade)) {
-        break;
-    } else {
-        echo 'Format not expected.\n';
-    }
-}
-
-while (true) {
-    echo 'Part (S,A,T,B): ';
-    $part = trim(fgets(STDIN));
-    if (preg_match('/^[S|A|T|B]$/', $part)) {
-        break;
-    } else {
-        echo 'Format not expected.\n';
-    }
-}
-
-while (true) {
-    echo 'Email: ';
-    $email = trim(fgets(STDIN));
-    if (preg_match('/^[^\s]+@[^\s]+$/', $email)) {
-        break;
-    } else {
-        echo 'Format not expected.\n';
-    }
-}
-
-while (true) {
-    echo 'Password (at least 8 letters): ';
-    $password = trim(fgets(STDIN));
-    if (preg_match('/^([\x21-\x7E]{8,})$/', $password)) {
-        $password = password_hash($password, PASSWORD_DEFAULT);
-        break;
-    } else {
-        echo 'Format not expected.\n';
-    }
-}
-
-$query = "INSERT INTO users (email, password, status) VALUES ('$email', '$password', 'PRESENT')";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-
-$query = "SELECT user_id FROM users WHERE email='$email'";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-while ($row = $result->fetch_assoc()) {
-    $user_id = $row['user_id'];
-}
-
-$query = "INSERT INTO profiles (user_id, last_name, first_name, name_kana, grade, part) VALUES ('$user_id', '$last_name', '$first_name', '$name_kana', '$grade', '$part')";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-$query = "INSERT INTO admins (user_id, role) VALUES ('$user_id', 'MASTER')";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-
-
-
 print("Database initialization finished!\n");
-print("Account set as admin: " . $grade . $part . " " . $last_name . $first_name . "\n");
+
+$query = "SELECT user_id FROM users";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$row_cnt = $result->num_rows;
+if ($row_cnt == 0) {
+    while (true) {
+        echo 'Last Name: ';
+        $last_name = trim(fgets(STDIN));
+        if (preg_match('/^\S+$/', $last_name)) {
+            break;
+        } else {
+            echo 'Format not expected.\n';
+        }
+    }
+
+    while (true) {
+        echo 'First Name: ';
+        $first_name = trim(fgets(STDIN));
+        if (preg_match('/^\S+$/', $first_name)) {
+            break;
+        } else {
+            echo 'Format not expected.\n';
+        }
+    }
+
+    while (true) {
+        echo 'Name Kana: ';
+        $name_kana = trim(fgets(STDIN));
+        if (preg_match('/^[ァ-ヶー]+$/u', $name_kana)) {
+            break;
+        } else {
+            echo 'Format not expected.\n';
+        }
+    }
+
+    while (true) {
+        echo 'Grade (integer): ';
+        $grade = trim(fgets(STDIN));
+        if (preg_match('/^\d+$/', $grade)) {
+            break;
+        } else {
+            echo 'Format not expected.\n';
+        }
+    }
+
+    while (true) {
+        echo 'Part (S,A,T,B): ';
+        $part = trim(fgets(STDIN));
+        if (preg_match('/^[S|A|T|B]$/', $part)) {
+            break;
+        } else {
+            echo 'Format not expected.\n';
+        }
+    }
+
+    while (true) {
+        echo 'Email: ';
+        $email = trim(fgets(STDIN));
+        if (preg_match('/^[^\s]+@[^\s]+$/', $email)) {
+            break;
+        } else {
+            echo 'Format not expected.\n';
+        }
+    }
+
+    while (true) {
+        echo 'Password (at least 8 letters): ';
+        $password = trim(fgets(STDIN));
+        if (preg_match('/^([\x21-\x7E]{8,})$/', $password)) {
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            break;
+        } else {
+            echo 'Format not expected.\n';
+        }
+    }
+
+    $query = "INSERT INTO users (email, password, status) VALUES ('$email', '$password', 'PRESENT')";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+
+    $query = "SELECT user_id FROM users WHERE email='$email'";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    while ($row = $result->fetch_assoc()) {
+        $user_id = $row['user_id'];
+    }
+
+    $query = "INSERT INTO profiles (user_id, last_name, first_name, name_kana, grade, part) VALUES ('$user_id', '$last_name', '$first_name', '$name_kana', '$grade', '$part')";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $query = "INSERT INTO admins (user_id, role) VALUES ('$user_id', 'MASTER')";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    print("Account set as admin: " . $grade . $part . " " . $last_name . $first_name . "\n");
+}
