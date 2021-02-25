@@ -17,21 +17,8 @@ if ($mysqli->connect_error) {
     exit;
 }
 
-$query = "SHOW TABLES";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
-}
-
-if ($result->fetch_assoc() != null) {
-    print('MySQL database is already initialized.');
-    exit();
-}
-
 $query = "
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     user_id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
     email varchar(256) UNIQUE,
     password varchar(256),
@@ -46,7 +33,7 @@ if (!$result) {
 }
 
 $query = "
-CREATE TABLE profiles (
+CREATE TABLE IF NOT EXISTS profiles (
     user_id int(5) UNSIGNED ZEROFILL,
     last_name varchar(256),
     first_name varchar(256),
@@ -64,7 +51,7 @@ if (!$result) {
 }
 
 $query = "
-CREATE TABLE admins (
+CREATE TABLE IF NOT EXISTS admins (
     user_id int(5) UNSIGNED ZEROFILL,
     role varchar(32),
     PRIMARY KEY (user_id)
@@ -77,7 +64,7 @@ if (!$result) {
 }
 
 $query = "
-CREATE TABLE login_histories (
+CREATE TABLE IF NOT EXISTS login_histories (
     user_id int(5) UNSIGNED ZEROFILL,
     datetime datetime,
     success int(1),
@@ -92,7 +79,7 @@ if (!$result) {
 }
 
 $query = "
-CREATE TABLE password_updates (
+CREATE TABLE IF NOT EXISTS password_updates (
     user_id int(5) UNSIGNED ZEROFILL,
     datetime datetime,
     IP varchar(32),
@@ -106,7 +93,7 @@ if (!$result) {
 }
 
 $query = "
-CREATE TABLE identity_verifications (
+CREATE TABLE IF NOT EXISTS identity_verifications (
     user_id int(5) UNSIGNED ZEROFILL,
     datetime datetime,
     token varchar(64),
@@ -120,7 +107,7 @@ if (!$result) {
 }
 
 $query = "
-CREATE TABLE accounting_lists (
+CREATE TABLE IF NOT EXISTS accounting_lists (
     accounting_id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
     name varchar(256),
     deadline date,
@@ -135,7 +122,7 @@ if (!$result) {
 }
 
 $query = "
-CREATE TABLE accounting_records (
+CREATE TABLE IF NOT EXISTS accounting_records (
     accounting_id int(5) UNSIGNED ZEROFILL,
     user_id int(5) UNSIGNED ZEROFILL,
     price int(10),
@@ -151,7 +138,7 @@ if (!$result) {
 }
 
 $query = "
-CREATE TABLE individual_accounting_lists (
+CREATE TABLE IF NOT EXISTS individual_accounting_lists (
     list_id int(5) UNSIGNED ZEROFILL AUTO_INCREMENT,
     name varchar(256),
     datetime datetime,
@@ -165,7 +152,7 @@ if (!$result) {
 }
 
 $query = "
-CREATE TABLE individual_accounting_records (
+CREATE TABLE IF NOT EXISTS individual_accounting_records (
     user_id int(5) UNSIGNED ZEROFILL,
     datetime datetime,
     price int(10),
@@ -179,11 +166,78 @@ if (!$result) {
     exit();
 }
 
-$last_name = 'admin';
-$grade = 0;
-$email = $mysqli->real_escape_string(ADMIN_EMAIL);
-$part = "S";
-$password = password_hash("password", PASSWORD_DEFAULT);
+
+while (true) {
+    echo 'Last Name: ';
+    $last_name = trim(fgets(STDIN));
+    if (preg_match('/^\S+$/', $last_name)) {
+        break;
+    } else {
+        echo 'Format not expected.\n';
+    }
+}
+
+while (true) {
+    echo 'First Name: ';
+    $first_name = trim(fgets(STDIN));
+    if (preg_match('/^\S+$/', $first_name)) {
+        break;
+    } else {
+        echo 'Format not expected.\n';
+    }
+}
+
+while (true) {
+    echo 'Name Kana: ';
+    $name_kana = trim(fgets(STDIN));
+    if (preg_match('/^[ァ-ヶー]+$/u', $name_kana)) {
+        break;
+    } else {
+        echo 'Format not expected.\n';
+    }
+}
+
+while (true) {
+    echo 'Grade (integer): ';
+    $grade = trim(fgets(STDIN));
+    if (preg_match('/^\d+$/', $grade)) {
+        break;
+    } else {
+        echo 'Format not expected.\n';
+    }
+}
+
+while (true) {
+    echo 'Part (S,A,T,B): ';
+    $part = trim(fgets(STDIN));
+    if (preg_match('/^[S|A|T|B]$/', $part)) {
+        break;
+    } else {
+        echo 'Format not expected.\n';
+    }
+}
+
+while (true) {
+    echo 'Email: ';
+    $email = trim(fgets(STDIN));
+    if (preg_match('/^[^\s]+@[^\s]+$/', $email)) {
+        break;
+    } else {
+        echo 'Format not expected.\n';
+    }
+}
+
+while (true) {
+    echo 'Password (at least 8 letters): ';
+    $password = trim(fgets(STDIN));
+    if (preg_match('/^([\x21-\x7E]{8,})$/', $password)) {
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        break;
+    } else {
+        echo 'Format not expected.\n';
+    }
+}
+
 $query = "INSERT INTO users (email, password, status) VALUES ('$email', '$password', 'PRESENT')";
 $result = $mysqli->query($query);
 if (!$result) {
@@ -203,7 +257,7 @@ while ($row = $result->fetch_assoc()) {
     $user_id = $row['user_id'];
 }
 
-$query = "INSERT INTO profiles (user_id, last_name, grade, part) VALUES ('$user_id', '$last_name', '$grade', '$part')";
+$query = "INSERT INTO profiles (user_id, last_name, first_name, name_kana, grade, part) VALUES ('$user_id', '$last_name', '$first_name', '$name_kana', '$grade', '$part')";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -221,6 +275,4 @@ if (!$result) {
 
 
 print("Database initialization finished!\n");
-print("Login as admin...\n");
-print("Email: " . ADMIN_EMAIL . "\n");
-print("Password: password");
+print("Account set as admin: " . $grade . $part . " " . $last_name . $first_name . "\n");
