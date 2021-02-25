@@ -74,7 +74,7 @@ $content = $Parsedown->text($markdown);
                             <?php
                             if ($user_id == $USER->id) {
                             ?>
-                                <a class="btn btn-outline-secondary btn-sm ml-1" href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>">編集</a>
+                                <a class="btn btn-outline-secondary btn-sm ml-1 text-nowrap" href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>">編集</a>
                             <?php
                             }
                             ?>
@@ -82,7 +82,28 @@ $content = $Parsedown->text($markdown);
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex w-100 justify-content-between text-secondary">
+                    <div class="d-none d-md-block">
+                        <div class="d-flex w-100 justify-content-between text-secondary mb-2">
+                            <div>
+                                <?php
+                                foreach ($hashtags as $hashtag) {
+                                ?>
+                                    <a href="./?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="text-right">
+                                <small><span class="text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
+                                <br />
+                                <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
+                                <br>
+                                <small><span class="text-nowrap">最終編集：<?= $edited ?></span></small>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="d-block d-md-none text-secondary mb-2">
                         <div>
                             <?php
                             foreach ($hashtags as $hashtag) {
