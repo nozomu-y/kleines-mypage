@@ -16,6 +16,11 @@ if (strcmp(getGitBranch(), "master") && WEB_DOMAIN == "chorkleines.com") {  // i
 }
 
 $USER = new User($_SESSION['mypage_user_id']);
+if (!$USER->exists) {
+    $_SESSION = array();
+    header('Location: ' . MYPAGE_ROOT . '/login');
+    exit();
+}
 
 if ($MAINTENANCE && !$USER->isMaster()) {
     header('Location: ' . MYPAGE_ROOT . '/login');
