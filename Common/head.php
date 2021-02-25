@@ -127,6 +127,26 @@ if ($backtrace == '/index.php') {
         </ul>
         <!-- end of sidebar -->
 
+        <script>
+            function sidebarToggle() {
+                if (document.getElementById('accordionSidebar').classList.contains('toggled')) {
+                    document.cookie = 'MypageSidebarToggle=;path=<?= MYPAGE_ROOT ?>';
+                } else {
+                    document.cookie = 'MypageSidebarToggle=toggled;path=<?= MYPAGE_ROOT ?>';
+                }
+            }
+            for (var c of document.cookie.split(";")) {
+                var cArray = c.split('=');
+                if (cArray[0] == 'MypageSidebarToggle') {
+                    if (cArray[1] == 'toggled') {
+                        document.getElementById('accordionSidebar').classList.add('toggled');
+                    } else {
+                        document.getElementById('accordionSidebar').classList.remove('toggled');
+                    }
+                }
+            }
+        </script>
+
         <!-- content wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- main content -->
