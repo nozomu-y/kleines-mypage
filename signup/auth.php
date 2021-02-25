@@ -27,6 +27,11 @@ if (isset($_SESSION['mypage_password_error'])) {
     $password_message = "パスワードが一致しません。";
 }
 
+if (isset($_SESSION['mypage_password_regex_error'])) {
+    $password_invalid = 'is-invalid';
+    $password_message = "パスワードの形式が異なります。";
+}
+
 if (!isset($_GET['token'])) {
     header('Location: ' . MYPAGE_ROOT . '/signup');
     exit();
