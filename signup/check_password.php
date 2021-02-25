@@ -63,6 +63,11 @@ if (isset($_POST['set_password']) && isset($_POST['token']) && isset($_POST['pas
         header('Location: ' . MYPAGE_ROOT . '/signup/auth.php?token=' . $token);
         exit();
     }
+    if (!preg_match('/^([\x21-\x7E]{8,})$/', $password)) {
+        $_SESSION['mypage_password_regex_error'] = '';
+        header('Location: ' . MYPAGE_ROOT . '/signup/auth.php?token=' . $token);
+        exit();
+    }
     $IP = $_SERVER["REMOTE_ADDR"];
     $query = "INSERT INTO password_updates (user_id, datetime, IP) VALUES ('$user_id', now(), '$IP')";
     $result = $mysqli->query($query);
