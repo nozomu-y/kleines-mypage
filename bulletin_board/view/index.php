@@ -25,6 +25,7 @@ while ($row = $result->fetch_assoc()) {
 require __DIR__ . '/../../vendor/autoload.php';
 $Parsedown = new ParsedownExtra();
 $Parsedown->setBreaksEnabled(true);
+$Parsedown->setSafeMode(true);
 $content = $Parsedown->text($markdown);
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
