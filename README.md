@@ -22,7 +22,7 @@
 </p>
 
 ## Features
-#### User Profile
+#### User profile
 * Name
 * Grade
 * Voice part
@@ -31,7 +31,7 @@
 #### Member management
 * Management of enrollment status between present, temporarily absent, and resigned
 
-#### Accounting Management
+#### Accounting management
 * Management of collection deadlines and amounts
 * Sending of payment confirmation emails 
 * Management of individual accounting balances
