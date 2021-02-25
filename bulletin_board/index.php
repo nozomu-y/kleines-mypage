@@ -34,7 +34,7 @@ include_once __DIR__ . '/../Common/head.php';
                     <div class="list-group-item flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
                             <a class="mb-1 h5 text-dark" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a>
-                            <small><span class="mr-3"><i class="fas fa-user mr-1"></i><?= $name ?></span><span><?= $datetime ?></span></small>
+                            <small><span class="mr-3 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span><span class="text-nowrap"><?= $datetime ?></span></small>
                         </div>
                         <div class="mt-1">
                             <?php

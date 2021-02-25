@@ -4,7 +4,6 @@ require __DIR__ . '/../../Common/init_page.php';
 $PAGE_NAME = "掲示板";
 include_once __DIR__ . '/../../Common/head.php';
 
-$nav_title = "新規作成";
 $title = "";
 $hashtags = "";
 $markdown = "";
@@ -29,7 +28,6 @@ if (isset($_GET['bulletin_board_id'])) {
     while ($row = $result->fetch_assoc()) {
         $markdown = $row['content'];
         $title = $row['title'];
-        $nav_title = $title;
         $status = $row['status'];
     }
     $query = "SELECT hashtag FROM bulletin_board_hashtags WHERE bulletin_board_id=$bulletin_board_id";
@@ -63,8 +61,27 @@ if (isset($_GET['bulletin_board_id'])) {
     <h1 class="h3 text-gray-800 mb-4">掲示板</h1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="../">掲示板</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><?= $nav_title ?></li>
+            <?php
+            if ($status == 'RELEASE') {
+            ?>
+                <li class="breadcrumb-item"><a href="../">掲示板</a></li>
+                <li class="breadcrumb-item"><a href="../view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
+                <li class="breadcrumb-item active" aria-current="page">編集</li>
+            <?php
+            } elseif ($status == 'DRAFT') {
+            ?>
+                <li class="breadcrumb-item"><a href="../">掲示板</a></li>
+                <li class="breadcrumb-item"><a href="../draft">下書き</a></li>
+                <li class="breadcrumb-item"><a href="../view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
+                <li class="breadcrumb-item active" aria-current="page">編集</li>
+            <?php
+            } else {
+            ?>
+                <li class="breadcrumb-item"><a href="../">掲示板</a></li>
+                <li class="breadcrumb-item active" aria-current="page">新規作成</li>
+            <?php
+            }
+            ?>
         </ol>
     </nav>
     <div class="row">
