@@ -95,5 +95,5 @@ if ($hashtag_count > 0) {
 }
 
 
-header('Location: ' . MYPAGE_ROOT . '/bulletin_board/');
+header('Location: ' . MYPAGE_ROOT . '/bulletin_board/view/?bulletin_board_id=' . $bulletin_board_id);
 exit();
