@@ -95,6 +95,7 @@ mysql> DESC bulletin_boards;
 +-------------------+---------------------------+------+-----+---------+----------------+
 | bulletin_board_id | int(10) unsigned zerofill | NO   | PRI | NULL    | auto_increment |
 | user_id           | int(5) unsigned zerofill  | YES  |     | NULL    |                |
+| title             | varchar(128)              | NO   |     | NULL    |                |
 | status            | varchar(32)               | YES  |     | NULL    |                |
 +-------------------+---------------------------+------+-----+---------+----------------+
 ```

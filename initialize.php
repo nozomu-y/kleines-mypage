@@ -170,6 +170,7 @@ $query = "
 CREATE TABLE IF NOT EXISTS bulletin_boards (
     bulletin_board_id int UNSIGNED ZEROFILL AUTO_INCREMENT,
     user_id int(5) UNSIGNED ZEROFILL,
+    title varchar(128),
     status varchar(32),
     PRIMARY KEY (bulletin_board_id)
 );";
