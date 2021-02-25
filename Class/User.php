@@ -10,6 +10,7 @@ class User
     public $part;
     public $name;
     public $email;
+    public $exists;
     private $password;
 
     public function __construct($user)
@@ -23,6 +24,13 @@ class User
             print('Query Failed : ' . $mysqli->error);
             $mysqli->close();
             exit();
+        }
+        $row_cnt = $result->num_rows;
+        if ($row_cnt == 0) {
+            $this->exists = False;
+            return;
+        } else {
+            $this->exists = True;
         }
         $profiles = $result->fetch_assoc();
         $this->last_name = $profiles['last_name'];
