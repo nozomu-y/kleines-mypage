@@ -51,6 +51,7 @@ if (isset($_GET['bulletin_board_id'])) {
     }
 }
 ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
 <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/github-markdown.min.css">
 <style>
     .markdown-body {
@@ -104,6 +105,7 @@ if (isset($_GET['bulletin_board_id'])) {
 
 <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
 
 <script>
     window.onload = function() {
