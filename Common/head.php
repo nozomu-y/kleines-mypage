@@ -47,7 +47,7 @@ if ($backtrace == '/index.php') {
 <body id="page-top" class="sidebar-toggled">
     <div id="wrapper">
         <!-- sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= MYPAGE_ROOT ?>">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-music"></i>
