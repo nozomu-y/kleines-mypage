@@ -21,6 +21,26 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
+<script>
+    function sidebarToggle() {
+        if (document.getElementById('accordionSidebar').classList.contains('toggled')) {
+            document.cookie = 'MypageSidebarToggle=;path=<?= MYPAGE_ROOT ?>';
+        } else {
+            document.cookie = 'MypageSidebarToggle=toggled;path=<?= MYPAGE_ROOT ?>';
+        }
+    }
+    for (var c of document.cookie.split(";")) {
+        var cArray = c.split('=');
+        if (cArray[0] == 'MypageSidebarToggle') {
+            if (cArray[1] == 'toggled') {
+                document.getElementById('accordionSidebar').classList.add('toggled');
+            } else {
+                document.getElementById('accordionSidebar').classList.remove('toggled');
+            }
+        }
+    }
+</script>
+
 <!-- Bootstrap core JavaScript-->
 <script src="<?= MYPAGE_ROOT ?>/Resources/js/jquery.min.js"></script>
 <script src="<?= MYPAGE_ROOT ?>/Resources/js/bootstrap.bundle.min.js"></script>
