@@ -29,29 +29,6 @@ while ($row = $result->fetch_assoc()) {
     array_push($bulletin_boards, $bulletin_board);
 }
 ?>
-<style>
-    .list-group-flush:last-child .list-group-item:last-child {
-        border-bottom: 1px solid rgba(0, 0, 0, .125);
-    }
-
-    .badge {
-        margin: 2px 0;
-        padding: 5px 8px;
-    }
-
-    .unread::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        margin-top: 7px;
-        margin-left: 7px;
-        background-color: #4e73df;
-    }
-</style>
 
 <div class="container-fluid">
     <div class="d-flex w-100 justify-content-between mb-4">

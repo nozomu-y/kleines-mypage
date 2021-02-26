@@ -52,12 +52,7 @@ if (isset($_GET['bulletin_board_id'])) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
 <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/github-markdown.min.css">
 <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/tagsinput.min.css">
-<style>
-    .markdown-body {
-        padding: 20px;
-        background-color: #FFFFFF;
-    }
-</style>
+
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">掲示板</h1>
     <nav aria-label="breadcrumb">

@@ -57,18 +57,6 @@ $content = $Parsedown->text($markdown);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
 <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/github-markdown.min.css">
 <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/tagsinput.min.css">
-<style>
-    .card.card-flush {
-        border-right: 0;
-        border-left: 0;
-        border-radius: 0;
-    }
-
-    .badge {
-        margin: 2px 0;
-        padding: 5px 8px;
-    }
-</style>
 
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">掲示板</h1>
