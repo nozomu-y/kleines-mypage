@@ -80,25 +80,23 @@ $content = $Parsedown->text($markdown);
     </nav>
     <div class="d-none d-md-block">
         <div class="card mb-3">
-            <div class="card-header py-3">
-                <div class="d-flex w-100 justify-content-between">
-                    <div>
-                        <span class="font-weight-bold text-primary h6" style="margin: auto 0;"><?= $title ?></span>
-                    </div>
-                    <div class="my-auto">
-                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-h"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <?php
-                            if ($user_id == $USER->id) {
-                            ?>
-                                <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button">編集</a>
-                                <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button">削除</a>
-                            <?php
-                            }
-                            ?>
-                        </div>
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"><?= $title ?></h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-h fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                        <!-- <div class="dropdown-header">Dropdown Header:</div> -->
+                        <?php
+                        if ($user_id == $USER->id) {
+                        ?>
+                            <!-- <div class="dropdown-divider"></div> -->
+                            <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button">編集</a>
+                            <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button">削除</a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -134,24 +132,25 @@ $content = $Parsedown->text($markdown);
 
 <div class="d-block d-md-none">
     <div class="card card-flush mb-3">
-        <div class="card-header py-3">
-            <div class="d-flex w-100 justify-content-between">
-                <div>
-                    <span class="font-weight-bold text-primary h6" style="margin: auto 0;"><?= $title ?></span>
-                </div>
-                <div class="my-auto">
-                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <?php
-                        if ($user_id == $USER->id) {
-                        ?>
-                            <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button">編集</a>
-                        <?php
-                        }
-                        ?>
-                    </div>
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary"><?= $title ?></h6>
+            <div class="dropdown no-arrow">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-h fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <!-- <div class="dropdown-header">Dropdown Header:</div> -->
+                    <a href="" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
+                    <a href="./download.php?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fab fa-markdown mr-2"></i>Markdownをダウンロード</a>
+                    <?php
+                    if ($user_id == $USER->id) {
+                    ?>
+                        <div class="dropdown-divider"></div>
+                        <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-edit mr-2"></i>編集</a>
+                        <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button"><i class="fas fa-trash-alt mr-2"></i>削除</a>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
