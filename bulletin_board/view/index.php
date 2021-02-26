@@ -41,6 +41,13 @@ $content = $Parsedown->text($markdown);
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
 <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/github-markdown.min.css">
+<style>
+    .card.card-flush {
+        border-right: 0;
+        border-left: 0;
+        border-radius: 0;
+    }
+</style>
 
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">掲示板</h1>
@@ -83,15 +90,6 @@ $content = $Parsedown->text($markdown);
                             ?>
                         </div>
                     </div>
-                    <!-- <div>
-                            <?php
-                            if ($user_id == $USER->id) {
-                            ?>
-                                <a class="btn btn-outline-secondary btn-sm ml-1 text-nowrap" href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>">編集</a>
-                            <?php
-                            }
-                            ?>
-                        </div> -->
                 </div>
             </div>
             <div class="card-body">
@@ -100,7 +98,7 @@ $content = $Parsedown->text($markdown);
                         <?php
                         foreach ($hashtags as $hashtag) {
                         ?>
-                            <a href="./?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
+                            <a href="../?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
                         <?php
                         }
                         ?>
@@ -121,14 +119,6 @@ $content = $Parsedown->text($markdown);
         </div>
     </div>
 </div>
-
-<style>
-    .card.card-flush {
-        border-right: 0;
-        border-left: 0;
-        border-radius: 0;
-    }
-</style>
 
 <div class="d-block d-md-none">
     <div class="card card-flush mb-3">
@@ -166,7 +156,7 @@ $content = $Parsedown->text($markdown);
                     <?php
                     foreach ($hashtags as $hashtag) {
                     ?>
-                        <a href="./?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
+                        <a href="../?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
                     <?php
                     }
                     ?>
