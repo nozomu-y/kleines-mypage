@@ -10,11 +10,21 @@ if (!isset($_GET['bulletin_board_id'])) {
 }
 
 $bulletin_board_id = $_GET['bulletin_board_id'];
-$query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime AS edited, bulletin_boards.title, bulletin_boards.status, bulletin_board_contents.content, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, bulletin_boards.user_id, (SELECT MIN(datetime) FROM bulletin_board_contents WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS created, (SELECT COUNT(*) FROM bulletin_board_views WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS views, (SELECT COUNT(*) FROM bulletin_board_views WHERE bulletin_board_id=bulletin_boards.bulletin_board_id AND user_id=$USER->id) AS user_views, hashtags FROM bulletin_board_contents INNER JOIN (SELECT bulletin_board_id, MAX(datetime) as datetime FROM bulletin_board_contents GROUP BY bulletin_board_id) AS T1 ON T1.bulletin_board_id=bulletin_board_contents.bulletin_board_id AND T1.datetime=bulletin_board_contents.datetime INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_boards.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id";
+if (isset($_GET['datetime'])) {
+    $datetime = $_GET['datetime'];
+    $query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime AS edited, bulletin_boards.title, bulletin_boards.status, bulletin_board_contents.content, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, bulletin_boards.user_id, (SELECT MIN(datetime) FROM bulletin_board_contents WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS created, (SELECT COUNT(*) FROM bulletin_board_views WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS views, (SELECT COUNT(*) FROM bulletin_board_views WHERE bulletin_board_id=bulletin_boards.bulletin_board_id AND user_id=$USER->id) AS user_views, hashtags FROM bulletin_board_contents INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_boards.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id AND bulletin_board_contents.datetime='$datetime'";
+} else {
+    $query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime AS edited, bulletin_boards.title, bulletin_boards.status, bulletin_board_contents.content, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, bulletin_boards.user_id, (SELECT MIN(datetime) FROM bulletin_board_contents WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS created, (SELECT COUNT(*) FROM bulletin_board_views WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS views, (SELECT COUNT(*) FROM bulletin_board_views WHERE bulletin_board_id=bulletin_boards.bulletin_board_id AND user_id=$USER->id) AS user_views, hashtags FROM bulletin_board_contents INNER JOIN (SELECT bulletin_board_id, MAX(datetime) as datetime FROM bulletin_board_contents GROUP BY bulletin_board_id) AS T1 ON T1.bulletin_board_id=bulletin_board_contents.bulletin_board_id AND T1.datetime=bulletin_board_contents.datetime INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_boards.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id";
+}
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
     $mysqli->close();
+    exit();
+}
+if ($result->num_rows == 0) {
+    // error
+    header('Location: ' . MYPAGE_ROOT . '/bulletin_board/');
     exit();
 }
 while ($row = $result->fetch_assoc()) {
@@ -63,17 +73,36 @@ $content = $Parsedown->text($markdown);
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <?php
-            if ($status == 'RELEASE') {
+            if (isset($_GET['datetime'])) {
+                if ($status == 'RELEASE') {
             ?>
-                <li class="breadcrumb-item"><a href="../">掲示板</a></li>
-                <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $title ?></li>
+                    <li class="breadcrumb-item"><a href="../">掲示板</a></li>
+                    <li class="breadcrumb-item"><a href="./?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
+                    <li class="breadcrumb-item"><a href="./history/?bulletin_board_id=<?= $bulletin_board_id ?>">編集履歴</a></li>
+                    <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $edited ?></li>
+                <?php
+                } elseif ($status == 'DRAFT') {
+                ?>
+                    <li class="breadcrumb-item"><a href="../">掲示板</a></li>
+                    <li class="breadcrumb-item"><a href="../?owner">自分の投稿</a></li>
+                    <li class="breadcrumb-item"><a href="./?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
+                    <li class="breadcrumb-item"><a href="./history/?bulletin_board_id=<?= $bulletin_board_id ?>">編集履歴</a></li>
+                    <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $edited ?></li>
+                <?php
+                }
+            } else {
+                if ($status == 'RELEASE') {
+                ?>
+                    <li class="breadcrumb-item"><a href="../">掲示板</a></li>
+                    <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $title ?></li>
+                <?php
+                } elseif ($status == 'DRAFT') {
+                ?>
+                    <li class="breadcrumb-item"><a href="../">掲示板</a></li>
+                    <li class="breadcrumb-item"><a href="../?owner">自分の投稿</a></li>
+                    <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $title ?></li>
             <?php
-            } elseif ($status == 'DRAFT') {
-            ?>
-                <li class="breadcrumb-item"><a href="../">掲示板</a></li>
-                <li class="breadcrumb-item"><a href="../?owner">自分の投稿</a></li>
-                <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $title ?></li>
-            <?php
+                }
             }
             ?>
         </ol>
@@ -89,12 +118,12 @@ $content = $Parsedown->text($markdown);
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                         <a href="../edit/?fork=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-code-branch mr-2"></i>この記事をもとに新規作成</a>
                         <a href="./download.php?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fab fa-markdown mr-2"></i>Markdownをダウンロード</a>
-                        <a href="" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
                         <?php
                         if ($user_id == $USER->id) {
                         ?>
                             <div class="dropdown-divider"></div>
                             <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-edit mr-2"></i>編集</a>
+                            <a href="./history/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
                             <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button"><i class="fas fa-trash-alt mr-2"></i>削除</a>
                         <?php
                         }
@@ -143,12 +172,12 @@ $content = $Parsedown->text($markdown);
                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                     <a href="../edit/?fork=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-code-branch mr-2"></i>この記事をもとに新規作成</a>
                     <a href="./download.php?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fab fa-markdown mr-2"></i>Markdownをダウンロード</a>
-                    <a href="" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
                     <?php
                     if ($user_id == $USER->id) {
                     ?>
                         <div class="dropdown-divider"></div>
                         <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-edit mr-2"></i>編集</a>
+                        <a href="./history/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
                         <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button"><i class="fas fa-trash-alt mr-2"></i>削除</a>
                     <?php
                     }
