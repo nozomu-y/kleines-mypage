@@ -19,7 +19,7 @@ if (mb_strlen($_POST['markdown']) > 20000) {
 }
 
 $hashtags = $_POST['hashtags'];
-$hashtags = preg_split('/[\s#,]+/', $hashtags);
+$hashtags = explode(",", $hashtags);
 
 $title = $mysqli->real_escape_string($_POST['title']);
 $markdown = $mysqli->real_escape_string($_POST['markdown']);
