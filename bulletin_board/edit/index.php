@@ -10,9 +10,13 @@ $markdown = "";
 $draft = "selected";
 $release = "";
 $bulletin_board_id = "";
-if (isset($_GET['bulletin_board_id'])) {
-    $bulletin_board_id = $_GET['bulletin_board_id'];
-    $query = "SELECT * FROM bulletin_boards INNER JOIN bulletin_board_contents ON bulletin_boards.bulletin_board_id=bulletin_board_contents.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id AND bulletin_boards.user_id=$USER->id";
+if (isset($_GET['bulletin_board_id']) || isset($_GET['fork'])) {
+    if (isset($_GET['bulletin_board_id'])) {
+        $bulletin_board_id = $_GET['bulletin_board_id'];
+    } elseif (isset($_GET['fork'])) {
+        $bulletin_board_id = $_GET['fork'];
+    }
+    $query = "SELECT * FROM bulletin_boards INNER JOIN bulletin_board_contents ON bulletin_boards.bulletin_board_id=bulletin_board_contents.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
@@ -29,7 +33,15 @@ if (isset($_GET['bulletin_board_id'])) {
         $markdown = $row['content'];
         $title = $row['title'];
         $status = $row['status'];
+        $user_id = $row['user_id'];
     }
+
+    if ($user_id != $USER->id && !isset($_GET['fork'])) {
+        // error
+        header('Location: ' . MYPAGE_ROOT . '/bulletin_board/');
+        exit();
+    }
+
     $query = "SELECT hashtag FROM bulletin_board_hashtags WHERE bulletin_board_id=$bulletin_board_id";
     $result = $mysqli->query($query);
     if (!$result) {
@@ -40,12 +52,17 @@ if (isset($_GET['bulletin_board_id'])) {
     while ($row = $result->fetch_assoc()) {
         $hashtags .=  $row['hashtag'] . ",";
     }
-    if ($status == "DRAFT") {
-        $draft = "selected";
-        $release = "";
-    } elseif ($status == "RELEASE") {
-        $draft = "";
-        $release = "selected";
+    if (!isset($_GET['fork'])) {
+        if ($status == "DRAFT") {
+            $draft = "selected";
+            $release = "";
+        } elseif ($status == "RELEASE") {
+            $draft = "";
+            $release = "selected";
+        }
+    }
+    if (isset($_GET['fork'])) {
+        $bulletin_board_id = "";
     }
 }
 ?>
@@ -58,13 +75,13 @@ if (isset($_GET['bulletin_board_id'])) {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <?php
-            if ($status == 'RELEASE') {
+            if ($status == 'RELEASE' && !isset($_GET['fork'])) {
             ?>
                 <li class="breadcrumb-item"><a href="../">掲示板</a></li>
                 <li class="breadcrumb-item"><a href="../view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
                 <li class="breadcrumb-item active" aria-current="page">編集</li>
             <?php
-            } elseif ($status == 'DRAFT') {
+            } elseif ($status == 'DRAFT' && !isset($_GET['fork'])) {
             ?>
                 <li class="breadcrumb-item"><a href="../">掲示板</a></li>
                 <li class="breadcrumb-item"><a href="../?ownwer">自分の投稿</a></li>

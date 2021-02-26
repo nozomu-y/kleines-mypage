@@ -87,13 +87,15 @@ $content = $Parsedown->text($markdown);
                         <i class="fas fa-ellipsis-h fa-sm fa-fw text-gray-400"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                        <!-- <div class="dropdown-header">Dropdown Header:</div> -->
+                        <a href="../edit/?fork=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-code-branch mr-2"></i>この記事をもとに新規作成</a>
+                        <a href="./download.php?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fab fa-markdown mr-2"></i>Markdownをダウンロード</a>
+                        <a href="" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
                         <?php
                         if ($user_id == $USER->id) {
                         ?>
-                            <!-- <div class="dropdown-divider"></div> -->
-                            <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button">編集</a>
-                            <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button">削除</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-edit mr-2"></i>編集</a>
+                            <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button"><i class="fas fa-trash-alt mr-2"></i>削除</a>
                         <?php
                         }
                         ?>
@@ -139,9 +141,9 @@ $content = $Parsedown->text($markdown);
                     <i class="fas fa-ellipsis-h fa-sm fa-fw text-gray-400"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                    <!-- <div class="dropdown-header">Dropdown Header:</div> -->
-                    <a href="" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
+                    <a href="../edit/?fork=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-code-branch mr-2"></i>この記事をもとに新規作成</a>
                     <a href="./download.php?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fab fa-markdown mr-2"></i>Markdownをダウンロード</a>
+                    <a href="" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
                     <?php
                     if ($user_id == $USER->id) {
                     ?>
