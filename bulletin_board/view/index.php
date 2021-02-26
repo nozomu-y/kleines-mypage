@@ -50,27 +50,40 @@ $content = $Parsedown->text($markdown);
             if ($status == 'RELEASE') {
             ?>
                 <li class="breadcrumb-item"><a href="../">掲示板</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><?= $title ?></li>
+                <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $title ?></li>
             <?php
             } elseif ($status == 'DRAFT') {
             ?>
                 <li class="breadcrumb-item"><a href="../">掲示板</a></li>
                 <li class="breadcrumb-item"><a href="../draft">下書き</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><?= $title ?></li>
+                <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $title ?></li>
             <?php
             }
             ?>
         </ol>
     </nav>
-    <div class="row">
-        <div class="col-12 mb-3">
-            <div class="card">
-                <div class="card-header py-3">
-                    <div class="d-flex w-100 justify-content-between">
-                        <div>
-                            <span class="font-weight-bold text-primary h6" style="margin: auto 0;"><?= $title ?></span>
+    <div class="d-none d-md-block">
+        <div class="card mb-3">
+            <div class="card-header py-3">
+                <div class="d-flex w-100 justify-content-between">
+                    <div>
+                        <span class="font-weight-bold text-primary h6" style="margin: auto 0;"><?= $title ?></span>
+                    </div>
+                    <div class="my-auto">
+                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <?php
+                            if ($user_id == $USER->id) {
+                            ?>
+                                <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button">編集</a>
+                            <?php
+                            }
+                            ?>
                         </div>
-                        <div>
+                    </div>
+                    <!-- <div>
                             <?php
                             if ($user_id == $USER->id) {
                             ?>
@@ -78,58 +91,94 @@ $content = $Parsedown->text($markdown);
                             <?php
                             }
                             ?>
-                        </div>
-                    </div>
+                        </div> -->
                 </div>
-                <div class="card-body">
-                    <div class="d-none d-md-block">
-                        <div class="d-flex w-100 justify-content-between text-secondary mb-2">
-                            <div>
-                                <?php
-                                foreach ($hashtags as $hashtag) {
-                                ?>
-                                    <a href="./?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
-                                <?php
-                                }
-                                ?>
-                            </div>
-                            <div class="text-right">
-                                <small><span class="text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
-                                <br />
-                                <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
-                                <br>
-                                <small><span class="text-nowrap">最終編集：<?= $edited ?></span></small>
-                            </div>
+            </div>
+            <div class="card-body">
+                <div class="d-flex w-100 justify-content-between text-secondary mb-2">
+                    <div>
+                        <?php
+                        foreach ($hashtags as $hashtag) {
+                        ?>
+                            <a href="./?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="text-right">
+                        <small><span class="text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
+                        <br />
+                        <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
+                        <br>
+                        <small><span class="text-nowrap">最終編集：<?= $edited ?></span></small>
+                    </div>
 
-                        </div>
-                    </div>
-                    <div class="d-block d-md-none text-secondary mb-2">
-                        <div>
-                            <?php
-                            foreach ($hashtags as $hashtag) {
-                            ?>
-                                <a href="./?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
-                            <?php
-                            }
-                            ?>
-                        </div>
-                        <div class="text-right">
-                            <small><span class="text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
-                            <br />
-                            <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
-                            <br>
-                            <small><span class="text-nowrap">最終編集：<?= $edited ?></span></small>
-                        </div>
-
-                    </div>
-                    <div class="markdown-body">
-                        <?= $content ?>
-                    </div>
+                </div>
+                <div class="markdown-body">
+                    <?= $content ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .card.card-flush {
+        border-right: 0;
+        border-left: 0;
+        border-radius: 0;
+    }
+</style>
+
+<div class="d-block d-md-none">
+    <div class="card card-flush mb-3">
+        <div class="card-header py-3">
+            <div class="d-flex w-100 justify-content-between">
+                <div>
+                    <span class="font-weight-bold text-primary h6" style="margin: auto 0;"><?= $title ?></span>
+                </div>
+                <div class="my-auto">
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <?php
+                        if ($user_id == $USER->id) {
+                        ?>
+                            <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button">編集</a>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="text-secondary mb-3">
+                <div class="text-right">
+                    <small><span class="text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
+                    <br />
+                    <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
+                    <br>
+                    <small><span class="text-nowrap">最終編集：<?= $edited ?></span></small>
+                </div>
+                <div>
+                    <?php
+                    foreach ($hashtags as $hashtag) {
+                    ?>
+                        <a href="./?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
+                    <?php
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="markdown-body">
+                <?= $content ?>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
 
