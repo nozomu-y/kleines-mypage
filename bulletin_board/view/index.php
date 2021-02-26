@@ -32,6 +32,10 @@ while ($row = $result->fetch_assoc()) {
 }
 $hashtags = explode(" ", $hashtags);
 
+if ($status == 'DRAFT' && $user_id != $USER->id) {
+    header('Location: ' . MYPAGE_ROOT . '/bulletin_board/');
+    exit();
+}
 
 require __DIR__ . '/../../vendor/autoload.php';
 $Parsedown = new ParsedownExtra();
