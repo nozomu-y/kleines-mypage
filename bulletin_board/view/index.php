@@ -10,7 +10,7 @@ if (!isset($_GET['bulletin_board_id'])) {
 }
 
 $bulletin_board_id = $_GET['bulletin_board_id'];
-$query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime AS edited, bulletin_boards.title, bulletin_boards.status, bulletin_board_contents.content, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, bulletin_boards.user_id, (SELECT MIN(datetime) FROM bulletin_board_contents WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS created, hashtags FROM bulletin_board_contents INNER JOIN (SELECT bulletin_board_id, MAX(datetime) as datetime FROM bulletin_board_contents GROUP BY bulletin_board_id) AS T1 ON T1.bulletin_board_id=bulletin_board_contents.bulletin_board_id AND T1.datetime=bulletin_board_contents.datetime INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_boards.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id";
+$query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime AS edited, bulletin_boards.title, bulletin_boards.status, bulletin_board_contents.content, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, bulletin_boards.user_id, (SELECT MIN(datetime) FROM bulletin_board_contents WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS created, (SELECT COUNT(*) FROM bulletin_board_views WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS views, (SELECT COUNT(*) FROM bulletin_board_views WHERE bulletin_board_id=bulletin_boards.bulletin_board_id AND user_id=$USER->id) AS user_views, hashtags FROM bulletin_board_contents INNER JOIN (SELECT bulletin_board_id, MAX(datetime) as datetime FROM bulletin_board_contents GROUP BY bulletin_board_id) AS T1 ON T1.bulletin_board_id=bulletin_board_contents.bulletin_board_id AND T1.datetime=bulletin_board_contents.datetime INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_boards.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -29,6 +29,8 @@ while ($row = $result->fetch_assoc()) {
     $created = $row['created'];
     $created = date('Y/m/d H:i', strtotime($created));
     $name = $row['name'];
+    $views = $row['views'];
+    $user_views = $row['user_views'];
 }
 $hashtags = explode(" ", $hashtags);
 
@@ -36,6 +38,15 @@ if ($status == 'DRAFT' && $user_id != $USER->id) {
     header('Location: ' . MYPAGE_ROOT . '/bulletin_board/');
     exit();
 }
+
+$query = "INSERT INTO bulletin_board_views (bulletin_board_id, user_id, datetime) VALUES ($bulletin_board_id, $USER->id, now())";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+$views++;
 
 require __DIR__ . '/../../vendor/autoload.php';
 $Parsedown = new ParsedownExtra();
@@ -120,6 +131,8 @@ $content = $Parsedown->text($markdown);
                         <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
                         <br>
                         <small><span class="text-nowrap">最終編集：<?= $edited ?></span></small>
+                        <br>
+                        <small><i class="fas fa-eye mr-1"></i><?= $views ?></span></small>
                     </div>
 
                 </div>
@@ -162,6 +175,8 @@ $content = $Parsedown->text($markdown);
                     <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
                     <br>
                     <small><span class="text-nowrap">最終編集：<?= $edited ?></span></small>
+                    <br>
+                    <small><span class="text-nowrap">閲覧数：<?= $views ?></span></small>
                 </div>
                 <div>
                     <?php

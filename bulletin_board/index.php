@@ -8,11 +8,11 @@ $bulletin_boards = array();
 if (isset($_GET['owner'])) {
     $owner = "&owner";
     $owner_first = "?owner";
-    $query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime, bulletin_boards.title, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, hashtags FROM bulletin_board_contents INNER JOIN (SELECT bulletin_board_id, MAX(datetime) as datetime FROM bulletin_board_contents GROUP BY bulletin_board_id) AS T1 ON T1.bulletin_board_id=bulletin_board_contents.bulletin_board_id AND T1.datetime=bulletin_board_contents.datetime INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_boards.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.user_id=$USER->id ORDER BY bulletin_board_contents.datetime DESC";
+    $query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime, bulletin_boards.title, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, (SELECT COUNT(*) FROM bulletin_board_views WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS views, hashtags FROM bulletin_board_contents INNER JOIN (SELECT bulletin_board_id, MAX(datetime) as datetime FROM bulletin_board_contents GROUP BY bulletin_board_id) AS T1 ON T1.bulletin_board_id=bulletin_board_contents.bulletin_board_id AND T1.datetime=bulletin_board_contents.datetime INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_boards.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.user_id=$USER->id ORDER BY bulletin_board_contents.datetime DESC";
 } else {
     $owner = "";
     $owner_first = "";
-    $query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime, bulletin_boards.title, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, hashtags FROM bulletin_board_contents INNER JOIN (SELECT bulletin_board_id, MAX(datetime) as datetime FROM bulletin_board_contents GROUP BY bulletin_board_id) AS T1 ON T1.bulletin_board_id=bulletin_board_contents.bulletin_board_id AND T1.datetime=bulletin_board_contents.datetime INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_boards.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.status='RELEASE' ORDER BY bulletin_board_contents.datetime DESC";
+    $query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime, bulletin_boards.title, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, (SELECT COUNT(*) FROM bulletin_board_views WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS views, hashtags FROM bulletin_board_contents INNER JOIN (SELECT bulletin_board_id, MAX(datetime) as datetime FROM bulletin_board_contents GROUP BY bulletin_board_id) AS T1 ON T1.bulletin_board_id=bulletin_board_contents.bulletin_board_id AND T1.datetime=bulletin_board_contents.datetime INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_boards.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.status='RELEASE' ORDER BY bulletin_board_contents.datetime DESC";
 }
 $result = $mysqli->query($query);
 if (!$result) {
@@ -91,18 +91,20 @@ while ($row = $result->fetch_assoc()) {
                         $name = $bulletin_board['name'];
                         $datetime = $bulletin_board['datetime'];
                         $hashtags = $bulletin_board['hashtags'];
+                        $views = $bulletin_board['views'];
                     ?>
                         <div class="list-group-item flex-column align-items-start">
                             <div class="row">
                                 <div class="col-auto mr-auto text-truncate">
+                                    <!-- <i class="fas fa-circle mr-1 text-primary" style="font-size: 10%;"></i> -->
                                     <a class="mb-1 h5 text-dark" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title  ?></a>
                                 </div>
                                 <div class="col-auto ml-auto">
-                                    <small><span class="mr-3 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
+                                    <small><span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
                                     <small><span class="text-nowrap"><?= $datetime ?></span></small>
                                 </div>
                             </div>
-                            <div class="mt-1 text-truncate">
+                            <div class="mt-1 text-truncate mr-5">
                                 <?php
                                 if ($bulletin_board['status'] == 'DRAFT') {
                                 ?>
@@ -118,6 +120,9 @@ while ($row = $result->fetch_assoc()) {
                                 }
                                 ?>
                             </div>
+                            <small style="position:absolute;bottom:0;right:0;margin-right:1.25rem;margin-bottom:0.75rem;">
+                                <span class="text-nowrap"><i class="fas fa-eye mr-1"></i><?= $views ?></span>
+                            </small>
                         </div>
                     <?php
                     }
@@ -148,15 +153,19 @@ while ($row = $result->fetch_assoc()) {
         $name = $bulletin_board['name'];
         $datetime = $bulletin_board['datetime'];
         $hashtags = $bulletin_board['hashtags'];
+        $views = $bulletin_board['views'];
     ?>
         <div class="list-group-item pt-1">
             <div class="text-right mb-2">
-                <small><span class="mr-3 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span><span class="text-nowrap"><?= $datetime ?></span></small>
+                <small>
+                    <span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span>
+                    <span class="text-nowrap"><?= $datetime ?></span>
+                </small>
             </div>
             <div class="text-truncate">
                 <a class="mb-1 h5 text-dark" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a>
             </div>
-            <div class="mt-1 text-truncate">
+            <div class="mt-1 text-truncate mr-5">
                 <?php
                 if ($bulletin_board['status'] == 'DRAFT') {
                 ?>
@@ -172,6 +181,9 @@ while ($row = $result->fetch_assoc()) {
                 }
                 ?>
             </div>
+            <small style="position:absolute;bottom:0;right:0;margin-right:1.25rem;margin-bottom:0.75rem;">
+                <span class="text-nowrap"><i class="fas fa-eye mr-1"></i><?= $views ?></span>
+            </small>
         </div>
     <?php
     }
