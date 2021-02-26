@@ -10,7 +10,7 @@ if (!isset($_GET['bulletin_board_id'])) {
 }
 
 $bulletin_board_id = $_GET['bulletin_board_id'];
-$query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime AS edited, bulletin_boards.title, bulletin_boards.status, bulletin_board_contents.content, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, bulletin_boards.user_id, (SELECT MIN(datetime) FROM bulletin_board_contents WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS created, hashtags FROM bulletin_board_contents INNER JOIN (SELECT bulletin_board_id, MAX(datetime) as datetime FROM bulletin_board_contents GROUP BY bulletin_board_id) AS T1 ON T1.bulletin_board_id=bulletin_board_contents.bulletin_board_id AND T1.datetime=bulletin_board_contents.datetime INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_board_contents.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id";
+$query = "SELECT bulletin_board_contents.bulletin_board_id, bulletin_board_contents.datetime AS edited, bulletin_boards.title, bulletin_boards.status, bulletin_board_contents.content, bulletin_boards.status, CONCAT(profiles.grade, profiles.part, ' ', profiles.last_name, profiles.first_name) as name, bulletin_boards.user_id, (SELECT MIN(datetime) FROM bulletin_board_contents WHERE bulletin_board_id=bulletin_boards.bulletin_board_id) AS created, hashtags FROM bulletin_board_contents INNER JOIN (SELECT bulletin_board_id, MAX(datetime) as datetime FROM bulletin_board_contents GROUP BY bulletin_board_id) AS T1 ON T1.bulletin_board_id=bulletin_board_contents.bulletin_board_id AND T1.datetime=bulletin_board_contents.datetime INNER JOIN bulletin_boards ON bulletin_board_contents.bulletin_board_id=bulletin_boards.bulletin_board_id INNER JOIN profiles ON bulletin_boards.user_id=profiles.user_id INNER JOIN (SELECT bulletin_board_id, GROUP_CONCAT(hashtag SEPARATOR ' ') AS hashtags FROM bulletin_board_hashtags GROUP BY bulletin_board_id) AS bulletin_board_hastags ON bulletin_board_hastags.bulletin_board_id=bulletin_boards.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id";
 $result = $mysqli->query($query);
 if (!$result) {
     print('Query Failed : ' . $mysqli->error);
@@ -41,11 +41,17 @@ $content = $Parsedown->text($markdown);
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
 <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/github-markdown.min.css">
+<link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/tagsinput.min.css">
 <style>
     .card.card-flush {
         border-right: 0;
         border-left: 0;
         border-radius: 0;
+    }
+
+    .badge {
+        margin: 2px 0;
+        padding: 5px 8px;
     }
 </style>
 
@@ -62,7 +68,7 @@ $content = $Parsedown->text($markdown);
             } elseif ($status == 'DRAFT') {
             ?>
                 <li class="breadcrumb-item"><a href="../">掲示板</a></li>
-                <li class="breadcrumb-item"><a href="../draft">下書き</a></li>
+                <li class="breadcrumb-item"><a href="../?owner">自分の投稿</a></li>
                 <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $title ?></li>
             <?php
             }
@@ -85,6 +91,7 @@ $content = $Parsedown->text($markdown);
                             if ($user_id == $USER->id) {
                             ?>
                                 <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button">編集</a>
+                                <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button">削除</a>
                             <?php
                             }
                             ?>
@@ -98,7 +105,7 @@ $content = $Parsedown->text($markdown);
                         <?php
                         foreach ($hashtags as $hashtag) {
                         ?>
-                            <a href="../?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
+                            <a href="../?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white"><?= $hashtag ?></a>
                         <?php
                         }
                         ?>
@@ -156,7 +163,7 @@ $content = $Parsedown->text($markdown);
                     <?php
                     foreach ($hashtags as $hashtag) {
                     ?>
-                        <a href="../?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white" style="padding: .3em .5em"><?= $hashtag ?></a>
+                        <a href="../?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white"><?= $hashtag ?></a>
                     <?php
                     }
                     ?>
@@ -169,6 +176,24 @@ $content = $Parsedown->text($markdown);
     </div>
 </div>
 
+<?php
+if ($user_id == $USER->id) {
+?>
+    <form action="./delete.php" method="POST" id="delete">
+        <input type="hidden" name="bulletin_board_id" value="<?= $bulletin_board_id ?>">
+        <input type="hidden" name="delete">
+    </form>
+    <script>
+        function delete_bulletin_board() {
+            var ret = window.confirm("「<?= $title ?>」を削除しますか？過去の履歴も含め全てのデータが削除されます。");
+            if (ret) {
+                document.getElementById("delete").submit();
+            }
+        }
+    </script>
+<?php
+}
+?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
 
