@@ -72,7 +72,7 @@ if (isset($_GET['bulletin_board_id'])) {
             } elseif ($status == 'DRAFT') {
             ?>
                 <li class="breadcrumb-item"><a href="../">掲示板</a></li>
-                <li class="breadcrumb-item"><a href="../draft">下書き</a></li>
+                <li class="breadcrumb-item"><a href="../?ownwer">自分の投稿</a></li>
                 <li class="breadcrumb-item"><a href="../view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
                 <li class="breadcrumb-item active" aria-current="page">編集</li>
             <?php
