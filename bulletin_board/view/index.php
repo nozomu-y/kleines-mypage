@@ -49,14 +49,16 @@ if ($status == 'DRAFT' && $user_id != $USER->id) {
     exit();
 }
 
-$query = "INSERT INTO bulletin_board_views (bulletin_board_id, user_id, datetime) VALUES ($bulletin_board_id, $USER->id, now())";
-$result = $mysqli->query($query);
-if (!$result) {
-    print('Query Failed : ' . $mysqli->error);
-    $mysqli->close();
-    exit();
+if ($user_id != $USER->id) {
+    $query = "INSERT INTO bulletin_board_views (bulletin_board_id, user_id, datetime) VALUES ($bulletin_board_id, $USER->id, now())";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $views++;
 }
-$views++;
 
 require __DIR__ . '/../../vendor/autoload.php';
 $Parsedown = new ParsedownExtra();
