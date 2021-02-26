@@ -113,25 +113,31 @@ $content = $Parsedown->text($markdown);
         <div class="card mb-3">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"><?= $title ?></h6>
-                <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-h fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                        <a href="../edit/?fork=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-code-branch mr-2"></i>この記事をもとに新規作成</a>
-                        <a href="./download.php?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fab fa-markdown mr-2"></i>Markdownをダウンロード</a>
-                        <?php
-                        if ($user_id == $USER->id) {
-                        ?>
-                            <div class="dropdown-divider"></div>
-                            <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-edit mr-2"></i>編集</a>
-                            <a href="./history/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
-                            <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button"><i class="fas fa-trash-alt mr-2"></i>削除</a>
-                        <?php
-                        }
-                        ?>
+                <?php
+                if (!isset($_GET['datetime'])) {
+                ?>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                            <a href="../edit/?fork=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-code-branch mr-2"></i>この記事をもとに新規作成</a>
+                            <a href="./download.php?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fab fa-markdown mr-2"></i>Markdownをダウンロード</a>
+                            <?php
+                            if ($user_id == $USER->id) {
+                            ?>
+                                <div class="dropdown-divider"></div>
+                                <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-edit mr-2"></i>編集</a>
+                                <a href="./history/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
+                                <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button"><i class="fas fa-trash-alt mr-2"></i>削除</a>
+                            <?php
+                            }
+                            ?>
+                        </div>
                     </div>
-                </div>
+                <?php
+                }
+                ?>
             </div>
             <div class="card-body">
                 <div class="d-flex w-100 justify-content-between text-secondary mb-2">
@@ -167,25 +173,31 @@ $content = $Parsedown->text($markdown);
     <div class="card card-flush mb-3">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary"><?= $title ?></h6>
-            <div class="dropdown no-arrow">
-                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-ellipsis-h fa-sm fa-fw text-gray-400"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                    <a href="../edit/?fork=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-code-branch mr-2"></i>この記事をもとに新規作成</a>
-                    <a href="./download.php?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fab fa-markdown mr-2"></i>Markdownをダウンロード</a>
-                    <?php
-                    if ($user_id == $USER->id) {
-                    ?>
-                        <div class="dropdown-divider"></div>
-                        <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-edit mr-2"></i>編集</a>
-                        <a href="./history/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
-                        <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button"><i class="fas fa-trash-alt mr-2"></i>削除</a>
-                    <?php
-                    }
-                    ?>
+            <?php
+            if (!isset($_GET['datetime'])) {
+            ?>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-h fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                        <a href="../edit/?fork=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-code-branch mr-2"></i>この記事をもとに新規作成</a>
+                        <a href="./download.php?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fab fa-markdown mr-2"></i>Markdownをダウンロード</a>
+                        <?php
+                        if ($user_id == $USER->id) {
+                        ?>
+                            <div class="dropdown-divider"></div>
+                            <a href="../edit/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-edit mr-2"></i>編集</a>
+                            <a href="./history/?bulletin_board_id=<?= $bulletin_board_id ?>" class="dropdown-item" type="button"><i class="fas fa-history mr-2"></i>編集履歴</a>
+                            <a class="dropdown-item text-danger" onclick="delete_bulletin_board();" type="button"><i class="fas fa-trash-alt mr-2"></i>削除</a>
+                        <?php
+                        }
+                        ?>
+                    </div>
                 </div>
-            </div>
+            <?php
+            }
+            ?>
         </div>
         <div class="card-body">
             <div class="text-secondary mb-3">
