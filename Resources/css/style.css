@@ -31,6 +31,13 @@ body {
 }
 
 .markdown-body {
-  padding: 20px;
   background-color: #ffffff;
+}
+
+.editor-preview-full.markdown-body {
+  padding: 20px;
+}
+
+.editor-preview-side.markdown-body {
+  padding: 20px;
 }
