@@ -12,7 +12,7 @@ $release = "";
 $bulletin_board_id = "";
 if (isset($_GET['bulletin_board_id'])) {
     $bulletin_board_id = $_GET['bulletin_board_id'];
-    $query = "SELECT * FROM bulletin_boards INNER JOIN bulletin_board_contents ON bulletin_boards.bulletin_board_id=bulletin_board_contents.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id";
+    $query = "SELECT * FROM bulletin_boards INNER JOIN bulletin_board_contents ON bulletin_boards.bulletin_board_id=bulletin_board_contents.bulletin_board_id WHERE bulletin_boards.bulletin_board_id=$bulletin_board_id AND bulletin_boards.user_id=$USER->id";
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
@@ -38,7 +38,7 @@ if (isset($_GET['bulletin_board_id'])) {
         exit();
     }
     while ($row = $result->fetch_assoc()) {
-        $hashtags .= "#" . $row['hashtag'] . " ";
+        $hashtags .=  $row['hashtag'] . ",";
     }
     if ($status == "DRAFT") {
         $draft = "selected";
@@ -51,6 +51,7 @@ if (isset($_GET['bulletin_board_id'])) {
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
 <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/github-markdown.min.css">
+<link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/tagsinput.min.css">
 <style>
     .markdown-body {
         padding: 20px;
@@ -91,21 +92,22 @@ if (isset($_GET['bulletin_board_id'])) {
                     <label for="title">タイトル</label>
                     <input type="text" class="form-control" name="title" value="<?= $title ?>" required>
                 </div>
-                <div class="form-group">
-                    <label for="hashtags">タグ</label>
-                    <input type="text" class="form-control" name="hashtags" value="<?= $hashtags ?>" pattern="^#[^\s#,]+([\s,]#[^\s#,]+)*\s*$" placeholder="#引き継ぎ資料 #Kleines_Mypage">
-                    <small id="hashtagslHelp" class="form-text text-muted">半角スペース区切りで入力してください。</small>
-                </div>
-                <div class="form-group">
-                    <div class="d-flex justify-content-center my-5" id="spinner">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
+                <div class="d-flex justify-content-center my-5" id="spinner">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
                     </div>
-                    <textarea class="form-control d-none" name="markdown" id="markdown" rows="10"><?= $markdown ?></textarea>
+                </div>
+                <div class="d-none" id="form-hidden">
+                    <div class="form-group">
+                        <label for="hashtags">タグ</label>
+                        <input type="text" class="form-control" name="hashtags" id="hashtags" value="<?= $hashtags ?>" data-role="tagsinput">
+                        <small id="hashtagslHelp" class="form-text text-muted">半角スペース区切りで入力してください。</small>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control d-none" name="markdown" id="markdown" rows="10"><?= $markdown ?></textarea>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <!-- <label for="exampleFormControlSelect1"></label> -->
                     <select class="form-control" name="status">
                         <option value="DRAFT" <?= $draft ?>>下書き</option>
                         <option value="RELEASE" <?= $release ?>>公開</option>
@@ -150,9 +152,20 @@ if (isset($_GET['bulletin_board_id'])) {
                 }
             }]
         });
+        $("#hashtags").tagsinput({
+            tagClass: "badge badge-secondary font-weight-normal text-white mr-1",
+            confirmKeys: [13, 32],
+            maxTags: 10,
+            maxChars: 16
+        });
+        document.getElementsByClassName("bootstrap-tagsinput")[0].classList.add("form-control");
         document.getElementById("spinner").remove();
+        document.getElementById("form-hidden").classList.remove("d-none");
     }
 </script>
 
 <?php
+$script = '<script src="' . MYPAGE_ROOT . '/Resources/js/tagsinput.min.js"></script>';
+
+
 include_once __DIR__ . '/../../Common/foot.php';
