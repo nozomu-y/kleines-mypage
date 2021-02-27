@@ -66,9 +66,6 @@ $Parsedown->setBreaksEnabled(true);
 $Parsedown->setSafeMode(true);
 $content = $Parsedown->text($markdown);
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
-<link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/github-markdown.min.css">
-<link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/tagsinput.min.css">
 
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">掲示板</h1>
@@ -246,8 +243,6 @@ if ($user_id == $USER->id) {
 <?php
 }
 ?>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
 
 <?php
 include_once __DIR__ . '/../../Common/foot.php';
