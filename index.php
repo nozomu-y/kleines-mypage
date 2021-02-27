@@ -118,24 +118,24 @@ while ($row = $result->fetch_assoc()) {
             </div>
             <!-- <div class="col-xl-4 col-sm-6">
                 <?php
-                $query = "SELECT * FROM accounting_records WHERE user_id='$USER->id'";
-                $result = $mysqli->query($query);
-                if (!$result) {
-                    print('Query Failed : ' . $mysqli->error);
-                    $mysqli->close();
-                    exit();
-                }
-                $unpaid = 0;
-                $paid = 0;
-                while ($row = $result->fetch_assoc()) {
-                    $price = $row['price'];
-                    $datetime = $row['datetime'];
-                    if ($datetime == null) {
-                        $unpaid += $price;
-                    } else {
-                        $paid += $price;
-                    }
-                }
+                // $query = "SELECT * FROM accounting_records WHERE user_id='$USER->id'";
+                // $result = $mysqli->query($query);
+                // if (!$result) {
+                //     print('Query Failed : ' . $mysqli->error);
+                //     $mysqli->close();
+                //     exit();
+                // }
+                // $unpaid = 0;
+                // $paid = 0;
+                // while ($row = $result->fetch_assoc()) {
+                //     $price = $row['price'];
+                //     $datetime = $row['datetime'];
+                //     if ($datetime == null) {
+                //         $unpaid += $price;
+                //     } else {
+                //         $paid += $price;
+                //     }
+                // }
                 ?>
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -177,11 +177,6 @@ while ($row = $result->fetch_assoc()) {
                         <a href="https://github.com/nozomu-y/kleines-mypage" target="_blank"><img class="img-fluid" src="https://gh-card.dev/repos/nozomu-y/kleines-mypage.svg?fullname="></a>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-4 col-sm-6">
-                <?php
-                bulletin_board_pin(33, '');
-                ?>
             </div>
         </div>
     </div>
@@ -296,9 +291,6 @@ while ($row = $result->fetch_assoc()) {
             <a href="https://github.com/nozomu-y/kleines-mypage" target="_blank"><img class="img-fluid" src="https://gh-card.dev/repos/nozomu-y/kleines-mypage.svg?fullname="></a>
         </div>
     </div>
-    <?php
-    bulletin_board_pin(33, 'card-flush');
-    ?>
 </div>
 
 <?php
