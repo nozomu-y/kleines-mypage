@@ -2,6 +2,10 @@ body {
   font-family: "Noto Sans JP", sans-serif !important;
 }
 
+.list-group-flush:first-child .list-group-item:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
 .list-group-flush:last-child .list-group-item:last-child {
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
