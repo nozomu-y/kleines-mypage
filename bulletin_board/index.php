@@ -38,11 +38,11 @@ while ($row = $result->fetch_assoc()) {
                 <i class="fas fa-ellipsis-h"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="./edit/" class="dropdown-item" type="button">新規作成</a>
+                <a href="./edit/" class="dropdown-item">新規作成</a>
                 <?php
                 if (!isset($_GET['owner'])) {
                 ?>
-                    <a href="./?owner" class="dropdown-item" type="button">自分の投稿</a>
+                    <a href="./?owner" class="dropdown-item">自分の投稿</a>
                 <?php
                 }
                 ?>
