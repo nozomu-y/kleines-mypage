@@ -1,6 +1,10 @@
 Changelog
 ===
 
+## [1.1.0] - 2021-02-27
+### Added
+* Bulletin board
+
 ## [1.0.3] - 2021-02-25
 ### Changed
 * Security update
@@ -24,6 +28,7 @@ Changelog
 ## [1.0.0] - 2021-02-13
 #### Initial Release
 
+[1.1.0]: https://github.com/nozomu-y/kleines-mypage/releases/tag/v1.1.0
 [1.0.3]: https://github.com/nozomu-y/kleines-mypage/releases/tag/v1.0.3
 [1.0.2]: https://github.com/nozomu-y/kleines-mypage/releases/tag/v1.0.2
 [1.0.1]: https://github.com/nozomu-y/kleines-mypage/releases/tag/v1.0.1

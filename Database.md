@@ -6,6 +6,10 @@ mysql> SHOW TABLES;
 | accounting_lists              |
 | accounting_records            |
 | admins                        |
+| bulletin_board_contents       |
+| bulletin_board_hashtags       |
+| bulletin_board_views          |
+| bulletin_boards               |
 | identity_verifications        |
 | individual_accounting_lists   |
 | individual_accounting_records |
@@ -49,6 +53,51 @@ mysql> DESC admins;
 | user_id | int(5) unsigned zerofill | NO   | PRI | NULL    |       |
 | role    | varchar(32)              | YES  |     | NULL    |       |
 +---------+--------------------------+------+-----+---------+-------+
+```
+
+```
+mysql> DESC bulletin_board_contents;
++-------------------+---------------------------+------+-----+---------+-------+
+| Field             | Type                      | Null | Key | Default | Extra |
++-------------------+---------------------------+------+-----+---------+-------+
+| bulletin_board_id | int(10) unsigned zerofill | NO   | PRI | NULL    |       |
+| user_id           | int(5) unsigned zerofill  | YES  |     | NULL    |       |
+| datetime          | datetime                  | NO   | PRI | NULL    |       |
+| content           | varchar(21800)            | YES  |     | NULL    |       |
++-------------------+---------------------------+------+-----+---------+-------+
+```
+
+```
+mysql> DESC bulletin_board_hashtags;
++-------------------+---------------------------+------+-----+---------+-------+
+| Field             | Type                      | Null | Key | Default | Extra |
++-------------------+---------------------------+------+-----+---------+-------+
+| bulletin_board_id | int(10) unsigned zerofill | NO   | PRI | NULL    |       |
+| hashtag           | varchar(32)               | NO   | PRI | NULL    |       |
++-------------------+---------------------------+------+-----+---------+-------+
+```
+
+```
+mysql> DESC bulletin_board_views;
++-------------------+---------------------------+------+-----+---------+-------+
+| Field             | Type                      | Null | Key | Default | Extra |
++-------------------+---------------------------+------+-----+---------+-------+
+| bulletin_board_id | int(10) unsigned zerofill | NO   | PRI | NULL    |       |
+| user_id           | int(5) unsigned zerofill  | YES  |     | NULL    |       |
+| datetime          | datetime                  | NO   | PRI | NULL    |       |
++-------------------+---------------------------+------+-----+---------+-------+
+```
+
+```
+mysql> DESC bulletin_boards;
++-------------------+---------------------------+------+-----+---------+----------------+
+| Field             | Type                      | Null | Key | Default | Extra          |
++-------------------+---------------------------+------+-----+---------+----------------+
+| bulletin_board_id | int(10) unsigned zerofill | NO   | PRI | NULL    | auto_increment |
+| user_id           | int(5) unsigned zerofill  | YES  |     | NULL    |                |
+| title             | varchar(128)              | NO   |     | NULL    |                |
+| status            | varchar(32)               | YES  |     | NULL    |                |
++-------------------+---------------------------+------+-----+---------+----------------+
 ```
 
 ```

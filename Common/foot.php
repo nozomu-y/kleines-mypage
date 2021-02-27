@@ -35,9 +35,23 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-flash-1.6.1/b-html5-1.6.1/datatables.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.20/sorting/currency.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
 <?php
 echo $script;
 ?>
+
+<script>
+    var markdowns = document.getElementsByClassName("markdown-body");
+    for (var i = 0; i < markdowns.length; i++) {
+        var links = markdowns[i].getElementsByTagName("a");
+        for (var j = 0; j < links.length; j++) {
+            if (!links[j].href.includes('<?= WEB_DOMAIN . MYPAGE_ROOT ?>')) {
+                links[j].target = "_blank";
+            }
+        }
+    }
+</script>
+
 </body>
 
 </html>
