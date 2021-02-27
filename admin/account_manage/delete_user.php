@@ -51,6 +51,48 @@ if (isset($_POST['delete'])) {
         $mysqli->close();
         exit();
     }
+    $query = "DELETE FROM bulletin_board_contents WHERE user_id=$user_id";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $query = "DELETE FROM bulletin_board_views WHERE user_id=$user_id";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $query = "SELECT * FROM bulletin_boards WHERE user_id=$user_id";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
+    $bulletin_board_ids = array();
+    while ($row = $result->fetch_assoc()) {
+        $bulletin_board_id = $row['bulletin_board_id'];
+        array_push($bulletin_board_ids, $bulletin_board_id);
+    }
+    foreach ($bulletin_board_ids as $bulletin_board_id) {
+        $query = "DELETE FROM bulletin_board_hashtags WHERE bulletin_board_id=$bulletin_board_id";
+        $result = $mysqli->query($query);
+        if (!$result) {
+            print('Query Failed : ' . $mysqli->error);
+            $mysqli->close();
+            exit();
+        }
+    }
+    $query = "DELETE FROM bulletin_boards WHERE user_id=$user_id";
+    $result = $mysqli->query($query);
+    if (!$result) {
+        print('Query Failed : ' . $mysqli->error);
+        $mysqli->close();
+        exit();
+    }
     $query = "DELETE FROM profiles WHERE user_id=$user_id";
     $result = $mysqli->query($query);
     if (!$result) {

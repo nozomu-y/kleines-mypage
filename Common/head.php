@@ -24,6 +24,8 @@ if ($backtrace == '/index.php') {
     $admin_camp_accounting = 'active';
 } elseif (strpos($backtrace, '/info/') !== false) {
     $info = 'active';
+} elseif (strpos($backtrace, '/bulletin_board/') !== false) {
+    $bulletin_board = 'active';
 }
 ?>
 
@@ -42,6 +44,9 @@ if ($backtrace == '/index.php') {
     <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/sb-admin-2.min.css">
     <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-flash-1.6.1/b-html5-1.6.1/datatables.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/github-markdown.min.css">
+    <link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/tagsinput.min.css">
 </head>
 
 <body id="page-top" class="sidebar-toggled">
@@ -67,6 +72,13 @@ if ($backtrace == '/index.php') {
                 <a class="nav-link" href="<?= MYPAGE_ROOT ?>/accounts/">
                     <i class="fas fa-users fa-fw"></i>
                     <span>アカウント一覧</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item <?php echo $bulletin_board; ?>">
+                <a class="nav-link" href="<?= MYPAGE_ROOT ?>/bulletin_board/">
+                    <i class="fas fa-clipboard fa-fw"></i>
+                    <span>掲示板</span>
                 </a>
             </li>
             <hr class="sidebar-divider">

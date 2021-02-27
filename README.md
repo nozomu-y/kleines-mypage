@@ -28,6 +28,11 @@
 * Voice part
 * Email address
 
+#### Bulletin Board
+* Posting / Editing of articles in Markdown format
+* Markdown file download
+* Forks
+
 #### Member management
 * Management of enrollment status between present, temporarily absent, and resigned
 

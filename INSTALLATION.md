@@ -6,6 +6,7 @@ Installation
 - [googleapis / google-api-php-client](https://github.com/googleapis/google-api-php-client)
 - [PHPOffice / PhpSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)
 - [donatj / PhpUserAgent](https://github.com/donatj/PhpUserAgent)
+- [erusev / parsedown-extra](https://github.com/erusev/parsedown-extra)
 
 To install all dependencies, execute the following command in the root directory.
 

@@ -166,6 +166,63 @@ if (!$result) {
     exit();
 }
 
+$query = "
+CREATE TABLE IF NOT EXISTS bulletin_boards (
+    bulletin_board_id int UNSIGNED ZEROFILL AUTO_INCREMENT,
+    user_id int(5) UNSIGNED ZEROFILL,
+    title varchar(128),
+    status varchar(32),
+    PRIMARY KEY (bulletin_board_id)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE IF NOT EXISTS bulletin_board_contents (
+    bulletin_board_id int UNSIGNED ZEROFILL,
+    user_id int(5) UNSIGNED ZEROFILL,
+    datetime datetime,
+    content varchar(21800),
+    PRIMARY KEY (bulletin_board_id, datetime)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE IF NOT EXISTS bulletin_board_hashtags (
+    bulletin_board_id int UNSIGNED ZEROFILL,
+    hashtag varchar(32),
+    PRIMARY KEY (bulletin_board_id, hashtag)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
+$query = "
+CREATE TABLE IF NOT EXISTS bulletin_board_views (
+    bulletin_board_id int UNSIGNED ZEROFILL,
+    user_id int(5) UNSIGNED ZEROFILL,
+    datetime datetime,
+    PRIMARY KEY (bulletin_board_id, datetime)
+);";
+$result = $mysqli->query($query);
+if (!$result) {
+    print('Query Failed : ' . $mysqli->error);
+    $mysqli->close();
+    exit();
+}
+
 print("Database initialization finished!\n");
 
 $query = "SELECT user_id FROM users";
