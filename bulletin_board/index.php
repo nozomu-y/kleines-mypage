@@ -90,11 +90,11 @@ while ($row = $result->fetch_assoc()) {
                         }
                     ?>
                         <div class="list-group-item flex-column align-items-start <?= $unread ?>" style="min-height: 82px;">
-                            <div class="row">
-                                <div class="col-auto mr-auto text-truncate">
+                            <div class="d-flex w-100 justify-content-between">
+                                <div class="mt-auto text-truncate">
                                     <a class="mb-1 h5 text-dark" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title  ?></a>
                                 </div>
-                                <div class="col-auto ml-auto">
+                                <div class="text-right text-nowrap">
                                     <small><span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
                                     <small><span class="text-nowrap"><?= $datetime ?></span></small>
                                 </div>
