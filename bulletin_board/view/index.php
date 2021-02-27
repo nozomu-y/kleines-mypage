@@ -153,8 +153,8 @@ $content = $Parsedown->text($markdown);
                         <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
                         <br>
                         <small><span class="text-nowrap">最終編集：<?= $edited ?></span></small>
-                        <br>
-                        <small><i class="fas fa-eye mr-1"></i><?= $views ?></span></small>
+                        <!-- <br>
+                        <small><i class="fas fa-eye mr-1"></i><?= $views ?></span></small> -->
                     </div>
                 </div>
                 <hr style="border-top: 2px solid rgba(0,0,0,.1);">
@@ -204,8 +204,8 @@ $content = $Parsedown->text($markdown);
                     <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
                     <br>
                     <small><span class="text-nowrap">最終編集：<?= $edited ?></span></small>
-                    <br>
-                    <small><span class="text-nowrap">閲覧数：<?= $views ?></span></small>
+                    <!-- <br>
+                    <small><span class="text-nowrap">閲覧数：<?= $views ?></span></small> -->
                 </div>
                 <div>
                     <?php
