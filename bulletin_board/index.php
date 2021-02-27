@@ -73,7 +73,12 @@ while ($row = $result->fetch_assoc()) {
     <div class="d-none d-md-block">
         <div class="row">
             <div class="col-md-9">
-                <div class="list-group mb-3">
+                <div class="d-flex justify-content-center my-5" id="spinner-md">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="list-group mb-3 d-none" id="list-group-md">
                     <?php
                     foreach ($bulletin_boards as $bulletin_board) {
                         $bulletin_board_id = $bulletin_board['bulletin_board_id'];
@@ -89,10 +94,10 @@ while ($row = $result->fetch_assoc()) {
                             $unread = "unread";
                         }
                     ?>
-                        <div class="list-group-item flex-column align-items-start <?= $unread ?>" style="min-height: 82px;">
+                        <a class="list-group-item list-group-item-action flex-column align-items-start <?= $unread ?>" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>" style="min-height: 82px;">
                             <div class="d-flex w-100 justify-content-between">
                                 <div class="mt-auto text-truncate">
-                                    <a class="mb-1 h5 text-dark" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title  ?></a>
+                                    <h5 class="mb-1"><?= $title  ?></h5>
                                 </div>
                                 <div class="text-right text-nowrap">
                                     <small><span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
@@ -111,7 +116,7 @@ while ($row = $result->fetch_assoc()) {
                                 foreach ($hashtags as $hashtag) {
                                     if ($hashtag == '') continue;
                                 ?>
-                                    <a href="./?hashtag=<?= $hashtag . $owner ?>" class="badge badge-secondary font-weight-normal text-white"><?= $hashtag ?></a>
+                                    <object><a href="./?hashtag=<?= $hashtag . $owner ?>" class="badge badge-secondary font-weight-normal text-white"><?= $hashtag ?></a></object>
                                 <?php
                                 }
                                 ?>
@@ -119,7 +124,7 @@ while ($row = $result->fetch_assoc()) {
                             <small style="position:absolute;bottom:0;right:0;margin-right:1.25rem;margin-bottom:0.75rem;">
                                 <span class="text-nowrap"><i class="fas fa-eye mr-1"></i><?= $views ?></span>
                             </small>
-                        </div>
+                        </a>
                     <?php
                     }
                     ?>
@@ -141,58 +146,81 @@ while ($row = $result->fetch_assoc()) {
     </div>
 </div>
 
-<div class="list-group list-group-flush mb-3 d-block d-md-none">
-    <?php
-    foreach ($bulletin_boards as $bulletin_board) {
-        $bulletin_board_id = $bulletin_board['bulletin_board_id'];
-        $title = $bulletin_board['title'];
-        $name = $bulletin_board['name'];
-        $datetime = $bulletin_board['datetime'];
-        $hashtags = $bulletin_board['hashtags'];
-        $views = $bulletin_board['views'];
-        $user_views = $bulletin_board['user_views'];
-        if ($user_views > 0) {
-            $unread = "";
-        } else {
-            $unread = "unread";
-        }
-    ?>
-        <div class="list-group-item pt-1 <?= $unread ?>">
-            <div class="text-right mb-2">
-                <small>
-                    <span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span>
-                    <span class="text-nowrap"><?= $datetime ?></span>
+<div class="d-flex justify-content-center my-5" id="spinner-sm">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div id="list-group-sm" class="d-none">
+    <div class="list-group list-group-flush mb-3 d-block d-md-none">
+        <?php
+        foreach ($bulletin_boards as $bulletin_board) {
+            $bulletin_board_id = $bulletin_board['bulletin_board_id'];
+            $title = $bulletin_board['title'];
+            $name = $bulletin_board['name'];
+            $datetime = $bulletin_board['datetime'];
+            $hashtags = $bulletin_board['hashtags'];
+            $views = $bulletin_board['views'];
+            $user_views = $bulletin_board['user_views'];
+            if ($user_views > 0) {
+                $unread = "";
+            } else {
+                $unread = "unread";
+            }
+        ?>
+            <a class="list-group-item list-group-item-action pt-1 <?= $unread ?>" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>">
+                <div class="text-right mb-2">
+                    <small>
+                        <span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span>
+                        <span class="text-nowrap"><?= $datetime ?></span>
+                    </small>
+                </div>
+                <div class="text-truncate">
+                    <h6 class="mb-1 text-dark"><?= $title ?></h6>
+                </div>
+                <div class="mt-1 text-truncate mr-5">
+                    <?php
+                    if ($bulletin_board['status'] == 'DRAFT') {
+                    ?>
+                        <span class="badge badge-danger font-weight-normal">下書き</span>
+                    <?php
+                    }
+                    ?>
+                    <?php
+                    foreach ($hashtags as $hashtag) {
+                    ?>
+                        <object><a href="./?hashtag=<?= $hashtag . $owner ?>" class="badge badge-secondary font-weight-normal text-white"><?= $hashtag ?></a></object>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <small style="position:absolute;bottom:0;right:0;margin-right:1.25rem;margin-bottom:0.75rem;">
+                    <span class="text-nowrap"><i class="fas fa-eye mr-1"></i><?= $views ?></span>
                 </small>
-            </div>
-            <div class="text-truncate">
-                <a class="mb-1 h6 text-dark" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a>
-            </div>
-            <div class="mt-1 text-truncate mr-5">
-                <?php
-                if ($bulletin_board['status'] == 'DRAFT') {
-                ?>
-                    <span class="badge badge-danger font-weight-normal">下書き</span>
-                <?php
-                }
-                ?>
-                <?php
-                foreach ($hashtags as $hashtag) {
-                ?>
-                    <a href="./?hashtag=<?= $hashtag . $owner ?>" class="badge badge-secondary font-weight-normal text-white"><?= $hashtag ?></a>
-                <?php
-                }
-                ?>
-            </div>
-            <small style="position:absolute;bottom:0;right:0;margin-right:1.25rem;margin-bottom:0.75rem;">
-                <span class="text-nowrap"><i class="fas fa-eye mr-1"></i><?= $views ?></span>
-            </small>
-        </div>
-    <?php
-    }
-    ?>
+            </a>
+        <?php
+        }
+        ?>
+    </div>
 </div>
 
-
+<script>
+    window.onload = function() {
+        document.getElementById("spinner-md").remove();
+        document.getElementById("list-group-md").classList.remove("d-none");
+        document.getElementById("spinner-sm").remove();
+        document.getElementById("list-group-sm").classList.remove("d-none");
+    }
+</script>
 
 <?php
+$script .= '$(".js-link").on("click", function(e){
+  //伝播をストップ
+  e.stopPropagation();
+  e.preventDefault();
+
+  //リンクを取得して飛ばす
+  location.href = $(this).attr("data-url");
+})';
+
 include_once __DIR__ . '/../Common/foot.php';
