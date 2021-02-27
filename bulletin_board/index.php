@@ -165,7 +165,7 @@ while ($row = $result->fetch_assoc()) {
                 </small>
             </div>
             <div class="text-truncate">
-                <a class="mb-1 h5 text-dark" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a>
+                <a class="mb-1 h6 text-dark" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a>
             </div>
             <div class="mt-1 text-truncate mr-5">
                 <?php
