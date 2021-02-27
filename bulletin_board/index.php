@@ -121,9 +121,9 @@ while ($row = $result->fetch_assoc()) {
                                 }
                                 ?>
                             </div>
-                            <small style="position:absolute;bottom:0;right:0;margin-right:1.25rem;margin-bottom:0.75rem;">
+                            <!-- <small style="position:absolute;bottom:0;right:0;margin-right:1.25rem;margin-bottom:0.75rem;">
                                 <span class="text-nowrap"><i class="fas fa-eye mr-1"></i><?= $views ?></span>
-                            </small>
+                            </small> -->
                         </a>
                     <?php
                     }
@@ -195,9 +195,9 @@ while ($row = $result->fetch_assoc()) {
                         }
                         ?>
                     </div>
-                    <small style="position:absolute;bottom:0;right:0;margin-right:1.25rem;margin-bottom:0.75rem;">
+                    <!-- <small style="position:absolute;bottom:0;right:0;margin-right:1.25rem;margin-bottom:0.75rem;">
                         <span class="text-nowrap"><i class="fas fa-eye mr-1"></i><?= $views ?></span>
-                    </small>
+                    </small> -->
                 </a>
             <?php
             }
