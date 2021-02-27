@@ -83,9 +83,9 @@ foreach ($hashtags as $hashtag) {
     $query .= " ($bulletin_board_id, '$hashtag'),";
     $hashtag_count++;
 }
-$query = mb_substr($query, 0, -1);
 
 if ($hashtag_count > 0) {
+    $query = mb_substr($query, 0, -1);
     $result = $mysqli->query($query);
     if (!$result) {
         print('Query Failed : ' . $mysqli->error);
@@ -93,7 +93,6 @@ if ($hashtag_count > 0) {
         exit();
     }
 }
-
 
 header('Location: ' . MYPAGE_ROOT . '/bulletin_board/view/?bulletin_board_id=' . $bulletin_board_id);
 exit();
