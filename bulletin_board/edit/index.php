@@ -75,14 +75,14 @@ if (isset($_GET['bulletin_board_id']) || isset($_GET['fork'])) {
             if ($status == 'RELEASE' && !isset($_GET['fork'])) {
             ?>
                 <li class="breadcrumb-item"><a href="../">掲示板</a></li>
-                <li class="breadcrumb-item"><a href="../view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
+                <li class="breadcrumb-item"><a href="../view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= h($title) ?></a></li>
                 <li class="breadcrumb-item active" aria-current="page">編集</li>
             <?php
             } elseif ($status == 'DRAFT' && !isset($_GET['fork'])) {
             ?>
                 <li class="breadcrumb-item"><a href="../">掲示板</a></li>
                 <li class="breadcrumb-item"><a href="../?ownwer">自分の投稿</a></li>
-                <li class="breadcrumb-item"><a href="../view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
+                <li class="breadcrumb-item"><a href="../view/?bulletin_board_id=<?= $bulletin_board_id ?>"><?= h($title) ?></a></li>
                 <li class="breadcrumb-item active" aria-current="page">編集</li>
             <?php
             } else {
@@ -99,7 +99,7 @@ if (isset($_GET['bulletin_board_id']) || isset($_GET['fork'])) {
             <form method="POST" action="./edit.php">
                 <div class="form-group">
                     <label for="title">タイトル</label>
-                    <input type="text" class="form-control" name="title" value="<?= $title ?>" required>
+                    <input type="text" class="form-control" name="title" value="<?= h($title) ?>" required>
                 </div>
                 <div class="d-flex justify-content-center my-5" id="spinner">
                     <div class="spinner-border text-primary" role="status">
@@ -109,11 +109,11 @@ if (isset($_GET['bulletin_board_id']) || isset($_GET['fork'])) {
                 <div class="d-none" id="form-hidden">
                     <div class="form-group">
                         <label for="hashtags">タグ</label>
-                        <input type="text" class="form-control" name="hashtags" id="hashtags" value="<?= $hashtags ?>">
+                        <input type="text" class="form-control" name="hashtags" id="hashtags" value="<?= h($hashtags) ?>">
                         <small id="hashtagslHelp" class="form-text text-muted">半角スペース区切りで入力してください。</small>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control d-none" name="markdown" id="markdown" rows="10"><?= $markdown ?></textarea>
+                        <textarea class="form-control d-none" name="markdown" id="markdown" rows="10"><?= h($markdown) ?></textarea>
                     </div>
                 </div>
                 <div class="form-group">

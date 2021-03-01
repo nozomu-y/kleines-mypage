@@ -65,7 +65,7 @@ while ($row = $result->fetch_assoc()) {
     if (isset($_GET['hashtag'])) {
     ?>
         <div class="mb-3">
-            <span><a href="./<?= $owner_first ?>" class="badge badge-secondary font-weight-normal text-white"><?= $_GET['hashtag'] ?><i class="fas fa-times ml-2"></i></a></span>
+            <span><a href="./<?= $owner_first ?>" class="badge badge-secondary font-weight-normal text-white"><?= h($_GET['hashtag']) ?><i class="fas fa-times ml-2"></i></a></span>
         </div>
     <?php
     }
@@ -97,10 +97,10 @@ while ($row = $result->fetch_assoc()) {
                         <a class="list-group-item list-group-item-action flex-column align-items-start <?= $unread ?>" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>" style="min-height: 82px;">
                             <div class="d-flex w-100 justify-content-between">
                                 <div class="mt-auto text-truncate">
-                                    <h5 class="mb-1"><?= $title  ?></h5>
+                                    <h5 class="mb-1"><?= h($title)  ?></h5>
                                 </div>
                                 <div class="text-right text-nowrap">
-                                    <small><span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
+                                    <small><span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= h($name) ?></span></small>
                                     <small><span class="text-nowrap"><?= $datetime ?></span></small>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@ while ($row = $result->fetch_assoc()) {
                                 foreach ($hashtags as $hashtag) {
                                     if ($hashtag == '') continue;
                                 ?>
-                                    <object><a href="./?hashtag=<?= $hashtag . $owner ?>" class="badge badge-secondary font-weight-normal text-white"><?= $hashtag ?></a></object>
+                                    <object><a href="./?hashtag=<?= h($hashtag) . $owner ?>" class="badge badge-secondary font-weight-normal text-white"><?= h($hashtag) ?></a></object>
                                 <?php
                                 }
                                 ?>
@@ -172,12 +172,12 @@ while ($row = $result->fetch_assoc()) {
                 <a class="list-group-item list-group-item-action pt-1 <?= $unread ?>" href="./view/?bulletin_board_id=<?= $bulletin_board_id ?>">
                     <div class="text-right mb-2">
                         <small>
-                            <span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span>
+                            <span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= h($name) ?></span>
                             <span class="text-nowrap"><?= $datetime ?></span>
                         </small>
                     </div>
                     <div class="text-truncate">
-                        <h6 class="mb-1 text-dark"><?= $title ?></h6>
+                        <h6 class="mb-1 text-dark"><?= h($title) ?></h6>
                     </div>
                     <div class="mt-1 text-truncate mr-5">
                         <?php
@@ -190,7 +190,7 @@ while ($row = $result->fetch_assoc()) {
                         <?php
                         foreach ($hashtags as $hashtag) {
                         ?>
-                            <object><a href="./?hashtag=<?= $hashtag . $owner ?>" class="badge badge-secondary font-weight-normal text-white"><?= $hashtag ?></a></object>
+                            <object><a href="./?hashtag=<?= h($hashtag) . $owner ?>" class="badge badge-secondary font-weight-normal text-white"><?= h($hashtag) ?></a></object>
                         <?php
                         }
                         ?>

@@ -76,7 +76,7 @@ $content = $Parsedown->text($markdown);
                 if ($status == 'RELEASE') {
             ?>
                     <li class="breadcrumb-item"><a href="../">掲示板</a></li>
-                    <li class="breadcrumb-item"><a href="./?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
+                    <li class="breadcrumb-item"><a href="./?bulletin_board_id=<?= $bulletin_board_id ?>"><?= h($title) ?></a></li>
                     <li class="breadcrumb-item"><a href="./history/?bulletin_board_id=<?= $bulletin_board_id ?>">編集履歴</a></li>
                     <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $edited ?></li>
                 <?php
@@ -84,7 +84,7 @@ $content = $Parsedown->text($markdown);
                 ?>
                     <li class="breadcrumb-item"><a href="../">掲示板</a></li>
                     <li class="breadcrumb-item"><a href="../?owner">自分の投稿</a></li>
-                    <li class="breadcrumb-item"><a href="./?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
+                    <li class="breadcrumb-item"><a href="./?bulletin_board_id=<?= $bulletin_board_id ?>"><?= h($title) ?></a></li>
                     <li class="breadcrumb-item"><a href="./history/?bulletin_board_id=<?= $bulletin_board_id ?>">編集履歴</a></li>
                     <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $edited ?></li>
                 <?php
@@ -93,13 +93,13 @@ $content = $Parsedown->text($markdown);
                 if ($status == 'RELEASE') {
                 ?>
                     <li class="breadcrumb-item"><a href="../">掲示板</a></li>
-                    <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $title ?></li>
+                    <li class="breadcrumb-item text-truncate active" aria-current="page"><?= h($title) ?></li>
                 <?php
                 } elseif ($status == 'DRAFT') {
                 ?>
                     <li class="breadcrumb-item"><a href="../">掲示板</a></li>
                     <li class="breadcrumb-item"><a href="../?owner">自分の投稿</a></li>
-                    <li class="breadcrumb-item text-truncate active" aria-current="page"><?= $title ?></li>
+                    <li class="breadcrumb-item text-truncate active" aria-current="page"><?= h($title) ?></li>
             <?php
                 }
             }
@@ -109,7 +109,7 @@ $content = $Parsedown->text($markdown);
     <div class="d-none d-md-block">
         <div class="card mb-3">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary"><?= $title ?></h6>
+                <h6 class="m-0 font-weight-bold text-primary"><?= h($title) ?></h6>
                 <?php
                 if (!isset($_GET['datetime'])) {
                 ?>
@@ -142,13 +142,13 @@ $content = $Parsedown->text($markdown);
                         <?php
                         foreach ($hashtags as $hashtag) {
                         ?>
-                            <a href="../?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white"><?= $hashtag ?></a>
+                            <a href="../?hashtag=<?= h($hashtag) ?>" class="badge badge-secondary font-weight-normal text-white"><?= h($hashtag) ?></a>
                         <?php
                         }
                         ?>
                     </div>
                     <div class="text-right">
-                        <small><span class="text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
+                        <small><span class="text-nowrap"><i class="fas fa-user mr-1"></i><?= h($name) ?></span></small>
                         <br />
                         <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
                         <br>
@@ -169,7 +169,7 @@ $content = $Parsedown->text($markdown);
 <div class="d-block d-md-none">
     <div class="card card-flush mb-3">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary"><?= $title ?></h6>
+            <h6 class="m-0 font-weight-bold text-primary"><?= h($title) ?></h6>
             <?php
             if (!isset($_GET['datetime'])) {
             ?>
@@ -199,7 +199,7 @@ $content = $Parsedown->text($markdown);
         <div class="card-body">
             <div class="text-secondary">
                 <div class="text-right">
-                    <small><span class="text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span></small>
+                    <small><span class="text-nowrap"><i class="fas fa-user mr-1"></i><?= h($name) ?></span></small>
                     <br />
                     <small><span class="text-nowrap">作成日時：<?= $created ?></span></small>
                     <br>
@@ -211,7 +211,7 @@ $content = $Parsedown->text($markdown);
                     <?php
                     foreach ($hashtags as $hashtag) {
                     ?>
-                        <a href="../?hashtag=<?= $hashtag ?>" class="badge badge-secondary font-weight-normal text-white"><?= $hashtag ?></a>
+                        <a href="../?hashtag=<?= h($hashtag) ?>" class="badge badge-secondary font-weight-normal text-white"><?= h($hashtag) ?></a>
                     <?php
                     }
                     ?>
@@ -234,7 +234,7 @@ if ($user_id == $USER->id) {
     </form>
     <script>
         function delete_bulletin_board() {
-            var ret = window.confirm("「<?= $title ?>」を削除しますか？過去の履歴も含め全てのデータが削除されます。");
+            var ret = window.confirm("「<?= h($title) ?>」を削除しますか？過去の履歴も含め全てのデータが削除されます。");
             if (ret) {
                 document.getElementById("delete").submit();
             }

@@ -44,14 +44,14 @@ while ($row = $result->fetch_assoc()) {
             if ($status == 'RELEASE') {
             ?>
                 <li class="breadcrumb-item"><a href="../../">掲示板</a></li>
-                <li class="breadcrumb-item"><a href="../?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
+                <li class="breadcrumb-item"><a href="../?bulletin_board_id=<?= $bulletin_board_id ?>"><?= h($title) ?></a></li>
                 <li class="breadcrumb-item text-truncate active" aria-current="page">編集履歴</li>
             <?php
             } elseif ($status == 'DRAFT') {
             ?>
                 <li class="breadcrumb-item"><a href="../../">掲示板</a></li>
                 <li class="breadcrumb-item"><a href="../../?owner">自分の投稿</a></li>
-                <li class="breadcrumb-item"><a href="../?bulletin_board_id=<?= $bulletin_board_id ?>"><?= $title ?></a></li>
+                <li class="breadcrumb-item"><a href="../?bulletin_board_id=<?= $bulletin_board_id ?>"><?= h($title) ?></a></li>
                 <li class="breadcrumb-item text-truncate active" aria-current="page">編集履歴</li>
             <?php
             }
@@ -74,7 +74,7 @@ while ($row = $result->fetch_assoc()) {
     if (isset($_GET['hashtag'])) {
     ?>
         <div class="mb-3">
-            <span><a href="./<?= $owner_first ?>" class="badge badge-secondary font-weight-normal text-white"><?= $_GET['hashtag'] ?><i class="fas fa-times ml-2"></i></a></span>
+            <span><a href="./<?= $owner_first ?>" class="badge badge-secondary font-weight-normal text-white"><?= h($_GET['hashtag']) ?><i class="fas fa-times ml-2"></i></a></span>
         </div>
     <?php
     }
