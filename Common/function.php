@@ -16,6 +16,11 @@ function format_price($price)
     return '￥' . number_format($price);
 }
 
+function h($text)
+{
+    return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}
+
 function bulletin_board_pin($bulletin_board_id, $card_flush)
 {
     require __DIR__ . '/dbconnect.php';
