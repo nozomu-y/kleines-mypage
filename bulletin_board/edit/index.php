@@ -66,9 +66,6 @@ if (isset($_GET['bulletin_board_id']) || isset($_GET['fork'])) {
     }
 }
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
-<link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/github-markdown.min.css">
-<link rel="stylesheet" href="<?= MYPAGE_ROOT ?>/Resources/css/tagsinput.min.css">
 
 <div class="container-fluid">
     <h1 class="h3 text-gray-800 mb-4">掲示板</h1>
@@ -112,7 +109,7 @@ if (isset($_GET['bulletin_board_id']) || isset($_GET['fork'])) {
                 <div class="d-none" id="form-hidden">
                     <div class="form-group">
                         <label for="hashtags">タグ</label>
-                        <input type="text" class="form-control" name="hashtags" id="hashtags" value="<?= $hashtags ?>" data-role="tagsinput">
+                        <input type="text" class="form-control" name="hashtags" id="hashtags" value="<?= $hashtags ?>">
                         <small id="hashtagslHelp" class="form-text text-muted">半角スペース区切りで入力してください。</small>
                     </div>
                     <div class="form-group">
@@ -136,12 +133,10 @@ if (isset($_GET['bulletin_board_id']) || isset($_GET['fork'])) {
 
 <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
 
 <script>
     window.onload = function() {
         var maxHeight = (document.getElementById("content").clientHeight - 300) + "px";
-        console.log(maxHeight);
         var easymde = new EasyMDE({
             sideBySideFullscreen: false,
             spellChecker: false,
@@ -165,8 +160,10 @@ if (isset($_GET['bulletin_board_id']) || isset($_GET['fork'])) {
             }]
         });
         $("#hashtags").tagsinput({
-            tagClass: "badge badge-secondary font-weight-normal text-white mr-1",
-            confirmKeys: [13, 32],
+            tagClass: function(item) {
+                return 'badge badge-secondary font-weight-normal text-white mr-1';
+            },
+            confirmKeys: [32], // space
             maxTags: 10,
             maxChars: 16
         });
@@ -177,7 +174,5 @@ if (isset($_GET['bulletin_board_id']) || isset($_GET['fork'])) {
 </script>
 
 <?php
-$script = '<script src="' . MYPAGE_ROOT . '/Resources/js/tagsinput.min.js"></script>';
-
 
 include_once __DIR__ . '/../../Common/foot.php';
