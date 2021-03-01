@@ -49,7 +49,7 @@ while ($row = $result->fetch_assoc()) {
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary mb-1">個別会計総額</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $USER->get_individual_accounting_total(); ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $USER->get_individual_accounting_total() ?></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-wallet fa-2x text-gray-300"></i>
@@ -64,7 +64,7 @@ while ($row = $result->fetch_assoc()) {
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-danger mb-1">滞納額</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $USER->get_delinquent(); ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $USER->get_delinquent() ?></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-yen-sign fa-2x text-gray-300"></i>
@@ -101,11 +101,11 @@ while ($row = $result->fetch_assoc()) {
                                 <a href="./bulletin_board/view/?bulletin_board_id=<?= $bulletin_board_id ?>" class="list-group-item list-group-item-action pt-1 <?= $unread ?>" <?= $border_top_0 ?>>
                                     <div class="text-right mb-2">
                                         <small>
-                                            <span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span>
+                                            <span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= h($name) ?></span>
                                             <span class="text-nowrap"><?= $datetime ?></span>
                                         </small>
                                     </div>
-                                    <h5 class="mb-0 text-truncate"><?= $title ?></h5>
+                                    <h5 class="mb-0 text-truncate"><?= h($title) ?></h5>
                                 </a>
                             <?php
                                 $border_top_0 = '';
@@ -155,11 +155,11 @@ while ($row = $result->fetch_assoc()) {
                         </div>
                         <div class="mt-4 text-center small">
                             <span class="mr-2">
-                                <i class="fas fa-circle text-primary"></i> 既納 ￥ <?php echo number_format($paid); ?>
+                                <i class="fas fa-circle text-primary"></i> 既納 ￥ <?= number_format($paid) ?>
                             </span>
                             <br>
                             <span class="mr-2">
-                                <i class="fas fa-circle text-danger"></i> 未納 ￥ <?php echo number_format($unpaid); ?>
+                                <i class="fas fa-circle text-danger"></i> 未納 ￥ <?= number_format($unpaid) ?>
                             </span>
                         </div>
                     </div>
@@ -211,7 +211,7 @@ while ($row = $result->fetch_assoc()) {
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary mb-1">個別会計総額</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $USER->get_individual_accounting_total(); ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $USER->get_individual_accounting_total() ?></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-wallet fa-2x text-gray-300"></i>
@@ -226,7 +226,7 @@ while ($row = $result->fetch_assoc()) {
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-danger mb-1">滞納額</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $USER->get_delinquent(); ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $USER->get_delinquent() ?></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-yen-sign fa-2x text-gray-300"></i>
@@ -266,11 +266,11 @@ while ($row = $result->fetch_assoc()) {
                     <a href="./bulletin_board/view/?bulletin_board_id=<?= $bulletin_board_id ?>" class="list-group-item list-group-item-action pt-1 <?= $unread ?>" <?= $border_top_0 ?>>
                         <div class="text-right mb-2">
                             <small>
-                                <span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= $name ?></span>
+                                <span class="mr-2 text-nowrap"><i class="fas fa-user mr-1"></i><?= h($name) ?></span>
                                 <span class="text-nowrap"><?= $datetime ?></span>
                             </small>
                         </div>
-                        <h6 class="mb-0 text-truncate"><?= $title ?></h6>
+                        <h6 class="mb-0 text-truncate"><?= h($title) ?></h6>
                     </a>
                 <?php
                     $border_top_0 = '';
