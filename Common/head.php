@@ -37,7 +37,7 @@ $CSS_JS_CACHE = '20210227';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo "Kleines Mypage" . $PAGE_NAME; ?></title>
+    <title><?= "Kleines Mypage" . $PAGE_NAME ?></title>
 
     <!-- Fonts -->
     <link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
@@ -63,21 +63,21 @@ $CSS_JS_CACHE = '20210227';
             </a>
             <hr class="sidebar-divider my-0">
             <!-- nav item -->
-            <li class="nav-item <?php echo $home; ?>">
+            <li class="nav-item <?= $home ?>">
                 <a class="nav-link" href="<?= MYPAGE_ROOT ?>">
                     <i class="fas fa-home fa-fw"></i>
                     <span>Home</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item <?php echo $accounts; ?>">
+            <li class="nav-item <?= $accounts ?>">
                 <a class="nav-link" href="<?= MYPAGE_ROOT ?>/accounts/">
                     <i class="fas fa-users fa-fw"></i>
                     <span>アカウント一覧</span>
                 </a>
             </li>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item <?php echo $bulletin_board; ?>">
+            <li class="nav-item <?= $bulletin_board ?>">
                 <a class="nav-link" href="<?= MYPAGE_ROOT ?>/bulletin_board/">
                     <i class="fas fa-clipboard fa-fw"></i>
                     <span>掲示板</span>
@@ -88,13 +88,13 @@ $CSS_JS_CACHE = '20210227';
             <div class="sidebar-heading">
                 会計システム
             </div>
-            <li class="nav-item <?php echo $accounting_collection; ?>">
+            <li class="nav-item <?= $accounting_collection ?>">
                 <a class="nav-link" href="<?= MYPAGE_ROOT ?>/accounting/collection/">
                     <i class="fas fa-yen-sign fa-fw"></i>
                     <span>集金記録</span>
                 </a>
             </li>
-            <li class="nav-item <?php echo $accounting_individual; ?>">
+            <li class="nav-item <?= $accounting_individual ?>">
                 <a class="nav-link" href="<?= MYPAGE_ROOT ?>/accounting/individual/">
                     <i class="fas fa-wallet fa-fw"></i>
                     <span>個別会計</span>
@@ -128,7 +128,7 @@ $CSS_JS_CACHE = '20210227';
             }
             ?>
             <hr class="sidebar-divider my-0">
-            <li class="nav-item <?php echo $info; ?>">
+            <li class="nav-item <?= $info ?>">
                 <a class="nav-link" href="<?= MYPAGE_ROOT ?>/info/">
                     <i class="fas fa-info-circle fa-fw"></i>
                     <span>Info</span>
@@ -183,7 +183,7 @@ $CSS_JS_CACHE = '20210227';
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 text-gray-600 small"><?php echo $USER->get_name(); ?></span>
+                                <span class="mr-2 text-gray-600 small"><?= h($USER->get_name()) ?></span>
                                 <i class="fas fa-user fa-fw"></i>
                             </a>
                             <!-- Dropdown - User Information -->

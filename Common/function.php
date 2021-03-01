@@ -54,7 +54,7 @@ function bulletin_board_pin($bulletin_board_id, $card_flush)
 ?>
     <div class="card <?= $card_flush ?> shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"><?= $title ?></h6>
+            <h6 class="m-0 font-weight-bold text-primary"><?= h($title) ?></h6>
         </div>
         <div class="card-body">
             <div class="markdown-body text-secondary">

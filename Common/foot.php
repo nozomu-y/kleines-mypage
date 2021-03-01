@@ -11,7 +11,7 @@
         }
         ?>
         <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Chor Kleines <?php echo date("Y") ?></span>
+            <span>Copyright &copy; Chor Kleines <?= date("Y") ?></span>
         </div>
     </div>
 </footer>
