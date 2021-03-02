@@ -106,19 +106,19 @@ if ($time_now - $validation_time > 24 * 60 * 60) {
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">パスワードの設定</h1>
-                                        <p><?php echo $USER->get_name() ?>さん。パスワードを入力してください。（大小英文字・数字・記号からなる8文字以上の文字列）</p>
+                                        <p><?= h($USER->get_name()) ?>さん。パスワードを入力してください。（大小英文字・数字・記号からなる8文字以上の文字列）</p>
                                     </div>
                                     <form class="user" method="POST" action="./check_password.php">
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user <?php echo $password_invalid ?>" id="password1" name="password1" required pattern="^([\x21-\x7E]{8,})$" placeholder="パスワード">
+                                            <input type="password" class="form-control form-control-user <?= $password_invalid ?>" id="password1" name="password1" required pattern="^([\x21-\x7E]{8,})$" placeholder="パスワード">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user <?php echo $password_invalid ?>" id="password2" name="password2" required pattern="^([\x21-\x7E]{8,})$" placeholder="パスワード（再入力）">
+                                            <input type="password" class="form-control form-control-user <?= $password_invalid ?>" id="password2" name="password2" required pattern="^([\x21-\x7E]{8,})$" placeholder="パスワード（再入力）">
                                             <span class="invalid-feedback" role="alert">
-                                                <?php echo $password_message; ?>
+                                                <?= $password_message ?>
                                             </span>
                                         </div>
-                                        <input type="hidden" name="token" value="<?php echo $token; ?>">
+                                        <input type="hidden" name="token" value="<?= $token ?>">
                                         <button type="submit" class="btn btn-primary btn-user btn-block" name="set_password">
                                             パスワードを設定
                                         </button>

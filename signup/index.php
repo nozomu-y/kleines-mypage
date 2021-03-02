@@ -82,9 +82,9 @@ session_destroy();
                                     </div>
                                     <form class="user" method="POST" action="./create_token.php">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user <?php echo $email_invalid ?>" id="email" name="email" required autocomplete="email" placeholder="メールアドレス">
+                                            <input type="email" class="form-control form-control-user <?= $email_invalid ?>" id="email" name="email" required autocomplete="email" placeholder="メールアドレス">
                                             <span class="invalid-feedback" role="alert">
-                                                <?php echo $email_message; ?>
+                                                <?= $email_message ?>
                                             </span>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block" name="signup">
@@ -98,7 +98,7 @@ session_destroy();
                                     <?php
                                     if ($mypage_auth_success) {
                                         echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
-                                        echo $email . 'にメールを送信しました。<br>24時間以内にリンクをクリックしてパスワードを設定してください。<br>メールが届かない場合は、<a href="mailto:' . ADMIN_EMAIL . '" class="alert-link">' . ADMIN_EMAIL . '</a>までご連絡ください。';
+                                        echo h($email) . 'にメールを送信しました。<br>24時間以内にリンクをクリックしてパスワードを設定してください。<br>メールが届かない場合は、<a href="mailto:' . ADMIN_EMAIL . '" class="alert-link">' . ADMIN_EMAIL . '</a>までご連絡ください。';
                                         echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                                         echo '</div>';
                                     }
