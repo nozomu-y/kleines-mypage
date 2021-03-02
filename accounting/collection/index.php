@@ -58,7 +58,7 @@ include_once __DIR__ . '/../../Common/head.php';
                             }
                         ?>
                             <tr>
-                                <td class="text-nowrap"><?= $accounting_name ?></td>
+                                <td class="text-nowrap"><?= h($accounting_name) ?></td>
                                 <td class="text-nowrap text-right"><?= $accounting_price ?></td>
                                 <td class="text-nowrap"><?= $accounting_deadline ?></td>
                                 <td class="text-nowrap"><?= $accounting_status ?></td>

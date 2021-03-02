@@ -34,7 +34,7 @@ include_once __DIR__ . '/../../Common/head.php';
                         ?>
                             <tr>
                                 <td class="text-nowrap"><?= $date ?></td>
-                                <td class="text-nowrap"><?= $name ?></td>
+                                <td class="text-nowrap"><?= h($name) ?></td>
                                 <td class="text-nowrap text-right">￥<?= $price ?></td>
                             </tr>
                         <?php
