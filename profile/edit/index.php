@@ -15,17 +15,17 @@ include_once __DIR__ . '/../../Common/head.php';
                     <div class="row">
                         <div class="col-sm-6">
                             <label for="last_name">姓</label>
-                            <input type="text" class="form-control" name="last_name" id="last_name" value="<?= $USER->last_name ?>" readonly>
+                            <input type="text" class="form-control" name="last_name" id="last_name" value="<?= h($USER->last_name) ?>" readonly>
                         </div>
                         <div class="col-sm-6">
                             <label for="first_name">名</label>
-                            <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $USER->first_name ?>" readonly>
+                            <input type="text" class="form-control" name="first_name" id="first_name" value="<?= h($USER->first_name) ?>" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="name_kana">カナ</label>
-                    <input type="text" class="form-control" name="name_kana" id="name_kana" value="<?= $USER->kana ?>" readonly>
+                    <input type="text" class="form-control" name="name_kana" id="name_kana" value="<?= h($USER->kana) ?>" readonly>
                 </div>
                 <div class="form-group">
                     <div class="row">
@@ -56,7 +56,7 @@ include_once __DIR__ . '/../../Common/head.php';
                 </div>
                 <div class="form-group">
                     <label for="email">メールアドレス</label>
-                    <input type="email" name="email" class="form-control" id="email" value="<?= $USER->email ?>" required>
+                    <input type="email" name="email" class="form-control" id="email" value="<?= h($USER->email) ?>" required>
                 </div>
                 <?php
                 $admin = '一般';
