@@ -6,7 +6,7 @@ include_once __DIR__ . '/../Common/head.php';
 ?>
 
 <div class="container-fluid">
-    <!-- <h1 class="h3 text-gray-800 mb-4">アカウント一覧</h1> -->
+    <h1 class="h3 text-gray-800 mb-4">アカウント一覧</h1>
     <div class="row">
         <div class="col-md-6">
             <div class="card shadow mb-4">
@@ -86,12 +86,14 @@ include_once __DIR__ . '/../Common/head.php';
                                 } else {
                                     $status = "休団";
                                 }
-                                echo '<tr>';
-                                echo '<td class="text-nowrap">' . $grade . '</td>';
-                                echo '<td class="text-nowrap">' . $part . '</td>';
-                                echo '<td class="text-nowrap"><span class="d-none">' . $name_kana . '</span>' . $name . '</td>';
-                                echo '<td class="text-nowrap">' . $status . '</td>';
-                                echo '</tr>';
+                        ?>
+                                <tr>
+                                    <td class="text-nowrap"><?= $grade ?></td>
+                                    <td class="text-nowrap"><?= $part ?></td>
+                                    <td class="text-nowrap"><span class="d-none"><?= h($name_kana) ?></span><?= h($name) ?></td>
+                                    <td class="text-nowrap"><?= $status ?></td>
+                                </tr>
+                        <?php
                             }
                         }
                         ?>
