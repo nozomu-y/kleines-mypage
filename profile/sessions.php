@@ -1,6 +1,9 @@
 <?php
 require __DIR__ . '/../Common/init_page.php';
 
+header('Location: ' . MYPAGE_ROOT);
+exit();
+
 $PAGE_NAME = "プロフィール";
 include_once __DIR__ . '/../Common/head.php';
 ?>
