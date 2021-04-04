@@ -25,7 +25,6 @@ if (isset($_SESSION['mypage_auth_error'])) {
         $email_invalid = 'is-invalid';
         $email_message = "退団者はログインできません";
     } elseif (strpos($_SESSION['mypage_auth_error'], "wrong-password") !== false) {
-        echo $_SESSION['mypage_auth_error'];
         $login_failure = explode("_", $_SESSION['mypage_auth_error'])[1];
         $password_invalid = 'is-invalid';
         $password_message = "パスワードが間違っています。";
