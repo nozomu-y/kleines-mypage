@@ -33,7 +33,8 @@ if (isset($_POST['signup'])) {
     }
     $row_cnt = $result->num_rows;
     if ($row_cnt != 1) {
-        $_SESSION['mypage_auth_error'] = "wrong-email";
+        $_SESSION['mypage_auth_success'] = $email;
+        // $_SESSION['mypage_auth_error'] = "wrong-email";
         header('Location: ' . MYPAGE_ROOT . '/signup');
         exit();
     }
