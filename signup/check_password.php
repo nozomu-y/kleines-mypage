@@ -56,14 +56,14 @@ if (isset($_POST['set_password']) && isset($_POST['token']) && isset($_POST['pas
     }
     $USER = new User($user_id);
 
-    $password1 = $mysqli->real_escape_string($_POST['password1']);
-    $password2 = $mysqli->real_escape_string($_POST['password2']);
+    $password1 = $_POST['password1'];
+    $password2 = $_POST['password2'];
     if ($password1 != $password2) {
         $_SESSION['mypage_password_error'] = '';
         header('Location: ' . MYPAGE_ROOT . '/signup/auth.php?token=' . $token);
         exit();
     }
-    if (!preg_match('/^([\x21-\x7E]{8,})$/', $password)) {
+    if (!preg_match('/^([\x21-\x7E]{8,})$/', $password1)) {
         $_SESSION['mypage_password_regex_error'] = '';
         header('Location: ' . MYPAGE_ROOT . '/signup/auth.php?token=' . $token);
         exit();
