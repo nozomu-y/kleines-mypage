@@ -334,6 +334,15 @@ if ($USER->isAccountant()) {
                     </div>
                 </form>
                 <div class="card shadow mb-4">
+                    <div class="card-header">個別会計を用いた一括処理</div>
+                    <div class="card-body">
+                        <p>
+                            集金金額の全てを個別会計で賄える場合、選択した団員の集金を一括で処理できます。
+                        </p>
+                        <a href="./change_status_paid_batch/?fee_id=<?= $accounting_id ?>" class="card-link">一括処理</a>
+                    </div>
+                </div>
+                <div class="card shadow mb-4">
                     <div class="card-header">未納に変更した場合...</div>
                     <div class="card-body">
                         <p>
