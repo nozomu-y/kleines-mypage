@@ -76,6 +76,7 @@ $CSS_JS_CACHE = '20210227';
                     <span>アカウント一覧</span>
                 </a>
             </li>
+<!--
             <hr class="sidebar-divider my-0">
             <li class="nav-item <?= $bulletin_board ?>">
                 <a class="nav-link" href="<?= MYPAGE_ROOT ?>/bulletin_board/">
@@ -83,6 +84,7 @@ $CSS_JS_CACHE = '20210227';
                     <span>掲示板</span>
                 </a>
             </li>
+-->
             <hr class="sidebar-divider">
             <!-- nav-item -->
             <div class="sidebar-heading">

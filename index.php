@@ -237,6 +237,7 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </div>
     </div>
+<!--
     <div class="card card-flush shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">新着記事</h6>
@@ -280,6 +281,7 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </div>
     </div>
+-->
     <div class="card card-flush shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">開発者募集中</h6>
