@@ -75,6 +75,7 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </div>
         <div class="row">
+<!--
             <div class="col-xl-4 col-sm-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -116,6 +117,7 @@ while ($row = $result->fetch_assoc()) {
                     </div>
                 </div>
             </div>
+-->
             <!-- <div class="col-xl-4 col-sm-6">
                 <?php
                 // $query = "SELECT * FROM accounting_records WHERE user_id='$USER->id'";
