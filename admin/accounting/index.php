@@ -72,6 +72,13 @@ include_once __DIR__ . '/../../Common/head.php';
                         <a href="./accounting_log.php">ログを閲覧</a>
                     </div>
                 </div>
+                <div class="card shadow mb-4">
+                    <div class="card-header">集金データ</div>
+                    <div class="card-body">
+                        <p>全ての集金データをダウンロードできます。（退団者も含む）</p>
+                        <a href="../../download/accounting.php"><i class="fas fa-file-download mr-2"></i>ダウンロード</a>
+                    </div>
+                </div>
             <?php
             }
             ?>
